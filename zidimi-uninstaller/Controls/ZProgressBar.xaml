@@ -1,0 +1,22 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
+>
+
+    <!-- ============ ZProgressBar ============ -->
+    <Style TargetType="{x:Type controls:ZProgressBar}">
+        <Setter Property="Height" Value="6"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:ZProgressBar}">
+                    <Border x:Name="PART_Track" Background="{StaticResource ZBrushLightGray}" CornerRadius="3">
+                        <Border x:Name="PART_Fill" Background="{StaticResource ZBrushAccent}" CornerRadius="3" HorizontalAlignment="Left"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
+

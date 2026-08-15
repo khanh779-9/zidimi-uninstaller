@@ -1,0 +1,13 @@
+## Visual Studio / .NET .gitignore
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.userprefs
+*.tmp
+publish/
+*.zip
+_wpftmp.csproj

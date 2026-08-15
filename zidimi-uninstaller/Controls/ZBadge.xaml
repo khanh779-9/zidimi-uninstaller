@@ -1,0 +1,44 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
+>
+
+    <!-- ============ ZBadge ============ -->
+    <Style TargetType="{x:Type controls:ZBadge}">
+        <Setter Property="Foreground" Value="{StaticResource ZBrushDarkGray}"/>
+        <Setter Property="Background" Value="{StaticResource ZBrushLightGray}"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Padding" Value="9,3"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:ZBadge}">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="9" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Variant" Value="Accent">
+                <Setter Property="Background" Value="{StaticResource ZBrushAccent}"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+            <Trigger Property="Variant" Value="Danger">
+                <Setter Property="Background" Value="#FDE5E9"/>
+                <Setter Property="Foreground" Value="{StaticResource ZBrushBrown}"/>
+            </Trigger>
+            <Trigger Property="Variant" Value="Info">
+                <Setter Property="Background" Value="#E3F0FA"/>
+                <Setter Property="Foreground" Value="#0B5CAD"/>
+            </Trigger>
+            <Trigger Property="Variant" Value="Success">
+                <Setter Property="Background" Value="#E2F4E8"/>
+                <Setter Property="Foreground" Value="#1E7A3C"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>
+

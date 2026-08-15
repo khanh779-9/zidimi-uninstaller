@@ -1,0 +1,237 @@
+[Info]
+LanguageName=Русский
+
+[Sidebar]
+Dashboard=Обзор
+Applications=Установленные программы
+StoreApps=Приложения Store
+Packages=Пакеты WinGet
+Features=Компоненты Windows
+Startup=Автозагрузка
+Settings=Настройки
+Version=Версия {0}
+ReloadAll=Перезагрузить все данные
+About=О программе
+
+[Pages]
+DashboardTitle=Обзор
+DashboardSubtitle=Быстрый обзор установленных приложений
+AppsTitle=Установленные программы
+AppsSubtitle=Управление и удаление программного обеспечения
+StoreTitle=Приложения Microsoft Store
+StoreSubtitle=Управление приложениями UWP/Appx
+PackagesTitle=Пакеты WinGet / Scoop
+PackagesSubtitle=Управление современными пакетами ПО
+FeaturesTitle=Компоненты Windows
+FeaturesSubtitle=Включение или отключение компонентов (DISM)
+StartupTitle=Автозагрузка
+StartupSubtitle=Управление программами при запуске системы
+SettingsTitle=Настройки
+SettingsSubtitle=Настройка параметров Zidimi Uninstaller
+
+[Dashboard]
+AppCount=Установлено программ
+StoreAppCount=Приложений Store
+StartupCount=Элементов автозагрузки
+TotalSize=Общий объем
+Rescan=Сканировать
+ReloadAll=Обновить все
+RecentInstalled=Недавно установленные
+RecentSubtitle=Последние установленные программы
+Scanning=Сканирование системы…
+
+[Apps]
+SearchPlaceholder=Поиск приложений…
+SortName=Имя программы
+SortPublisher=Издатель
+SortSize=Размер
+SortDate=Дата установки
+FilterAll=Все
+Filter64Bit=64-бит
+Filter32Bit=32-бит
+FilterLarge=Большой размер (>500МБ)
+FilterRecent=Недавно установленные (30д)
+FilterBroken=Поврежденные / Без деинсталлятора
+SelectedCount=Выбрано программ: {0}
+Uninstall=Удалить
+QuietUninstall=Тихое удаление
+DeepClean=Глубокая очистка
+Modify=Изменить
+OpenFolder=Папка
+OpenWebsite=Веб-сайт
+DeleteRegistry=Удалить из реестра
+BrokenBadge=Повреждено
+SystemComponentBadge=Системный компонент
+EmptyTitle=Приложения не найдены
+EmptySubtitle=Нажмите кнопку повторного сканирования в правом верхнем углу.
+NoResultsTitle=Нет результатов
+NoResultsSubtitle=Попробуйте другой запрос или измените фильтр компонентов.
+Scanning=Сканирование реестра…
+DisplayCount=Показано {0} из {1}
+PublisherLabel=Издатель
+VersionLabel=Версия
+SizeLabel=Размер
+InstallDateLabel=Дата установки
+ArchLabel=Архитектура
+InstallLocationLabel=Папка установки
+InstallSourceLabel=Источник установки
+WebsiteLabel=Веб-сайт
+RegistryKeyLabel=Ключ реестра
+Details=Подробности
+Close=Закрыть
+CloseTooltip=Закрыть
+CloseActionBar=Закрыть панель действий
+
+[Store]
+SearchPlaceholder=Поиск приложений Store…
+RescanTooltip=Пересканировать приложения Store
+SelectedCount=Выбрано приложений: {0}
+UninstallSelected=Удалить выбранные
+Uninstall=Удалить
+EmptyTitle=Нет приложений Store
+EmptySubtitle=Все приложения Store удалены или не установлены для этой учетной записи.
+NoResultsTitle=Приложения не найдены
+NoResultsSubtitle=Попробуйте выполнить поиск с другим ключевым словом.
+Scanning=Сканирование приложений Microsoft Store…
+
+[Packages]
+SearchPlaceholder=Поиск пакетов WinGet / Scoop / Chocolatey…
+RescanTooltip=Пересканировать список пакетов
+HasUpdate=Обновление v{0}
+Upgrade=Обновить
+Uninstall=Удалить
+EmptyTitle=Пакеты не найдены
+EmptySubtitle=Пакеты WinGet/Scoop не установлены или WinGet не настроен.
+NoResultsTitle=Пакеты не найдены
+NoResultsSubtitle=Попробуйте выполнить поиск с другим ключевым словом.
+Scanning=Сканирование пакетов через WinGet CLI…
+
+[Features]
+SearchPlaceholder=Поиск компонентов Windows (Hyper-V, WSL, Sandbox, .NET…)
+RescanTooltip=Пересканировать компоненты Windows
+CountBadge=Компонентов: {0}
+EnabledBadge=Включено: {0}
+StatusEnabled=Включено
+StatusDisabled=Отключено
+EmptyTitle=Нет доступных компонентов
+EmptySubtitle=Не удалось прочитать состояние компонентов DISM.
+NoResultsTitle=Компоненты не найдены
+NoResultsSubtitle=Попробуйте выполнить поиск с другим ключевым словом.
+Scanning=Опрос компонентов Windows DISM…
+
+[Startup]
+SearchPlaceholder=Поиск элементов автозагрузки…
+RescanTooltip=Пересканировать автозагрузку
+TotalBadge=Элементов: {0}
+EnabledBadge=Включено: {0}
+DisabledBadge=Отключено: {0}
+EmptyTitle=Нет элементов автозагрузки
+EmptySubtitle=В реестре не найдено записей автозагрузки.
+NoResultsTitle=Результаты не найдены
+NoResultsSubtitle=Попробуйте другой поисковый запрос.
+Scanning=Сканирование записей автозагрузки…
+
+[DeepClean]
+Title=Глубокая очистка: {0}
+FoundStats=Найдено остатков: {0}  ·  Объем: {1}
+SelectAll=Выбрать все
+SelectSafeOnly=Только безопасные
+Skip=Пропустить
+CleanSelected=Очистить {0} элементов
+CleaningProgress=Удаление остаточных файлов и ключей…
+
+[Settings]
+SectionTitle=Параметры
+SectionSubtitle=Поведение и конфигурация приложения
+LanguageHeader=Язык интерфейса
+LanguageSubtitle=Выберите язык интерфейса для Zidimi Uninstaller
+ProtectionHeader=Поведение и защита
+ProtectionSubtitle=Механизмы безопасности во время удаления
+HideSystem=Скрывать системные компоненты
+HideSystemDesc=Исключить предустановленные системные пакеты Windows.
+PreferQuiet=Предпочитать тихое удаление
+PreferQuietDesc=Автоматически передавать параметры тихой деинсталляции, если поддерживается.
+ConfirmBefore=Подтверждать перед удалением
+ConfirmBeforeDesc=Показывать диалоговое окно подтверждения перед удалением.
+AutoKill=Автозавершение активных процессов
+AutoKillDesc=Сканировать и закрывать процессы, блокирующие файлы перед удалением.
+RestorePoint=Создавать точку восстановления системы
+RestorePointDesc=Автоматически создавать точку восстановления перед удалением.
+DeepCleanHeader=Очистка остатков (Deep Clean)
+DeepCleanSubtitle=Автоматически находить и удалять остаточные файлы, папки и ключи реестра
+AutoDeepClean=Искать остатки после удаления
+AutoDeepCleanDesc=Автоматически запускать Deep Clean после завершения работы деинсталлятора.
+RecycleBin=Перемещать удаленные файлы в корзину
+RecycleBinDesc=Безопасно отправлять файлы в корзину вместо безвозвратного удаления.
+DataHeader=Данные и кэш
+DataSubtitle=Управление кэшем и перезагрузка системных данных
+ReloadAllBtn=Перезагрузить все данные
+ClearCacheBtn=Очистить кэш иконок
+
+[Dialogs]
+ConfirmUninstallSingleTitle=Удаление программы
+ConfirmUninstallSingleMsg=Вы уверены, что хотите удалить "{0}"?
+ConfirmUninstallMultiTitle=Удаление {0} программ
+ConfirmUninstallMultiMsg=Вы уверены, что хотите удалить выбранные программы ({0} шт.)?
+ConfirmBtn=Удалить
+CancelBtn=Отмена
+CloseBtn=Закрыть
+ForceRemoveTitle=Удаление данных регистрации
+ForceRemoveMsg=Это действие удалит запись деинсталляции "{0}" из реестра.\nИспользуйте только в случае сбоя обычной деинсталляции. Продолжить?
+ForceRemoveBtn=Удалить
+FeatureEnableTitle=Включение компонента Windows
+FeatureDisableTitle=Отключение компонента Windows
+FeatureToggleMsg=Вы уверены, что хотите {0} компонент "{1}"?\nЭта операция может занять несколько минут.
+ActionEnable=включить
+ActionDisable=отключить
+ActionEnableCapital=Включить
+ActionDisableCapital=Отключить
+PackageUninstallTitle=Удаление пакета WinGet
+PackageUninstallMsg=Вы уверены, что хотите удалить пакет "{0}" (ID: {1})?
+AboutTitle=О программе Zidimi Uninstaller
+AboutDesc=Zidimi Uninstaller — это высокопроизводительный инструмент для удаления программ.\n\nВерсия: {0}
+
+[Toasts]
+CreatingRestorePoint=Создание точки восстановления системы…
+KilledProcesses=Завершено {0} блокирующих процессов для "{1}".
+UninstallerNotFound=Деинсталлятор для "{0}" не найден.
+LaunchedUninstallers=Запущено деинсталляторов: {0}.
+RemovedRegistryEntries=Удалено записей из реестра: {0}.
+CannotRemoveRegistry=Не удалось удалить запись из реестра.
+ModifyNotSupported=Эта программа не поддерживает изменение установки.
+NoInstallLocation=Нет информации о папке установки.
+NoWebsiteUrl=URL веб-сайта отсутствует.
+NoExecutable=Исполняемый файл не найден.
+StoreUninstallFailed=Не удалось удалить "{0}". Проверьте права администратора.
+StoreUninstallSuccess=Успешно удалено приложений Store: {0}.
+PackageUninstallSuccess=Пакет "{0}" успешно удален.
+PackageUninstallFailed=Не удалось удалить пакет "{0}".
+PackageUpgrading=Обновление "{0}" до последней версии…
+PackageUpgradeSuccess="{0}" успешно обновлен!
+PackageUpgradeFailed=Не удалось обновить "{0}".
+FeatureToggling=Применение состояния для "{0}" через DISM…
+FeatureToggleSuccess=Компонент "{1}" успешно {0}!
+FeatureToggleFailed=Не удалось изменить состояние "{0}". Требуются права администратора.
+StartupToggleSuccess=Элемент "{1}" успешно {0}.
+StartupToggleFailed=Не удалось обновить "{0}". Требуются права администратора.
+DeepCleanNoLeftovers=Остатков для "{0}" не обнаружено. Чистое удаление!
+DeepCleanSuccess=Глубокая очистка завершена: удалено {0} элементов, освобождено {1}.
+DeepCleanFailed=Ошибка при очистке остатков: {0}
+CacheCleared=Кэш иконок очищен.
+
+[Status]
+ScanningRegistry=Сканирование реестра…
+ScanningStore=Сканирование приложений Store…
+ScanningPackages=Сканирование пакетов WinGet…
+ScanningFeatures=Чтение компонентов Windows (DISM)…
+ScanningStartup=Чтение записей автозагрузки…
+AppsCount=Программ: {0}
+StoreAppsCount=Приложений Store: {0}
+PackagesCount=Пакетов: {0}
+FeaturesCount=Компонентов Windows: {0}
+StartupCount=Элементов автозагрузки: {0}
+CannotReadApps=Не удалось прочитать установленные программы
+CannotReadStore=Не удалось прочитать приложения Store
+CannotReadPackages=Не удалось прочитать пакеты WinGet
+CannotReadFeatures=Не удалось прочитать компоненты Windows
+CannotReadStartup=Не удалось прочитать записи автозагрузки

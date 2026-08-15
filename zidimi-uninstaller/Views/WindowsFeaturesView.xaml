@@ -1,0 +1,86 @@
+<UserControl x:Class="zidimi_uninstaller.Views.WindowsFeaturesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
+             xmlns:services="clr-namespace:zidimi_uninstaller.Services"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="900">
+    <Grid Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Toolbar -->
+        <Grid Grid.Row="0" Margin="0,0,0,14">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <controls:ZSearchBox Placeholder="{Binding [Features_SearchPlaceholder], Source={x:Static services:LanguageManager.Instance}}"
+                                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                                 MaxWidth="500" HorizontalAlignment="Left"/>
+            <controls:ZIconButton Grid.Column="1" Icon="{StaticResource IconRefresh}"
+                                  Command="{Binding RefreshCommand}"
+                                  ToolTip="{Binding [Features_RescanTooltip], Source={x:Static services:LanguageManager.Instance}}"/>
+        </Grid>
+
+        <!-- Stats Bar -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12">
+            <controls:ZBadge Content="{Binding TotalCount, StringFormat={}{0} features}" Variant="Accent"/>
+            <controls:ZBadge Content="{Binding EnabledCount, StringFormat={}{0} enabled}" Variant="Success" Margin="8,0,0,0"/>
+        </StackPanel>
+
+        <!-- List -->
+        <Grid Grid.Row="2">
+            <ListBox ItemsSource="{Binding ItemsView}"
+                     ItemContainerStyle="{StaticResource ZStartupListItemStyle}"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     Background="Transparent">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <controls:ZToggleRow Title="{Binding DisplayName}"
+                                             Subtitle="{Binding Name}"
+                                             IsOn="{Binding IsEnabled, Mode=TwoWay}">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <controls:ZBadge Content="{Binding StatusText}" Variant="{Binding StatusBadgeVariant}" Margin="0,0,8,0"/>
+                                <controls:ZProgressRing RingSize="18" Margin="8,0,0,0"
+                                                        Visibility="{Binding IsOperating, Converter={StaticResource BoolToVis}}"/>
+                            </StackPanel>
+                        </controls:ZToggleRow>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <!-- Empty state -->
+            <controls:ZEmptyState Icon="{StaticResource IconSettings}"
+                                  Title="{Binding [Features_EmptyTitle], Source={x:Static services:LanguageManager.Instance}}"
+                                  Subtitle="{Binding [Features_EmptySubtitle], Source={x:Static services:LanguageManager.Instance}}"
+                                  Visibility="{Binding ShowEmptyState, Converter={StaticResource BoolToVis}}"/>
+
+            <controls:ZEmptyState Icon="{StaticResource IconSearch}"
+                                  Title="{Binding [Features_NoResultsTitle], Source={x:Static services:LanguageManager.Instance}}"
+                                  Subtitle="{Binding [Features_NoResultsSubtitle], Source={x:Static services:LanguageManager.Instance}}"
+                                  Visibility="{Binding ShowNoResults, Converter={StaticResource BoolToVis}}"/>
+
+            <!-- Loading overlay -->
+            <Grid Background="#CCF2F2F2"
+                  Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}" Panel.ZIndex="10">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <controls:ZProgressRing RingSize="40"/>
+                    <TextBlock Text="{Binding [Features_Scanning], Source={x:Static services:LanguageManager.Instance}}" Margin="0,14,0,0" HorizontalAlignment="Center"
+                               Foreground="{StaticResource ZBrushGray}"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <!-- Status bar -->
+        <TextBlock Grid.Row="3" Margin="6,10,6,0" FontSize="12" Foreground="{StaticResource ZBrushGray}">
+            <Run Text="{Binding StatusText, Mode=OneWay}"/>
+        </TextBlock>
+    </Grid>
+</UserControl>

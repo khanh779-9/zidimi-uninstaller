@@ -1,0 +1,237 @@
+[Info]
+LanguageName=Tiếng Việt
+
+[Sidebar]
+Dashboard=Tổng quan
+Applications=Ứng dụng đã cài
+StoreApps=Ứng dụng Store
+Packages=Gói WinGet
+Features=Tính năng Windows
+Startup=Khởi động
+Settings=Cài đặt
+Version=Phiên bản {0}
+ReloadAll=Nạp lại tất cả dữ liệu
+About=Thông tin phần mềm
+
+[Pages]
+DashboardTitle=Tổng quan
+DashboardSubtitle=Thông tin nhanh về các ứng dụng đã cài
+AppsTitle=Ứng dụng đã cài
+AppsSubtitle=Quản lý và gỡ cài đặt phần mềm
+StoreTitle=Ứng dụng Microsoft Store
+StoreSubtitle=Quản lý các ứng dụng UWP/Appx
+PackagesTitle=Gói WinGet / Scoop
+PackagesSubtitle=Quản lý các gói phần mềm hiện đại
+FeaturesTitle=Tính năng Windows
+FeaturesSubtitle=Bật hoặc tắt các tính năng tuỳ chọn (DISM)
+StartupTitle=Ứng dụng khởi động
+StartupSubtitle=Quản lý chương trình khởi động cùng hệ thống
+SettingsTitle=Cài đặt
+SettingsSubtitle=Tuỳ chỉnh cấu hình Zidimi Uninstaller
+
+[Dashboard]
+AppCount=Ứng dụng đã cài
+StoreAppCount=Ứng dụng Store
+StartupCount=Mục khởi động
+TotalSize=Tổng dung lượng
+Rescan=Quét lại
+ReloadAll=Nạp lại tất cả
+RecentInstalled=Cài đặt gần đây
+RecentSubtitle=Những ứng dụng được cài đặt mới nhất
+Scanning=Đang quét hệ thống…
+
+[Apps]
+SearchPlaceholder=Tìm kiếm ứng dụng…
+SortName=Tên ứng dụng
+SortPublisher=Nhà phát hành
+SortSize=Kích thước
+SortDate=Ngày cài đặt
+FilterAll=Tất cả
+Filter64Bit=64-bit
+Filter32Bit=32-bit
+FilterLarge=Dung lượng lớn (>500MB)
+FilterRecent=Mới cài đặt (30 ngày)
+FilterBroken=Hỏng / Mất uninstaller
+SelectedCount=Đã chọn {0} ứng dụng
+Uninstall=Gỡ cài đặt
+QuietUninstall=Gỡ nhanh (quiet)
+DeepClean=Quét tàn dư
+Modify=Thay đổi
+OpenFolder=Thư mục
+OpenWebsite=Website
+DeleteRegistry=Xoá registry
+BrokenBadge=Không xác định
+SystemComponentBadge=Thành phần hệ thống
+EmptyTitle=Không tìm thấy ứng dụng
+EmptySubtitle=Nhấn nút quét lại ở góc phải trên để làm mới.
+NoResultsTitle=Không có kết quả phù hợp
+NoResultsSubtitle=Thử tìm với từ khoá khác hoặc bỏ lọc thành phần hệ thống.
+Scanning=Đang quét registry…
+DisplayCount=Hiển thị {0}/{1}
+PublisherLabel=Nhà phát hành
+VersionLabel=Phiên bản
+SizeLabel=Kích thước
+InstallDateLabel=Ngày cài đặt
+ArchLabel=Kiến trúc
+InstallLocationLabel=Vị trí cài đặt
+InstallSourceLabel=Nguồn cài đặt
+WebsiteLabel=Website
+RegistryKeyLabel=Registry Key
+Details=Chi tiết
+Close=Đóng
+CloseTooltip=Đóng
+CloseActionBar=Đóng thanh tác vụ
+
+[Store]
+SearchPlaceholder=Tìm kiếm ứng dụng Store…
+RescanTooltip=Quét lại ứng dụng Store
+SelectedCount=Đã chọn {0} ứng dụng
+UninstallSelected=Gỡ cài đặt mục đã chọn
+Uninstall=Gỡ cài đặt
+EmptyTitle=Không có ứng dụng Store
+EmptySubtitle=Tất cả ứng dụng Store đã bị xoá hoặc chưa được cài cho tài khoản này.
+NoResultsTitle=Không tìm thấy ứng dụng phù hợp
+NoResultsSubtitle=Thử tìm kiếm với từ khoá khác.
+Scanning=Đang quét ứng dụng Microsoft Store…
+
+[Packages]
+SearchPlaceholder=Tìm kiếm gói WinGet / Scoop / Chocolatey…
+RescanTooltip=Quét lại danh sách gói
+HasUpdate=Cập nhật v{0}
+Upgrade=Cập nhật
+Uninstall=Gỡ cài đặt
+EmptyTitle=Không tìm thấy gói phần mềm
+EmptySubtitle=Chưa cài gói WinGet/Scoop nào hoặc hệ thống chưa cấu hình WinGet.
+NoResultsTitle=Không có gói phù hợp
+NoResultsSubtitle=Thử tìm kiếm với từ khoá khác.
+Scanning=Đang quét gói từ WinGet CLI…
+
+[Features]
+SearchPlaceholder=Tìm kiếm tính năng Windows (Hyper-V, WSL, Sandbox, .NET…)
+RescanTooltip=Quét lại tính năng Windows
+CountBadge={0} tính năng
+EnabledBadge={0} đã bật
+StatusEnabled=Đã bật
+StatusDisabled=Đã tắt
+EmptyTitle=Không có tính năng nào
+EmptySubtitle=Không thể đọc trạng thái tính năng DISM trên hệ thống này.
+NoResultsTitle=Không có tính năng phù hợp
+NoResultsSubtitle=Thử tìm kiếm với từ khoá khác.
+Scanning=Đang truy vấn tính năng Windows qua DISM…
+
+[Startup]
+SearchPlaceholder=Tìm kiếm mục khởi động…
+RescanTooltip=Quét lại mục khởi động
+TotalBadge={0} mục
+EnabledBadge={0} đang bật
+DisabledBadge={0} đã tắt
+EmptyTitle=Không có mục khởi động
+EmptySubtitle=Không tìm thấy mục khởi động nào trong registry.
+NoResultsTitle=Không có kết quả phù hợp
+NoResultsSubtitle=Thử tìm kiếm với từ khoá khác.
+Scanning=Đang quét danh sách khởi động…
+
+[DeepClean]
+Title=Dọn dẹp sâu tàn dư: {0}
+FoundStats=Tìm thấy {0} mục tàn dư  ·  Dung lượng: {1}
+SelectAll=Chọn tất cả
+SelectSafeOnly=Chỉ chọn mục an toàn
+Skip=Bỏ qua
+CleanSelected=Dọn dẹp {0} mục
+CleaningProgress=Đang dọn dẹp các tệp và registry tàn dư…
+
+[Settings]
+SectionTitle=Tuỳ chọn
+SectionSubtitle=Hành vi và cấu hình ứng dụng
+LanguageHeader=Ngôn ngữ hiển thị
+LanguageSubtitle=Chọn ngôn ngữ giao diện cho Zidimi Uninstaller
+ProtectionHeader=Hành vi & Bảo vệ
+ProtectionSubtitle=Cơ chế an toàn trong quá trình gỡ cài đặt
+HideSystem=Ẩn thành phần hệ thống
+HideSystemDesc=Loại bỏ các gói hệ thống cài sẵn của Windows (thường không thể gỡ).
+PreferQuiet=Ưu tiên gỡ cài đặt không giao diện (Quiet)
+PreferQuietDesc=Tự động truyền tham số gỡ cài đặt ẩn khi ứng dụng hỗ trợ.
+ConfirmBefore=Xác nhận trước khi gỡ cài đặt
+ConfirmBeforeDesc=Hiển thị hộp thoại xác nhận trước khi thực hiện thao tác gỡ.
+AutoKill=Tự động đóng tiến trình đang chạy
+AutoKillDesc=Quét và buộc đóng các tiến trình đang chiếm giữ file trước khi gỡ cài đặt.
+RestorePoint=Tạo điểm khôi phục hệ thống (System Restore Point)
+RestorePointDesc=Tự động tạo Restore Point trước khi xoá để phòng ngừa rủi ro.
+DeepCleanHeader=Dọn dẹp tàn dư (Deep Clean)
+DeepCleanSubtitle=Tự động quét và xoá sạch file rác, thư mục thừa và khoá registry còn sót
+AutoDeepClean=Quét tàn dư sau khi gỡ cài đặt
+AutoDeepCleanDesc=Tự động kích hoạt quét Deep Clean khi trình gỡ cài đặt hoàn tất.
+RecycleBin=Đưa file đã xoá vào Thùng rác (Recycle Bin)
+RecycleBinDesc=Chuyển file an toàn vào Thùng rác thay vì xoá vĩnh viễn khỏi ổ đĩa.
+DataHeader=Dữ liệu & Bộ nhớ đệm
+DataSubtitle=Quản lý bộ nhớ đệm và nạp lại dữ liệu từ hệ thống
+ReloadAllBtn=Nạp lại tất cả dữ liệu
+ClearCacheBtn=Xoá bộ nhớ đệm Icon
+
+[Dialogs]
+ConfirmUninstallSingleTitle=Gỡ cài đặt ứng dụng
+ConfirmUninstallSingleMsg=Bạn có chắc muốn gỡ cài đặt "{0}"?
+ConfirmUninstallMultiTitle=Gỡ cài đặt {0} ứng dụng
+ConfirmUninstallMultiMsg=Bạn có chắc muốn gỡ cài đặt {0} ứng dụng đã chọn?
+ConfirmBtn=Gỡ cài đặt
+CancelBtn=Huỷ bỏ
+CloseBtn=Đóng
+ForceRemoveTitle=Xoá dữ liệu đăng ký gỡ cài đặt
+ForceRemoveMsg=Hành động này sẽ xoá thông tin đăng ký gỡ cài đặt của "{0}" khỏi registry.\nChỉ dùng khi trình gỡ cài đặt thông thường không hoạt động. Tiếp tục?
+ForceRemoveBtn=Xoá
+FeatureEnableTitle=Bật tính năng Windows
+FeatureDisableTitle=Tắt tính năng Windows
+FeatureToggleMsg=Bạn có chắc muốn {0} tính năng "{1}"?\nThao tác này có thể mất vài phút.
+ActionEnable=bật
+ActionDisable=tắt
+ActionEnableCapital=Bật
+ActionDisableCapital=Tắt
+PackageUninstallTitle=Gỡ cài đặt gói WinGet
+PackageUninstallMsg=Bạn có chắc muốn gỡ bỏ gói "{0}" (ID: {1})?
+AboutTitle=Về Zidimi Uninstaller
+AboutDesc=Zidimi Uninstaller là công cụ gỡ cài đặt phần mềm dựa trên registry.\n\nPhiên bản: {0}
+
+[Toasts]
+CreatingRestorePoint=Đang tạo điểm khôi phục hệ thống (System Restore Point)…
+KilledProcesses=Đã đóng {0} tiến trình liên quan của "{1}".
+UninstallerNotFound=Không tìm thấy trình gỡ cài đặt của "{0}".
+LaunchedUninstallers=Đã khởi chạy {0} trình gỡ cài đặt.
+RemovedRegistryEntries=Đã xoá {0} mục khỏi registry.
+CannotRemoveRegistry=Không thể xoá dữ liệu registry.
+ModifyNotSupported=Ứng dụng này không hỗ trợ thay đổi (Modify).
+NoInstallLocation=Không có thông tin thư mục cài đặt.
+NoWebsiteUrl=Không có liên kết website.
+NoExecutable=Không tìm thấy file thực thi.
+StoreUninstallFailed=Không gỡ được "{0}". Kiểm tra quyền Admin.
+StoreUninstallSuccess=Đã gỡ {0} ứng dụng Store.
+PackageUninstallSuccess=Đã gỡ cài đặt "{0}".
+PackageUninstallFailed=Không gỡ được "{0}".
+PackageUpgrading=Đang cập nhật "{0}" lên phiên bản mới…
+PackageUpgradeSuccess=Đã cập nhật "{0}" thành công!
+PackageUpgradeFailed=Cập nhật "{0}" thất bại.
+FeatureToggling=Đang {0} "{1}" qua DISM…
+FeatureToggleSuccess=Đã {0} "{1}" thành công!
+FeatureToggleFailed=Không thể thay đổi trạng thái "{0}". Cần quyền Admin.
+StartupToggleSuccess=Đã {0} "{1}".
+StartupToggleFailed=Không thể cập nhật "{0}". Cần quyền Admin?
+DeepCleanNoLeftovers=Không phát hiện tàn dư của "{0}". Đã gỡ sạch sẽ!
+DeepCleanSuccess=Dọn dẹp tàn dư hoàn tất: đã xoá {0} mục, giải phóng {1}.
+DeepCleanFailed=Lỗi khi dọn dẹp tàn dư: {0}
+CacheCleared=Đã xoá bộ nhớ đệm Icon.
+
+[Status]
+ScanningRegistry=Đang quét registry…
+ScanningStore=Đang quét ứng dụng Store…
+ScanningPackages=Đang quét gói cài đặt WinGet…
+ScanningFeatures=Đang đọc tính năng Windows (DISM)…
+ScanningStartup=Đang đọc danh sách khởi động…
+AppsCount={0} ứng dụng
+StoreAppsCount={0} ứng dụng
+PackagesCount={0} gói cài đặt
+FeaturesCount={0} tính năng Windows
+StartupCount={0} mục khởi động
+CannotReadApps=Không đọc được danh sách ứng dụng
+CannotReadStore=Không đọc được danh sách ứng dụng Store
+CannotReadPackages=Không đọc được danh sách gói WinGet
+CannotReadFeatures=Không đọc được danh sách tính năng Windows
+CannotReadStartup=Không đọc được danh sách khởi động

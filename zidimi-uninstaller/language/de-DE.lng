@@ -1,0 +1,237 @@
+[Info]
+LanguageName=Deutsch
+
+[Sidebar]
+Dashboard=Übersicht
+Applications=Installierte Apps
+StoreApps=Store Apps
+Packages=WinGet Pakete
+Features=Windows-Features
+Startup=Autostart
+Settings=Einstellungen
+Version=Version {0}
+ReloadAll=Alle Daten neu laden
+About=Über die Anwendung
+
+[Pages]
+DashboardTitle=Übersicht
+DashboardSubtitle=Schnellübersicht der installierten Anwendungen
+AppsTitle=Installierte Anwendungen
+AppsSubtitle=Software verwalten und deinstallieren
+StoreTitle=Microsoft Store Apps
+StoreSubtitle=UWP/Appx Anwendungen verwalten
+PackagesTitle=WinGet / Scoop Pakete
+PackagesSubtitle=Moderne Softwarepakete verwalten
+FeaturesTitle=Windows-Features
+FeaturesSubtitle=Optionale Features aktivieren oder deaktivieren (DISM)
+StartupTitle=Autostart-Anwendungen
+StartupSubtitle=Autostart-Programme verwalten
+SettingsTitle=Einstellungen
+SettingsSubtitle=Zidimi Uninstaller Verhalten anpassen
+
+[Dashboard]
+AppCount=Installierte Apps
+StoreAppCount=Store Apps
+StartupCount=Autostart-Einträge
+TotalSize=Gesamtgröße
+Rescan=Neu scannen
+ReloadAll=Alles neu laden
+RecentInstalled=Kürzlich installiert
+RecentSubtitle=Neueste Software-Installationen
+Scanning=System wird gescannt…
+
+[Apps]
+SearchPlaceholder=Anwendungen suchen…
+SortName=App-Name
+SortPublisher=Herausgeber
+SortSize=Größe
+SortDate=Installationsdatum
+FilterAll=Alle
+Filter64Bit=64-Bit
+Filter32Bit=32-Bit
+FilterLarge=Große Größe (>500MB)
+FilterRecent=Kürzlich installiert (30 Tage)
+FilterBroken=Beschädigt / Kein Uninstaller
+SelectedCount={0} Anwendungen ausgewählt
+Uninstall=Deinstallieren
+QuietUninstall=Stille Deinstallation
+DeepClean=Tiefenreinigung
+Modify=Ändern
+OpenFolder=Ordner
+OpenWebsite=Webseite
+DeleteRegistry=Aus Registrierung löschen
+BrokenBadge=Beschädigt
+SystemComponentBadge=Systemkomponente
+EmptyTitle=Keine Anwendungen gefunden
+EmptySubtitle=Klicken Sie oben rechts auf Aktualisieren.
+NoResultsTitle=Keine Ergebnisse
+NoResultsSubtitle=Versuchen Sie einen anderen Suchbegriff oder passen Sie die Filter an.
+Scanning=Registrierung wird gescannt…
+DisplayCount=Zeige {0} von {1}
+PublisherLabel=Herausgeber
+VersionLabel=Version
+SizeLabel=Größe
+InstallDateLabel=Installationsdatum
+ArchLabel=Architektur
+InstallLocationLabel=Installationspfad
+InstallSourceLabel=Installationsquelle
+WebsiteLabel=Webseite
+RegistryKeyLabel=Registrierungsschlüssel
+Details=Details
+Close=Schließen
+CloseTooltip=Schließen
+CloseActionBar=Aktionsleiste schließen
+
+[Store]
+SearchPlaceholder=Store Apps suchen…
+RescanTooltip=Store Apps neu scannen
+SelectedCount={0} Apps ausgewählt
+UninstallSelected=Ausgewählte deinstallieren
+Uninstall=Deinstallieren
+EmptyTitle=Keine Store Apps
+EmptySubtitle=Alle Store Apps wurden entfernt oder sind für dieses Konto nicht installiert.
+NoResultsTitle=Keine passenden Apps
+NoResultsSubtitle=Versuchen Sie die Suche mit einem anderen Begriff.
+Scanning=Microsoft Store Apps werden gescannt…
+
+[Packages]
+SearchPlaceholder=WinGet / Scoop / Chocolatey Pakete suchen…
+RescanTooltip=Paketliste neu scannen
+HasUpdate=Update v{0}
+Upgrade=Aktualisieren
+Uninstall=Deinstallieren
+EmptyTitle=Keine Pakete gefunden
+EmptySubtitle=Keine WinGet/Scoop Pakete installiert oder WinGet ist nicht konfiguriert.
+NoResultsTitle=Keine passenden Pakete
+NoResultsSubtitle=Versuchen Sie die Suche mit einem anderen Begriff.
+Scanning=Pakete über WinGet CLI werden gescannt…
+
+[Features]
+SearchPlaceholder=Windows-Features suchen (Hyper-V, WSL, Sandbox, .NET…)
+RescanTooltip=Windows-Features neu scannen
+CountBadge={0} Features
+EnabledBadge={0} aktiviert
+StatusEnabled=Aktiviert
+StatusDisabled=Deaktiviert
+EmptyTitle=Keine Features verfügbar
+EmptySubtitle=DISM Feature-Status konnte auf diesem System nicht gelesen werden.
+NoResultsTitle=Keine passenden Features
+NoResultsSubtitle=Versuchen Sie die Suche mit einem anderen Begriff.
+Scanning=Windows-Features werden über DISM abgefragt…
+
+[Startup]
+SearchPlaceholder=Autostart-Einträge suchen…
+RescanTooltip=Autostart-Einträge neu scannen
+TotalBadge={0} Einträge
+EnabledBadge={0} aktiviert
+DisabledBadge={0} deaktiviert
+EmptyTitle=Keine Autostart-Einträge
+EmptySubtitle=Keine Autostart-Einträge in der Registrierung gefunden.
+NoResultsTitle=Keine Ergebnisse
+NoResultsSubtitle=Versuchen Sie einen anderen Suchbegriff.
+Scanning=Autostart-Einträge werden gescannt…
+
+[DeepClean]
+Title=Tiefenreinigung: {0}
+FoundStats={0} Restelemente gefunden  ·  Größe: {1}
+SelectAll=Alle auswählen
+SelectSafeOnly=Nur sichere auswählen
+Skip=Überspringen
+CleanSelected={0} Elemente bereinigen
+CleaningProgress=Restelemente werden entfernt…
+
+[Settings]
+SectionTitle=Einstellungen
+SectionSubtitle=Anwendungsverhalten und Konfiguration
+LanguageHeader=Anzeigesprache
+LanguageSubtitle=Wählen Sie die Sprache für Zidimi Uninstaller
+ProtectionHeader=Verhalten & Schutz
+ProtectionSubtitle=Sicherheitsmechanismen während der Deinstallation
+HideSystem=Systemkomponenten ausblenden
+HideSystemDesc=Vorinstallierte Windows-Systempakete ausschließen.
+PreferQuiet=Stille Deinstallation bevorzugen
+PreferQuietDesc=Automatisch Parameter für stille Deinstallation übergeben.
+ConfirmBefore=Vor Deinstallation bestätigen
+ConfirmBeforeDesc=Bestätigungsdialog vor Deinstallationsaktionen anzeigen.
+AutoKill=Laufende Prozesse automatisch beenden
+AutoKillDesc=Aktive Prozesse scannen und beenden, die Dateien vor Deinstallation sperren.
+RestorePoint=Systemwiederherstellungspunkt erstellen
+RestorePointDesc=Vor Entfernungsoperationen automatisch einen Wiederherstellungspunkt erstellen.
+DeepCleanHeader=Reste-Bereinigung (Deep Clean)
+DeepCleanSubtitle=Automatisch verbleibende Dateien, Ordner und Registrierungsschlüssel bereinigen
+AutoDeepClean=Reste nach Deinstallation suchen
+AutoDeepCleanDesc=Deep Clean automatisch nach Abschluss des Uninstallers ausführen.
+RecycleBin=Gelöschte Dateien in den Papierkorb verschieben
+RecycleBinDesc=Dateien sicher in den Papierkorb verschieben statt dauerhaft zu löschen.
+DataHeader=Daten & Cache
+DataSubtitle=Cache verwalten und Systemdaten neu laden
+ReloadAllBtn=Alle Daten neu laden
+ClearCacheBtn=Icon-Cache leeren
+
+[Dialogs]
+ConfirmUninstallSingleTitle=Anwendung deinstallieren
+ConfirmUninstallSingleMsg=Möchten Sie "{0}" wirklich deinstallieren?
+ConfirmUninstallMultiTitle={0} Anwendungen deinstallieren
+ConfirmUninstallMultiMsg=Möchten Sie die {0} ausgewählten Anwendungen wirklich deinstallieren?
+ConfirmBtn=Deinstallieren
+CancelBtn=Abbrechen
+CloseBtn=Schließen
+ForceRemoveTitle=Registrierungseintrag löschen
+ForceRemoveMsg=Dadurch wird der Deinstallations-Registrierungseintrag für "{0}" entfernt.\nNur verwenden, wenn die normale Deinstallation fehlschlägt. Fortfahren?
+ForceRemoveBtn=Löschen
+FeatureEnableTitle=Windows-Feature aktivieren
+FeatureDisableTitle=Windows-Feature deaktivieren
+FeatureToggleMsg=Möchten Sie das Feature "{1}" wirklich {0}?\nDieser Vorgang kann einige Minuten dauern.
+ActionEnable=aktivieren
+ActionDisable=deaktivieren
+ActionEnableCapital=Aktivieren
+ActionDisableCapital=Deaktivieren
+PackageUninstallTitle=WinGet-Paket deinstallieren
+PackageUninstallMsg=Möchten Sie das Paket "{0}" (ID: {1}) wirklich entfernen?
+AboutTitle=Über Zidimi Uninstaller
+AboutDesc=Zidimi Uninstaller ist ein leistungsstarker Uninstaller.\n\nVersion: {0}
+
+[Toasts]
+CreatingRestorePoint=Systemwiederherstellungspunkt wird erstellt…
+KilledProcesses={0} sperrende Prozesse für "{1}" beendet.
+UninstallerNotFound=Kein Deinstallationsprogramm für "{0}" gefunden.
+LaunchedUninstallers={0} Deinstallationsprogramm(e) gestartet.
+RemovedRegistryEntries={0} Einträge aus der Registrierung entfernt.
+CannotRemoveRegistry=Registrierungseintrag konnte nicht entfernt werden.
+ModifyNotSupported=Diese Anwendung unterstützt keine Änderung (Modify).
+NoInstallLocation=Keine Installationspfad-Informationen verfügbar.
+NoWebsiteUrl=Keine Webseiten-URL verfügbar.
+NoExecutable=Ausführbare Datei nicht gefunden.
+StoreUninstallFailed=Deinstallation von "{0}" fehlgeschlagen. Administratorrechte prüfen.
+StoreUninstallSuccess={0} Store-App(s) erfolgreich deinstalliert.
+PackageUninstallSuccess="{0}" erfolgreich deinstalliert.
+PackageUninstallFailed=Deinstallation von "{0}" fehlgeschlagen.
+PackageUpgrading="{0}" wird auf die neueste Version aktualisiert…
+PackageUpgradeSuccess="{0}" erfolgreich aktualisiert!
+PackageUpgradeFailed=Aktualisierung von "{0}" fehlgeschlagen.
+FeatureToggling=Feature-Status für "{0}" wird über DISM angewendet…
+FeatureToggleSuccess="{1}" erfolgreich {0}!
+FeatureToggleFailed=Status für "{0}" konnte nicht geändert werden. Administratorrechte erforderlich.
+StartupToggleSuccess="{1}" erfolgreich {0}.
+StartupToggleFailed="{0}" konnte nicht aktualisiert werden. Administratorrechte erforderlich.
+DeepCleanNoLeftovers=Keine Reste für "{0}" gefunden. Saubere Deinstallation!
+DeepCleanSuccess=Tiefenreinigung abgeschlossen: {0} Elemente entfernt, {1} freigegeben.
+DeepCleanFailed=Fehler bei der Tiefenreinigung: {0}
+CacheCleared=Icon-Cache geleert.
+
+[Status]
+ScanningRegistry=Registrierung wird gescannt…
+ScanningStore=Microsoft Store Apps werden gescannt…
+ScanningPackages=Pakete über WinGet werden gescannt…
+ScanningFeatures=Windows-Features (DISM) werden gelesen…
+ScanningStartup=Autostart-Einträge werden gelesen…
+AppsCount={0} Anwendungen
+StoreAppsCount={0} Store Apps
+PackagesCount={0} Pakete
+FeaturesCount={0} Windows-Features
+StartupCount={0} Autostart-Einträge
+CannotReadApps=Installierte Anwendungen konnten nicht gelesen werden
+CannotReadStore=Store Apps konnten nicht gelesen werden
+CannotReadPackages=WinGet Pakete konnten nicht gelesen werden
+CannotReadFeatures=Windows-Features konnten nicht gelesen werden
+CannotReadStartup=Autostart-Einträge konnten nicht gelesen werden

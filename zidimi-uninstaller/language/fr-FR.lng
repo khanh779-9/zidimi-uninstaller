@@ -1,0 +1,237 @@
+[Info]
+LanguageName=Français
+
+[Sidebar]
+Dashboard=Tableau de bord
+Applications=Applications installées
+StoreApps=Applications Store
+Packages=Paquets WinGet
+Features=Fonctionnalités Windows
+Startup=Démarrage
+Settings=Paramètres
+Version=Version {0}
+ReloadAll=Recharger toutes les données
+About=À propos de l'application
+
+[Pages]
+DashboardTitle=Tableau de bord
+DashboardSubtitle=Aperçu rapide des applications installées
+AppsTitle=Applications installées
+AppsSubtitle=Gérer et désinstaller des logiciels
+StoreTitle=Applications Microsoft Store
+StoreSubtitle=Gérer les applications UWP/Appx
+PackagesTitle=Paquets WinGet / Scoop
+PackagesSubtitle=Gérer les paquets logiciels modernes
+FeaturesTitle=Fonctionnalités Windows
+FeaturesSubtitle=Activer ou désactiver des fonctionnalités facultatives (DISM)
+StartupTitle=Applications au démarrage
+StartupSubtitle=Gérer les programmes lancés au démarrage
+SettingsTitle=Paramètres
+SettingsSubtitle=Personnaliser le comportement de Zidimi Uninstaller
+
+[Dashboard]
+AppCount=Applications installées
+StoreAppCount=Applications Store
+StartupCount=Éléments au démarrage
+TotalSize=Taille totale
+Rescan=Rebalayer
+ReloadAll=Tout recharger
+RecentInstalled=Récemment installées
+RecentSubtitle=Dernières installations logicielles
+Scanning=Analyse du système…
+
+[Apps]
+SearchPlaceholder=Rechercher des applications…
+SortName=Nom de l'application
+SortPublisher=Éditeur
+SortSize=Taille
+SortDate=Date d'installation
+FilterAll=Tout
+Filter64Bit=64-bit
+Filter32Bit=32-bit
+FilterLarge=Grande taille (>500 Mo)
+FilterRecent=Récemment installées (30j)
+FilterBroken=Endommagé / Désinstallateur manquant
+SelectedCount={0} applications sélectionnées
+Uninstall=Désinstaller
+QuietUninstall=Désinstallation silencieuse
+DeepClean=Nettoyage approfondi
+Modify=Modifier
+OpenFolder=Dossier
+OpenWebsite=Site web
+DeleteRegistry=Supprimer du Registre
+BrokenBadge=Endommagé
+SystemComponentBadge=Composant système
+EmptyTitle=Aucune application trouvée
+EmptySubtitle=Cliquez sur le bouton de réanalyse en haut à droite pour actualiser.
+NoResultsTitle=Aucun résultat correspondant
+NoResultsSubtitle=Essayez un autre mot-clé ou modifiez le filtre des composants système.
+Scanning=Analyse du Registre…
+DisplayCount=Affichage de {0} sur {1}
+PublisherLabel=Éditeur
+VersionLabel=Version
+SizeLabel=Taille
+InstallDateLabel=Date d'installation
+ArchLabel=Architecture
+InstallLocationLabel=Emplacement d'installation
+InstallSourceLabel=Source d'installation
+WebsiteLabel=Site web
+RegistryKeyLabel=Clé de Registre
+Details=Détails
+Close=Fermer
+CloseTooltip=Fermer
+CloseActionBar=Fermer la barre d'action
+
+[Store]
+SearchPlaceholder=Rechercher des applications Store…
+RescanTooltip=Réanalyser les applications Store
+SelectedCount={0} applications sélectionnées
+UninstallSelected=Désinstaller la sélection
+Uninstall=Désinstaller
+EmptyTitle=Aucune application Store
+EmptySubtitle=Toutes les applications Store ont été supprimées ou ne sont pas installées pour ce compte.
+NoResultsTitle=Aucune application correspondante
+NoResultsSubtitle=Essayez de rechercher avec un autre mot-clé.
+Scanning=Analyse des applications Microsoft Store…
+
+[Packages]
+SearchPlaceholder=Rechercher des paquets WinGet / Scoop / Chocolatey…
+RescanTooltip=Réanalyser la liste des paquets
+HasUpdate=Mise à jour v{0}
+Upgrade=Mettre à niveau
+Uninstall=Désinstaller
+EmptyTitle=Aucun paquet trouvé
+EmptySubtitle=Aucun paquet WinGet/Scoop installé ou WinGet n'est pas configuré.
+NoResultsTitle=Aucun paquet correspondant
+NoResultsSubtitle=Essayez de rechercher avec un autre mot-clé.
+Scanning=Analyse des paquets depuis WinGet CLI…
+
+[Features]
+SearchPlaceholder=Rechercher des fonctionnalités Windows (Hyper-V, WSL, Sandbox, .NET…)
+RescanTooltip=Réanalyser les fonctionnalités Windows
+CountBadge={0} fonctionnalités
+EnabledBadge={0} activées
+StatusEnabled=Activé
+StatusDisabled=Désactivé
+EmptyTitle=Aucune fonctionnalité disponible
+EmptySubtitle=Impossible de lire l'état des fonctionnalités DISM sur ce système.
+NoResultsTitle=Aucune fonctionnalité correspondante
+NoResultsSubtitle=Essayez de rechercher avec un autre mot-clé.
+Scanning=Interrogation des fonctionnalités Windows DISM…
+
+[Startup]
+SearchPlaceholder=Rechercher des éléments de démarrage…
+RescanTooltip=Réanalyser les éléments de démarrage
+TotalBadge={0} éléments
+EnabledBadge={0} activés
+DisabledBadge={0} désactivés
+EmptyTitle=Aucun élément de démarrage
+EmptySubtitle=Aucune entrée de démarrage trouvée dans le Registre.
+NoResultsTitle=Aucun résultat correspondant
+NoResultsSubtitle=Essayez un autre mot-clé.
+Scanning=Analyse des entrées de démarrage…
+
+[DeepClean]
+Title=Nettoyage approfondi : {0}
+FoundStats={0} éléments résiduels trouvés  ·  Taille : {1}
+SelectAll=Tout sélectionner
+SelectSafeOnly=Sélectionner uniquement sûrs
+Skip=Ignorer
+CleanSelected=Nettoyer {0} éléments
+CleaningProgress=Suppression des éléments résiduels…
+
+[Settings]
+SectionTitle=Préférences
+SectionSubtitle=Comportement et configuration de l'application
+LanguageHeader=Langue d'affichage
+LanguageSubtitle=Choisissez la langue de l'interface pour Zidimi Uninstaller
+ProtectionHeader=Comportement & Protection
+ProtectionSubtitle=Mécanismes de sécurité pendant la désinstallation
+HideSystem=Masquer les composants système
+HideSystemDesc=Exclure les paquets système Windows préinstallés (généralement non supprimables).
+PreferQuiet=Préférer la désinstallation silencieuse
+PreferQuietDesc=Transmettre automatiquement les paramètres de désinstallation silencieuse lorsqu'ils sont pris en charge.
+ConfirmBefore=Confirmer avant de désinstaller
+ConfirmBeforeDesc=Afficher une boîte de dialogue de confirmation avant les opérations de désinstallation.
+AutoKill=Arrêter automatiquement les processus en cours
+AutoKillDesc=Analyser et fermer les processus actifs verrouillant des fichiers avant la désinstallation.
+RestorePoint=Créer un point de restauration système
+RestorePointDesc=Créer automatiquement un point de restauration système avant les opérations de suppression.
+DeepCleanHeader=Nettoyage des résidus (Deep Clean)
+DeepCleanSubtitle=Analyser et supprimer automatiquement les fichiers, dossiers et clés de Registre résiduels
+AutoDeepClean=Rechercher les résidus après désinstallation
+AutoDeepCleanDesc=Déclencher automatiquement l'analyse Deep Clean une fois la désinstallation terminée.
+RecycleBin=Envoyer les fichiers supprimés à la Corbeille
+RecycleBinDesc=Envoyer en toute sécurité les fichiers à la Corbeille au lieu d'une suppression définitive.
+DataHeader=Données & Cache
+DataSubtitle=Gérer le cache et recharger les données du système
+ReloadAllBtn=Tout recharger
+ClearCacheBtn=Vider le cache d'icônes
+
+[Dialogs]
+ConfirmUninstallSingleTitle=Désinstaller l'application
+ConfirmUninstallSingleMsg=Voulez-vous vraiment désinstaller "{0}" ?
+ConfirmUninstallMultiTitle=Désinstaller {0} applications
+ConfirmUninstallMultiMsg=Voulez-vous vraiment désinstaller les {0} applications sélectionnées ?
+ConfirmBtn=Désinstaller
+CancelBtn=Annuler
+CloseBtn=Fermer
+ForceRemoveTitle=Supprimer l'enregistrement de désinstallation
+ForceRemoveMsg=Cette action supprimera l'entrée de désinstallation de "{0}" du Registre.\nÀ utiliser uniquement si la désinstallation normale échoue. Continuer ?
+ForceRemoveBtn=Supprimer
+FeatureEnableTitle=Activer la fonctionnalité Windows
+FeatureDisableTitle=Désactiver la fonctionnalité Windows
+FeatureToggleMsg=Voulez-vous vraiment {0} la fonctionnalité "{1}" ?\nCette opération peut prendre plusieurs minutes.
+ActionEnable=activer
+ActionDisable=désactiver
+ActionEnableCapital=Activer
+ActionDisableCapital=Désactiver
+PackageUninstallTitle=Désinstaller le paquet WinGet
+PackageUninstallMsg=Voulez-vous vraiment supprimer le paquet "{0}" (ID: {1}) ?
+AboutTitle=À propos de Zidimi Uninstaller
+AboutDesc=Zidimi Uninstaller est un outil de désinstallation haute performance.\n\nVersion : {0}
+
+[Toasts]
+CreatingRestorePoint=Création du point de restauration système en cours…
+KilledProcesses={0} processus bloquant(s) fermé(s) pour "{1}".
+UninstallerNotFound=Désinstallateur introuvable pour "{0}".
+LaunchedUninstallers={0} désinstallateur(s) lancé(s).
+RemovedRegistryEntries={0} entrées supprimées du Registre.
+CannotRemoveRegistry=Impossible de supprimer l'entrée de Registre.
+ModifyNotSupported=Cette application ne prend pas en charge la modification.
+NoInstallLocation=Aucune information d'emplacement d'installation disponible.
+NoWebsiteUrl=Aucune URL de site web disponible.
+NoExecutable=Fichier exécutable introuvable.
+StoreUninstallFailed=Échec de la désinstallation de "{0}". Vérifiez les droits administrateur.
+StoreUninstallSuccess={0} application(s) Store désinstallée(s) avec succès.
+PackageUninstallSuccess="{0}" désinstallé avec succès.
+PackageUninstallFailed=Échec de la désinstallation de "{0}".
+PackageUpgrading=Mise à niveau de "{0}" vers la dernière version…
+PackageUpgradeSuccess="{0}" mis à niveau avec succès !
+PackageUpgradeFailed=Échec de la mise à niveau de "{0}".
+FeatureToggling=Application de l'état pour "{0}" via DISM…
+FeatureToggleSuccess="{1}" {0} avec succès !
+FeatureToggleFailed=Impossible de modifier l'état de "{0}". Droits administrateur requis.
+StartupToggleSuccess="{1}" {0} avec succès.
+StartupToggleFailed=Impossible de mettre à jour "{0}". Droits administrateur requis.
+DeepCleanNoLeftovers=Aucun résidu détecté pour "{0}". Désinstallation propre !
+DeepCleanSuccess=Nettoyage approfondi terminé : {0} éléments supprimés, {1} libérés.
+DeepCleanFailed=Erreur lors du nettoyage des résidus : {0}
+CacheCleared=Cache d'icônes vidé.
+
+[Status]
+ScanningRegistry=Analyse du Registre…
+ScanningStore=Analyse des applications Store…
+ScanningPackages=Analyse des paquets WinGet…
+ScanningFeatures=Lecture des fonctionnalités Windows (DISM)…
+ScanningStartup=Lecture des entrées au démarrage…
+AppsCount={0} applications
+StoreAppsCount={0} applications Store
+PackagesCount={0} paquets
+FeaturesCount={0} fonctionnalités Windows
+StartupCount={0} éléments au démarrage
+CannotReadApps=Impossible de lire les applications installées
+CannotReadStore=Impossible de lire les applications Store
+CannotReadPackages=Impossible de lire les paquets WinGet
+CannotReadFeatures=Impossible de lire les fonctionnalités Windows
+CannotReadStartup=Impossible de lire les éléments au démarrage

@@ -1,0 +1,45 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ============ Core color palette ============ -->
+    <Color x:Key="ZColorWhite">#FEFEFE</Color>
+    <Color x:Key="ZColorCard">#F2F2F2</Color>
+    <Color x:Key="ZColorBlack">#121012</Color>
+    <Color x:Key="ZColorDark">#2C2B2C</Color>
+    <Color x:Key="ZColorGray">#767475</Color>
+    <Color x:Key="ZColorAccent">#EA0232</Color>
+    <Color x:Key="ZColorAccentLight">#CE5564</Color>
+    <Color x:Key="ZColorLightGray">#E3DFDF</Color>
+    <Color x:Key="ZColorLighterGray">#BEB7B7</Color>
+    <Color x:Key="ZColorMidGray">#959495</Color>
+    <Color x:Key="ZColorDarkGray">#525153</Color>
+    <Color x:Key="ZColorBrown">#803C38</Color>
+
+    <!-- Derived color variants -->
+    <Color x:Key="ZColorAccentHover">#D0022D</Color>
+    <Color x:Key="ZColorAccentPressed">#B00026</Color>
+    <Color x:Key="ZColorAccentTint">#FDEDF0</Color>
+    <Color x:Key="ZColorAccentTintPressed">#F8D7DE</Color>
+    <Color x:Key="ZColorBrownHover">#9A4A44</Color>
+
+    <!-- ============ Brushes ============ -->
+    <SolidColorBrush x:Key="ZBrushWhite" Color="{StaticResource ZColorWhite}"/>
+    <SolidColorBrush x:Key="ZBrushCard" Color="{StaticResource ZColorCard}"/>
+    <SolidColorBrush x:Key="ZBrushBlack" Color="{StaticResource ZColorBlack}"/>
+    <SolidColorBrush x:Key="ZBrushDark" Color="{StaticResource ZColorDark}"/>
+    <SolidColorBrush x:Key="ZBrushGray" Color="{StaticResource ZColorGray}"/>
+    <SolidColorBrush x:Key="ZBrushAccent" Color="{StaticResource ZColorAccent}"/>
+    <SolidColorBrush x:Key="ZBrushAccentLight" Color="{StaticResource ZColorAccentLight}"/>
+    <SolidColorBrush x:Key="ZBrushLightGray" Color="{StaticResource ZColorLightGray}"/>
+    <SolidColorBrush x:Key="ZBrushLighterGray" Color="{StaticResource ZColorLighterGray}"/>
+    <SolidColorBrush x:Key="ZBrushMidGray" Color="{StaticResource ZColorMidGray}"/>
+    <SolidColorBrush x:Key="ZBrushDarkGray" Color="{StaticResource ZColorDarkGray}"/>
+    <SolidColorBrush x:Key="ZBrushBrown" Color="{StaticResource ZColorBrown}"/>
+
+    <SolidColorBrush x:Key="ZBrushAccentHover" Color="{StaticResource ZColorAccentHover}"/>
+    <SolidColorBrush x:Key="ZBrushAccentPressed" Color="{StaticResource ZColorAccentPressed}"/>
+    <SolidColorBrush x:Key="ZBrushAccentTint" Color="{StaticResource ZColorAccentTint}"/>
+    <SolidColorBrush x:Key="ZBrushAccentTintPressed" Color="{StaticResource ZColorAccentTintPressed}"/>
+    <SolidColorBrush x:Key="ZBrushBrownHover" Color="{StaticResource ZColorBrownHover}"/>
+
+</ResourceDictionary>

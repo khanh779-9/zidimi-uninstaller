@@ -1,0 +1,237 @@
+[Info]
+LanguageName=English
+
+[Sidebar]
+Dashboard=Dashboard
+Applications=Installed Apps
+StoreApps=Store Apps
+Packages=WinGet Packages
+Features=Windows Features
+Startup=Startup
+Settings=Settings
+Version=Version {0}
+ReloadAll=Reload all data
+About=About Application
+
+[Pages]
+DashboardTitle=Dashboard
+DashboardSubtitle=Quick overview of installed applications
+AppsTitle=Installed Applications
+AppsSubtitle=Manage and uninstall software
+StoreTitle=Microsoft Store Apps
+StoreSubtitle=Manage UWP/Appx applications
+PackagesTitle=WinGet / Scoop Packages
+PackagesSubtitle=Manage modern software packages
+FeaturesTitle=Windows Features
+FeaturesSubtitle=Enable or disable optional features (DISM)
+StartupTitle=Startup Applications
+StartupSubtitle=Manage startup programs
+SettingsTitle=Settings
+SettingsSubtitle=Customize Zidimi Uninstaller behavior
+
+[Dashboard]
+AppCount=Installed Apps
+StoreAppCount=Store Apps
+StartupCount=Startup Items
+TotalSize=Total Size
+Rescan=Rescan
+ReloadAll=Reload All
+RecentInstalled=Recently Installed
+RecentSubtitle=Latest software installations
+Scanning=Scanning system…
+
+[Apps]
+SearchPlaceholder=Search applications…
+SortName=App Name
+SortPublisher=Publisher
+SortSize=Size
+SortDate=Install Date
+FilterAll=All
+Filter64Bit=64-bit
+Filter32Bit=32-bit
+FilterLarge=Large Size (>500MB)
+FilterRecent=Recently Installed (30d)
+FilterBroken=Broken / Missing Uninstaller
+SelectedCount=Selected {0} applications
+Uninstall=Uninstall
+QuietUninstall=Quiet Uninstall
+DeepClean=Deep Clean
+Modify=Modify
+OpenFolder=Folder
+OpenWebsite=Website
+DeleteRegistry=Delete Registry
+BrokenBadge=Broken
+SystemComponentBadge=System Component
+EmptyTitle=No applications found
+EmptySubtitle=Click the rescan button at the top right to refresh.
+NoResultsTitle=No matching results
+NoResultsSubtitle=Try a different keyword or toggle system components filter.
+Scanning=Scanning registry…
+DisplayCount=Showing {0} of {1}
+PublisherLabel=Publisher
+VersionLabel=Version
+SizeLabel=Size
+InstallDateLabel=Install Date
+ArchLabel=Architecture
+InstallLocationLabel=Install Location
+InstallSourceLabel=Install Source
+WebsiteLabel=Website
+RegistryKeyLabel=Registry Key
+Details=Details
+Close=Close
+CloseTooltip=Close
+CloseActionBar=Close action bar
+
+[Store]
+SearchPlaceholder=Search Store apps…
+RescanTooltip=Rescan Store applications
+SelectedCount=Selected {0} apps
+UninstallSelected=Uninstall Selected
+Uninstall=Uninstall
+EmptyTitle=No Store apps
+EmptySubtitle=All Store apps have been removed or are not installed for this account.
+NoResultsTitle=No matching apps
+NoResultsSubtitle=Try searching with a different keyword.
+Scanning=Scanning Microsoft Store apps…
+
+[Packages]
+SearchPlaceholder=Search WinGet / Scoop / Chocolatey packages…
+RescanTooltip=Rescan packages list
+HasUpdate=Update v{0}
+Upgrade=Upgrade
+Uninstall=Uninstall
+EmptyTitle=No packages found
+EmptySubtitle=No WinGet/Scoop packages installed or WinGet is not configured.
+NoResultsTitle=No matching packages
+NoResultsSubtitle=Try searching with a different keyword.
+Scanning=Scanning packages from WinGet CLI…
+
+[Features]
+SearchPlaceholder=Search Windows Features (Hyper-V, WSL, Sandbox, .NET…)
+RescanTooltip=Rescan Windows Features
+CountBadge={0} features
+EnabledBadge={0} enabled
+StatusEnabled=Enabled
+StatusDisabled=Disabled
+EmptyTitle=No features available
+EmptySubtitle=Unable to read DISM feature state on this system.
+NoResultsTitle=No matching features
+NoResultsSubtitle=Try searching with a different keyword.
+Scanning=Querying DISM Windows Features…
+
+[Startup]
+SearchPlaceholder=Search startup items…
+RescanTooltip=Rescan startup items
+TotalBadge={0} items
+EnabledBadge={0} enabled
+DisabledBadge={0} disabled
+EmptyTitle=No startup items
+EmptySubtitle=No startup entries found in registry.
+NoResultsTitle=No matching results
+NoResultsSubtitle=Try a different keyword.
+Scanning=Scanning startup entries…
+
+[DeepClean]
+Title=Deep Clean: {0}
+FoundStats=Found {0} leftover items  ·  Size: {1}
+SelectAll=Select All
+SelectSafeOnly=Select Safe Only
+Skip=Skip
+CleanSelected=Clean {0} items
+CleaningProgress=Purging leftover items…
+
+[Settings]
+SectionTitle=Preferences
+SectionSubtitle=Application behavior and configuration
+LanguageHeader=Display Language
+LanguageSubtitle=Choose interface language for Zidimi Uninstaller
+ProtectionHeader=Behavior & Protection
+ProtectionSubtitle=Safety mechanisms during uninstallation
+HideSystem=Hide system components
+HideSystemDesc=Exclude pre-installed Windows system packages (usually unremovable).
+PreferQuiet=Prefer quiet uninstall
+PreferQuietDesc=Automatically pass silent uninstall parameters when supported.
+ConfirmBefore=Confirm before uninstalling
+ConfirmBeforeDesc=Display confirmation dialog before uninstallation actions.
+AutoKill=Auto-kill running processes
+AutoKillDesc=Scan and terminate active processes locking files before uninstallation.
+RestorePoint=Create System Restore Point
+RestorePointDesc=Automatically create System Restore Point before removal operations.
+DeepCleanHeader=Leftover Cleanup (Deep Clean)
+DeepCleanSubtitle=Automatically scan and purge leftover files, folders, and registry keys
+AutoDeepClean=Scan leftovers after uninstall
+AutoDeepCleanDesc=Automatically trigger Deep Clean scan when uninstaller finishes.
+RecycleBin=Send deleted files to Recycle Bin
+RecycleBinDesc=Safely send files to Recycle Bin instead of permanent deletion.
+DataHeader=Data & Cache
+DataSubtitle=Manage cache and reload data from system
+ReloadAllBtn=Reload All Data
+ClearCacheBtn=Clear Icon Cache
+
+[Dialogs]
+ConfirmUninstallSingleTitle=Uninstall Application
+ConfirmUninstallSingleMsg=Are you sure you want to uninstall "{0}"?
+ConfirmUninstallMultiTitle=Uninstall {0} Applications
+ConfirmUninstallMultiMsg=Are you sure you want to uninstall {0} selected applications?
+ConfirmBtn=Uninstall
+CancelBtn=Cancel
+CloseBtn=Close
+ForceRemoveTitle=Delete Uninstall Registration
+ForceRemoveMsg=This will remove the uninstall registration entry for "{0}" from the registry.\nOnly use this if normal uninstallation fails. Continue?
+ForceRemoveBtn=Delete
+FeatureEnableTitle=Enable Windows Feature
+FeatureDisableTitle=Disable Windows Feature
+FeatureToggleMsg=Are you sure you want to {0} "{1}"?\nThis operation may take several minutes.
+ActionEnable=enable
+ActionDisable=disable
+ActionEnableCapital=Enable
+ActionDisableCapital=Disable
+PackageUninstallTitle=Uninstall WinGet Package
+PackageUninstallMsg=Are you sure you want to remove package "{0}" (ID: {1})?
+AboutTitle=About Zidimi Uninstaller
+AboutDesc=Zidimi Uninstaller is a high-performance uninstaller.\n\nVersion: {0}
+
+[Toasts]
+CreatingRestorePoint=Creating System Restore Point…
+KilledProcesses=Closed {0} locking process(es) for "{1}".
+UninstallerNotFound=Uninstaller not found for "{0}".
+LaunchedUninstallers=Launched {0} uninstaller(s).
+RemovedRegistryEntries=Removed {0} entries from registry.
+CannotRemoveRegistry=Unable to remove registry entry.
+ModifyNotSupported=This application does not support Modify.
+NoInstallLocation=No installation folder information available.
+NoWebsiteUrl=No website URL available.
+NoExecutable=Executable file not found.
+StoreUninstallFailed=Failed to uninstall "{0}". Check administrator privileges.
+StoreUninstallSuccess=Successfully uninstalled {0} Store app(s).
+PackageUninstallSuccess=Uninstalled "{0}".
+PackageUninstallFailed=Failed to uninstall "{0}".
+PackageUpgrading=Upgrading "{0}" to latest version…
+PackageUpgradeSuccess=Successfully upgraded "{0}"!
+PackageUpgradeFailed=Failed to upgrade "{0}".
+FeatureToggling=Applying "{0}" state via DISM…
+FeatureToggleSuccess=Successfully {0}d "{1}"!
+FeatureToggleFailed=Failed to change state for "{0}". Administrator privileges required.
+StartupToggleSuccess=Successfully {0}d "{1}".
+StartupToggleFailed=Cannot update "{0}". Administrator privileges required.
+DeepCleanNoLeftovers=No leftovers detected for "{0}". Clean uninstall!
+DeepCleanSuccess=Deep Clean complete: removed {0} items, freed {1}.
+DeepCleanFailed=Error cleaning leftovers: {0}
+CacheCleared=Icon cache cleared.
+
+[Status]
+ScanningRegistry=Scanning registry…
+ScanningStore=Scanning Microsoft Store apps…
+ScanningPackages=Scanning packages from WinGet…
+ScanningFeatures=Reading Windows Features (DISM)…
+ScanningStartup=Reading startup entries…
+AppsCount={0} applications
+StoreAppsCount={0} Store apps
+PackagesCount={0} packages
+FeaturesCount={0} Windows features
+StartupCount={0} startup items
+CannotReadApps=Unable to read installed applications
+CannotReadStore=Unable to read Store applications
+CannotReadPackages=Unable to read WinGet packages
+CannotReadFeatures=Unable to read Windows features
+CannotReadStartup=Unable to read startup items

@@ -1,0 +1,22 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
+>
+
+    <!-- ============ ZCard ============ -->
+    <Style TargetType="{x:Type controls:ZCard}">
+        <Setter Property="Background" Value="{StaticResource ZBrushWhite}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ZBrushLightGray}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="14"/>
+        <Setter Property="Padding" Value="20"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect BlurRadius="24" ShadowDepth="2" Direction="270" Opacity="0.05" Color="#121012"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
+

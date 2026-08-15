@@ -1,0 +1,237 @@
+[Info]
+LanguageName=简体中文
+
+[Sidebar]
+Dashboard=概览
+Applications=已安装程序
+StoreApps=Store 应用
+Packages=WinGet 软件包
+Features=Windows 功能
+Startup=自启动项
+Settings=设置
+Version=版本 {0}
+ReloadAll=重新加载所有数据
+About=关于软件
+
+[Pages]
+DashboardTitle=概览
+DashboardSubtitle=已安装应用程序概况
+AppsTitle=已安装程序
+AppsSubtitle=管理并卸载电脑中的软件
+StoreTitle=Microsoft Store 应用
+StoreSubtitle=管理 UWP/Appx 应用程序
+PackagesTitle=WinGet / Scoop 软件包
+PackagesSubtitle=管理现代化软件包
+FeaturesTitle=Windows 功能
+FeaturesSubtitle=启用或关闭 Windows 可选功能 (DISM)
+StartupTitle=自启动程序
+StartupSubtitle=管理随系统开机自启的项目
+SettingsTitle=设置
+SettingsSubtitle=自定义 Zidimi Uninstaller 行为与偏好
+
+[Dashboard]
+AppCount=已安装程序
+StoreAppCount=Store 应用
+StartupCount=自启动项
+TotalSize=总占用空间
+Rescan=重新扫描
+ReloadAll=全部重载
+RecentInstalled=最近安装
+RecentSubtitle=最新安装的软件列表
+Scanning=正在扫描系统…
+
+[Apps]
+SearchPlaceholder=搜索应用程序…
+SortName=程序名称
+SortPublisher=发布者
+SortSize=占用大小
+SortDate=安装日期
+FilterAll=全部
+Filter64Bit=64位
+Filter32Bit=32位
+FilterLarge=大容量 (>500MB)
+FilterRecent=最近安装 (30天内)
+FilterBroken=损坏 / 缺失卸载程序
+SelectedCount=已选择 {0} 个程序
+Uninstall=卸载
+QuietUninstall=静默卸载
+DeepClean=强力清理
+Modify=修改安装
+OpenFolder=打开目录
+OpenWebsite=访问网站
+DeleteRegistry=清理注册表
+BrokenBadge=未知/损坏
+SystemComponentBadge=系统组件
+EmptyTitle=未找到应用程序
+EmptySubtitle=点击右上角的刷新按钮重新扫描。
+NoResultsTitle=无匹配结果
+NoResultsSubtitle=尝试其他搜索关键词或调整系统组件筛选。
+Scanning=正在扫描注册表…
+DisplayCount=显示 {0}/{1}
+PublisherLabel=发布者
+VersionLabel=版本
+SizeLabel=占用空间
+InstallDateLabel=安装日期
+ArchLabel=架构
+InstallLocationLabel=安装目录
+InstallSourceLabel=安装来源
+WebsiteLabel=官方网站
+RegistryKeyLabel=注册表项
+Details=详细信息
+Close=关闭
+CloseTooltip=关闭
+CloseActionBar=关闭操作栏
+
+[Store]
+SearchPlaceholder=搜索 Store 应用…
+RescanTooltip=重新扫描 Store 应用
+SelectedCount=已选择 {0} 个应用
+UninstallSelected=卸载所选应用
+Uninstall=卸载
+EmptyTitle=没有 Store 应用
+EmptySubtitle=所有 Store 应用已移除或当前用户账户未安装。
+NoResultsTitle=未找到匹配应用
+NoResultsSubtitle=尝试使用其他关键词搜索。
+Scanning=正在扫描 Microsoft Store 应用…
+
+[Packages]
+SearchPlaceholder=搜索 WinGet / Scoop / Chocolatey 软件包…
+RescanTooltip=重新扫描软件包列表
+HasUpdate=可更新 v{0}
+Upgrade=更新
+Uninstall=卸载
+EmptyTitle=未找到软件包
+EmptySubtitle=未安装 WinGet/Scoop 软件包或尚未配置 WinGet。
+NoResultsTitle=未找到匹配软件包
+NoResultsSubtitle=尝试使用其他关键词搜索。
+Scanning=正在通过 WinGet CLI 扫描软件包…
+
+[Features]
+SearchPlaceholder=搜索 Windows 功能 (Hyper-V, WSL, Sandbox, .NET…)
+RescanTooltip=重新扫描 Windows 功能
+CountBadge={0} 项功能
+EnabledBadge=已启用 {0} 项
+StatusEnabled=已启用
+StatusDisabled=已禁用
+EmptyTitle=无可用功能
+EmptySubtitle=无法读取当前系统的 DISM 功能状态。
+NoResultsTitle=未找到匹配功能
+NoResultsSubtitle=尝试使用其他关键词搜索。
+Scanning=正在通过 DISM 查询 Windows 功能…
+
+[Startup]
+SearchPlaceholder=搜索自启动项…
+RescanTooltip=重新扫描自启动项
+TotalBadge=共 {0} 项
+EnabledBadge=已启用 {0} 项
+DisabledBadge=已禁用 {0} 项
+EmptyTitle=无自启动项
+EmptySubtitle=在注册表中未检测到自启动项目。
+NoResultsTitle=无匹配结果
+NoResultsSubtitle=尝试使用其他关键词搜索。
+Scanning=正在扫描自启动项…
+
+[DeepClean]
+Title=深度强力清理: {0}
+FoundStats=发现 {0} 个残留项目  ·  占用空间: {1}
+SelectAll=全选
+SelectSafeOnly=仅选安全项
+Skip=跳过
+CleanSelected=清理 {0} 个项目
+CleaningProgress=正在清理残留文件与注册表项…
+
+[Settings]
+SectionTitle=偏好设置
+SectionSubtitle=应用程序行为与选项配置
+LanguageHeader=显示语言
+LanguageSubtitle=选择 Zidimi Uninstaller 的界面语言
+ProtectionHeader=行为与安全保护
+ProtectionSubtitle=卸载过程中的安全与防护机制
+HideSystem=隐藏系统组件
+HideSystemDesc=排除 Windows 预装的系统核心包 (通常不可卸载)。
+PreferQuiet=优先静默卸载
+PreferQuietDesc=软件支持时自动传入无弹窗静默卸载参数。
+ConfirmBefore=卸载前确认
+ConfirmBeforeDesc=在执行卸载操作前弹出确认对话框。
+AutoKill=自动结束占用进程
+AutoKillDesc=在卸载前自动扫描并终止锁定相关文件的活动进程。
+RestorePoint=创建系统还原点
+RestorePointDesc=在执行移除操作前自动创建 Windows 系统还原点。
+DeepCleanHeader=残留深度清理 (Deep Clean)
+DeepCleanSubtitle=自动扫描并彻底清除残留文件、空文件夹及注册表冗余项
+AutoDeepClean=卸载后自动扫描残留
+AutoDeepCleanDesc=当卸载程序运行结束后自动唤起 Deep Clean 扫描。
+RecycleBin=将删除的文件移至回收站
+RecycleBinDesc=安全将文件移入回收站，而非直接永久删除。
+DataHeader=数据与缓存
+DataSubtitle=管理缓存并从系统重新加载所有数据
+ReloadAllBtn=重新加载全部数据
+ClearCacheBtn=清空图标缓存
+
+[Dialogs]
+ConfirmUninstallSingleTitle=卸载应用程序
+ConfirmUninstallSingleMsg=确定要卸载 "{0}" 吗？
+ConfirmUninstallMultiTitle=批量卸载 {0} 个程序
+ConfirmUninstallMultiMsg=确定要卸载选中的 {0} 个应用程序吗？
+ConfirmBtn=卸载
+CancelBtn=取消
+CloseBtn=关闭
+ForceRemoveTitle=清理卸载注册信息
+ForceRemoveMsg=此操作将从注册表中移除 "{0}" 的卸载登记项。\n仅在常规卸载失效时使用。是否继续？
+ForceRemoveBtn=删除
+FeatureEnableTitle=启用 Windows 功能
+FeatureDisableTitle=禁用 Windows 功能
+FeatureToggleMsg=确定要{0}功能 "{1}" 吗？\n此操作可能需要数分钟。
+ActionEnable=启用
+ActionDisable=禁用
+ActionEnableCapital=启用
+ActionDisableCapital=禁用
+PackageUninstallTitle=卸载 WinGet 软件包
+PackageUninstallMsg=确定要移除软件包 "{0}" (ID: {1}) 吗？
+AboutTitle=关于 Zidimi Uninstaller
+AboutDesc=Zidimi Uninstaller 是一款基于注册表的高性能软件卸载管理工具。\n\n版本: {0}
+
+[Toasts]
+CreatingRestorePoint=正在创建系统还原点…
+KilledProcesses=已关闭 "{1}" 的 {0} 个占用进程。
+UninstallerNotFound=未找到 "{0}" 的卸载程序。
+LaunchedUninstallers=已启动 {0} 个卸载程序。
+RemovedRegistryEntries=已从注册表移除 {0} 项。
+CannotRemoveRegistry=无法移除注册表数据。
+ModifyNotSupported=此程序不支持修改安装 (Modify)。
+NoInstallLocation=无安装目录信息。
+NoWebsiteUrl=无官方网站链接。
+NoExecutable=未找到可执行文件。
+StoreUninstallFailed=卸载 "{0}" 失败，请检查管理员权限。
+StoreUninstallSuccess=已成功卸载 {0} 个 Store 应用。
+PackageUninstallSuccess=已成功卸载 "{0}"。
+PackageUninstallFailed=卸载 "{0}" 失败。
+PackageUpgrading=正在升级 "{0}" 至最新版本…
+PackageUpgradeSuccess=成功升级 "{0}"！
+PackageUpgradeFailed=升级 "{0}" 失败。
+FeatureToggling=正在通过 DISM {0} "{1}"…
+FeatureToggleSuccess=成功{0} "{1}"！
+FeatureToggleFailed=修改 "{0}" 状态失败，需要管理员权限。
+StartupToggleSuccess=已成功{0} "{1}"。
+StartupToggleFailed=无法修改 "{0}"，需要管理员权限。
+DeepCleanNoLeftovers=未检测到 "{0}" 的任何残留，已干净卸载！
+DeepCleanSuccess=深度清理完成：移除了 {0} 项，释放了 {1} 空间。
+DeepCleanFailed=清理残留时出错: {0}
+CacheCleared=已清空图标缓存。
+
+[Status]
+ScanningRegistry=正在扫描注册表…
+ScanningStore=正在扫描 Microsoft Store 应用…
+ScanningPackages=正在扫描 WinGet 软件包…
+ScanningFeatures=正在读取 Windows 功能 (DISM)…
+ScanningStartup=正在读取自启动项…
+AppsCount={0} 个程序
+StoreAppsCount={0} 个应用
+PackagesCount={0} 个软件包
+FeaturesCount={0} 项功能
+StartupCount={0} 个自启动项
+CannotReadApps=无法读取已安装程序列表
+CannotReadStore=无法读取 Store 应用列表
+CannotReadPackages=无法读取 WinGet 软件包
+CannotReadFeatures=无法读取 Windows 功能列表
+CannotReadStartup=无法读取自启动项列表

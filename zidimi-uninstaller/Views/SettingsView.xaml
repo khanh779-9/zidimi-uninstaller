@@ -1,0 +1,108 @@
+<UserControl x:Class="zidimi_uninstaller.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
+             xmlns:services="clr-namespace:zidimi_uninstaller.Services"
+             mc:Ignorable="d"
+             d:DesignHeight="750" d:DesignWidth="900">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="28">
+        <StackPanel MaxWidth="640" HorizontalAlignment="Left">
+            <controls:ZSectionHeader Title="{Binding [Settings_SectionTitle], Source={x:Static services:LanguageManager.Instance}}"
+                                     Subtitle="{Binding [Settings_SectionSubtitle], Source={x:Static services:LanguageManager.Instance}}"
+                                     Icon="{StaticResource IconSettings}"/>
+
+            <!-- ============ Display Language ============ -->
+            <controls:ZCard Margin="0,18,0,0" Padding="20,14">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="{Binding [Settings_LanguageHeader], Source={x:Static services:LanguageManager.Instance}}"
+                                   FontWeight="SemiBold" FontSize="14"
+                                   Foreground="{StaticResource ZBrushBlack}"/>
+                        <TextBlock Text="{Binding [Settings_LanguageSubtitle], Source={x:Static services:LanguageManager.Instance}}"
+                                   FontSize="12" Foreground="{StaticResource ZBrushGray}" Margin="0,3,0,0"/>
+                    </StackPanel>
+                    <ComboBox Grid.Column="1"
+                              ItemsSource="{Binding AvailableLanguages}"
+                              SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
+                              DisplayMemberPath="Name"
+                              Width="180" VerticalAlignment="Center"/>
+                </Grid>
+            </controls:ZCard>
+
+            <!-- ============ Uninstall & Protection ============ -->
+            <controls:ZCard Margin="0,14,0,0" Padding="20,14">
+                <StackPanel>
+                    <controls:ZSectionHeader Title="{Binding [Settings_ProtectionHeader], Source={x:Static services:LanguageManager.Instance}}"
+                                             Subtitle="{Binding [Settings_ProtectionSubtitle], Source={x:Static services:LanguageManager.Instance}}"
+                                             Icon="{StaticResource IconShield}"/>
+                    <controls:ZToggleRow Title="{Binding [Settings_HideSystem], Source={x:Static services:LanguageManager.Instance}}"
+                                         Subtitle="{Binding [Settings_HideSystemDesc], Source={x:Static services:LanguageManager.Instance}}"
+                                         IsOn="{Binding HideSystemComponents, Mode=TwoWay}"
+                                         Margin="0,8,0,0"/>
+                    <Separator Height="1" Background="{StaticResource ZBrushLightGray}" Margin="0,6"/>
+                    <controls:ZToggleRow Title="{Binding [Settings_PreferQuiet], Source={x:Static services:LanguageManager.Instance}}"
+                                         Subtitle="{Binding [Settings_PreferQuietDesc], Source={x:Static services:LanguageManager.Instance}}"
+                                         IsOn="{Binding PreferQuietUninstall, Mode=TwoWay}"/>
+                    <Separator Height="1" Background="{StaticResource ZBrushLightGray}" Margin="0,6"/>
+                    <controls:ZToggleRow Title="{Binding [Settings_ConfirmBefore], Source={x:Static services:LanguageManager.Instance}}"
+                                         Subtitle="{Binding [Settings_ConfirmBeforeDesc], Source={x:Static services:LanguageManager.Instance}}"
+                                         IsOn="{Binding ConfirmBeforeUninstall, Mode=TwoWay}"/>
+                    <Separator Height="1" Background="{StaticResource ZBrushLightGray}" Margin="0,6"/>
+                    <controls:ZToggleRow Title="{Binding [Settings_AutoKill], Source={x:Static services:LanguageManager.Instance}}"
+                                         Subtitle="{Binding [Settings_AutoKillDesc], Source={x:Static services:LanguageManager.Instance}}"
+                                         IsOn="{Binding AutoKillProcesses, Mode=TwoWay}"/>
+                    <Separator Height="1" Background="{StaticResource ZBrushLightGray}" Margin="0,6"/>
+                    <controls:ZToggleRow Title="{Binding [Settings_RestorePoint], Source={x:Static services:LanguageManager.Instance}}"
+                                         Subtitle="{Binding [Settings_RestorePointDesc], Source={x:Static services:LanguageManager.Instance}}"
+                                         IsOn="{Binding CreateRestorePoint, Mode=TwoWay}"/>
+                </StackPanel>
+            </controls:ZCard>
+
+            <!-- ============ Deep Clean ============ -->
+            <controls:ZCard Margin="0,14,0,0" Padding="20,14">
+                <StackPanel>
+                    <controls:ZSectionHeader Title="{Binding [Settings_DeepCleanHeader], Source={x:Static services:LanguageManager.Instance}}"
+                                             Subtitle="{Binding [Settings_DeepCleanSubtitle], Source={x:Static services:LanguageManager.Instance}}"
+                                             Icon="{StaticResource IconTrash}"/>
+                    <controls:ZToggleRow Title="{Binding [Settings_AutoDeepClean], Source={x:Static services:LanguageManager.Instance}}"
+                                         Subtitle="{Binding [Settings_AutoDeepCleanDesc], Source={x:Static services:LanguageManager.Instance}}"
+                                         IsOn="{Binding EnableDeepClean, Mode=TwoWay}"
+                                         Margin="0,8,0,0"/>
+                    <Separator Height="1" Background="{StaticResource ZBrushLightGray}" Margin="0,6"/>
+                    <controls:ZToggleRow Title="{Binding [Settings_RecycleBin], Source={x:Static services:LanguageManager.Instance}}"
+                                         Subtitle="{Binding [Settings_RecycleBinDesc], Source={x:Static services:LanguageManager.Instance}}"
+                                         IsOn="{Binding SendToRecycleBin, Mode=TwoWay}"/>
+                </StackPanel>
+            </controls:ZCard>
+
+            <!-- ============ Data & Cache ============ -->
+            <controls:ZCard Margin="0,14,0,0" Padding="20,14">
+                <StackPanel>
+                    <controls:ZSectionHeader Title="{Binding [Settings_DataHeader], Source={x:Static services:LanguageManager.Instance}}"
+                                             Subtitle="{Binding [Settings_DataSubtitle], Source={x:Static services:LanguageManager.Instance}}"
+                                             Icon="{StaticResource IconRefresh}"/>
+                    <Grid Margin="0,14,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <controls:ZButton Content="{Binding [Settings_ReloadAllBtn], Source={x:Static services:LanguageManager.Instance}}"
+                                          Variant="Secondary" Icon="{StaticResource IconRefresh}"
+                                          Command="{Binding ReloadDataCommand}"/>
+                        <controls:ZButton Grid.Column="1"
+                                          Content="{Binding [Settings_ClearCacheBtn], Source={x:Static services:LanguageManager.Instance}}"
+                                          Variant="Secondary" Icon="{StaticResource IconTrash}"
+                                          Command="{Binding ClearIconCacheCommand}"
+                                          Margin="12,0,0,0"/>
+                    </Grid>
+                </StackPanel>
+            </controls:ZCard>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
