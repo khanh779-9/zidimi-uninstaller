@@ -71,7 +71,7 @@ public class StartupViewModel : ObservableObject
         _itemsView = new ListCollectionView(Entries) { Filter = Filter };
 
         RefreshCommand = new AsyncRelayCommand(async _ => await LoadAsync());
-        OpenLocationCommand = new RelayCommand(_ => OpenLocationSelected());
+        OpenLocationCommand = new RelayCommand(p => OpenLocationSelected(p as StartupEntry ?? SelectedEntry));
     }
 
     public async Task LoadAsync()
@@ -99,6 +99,24 @@ public class StartupViewModel : ObservableObject
         {
             IsLoading = false;
             UpdateCounts();
+            _ = LoadIconsAsync();
+        }
+    }
+
+    private async Task LoadIconsAsync()
+    {
+        foreach (var entry in Entries.ToList())
+        {
+            if (entry.Icon != null) continue;
+            try
+            {
+                var iconPath = !string.IsNullOrWhiteSpace(entry.ExecutablePath) ? entry.ExecutablePath : entry.Command;
+                entry.Icon = await Task.Run(() => IconService.GetIcon(iconPath));
+            }
+            catch
+            {
+                // ignore
+            }
         }
     }
 
@@ -127,9 +145,8 @@ public class StartupViewModel : ObservableObject
         }
     }
 
-    private void OpenLocationSelected()
+    private void OpenLocationSelected(StartupEntry? entry)
     {
-        var entry = SelectedEntry;
         if (entry == null) return;
         if (!StartupService.OpenCommandLocation(entry))
             AppServices.Toast.Show(LanguageManager.T("Toasts_NoExecutable", "Executable file not found."), ZToastType.Warning);

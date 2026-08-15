@@ -39,19 +39,59 @@
         <!-- List -->
         <Grid Grid.Row="2">
             <ListBox ItemsSource="{Binding ItemsView}"
+                     SelectedItem="{Binding SelectedEntry}"
                      ItemContainerStyle="{StaticResource ZStartupListItemStyle}"
                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                      Background="Transparent">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <controls:ZToggleRow Title="{Binding Name}"
-                                             Subtitle="{Binding Command}"
-                                             IsOn="{Binding IsEnabled, Mode=TwoWay}">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <controls:ZBadge Content="{Binding Location}" Variant="Neutral" Margin="0,0,8,0"/>
-                                <controls:ZBadge Content="{Binding StatusText}" Variant="Danger" Margin="0,0,0,0"/>
-                            </StackPanel>
-                        </controls:ZToggleRow>
+                        <Border Background="{StaticResource ZBrushWhite}" CornerRadius="12"
+                                BorderBrush="{StaticResource ZBrushLightGray}" BorderThickness="1"
+                                Padding="16,12" Margin="0,3">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- App Icon -->
+                                <Border Width="44" Height="44" CornerRadius="10" Background="{StaticResource ZBrushCard}" VerticalAlignment="Center">
+                                    <Image Source="{Binding Icon}" Width="28" Height="28" Stretch="Uniform"
+                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                                </Border>
+
+                                <!-- Name & Command -->
+                                <StackPanel Grid.Column="1" Margin="14,0,16,0" VerticalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="13.5"
+                                                   Foreground="{StaticResource ZBrushBlack}" TextTrimming="CharacterEllipsis"
+                                                   MaxWidth="360"/>
+                                        <controls:ZBadge Content="{Binding LocationShort}" Variant="Neutral" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Command}" FontSize="12" Foreground="{StaticResource ZBrushGray}"
+                                               TextTrimming="CharacterEllipsis" Margin="0,4,0,0" ToolTip="{Binding Command}"/>
+                                </StackPanel>
+
+                                <!-- Status Badge -->
+                                <controls:ZBadge Grid.Column="2" Content="{Binding StatusText}"
+                                                 Variant="{Binding StatusBadgeVariant}"
+                                                 VerticalAlignment="Center" Margin="0,0,14,0"/>
+
+                                <!-- Open Location Button -->
+                                <controls:ZIconButton Grid.Column="3" Icon="{StaticResource IconFolder}"
+                                                      Command="{Binding DataContext.OpenLocationCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      CommandParameter="{Binding}"
+                                                      ToolTip="{Binding [Apps_OpenFolder], Source={x:Static services:LanguageManager.Instance}}"
+                                                      Margin="0,0,12,0"/>
+
+                                <!-- Toggle Switch -->
+                                <controls:ZToggleButton Grid.Column="4" VerticalAlignment="Center"
+                                                        IsChecked="{Binding IsEnabled, Mode=TwoWay}"/>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
