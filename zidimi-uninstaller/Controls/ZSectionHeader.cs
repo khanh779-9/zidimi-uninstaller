@@ -3,10 +3,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>
-/// Section header: title + subtitle + optional right-aligned content area.
-/// </summary>
 public class ZSectionHeader : ContentControl
 {
     static ZSectionHeader()

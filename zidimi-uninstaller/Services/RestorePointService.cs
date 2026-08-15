@@ -1,10 +1,6 @@
 using System.Runtime.InteropServices;
 
 namespace zidimi_uninstaller.Services;
-
-/// <summary>
-/// Service responsible for managing and creating Windows System Restore Points.
-/// </summary>
 public static class RestorePointService
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
@@ -29,13 +25,6 @@ public static class RestorePointService
 
     private const int BEGIN_SYSTEM_CHANGE = 100;
     private const int APPLICATION_UNINSTALL = 1;
-
-    /// <summary>
-    /// Attempts to create a System Restore Point.
-    /// Falls back to PowerShell/WMI if srclient.dll fails.
-    /// </summary>
-    /// <param name="description">Description of the restore point.</param>
-    /// <returns>True if created successfully, false otherwise.</returns>
     public static bool CreateRestorePoint(string description)
     {
         try

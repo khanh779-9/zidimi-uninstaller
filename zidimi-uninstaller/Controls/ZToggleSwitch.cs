@@ -2,10 +2,6 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>
-/// Toggle switch with status label (On/Off), used in Settings page.
-/// </summary>
 public class ZToggleSwitch : ToggleButton
 {
     static ZToggleSwitch()

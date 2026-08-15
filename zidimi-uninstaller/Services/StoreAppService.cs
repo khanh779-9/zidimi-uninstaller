@@ -4,12 +4,6 @@ using System.Text.Json;
 using zidimi_uninstaller.Models;
 
 namespace zidimi_uninstaller.Services;
-
-/// <summary>
-/// Reads Microsoft Store apps using PowerShell Get-AppxPackage
-/// and uninstalls them via Remove-AppxPackage.
-/// Inspired by Bulk-Crap-Uninstaller: UninstallTools/Factory/StoreAppFactory.cs
-/// </summary>
 public static class StoreAppService
 {
     private const string QueryScript =
@@ -68,11 +62,6 @@ public static class StoreAppService
 
         results.Add(entry);
     }
-
-    /// <summary>
-    /// Uninstalls a Store app package for current user.
-    /// Returns true if successful (no error output).
-    /// </summary>
     public static bool Uninstall(StoreAppEntry entry)
     {
         if (string.IsNullOrEmpty(entry.PackageFullName)) return false;

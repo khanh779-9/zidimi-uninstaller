@@ -2,8 +2,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace zidimi_uninstaller.ViewModels;
-
-/// <summary>Base class for ViewModels supporting property change notifications.</summary>
 public abstract class ObservableObject : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;

@@ -9,8 +9,6 @@ using System.Windows.Threading;
 namespace zidimi_uninstaller.Controls;
 
 public enum ZToastType { Info, Success, Warning, Error }
-
-/// <summary>A toast notification item in ZToastHost.</summary>
 public class ZToastItem : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -37,10 +35,6 @@ public class ZToastItem : INotifyPropertyChanged
         _ => Geometry.Parse("M12,2C6.48,2 2,6.48 2,12s4.48,10 10,10 10,-4.48 10,-10S17.52,2 12,2zM13,17h-2v-6h2v6zM13,9h-2V7h2v2z")
     };
 }
-
-/// <summary>
-/// Host control for displaying floating toast notifications. Call Show() to display a toast.
-/// </summary>
 public class ZToastHost : Control
 {
     static ZToastHost()

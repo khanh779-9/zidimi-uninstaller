@@ -4,10 +4,6 @@ using Microsoft.Win32;
 using zidimi_uninstaller.Models;
 
 namespace zidimi_uninstaller.Services;
-
-/// <summary>
-/// Deep Clean Engine: scans for leftover files, directories, shortcuts, and registry entries after uninstallation.
-/// </summary>
 public static class DeepCleanService
 {
     #region Win32 Recycle Bin Interop
@@ -99,10 +95,6 @@ public static class DeepCleanService
             return true;
         }
     }
-
-    /// <summary>
-    /// Scans for leftover files and registry entries for an uninstalled application.
-    /// </summary>
     public static List<LeftoverItem> ScanLeftovers(ApplicationEntry app)
     {
         var items = new List<LeftoverItem>();
@@ -355,10 +347,6 @@ public static class DeepCleanService
             return 0;
         }
     }
-
-    /// <summary>
-    /// Safely deletes selected leftover items.
-    /// </summary>
     public static (int DeletedCount, long FreedBytes) CleanLeftovers(IEnumerable<LeftoverItem> items, bool recycleBin = true)
     {
         int deleted = 0;

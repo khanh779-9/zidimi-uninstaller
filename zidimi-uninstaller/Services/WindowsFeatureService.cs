@@ -3,15 +3,8 @@ using System.Text.RegularExpressions;
 using zidimi_uninstaller.Models;
 
 namespace zidimi_uninstaller.Services;
-
-/// <summary>
-/// Service managing Windows Optional Features using DISM and PowerShell CLI.
-/// </summary>
 public static class WindowsFeatureService
 {
-    /// <summary>
-    /// Enumerates all Windows Optional Features.
-    /// </summary>
     public static List<WindowsFeatureEntry> GetFeatures()
     {
         var list = new List<WindowsFeatureEntry>();
@@ -69,10 +62,6 @@ public static class WindowsFeatureService
             .Replace("-", " ")
             .Replace("_", " ");
     }
-
-    /// <summary>
-    /// Enables or disables a Windows Optional Feature.
-    /// </summary>
     public static bool SetFeatureState(WindowsFeatureEntry feature, bool enable)
     {
         try

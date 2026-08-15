@@ -4,11 +4,6 @@ using Microsoft.Win32;
 using zidimi_uninstaller.Models;
 
 namespace zidimi_uninstaller.Services;
-
-/// <summary>
-/// Detects uninstaller types (MSI, Inno Setup, NSIS, Steam, etc.).
-/// Inspired by Bulk-Crap-Uninstaller: UninstallTools/Factory/InfoAdders/UninstallerTypeAdder.cs
-/// </summary>
 public static class AppTypeDetector
 {
     private static readonly Regex InnoRegex = new(@"unins\d\d\d", RegexOptions.Compiled | RegexOptions.IgnoreCase);

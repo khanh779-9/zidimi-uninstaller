@@ -2,10 +2,6 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>
-/// Custom rounded progress bar with accent color styling.
-/// </summary>
 public class ZProgressBar : Control
 {
     static ZProgressBar()

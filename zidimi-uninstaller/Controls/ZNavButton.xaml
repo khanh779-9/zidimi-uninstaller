@@ -2,8 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
 >
-
-    <!-- ============ ZNavButton ============ -->
     <Style TargetType="{x:Type controls:ZNavButton}">
         <Setter Property="Height" Value="42"/>
         <Setter Property="Margin" Value="10,2"/>

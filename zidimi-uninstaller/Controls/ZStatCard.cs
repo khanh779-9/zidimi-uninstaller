@@ -3,10 +3,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>
-/// Statistics card for Dashboard: icon + prominent value + label.
-/// </summary>
 public class ZStatCard : ContentControl
 {
     static ZStatCard()

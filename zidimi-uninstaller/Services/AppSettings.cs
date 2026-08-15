@@ -2,10 +2,6 @@ using System.IO;
 using System.Text.Json;
 
 namespace zidimi_uninstaller.Services;
-
-/// <summary>
-/// Application settings, stored as JSON in %LocalAppData%\ZidimiUninstaller.
-/// </summary>
 public class AppSettings
 {
     public bool HideSystemComponents { get; set; } = true;

@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- ============ Toolbar ============ -->
+        <!-- Toolbar -->
         <Grid Grid.Row="0" Margin="0,0,0,14">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -29,14 +29,14 @@
                                   ToolTip="{Binding [Startup_RescanTooltip], Source={x:Static services:LanguageManager.Instance}}"/>
         </Grid>
 
-        <!-- ============ Statistics bar ============ -->
+        <!-- Statistics bar -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12">
             <controls:ZBadge Content="{Binding TotalCount, StringFormat={}{0} items}" Variant="Accent"/>
             <controls:ZBadge Content="{Binding EnabledCount, StringFormat={}{0} enabled}" Variant="Info" Margin="8,0,0,0"/>
             <controls:ZBadge Content="{Binding DisabledCount, StringFormat={}{0} disabled}" Variant="Danger" Margin="8,0,0,0"/>
         </StackPanel>
 
-        <!-- ============ List ============ -->
+        <!-- List -->
         <Grid Grid.Row="2">
             <ListBox ItemsSource="{Binding ItemsView}"
                      ItemContainerStyle="{StaticResource ZStartupListItemStyle}"
@@ -77,7 +77,7 @@
             </Grid>
         </Grid>
 
-        <!-- ============ Status bar ============ -->
+        <!-- Status bar -->
         <TextBlock Grid.Row="3" Margin="6,10,6,0" FontSize="12" Foreground="{StaticResource ZBrushGray}">
             <Run Text="{Binding StatusText, Mode=OneWay}"/>
         </TextBlock>

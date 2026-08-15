@@ -4,10 +4,6 @@ using Microsoft.Win32;
 using zidimi_uninstaller.Models;
 
 namespace zidimi_uninstaller.Services;
-
-/// <summary>
-/// Reads Windows startup entries from registry (Run / RunOnce).
-/// </summary>
 public static class StartupService
 {
     public static List<StartupEntry> GetEntries()
@@ -54,10 +50,6 @@ public static class StartupService
             // Skip unreadable keys
         }
     }
-
-    /// <summary>
-    /// Enables or disables a startup entry: deletes or recreates value in registry.
-    /// </summary>
     public static bool SetEnabled(StartupEntry entry, bool enabled)
     {
         if (string.IsNullOrWhiteSpace(entry.Location) || string.IsNullOrWhiteSpace(entry.Name))
@@ -85,8 +77,6 @@ public static class StartupService
             return false;
         }
     }
-
-    /// <summary>Opens the directory containing the executable for the startup command.</summary>
     public static bool OpenCommandLocation(StartupEntry entry)
     {
         var (file, _) = ProcessTools.SeparateArgsFromCommand(entry.Command);

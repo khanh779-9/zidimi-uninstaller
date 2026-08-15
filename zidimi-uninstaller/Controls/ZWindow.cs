@@ -4,12 +4,6 @@ using System.Windows.Shell;
 using System.Windows.Controls;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>
-/// Custom window utilizing standard WPF WindowChrome (.NET 8).
-/// Automatically supports title bar dragging, Aero Snap, minimize, maximize, and close operations.
-/// Template defined in Controls/ZWindowStyle.xaml.
-/// </summary>
 public class ZWindow : Window
 {
     public ZWindow()
@@ -19,7 +13,6 @@ public class ZWindow : Window
         CommandBindings.Add(new CommandBinding(SystemCommands.MaximizeWindowCommand, OnMaximizeWindow, OnCanResizeWindow));
         CommandBindings.Add(new CommandBinding(SystemCommands.MinimizeWindowCommand, OnMinimizeWindow, OnCanMinimizeWindow));
         CommandBindings.Add(new CommandBinding(SystemCommands.RestoreWindowCommand, OnRestoreWindow, OnCanResizeWindow));
-
 
         StateChanged += ZWindow_StateChanged;
         ApplyChrome();
@@ -44,7 +37,6 @@ public class ZWindow : Window
     }
 
     bool UseNativeCaption => Environment.OSVersion.Version.Major >= 10;
-
 
     private void OnCanResizeWindow(object sender, CanExecuteRoutedEventArgs e)
     {

@@ -2,8 +2,6 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>Custom checkbox with rounded box styling.</summary>
 public class ZCheckBox : CheckBox
 {
     static ZCheckBox()

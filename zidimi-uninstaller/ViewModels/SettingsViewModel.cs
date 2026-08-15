@@ -113,8 +113,6 @@ public class SettingsViewModel : ObservableObject
     public RelayCommand ClearIconCacheCommand { get; }
     public RelayCommand ReloadDataCommand { get; }
     public RelayCommand ReloadCommand => ReloadDataCommand;
-
-    /// <summary>Requests MainViewModel to reload all application data.</summary>
     public event Action? ReloadDataRequested;
 
     public SettingsViewModel()

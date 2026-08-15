@@ -4,10 +4,6 @@ using zidimi_uninstaller.Services;
 using zidimi_uninstaller.ViewModels;
 
 namespace zidimi_uninstaller;
-
-/// <summary>
-/// Main application window with navigation sidebar.
-/// </summary>
 public partial class MainWindow : ZWindow
 {
     private readonly MainViewModel _vm = new();
@@ -36,8 +32,6 @@ public partial class MainWindow : ZWindow
 
     private void OnClosed(object? sender, EventArgs e)
         => AppServices.Dialog.ConfirmHandler = null;
-
-    /// <summary>Displays confirmation dialog and awaits user choice.</summary>
     private Task<bool> ConfirmAsync(string title, string message, string confirmText, string cancelText)
     {
         var tcs = new TaskCompletionSource<bool>();
@@ -49,8 +43,6 @@ public partial class MainWindow : ZWindow
         ConfirmDialog.IsOpen = true;
         return tcs.Task;
     }
-
-    /// <summary>Displays a simple informational message dialog.</summary>
     private Task<bool> ShowMessageAsync(string title, string message)
     {
         var tcs = new TaskCompletionSource<bool>();

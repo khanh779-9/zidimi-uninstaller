@@ -3,11 +3,6 @@ using System.Runtime.CompilerServices;
 using System.Windows.Media;
 
 namespace zidimi_uninstaller.Models;
-
-/// <summary>
-/// An installed application (read from registry Uninstall keys).
-/// Inspired by Bulk-Crap-Uninstaller: UninstallTools/ApplicationUninstallerEntry.cs
-/// </summary>
 public class ApplicationEntry : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;

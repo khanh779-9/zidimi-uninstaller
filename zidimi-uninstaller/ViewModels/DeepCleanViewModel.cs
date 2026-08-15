@@ -4,10 +4,6 @@ using zidimi_uninstaller.Models;
 using zidimi_uninstaller.Services;
 
 namespace zidimi_uninstaller.ViewModels;
-
-/// <summary>
-/// ViewModel managing the Deep Clean leftover inspection and removal workflow.
-/// </summary>
 public class DeepCleanViewModel : ObservableObject
 {
     public ObservableCollection<LeftoverItem> Items { get; } = new();

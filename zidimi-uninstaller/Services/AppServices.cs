@@ -1,8 +1,6 @@
 using zidimi_uninstaller.Controls;
 
 namespace zidimi_uninstaller.Services;
-
-/// <summary>Dialog confirmation service, connected by MainWindow to ZDialog.</summary>
 public class DialogService
 {
     public Func<string, string, string, string, Task<bool>>? ConfirmHandler { get; set; }
@@ -18,8 +16,6 @@ public class DialogService
             ? MessageHandler(title, message)
             : Task.CompletedTask;
 }
-
-/// <summary>Toast notification service, connected by MainWindow to ZToastHost.</summary>
 public class ToastService
 {
     public Action<string, ZToastType, string?>? ShowHandler { get; set; }
@@ -27,8 +23,6 @@ public class ToastService
     public void Show(string message, ZToastType type = ZToastType.Info, string? title = null)
         => ShowHandler?.Invoke(message, type, title);
 }
-
-/// <summary>Shared services across the application.</summary>
 public static class AppServices
 {
     public static DialogService Dialog { get; } = new();

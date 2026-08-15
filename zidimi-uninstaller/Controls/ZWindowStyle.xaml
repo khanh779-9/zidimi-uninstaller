@@ -5,7 +5,7 @@
                     xmlns:sys="clr-namespace:System.Windows;assembly=PresentationFramework"
 >
 
-    <!-- ============ ZWindow buttons ============ -->
+    <!-- ZWindow buttons -->
     <Style x:Key="ZWindowBarButton" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="46"/>
         <Setter Property="Foreground" Value="{StaticResource ZBrushLighterGray}"/>
@@ -39,7 +39,7 @@
         </Style.Triggers>
     </Style>
 
-    <!-- ============ ZWindow - window chrome ============ -->
+    <!-- ZWindow - window chrome -->
     <Style x:Key="ZWindowStyle" TargetType="{x:Type controls:ZWindow}">
         <Setter Property="shell:WindowChrome.WindowChrome">
             <Setter.Value>
@@ -69,7 +69,7 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <!-- ============ Title bar ============ -->
+                                <!-- Title bar -->
                                 <Border Grid.Row="0" Background="{StaticResource ZBrushDark}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -124,7 +124,7 @@
                                     </Grid>
                                 </Border>
 
-                                <!-- ============ Content ============ -->
+                                <!-- Content -->
                                 <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}"/>
                             </Grid>
                         </Border>

@@ -3,15 +3,8 @@ using System.IO;
 using zidimi_uninstaller.Models;
 
 namespace zidimi_uninstaller.Services;
-
-/// <summary>
-/// Scans and terminates active processes holding locks on application files before uninstallation.
-/// </summary>
 public static class ProcessHunterService
 {
-    /// <summary>
-    /// Finds all currently running processes associated with an application.
-    /// </summary>
     public static List<Process> FindRunningProcesses(ApplicationEntry app)
     {
         var result = new List<Process>();
@@ -95,10 +88,6 @@ public static class ProcessHunterService
             }
         }
     }
-
-    /// <summary>
-    /// Closes gracefully or kills the list of processes.
-    /// </summary>
     public static int TerminateProcesses(IEnumerable<Process> processes, int timeoutMs = 3000)
     {
         int killed = 0;

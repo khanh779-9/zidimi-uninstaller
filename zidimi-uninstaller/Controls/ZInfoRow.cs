@@ -2,10 +2,6 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>
-/// Information row displaying "Label — Value" pairs for application details.
-/// </summary>
 public class ZInfoRow : ContentControl
 {
     static ZInfoRow()
@@ -33,8 +29,6 @@ public class ZInfoRow : ContentControl
 
     public static readonly DependencyProperty IsAccentProperty =
         DependencyProperty.Register(nameof(IsAccent), typeof(bool), typeof(ZInfoRow), new PropertyMetadata(false));
-
-    /// <summary>Displays the value in accent color (used for warnings/highlights).</summary>
     public bool IsAccent
     {
         get => (bool)GetValue(IsAccentProperty);

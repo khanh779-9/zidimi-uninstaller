@@ -1,9 +1,4 @@
 namespace zidimi_uninstaller.Models;
-
-/// <summary>
-/// Application uninstaller type, used for badge display and selecting the appropriate uninstall command.
-/// Inspired by Bulk-Crap-Uninstaller: UninstallTools/UninstallerType.cs
-/// </summary>
 public enum UninstallerType
 {
     Unknown = 0,

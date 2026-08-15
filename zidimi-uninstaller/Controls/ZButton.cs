@@ -5,8 +5,6 @@ using System.Windows.Media;
 namespace zidimi_uninstaller.Controls;
 
 public enum ZButtonVariant { Primary, Secondary, Ghost, Danger }
-
-/// <summary>Custom button with style variants and icon support.</summary>
 public class ZButton : Button
 {
     static ZButton()

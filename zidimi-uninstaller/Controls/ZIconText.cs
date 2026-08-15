@@ -3,10 +3,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>
-/// Horizontal icon + text label, used for compact metadata descriptions (e.g. "32-bit · 12 MB · 01/01/2026").
-/// </summary>
 public class ZIconText : ContentControl
 {
     static ZIconText()

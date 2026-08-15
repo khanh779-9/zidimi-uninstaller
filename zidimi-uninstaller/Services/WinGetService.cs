@@ -3,10 +3,6 @@ using System.Text.RegularExpressions;
 using zidimi_uninstaller.Models;
 
 namespace zidimi_uninstaller.Services;
-
-/// <summary>
-/// Service for interacting with Windows Package Manager (WinGet), Scoop, and Chocolatey CLIs.
-/// </summary>
 public static class WinGetService
 {
     private static bool? _isWinGetAvailable;
@@ -25,10 +21,6 @@ public static class WinGetService
         }
         return _isWinGetAvailable.Value;
     }
-
-    /// <summary>
-    /// Enumerates installed packages using WinGet CLI.
-    /// </summary>
     public static List<PackageEntry> GetInstalledPackages()
     {
         var list = new List<PackageEntry>();
@@ -104,10 +96,6 @@ public static class WinGetService
         catch { }
         return null;
     }
-
-    /// <summary>
-    /// Uninstalls a package via WinGet CLI.
-    /// </summary>
     public static bool UninstallPackage(PackageEntry package)
     {
         try
@@ -129,10 +117,6 @@ public static class WinGetService
         catch { }
         return false;
     }
-
-    /// <summary>
-    /// Upgrades a package via WinGet CLI.
-    /// </summary>
     public static bool UpgradePackage(PackageEntry package)
     {
         try

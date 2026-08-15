@@ -22,7 +22,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- ============ Left sidebar ============ -->
+        <!-- Left sidebar -->
         <Grid Grid.Column="0" Width="236">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -91,7 +91,7 @@
             </Border>
         </Grid>
 
-        <!-- ============ Main content area ============ -->
+        <!-- Main content area -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -136,14 +136,14 @@
             </ContentControl>
         </Grid>
 
-        <!-- ============ Confirmation dialog ============ -->
+        <!-- Confirmation dialog -->
         <controls:ZDialog Grid.Column="0" Grid.ColumnSpan="2" x:Name="ConfirmDialog"
                           Title="Xác nhận gỡ cài đặt"
                           Message="Bạn có chắc muốn gỡ cài đặt ứng dụng này?"
                           ConfirmText="Gỡ cài đặt" CancelText="Huỷ bỏ"
                           Panel.ZIndex="100"/>
 
-        <!-- ============ Application Details Modal Overlay ============ -->
+        <!-- Application Details Modal Overlay -->
         <Grid Grid.Column="0" Grid.ColumnSpan="2" Background="#7F000000"
               Visibility="{Binding Applications.IsDetailsModalOpen, Converter={StaticResource BoolToVis}}"
               PreviewMouseDown="OnModalBackdropMouseDown"
@@ -153,7 +153,7 @@
                                    Margin="24"/>
         </Grid>
 
-        <!-- ============ Deep Clean Modal Overlay ============ -->
+        <!-- Deep Clean Modal Overlay -->
         <Grid Grid.Column="0" Grid.ColumnSpan="2" Background="#7F000000"
               Visibility="{Binding DeepClean.IsOpen, Converter={StaticResource BoolToVis}}"
               PreviewMouseDown="OnModalBackdropMouseDown"
@@ -163,7 +163,7 @@
                                  Margin="24"/>
         </Grid>
 
-        <!-- ============ Toast notifications ============ -->
+        <!-- Toast notifications -->
         <controls:ZToastHost Grid.Column="1" x:Name="ToastHost"
                              HorizontalAlignment="Right" VerticalAlignment="Top"
                              Margin="0,78,18,0" Panel.ZIndex="90"/>

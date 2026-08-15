@@ -2,8 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
 >
-
-    <!-- ============ ZBadge ============ -->
     <Style TargetType="{x:Type controls:ZBadge}">
         <Setter Property="Foreground" Value="{StaticResource ZBrushDarkGray}"/>
         <Setter Property="Background" Value="{StaticResource ZBrushLightGray}"/>

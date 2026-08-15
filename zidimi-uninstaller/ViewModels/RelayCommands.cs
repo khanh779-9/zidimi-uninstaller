@@ -1,8 +1,6 @@
 using System.Windows.Input;
 
 namespace zidimi_uninstaller.ViewModels;
-
-/// <summary>Synchronous command.</summary>
 public class RelayCommand : ICommand
 {
     private readonly Action<object?> _execute;
@@ -23,8 +21,6 @@ public class RelayCommand : ICommand
     public bool CanExecute(object? parameter) => _canExecute?.Invoke(parameter) ?? true;
     public void Execute(object? parameter) => _execute(parameter);
 }
-
-/// <summary>Asynchronous command, disables execution while running.</summary>
 public class AsyncRelayCommand : ICommand
 {
     private readonly Func<object?, Task> _execute;

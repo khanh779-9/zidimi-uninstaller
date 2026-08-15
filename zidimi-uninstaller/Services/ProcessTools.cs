@@ -3,16 +3,8 @@ using System.IO;
 using System.Text;
 
 namespace zidimi_uninstaller.Services;
-
-/// <summary>
-/// Command-line and process manipulation utilities.
-/// Inspired by Bulk-Crap-Uninstaller: Klocman/Tools/ProcessTools.cs
-/// </summary>
 public static class ProcessTools
 {
-    /// <summary>
-    /// Separates command string into executable filename and arguments.
-    /// </summary>
     public static (string FileName, string Arguments) SeparateArgsFromCommand(string command)
     {
         if (string.IsNullOrWhiteSpace(command)) return (string.Empty, string.Empty);
@@ -28,10 +20,6 @@ public static class ProcessTools
         var idx = command.IndexOf(' ');
         return idx > 0 ? (command[..idx], command[(idx + 1)..].Trim()) : (command, string.Empty);
     }
-
-    /// <summary>
-    /// Starts a process command. Returns Process instance or null if execution failed.
-    /// </summary>
     public static Process? StartCommand(string command, string? workingDir = null)
     {
         if (string.IsNullOrWhiteSpace(command)) return null;
@@ -61,10 +49,6 @@ public static class ProcessTools
             }
         }
     }
-
-    /// <summary>
-    /// Runs a CLI process and captures all standard output/error (used for PowerShell Get-AppxPackage, etc.).
-    /// </summary>
     public static string? RunAndReadOutput(string fileName, string arguments, int timeoutMs = 60_000)
     {
         try
@@ -98,10 +82,6 @@ public static class ProcessTools
             return null;
         }
     }
-
-    /// <summary>
-    /// Formats raw byte count into human-readable string (KB, MB, GB).
-    /// </summary>
     public static string FormatBytes(long bytes)
     {
         if (bytes <= 0) return "0 B";

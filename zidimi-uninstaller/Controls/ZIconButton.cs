@@ -5,8 +5,6 @@ using System.Windows.Media;
 namespace zidimi_uninstaller.Controls;
 
 public enum ZIconButtonVariant { Default, Close }
-
-/// <summary>Small circular icon button (used for title bars, action buttons, etc.).</summary>
 public class ZIconButton : Button
 {
     static ZIconButton()

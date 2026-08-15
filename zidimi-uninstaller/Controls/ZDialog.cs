@@ -6,12 +6,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>
-/// Modal dialog: blurs/dims background and displays a centered card.
-/// Overlays the main content, controlled via the IsOpen property.
-/// Supports Confirm/Cancel buttons; results returned via OnResult callback.
-/// </summary>
 public class ZDialog : ContentControl
 {
     static ZDialog()
@@ -75,15 +69,11 @@ public class ZDialog : ContentControl
 
     public static readonly DependencyProperty ButtonsContentProperty =
         DependencyProperty.Register(nameof(ButtonsContent), typeof(object), typeof(ZDialog), new PropertyMetadata(null));
-
-    /// <summary>Custom action buttons area (replaces default buttons if set).</summary>
     public object? ButtonsContent
     {
         get => GetValue(ButtonsContentProperty);
         set => SetValue(ButtonsContentProperty, value);
     }
-
-    /// <summary>User result callback: true = confirmed, false = cancelled.</summary>
     public Action<bool>? OnResult { get; set; }
 
     public static readonly DependencyProperty IsOpenProperty =

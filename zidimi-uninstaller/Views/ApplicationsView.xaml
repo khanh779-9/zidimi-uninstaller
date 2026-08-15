@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- ============ Toolbar ============ -->
+        <!-- Toolbar -->
         <StackPanel Grid.Row="0" Margin="0,0,0,14">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -58,7 +58,7 @@
             </StackPanel>
         </StackPanel>
 
-        <!-- ============ Action bar on multi-selection ============ -->
+        <!-- Action bar on multi-selection -->
         <Border Grid.Row="1" Background="{StaticResource ZBrushAccentTint}" CornerRadius="10" Padding="16,10"
                 Margin="0,0,0,12"
                 Visibility="{Binding HasSelection, Converter={StaticResource BoolToVis}}">
@@ -80,7 +80,7 @@
             </Grid>
         </Border>
 
-        <!-- ============ Applications list & Floating Bar ============ -->
+        <!-- Applications list & Floating Bar -->
         <Grid Grid.Row="2">
             <ListBox ItemsSource="{Binding ItemsView}"
                      SelectedItem="{Binding SelectedApp}"
@@ -181,7 +181,7 @@
             </Grid>
         </Grid>
 
-        <!-- ============ Status bar ============ -->
+        <!-- Status bar -->
         <Grid Grid.Row="3" Margin="6,10,6,0">
             <TextBlock Text="{Binding StatusText}" FontSize="12" Foreground="{StaticResource ZBrushGray}" VerticalAlignment="Center"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

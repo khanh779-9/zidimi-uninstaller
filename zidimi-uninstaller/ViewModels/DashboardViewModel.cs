@@ -30,8 +30,6 @@ public class DashboardViewModel : ObservableObject
 
     public AsyncRelayCommand RefreshCommand { get; }
     public RelayCommand ReloadAllCommand { get; }
-
-    /// <summary>Requests MainViewModel to reload all application data.</summary>
     public event Action? ReloadAllRequested;
 
     public DashboardViewModel()

@@ -3,10 +3,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>
-/// Card control displaying an application in list: icon + title + subtitle + arbitrary content area.
-/// </summary>
 public class ZAppCard : ContentControl
 {
     static ZAppCard()

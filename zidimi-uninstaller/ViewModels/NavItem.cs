@@ -1,8 +1,6 @@
 using System.Windows.Media;
 
 namespace zidimi_uninstaller.ViewModels;
-
-/// <summary>A navigation item in the sidebar.</summary>
 public class NavItem : ObservableObject
 {
     public string Key { get; init; } = string.Empty;

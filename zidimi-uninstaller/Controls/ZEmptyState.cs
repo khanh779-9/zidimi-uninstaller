@@ -3,10 +3,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>
-/// Empty state indicator (no data): large icon + title + description + action area.
-/// </summary>
 public class ZEmptyState : ContentControl
 {
     static ZEmptyState()

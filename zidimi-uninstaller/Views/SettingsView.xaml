@@ -13,7 +13,7 @@
                                      Subtitle="{Binding [Settings_SectionSubtitle], Source={x:Static services:LanguageManager.Instance}}"
                                      Icon="{StaticResource IconSettings}"/>
 
-            <!-- ============ Display Language ============ -->
+            <!-- Display Language -->
             <controls:ZCard Margin="0,18,0,0" Padding="20,14">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -35,7 +35,7 @@
                 </Grid>
             </controls:ZCard>
 
-            <!-- ============ Uninstall & Protection ============ -->
+            <!-- Uninstall & Protection -->
             <controls:ZCard Margin="0,14,0,0" Padding="20,14">
                 <StackPanel>
                     <controls:ZSectionHeader Title="{Binding [Settings_ProtectionHeader], Source={x:Static services:LanguageManager.Instance}}"
@@ -64,7 +64,7 @@
                 </StackPanel>
             </controls:ZCard>
 
-            <!-- ============ Deep Clean ============ -->
+            <!-- Deep Clean -->
             <controls:ZCard Margin="0,14,0,0" Padding="20,14">
                 <StackPanel>
                     <controls:ZSectionHeader Title="{Binding [Settings_DeepCleanHeader], Source={x:Static services:LanguageManager.Instance}}"
@@ -81,7 +81,7 @@
                 </StackPanel>
             </controls:ZCard>
 
-            <!-- ============ Data & Cache ============ -->
+            <!-- Data & Cache -->
             <controls:ZCard Margin="0,14,0,0" Padding="20,14">
                 <StackPanel>
                     <controls:ZSectionHeader Title="{Binding [Settings_DataHeader], Source={x:Static services:LanguageManager.Instance}}"

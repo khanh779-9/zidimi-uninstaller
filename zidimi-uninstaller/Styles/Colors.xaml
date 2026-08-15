@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- ============ Core color palette ============ -->
+    <!-- Core color palette -->
     <Color x:Key="ZColorWhite">#FEFEFE</Color>
     <Color x:Key="ZColorCard">#F2F2F2</Color>
     <Color x:Key="ZColorBlack">#121012</Color>
@@ -22,7 +22,7 @@
     <Color x:Key="ZColorAccentTintPressed">#F8D7DE</Color>
     <Color x:Key="ZColorBrownHover">#9A4A44</Color>
 
-    <!-- ============ Brushes ============ -->
+    <!-- Brushes -->
     <SolidColorBrush x:Key="ZBrushWhite" Color="{StaticResource ZColorWhite}"/>
     <SolidColorBrush x:Key="ZBrushCard" Color="{StaticResource ZColorCard}"/>
     <SolidColorBrush x:Key="ZBrushBlack" Color="{StaticResource ZColorBlack}"/>

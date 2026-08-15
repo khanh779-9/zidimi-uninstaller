@@ -3,8 +3,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>Sidebar navigation button with active state and icon support.</summary>
 public class ZNavButton : Button
 {
     static ZNavButton()

@@ -7,11 +7,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace zidimi_uninstaller.Services;
-
-/// <summary>
-/// Extracts application icons from files (.exe / .ico / .dll) via shell32.SHGetFileInfo,
-/// cached to avoid redundant calls.
-/// </summary>
 public static class IconService
 {
     private static readonly ConcurrentDictionary<string, ImageSource> Cache = new(StringComparer.OrdinalIgnoreCase);

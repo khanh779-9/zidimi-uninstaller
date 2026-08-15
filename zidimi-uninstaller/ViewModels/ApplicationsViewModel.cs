@@ -158,11 +158,7 @@ public class ApplicationsViewModel : ObservableObject
     public RelayCommand ClearSelectionCommand { get; }
     public RelayCommand OpenDetailsCommand { get; }
     public RelayCommand CloseDetailsCommand { get; }
-
-    /// <summary>Requests Dashboard page to reload.</summary>
     public event Action? ReloadRequested;
-
-    /// <summary>Requests Deep Clean inspection for an uninstalled application.</summary>
     public event Action<ApplicationEntry>? DeepCleanRequested;
 
     public ApplicationsViewModel()

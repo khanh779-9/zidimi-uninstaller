@@ -23,7 +23,6 @@ public class BoolToVisibilityConverter : IValueConverter
 
 public class NullOrEmptyToVisibilityConverter : IValueConverter
 {
-    /// <summary>true: visible when empty/null; false: visible when populated.</summary>
     public bool ShowWhenEmpty { get; set; } = true;
 
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)

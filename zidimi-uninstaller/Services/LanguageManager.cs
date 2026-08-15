@@ -12,11 +12,6 @@ public class LanguageInfo
 
     public override string ToString() => Name;
 }
-
-/// <summary>
-/// Localization manager supporting real-time dynamic language switching.
-/// Inspired by Zidimi.Browser Infrastructure/LanguageManager.cs.
-/// </summary>
 public class LanguageManager : ObservableObject
 {
     private static LanguageManager? _instance;

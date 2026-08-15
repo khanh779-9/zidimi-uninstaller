@@ -18,10 +18,6 @@ public enum LeftoverSafetyLevel
     Review,  // Needs review (e.g. registry keys with other entries, shared parent folders)
     Warning  // Potentially shared or risky
 }
-
-/// <summary>
-/// Represents a leftover trace (file, directory, or registry entry) remaining after uninstallation.
-/// </summary>
 public class LeftoverItem : ObservableObject
 {
     public LeftoverType Type { get; init; }

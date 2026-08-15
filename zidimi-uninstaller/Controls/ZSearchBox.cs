@@ -2,10 +2,6 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>
-/// Search box with placeholder text and a clear button.
-/// </summary>
 public class ZSearchBox : TextBox
 {
     static ZSearchBox()

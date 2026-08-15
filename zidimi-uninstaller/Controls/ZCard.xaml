@@ -2,8 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
 >
-
-    <!-- ============ ZCard ============ -->
     <Style TargetType="{x:Type controls:ZCard}">
         <Setter Property="Background" Value="{StaticResource ZBrushWhite}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ZBrushLightGray}"/>

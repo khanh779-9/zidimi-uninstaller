@@ -8,10 +8,6 @@ public enum PackageManagerKind
     Scoop,
     Chocolatey
 }
-
-/// <summary>
-/// Represents a package installed via modern package managers (WinGet, Scoop, Chocolatey).
-/// </summary>
 public class PackageEntry : ObservableObject
 {
     public string Id { get; init; } = string.Empty;

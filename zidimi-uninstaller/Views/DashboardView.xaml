@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- ============ Statistics cards ============ -->
+        <!-- Statistics cards -->
         <StackPanel Grid.Row="0">
             <UniformGrid Columns="4">
                 <controls:ZStatCard Margin="0,0,12,0"
@@ -49,7 +49,7 @@
             </StackPanel>
         </StackPanel>
 
-        <!-- ============ Recently installed ============ -->
+        <!-- Recently installed -->
         <controls:ZCard Grid.Row="1" Margin="0,24,0,0" Padding="20,16">
             <Grid>
                 <Grid.RowDefinitions>

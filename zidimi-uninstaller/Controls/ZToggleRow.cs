@@ -2,10 +2,6 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>
-/// A setting row control: title + description + toggle switch.
-/// </summary>
 public class ZToggleRow : ContentControl
 {
     static ZToggleRow()

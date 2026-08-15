@@ -2,8 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
 >
-
-    <!-- ============ Common styles ============ -->
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="13"/>
@@ -31,8 +29,7 @@
         </Setter>
     </Style>
 
-
-    <!-- ============ ScrollBar ============ -->
+    <!-- ScrollBar -->
     <Style TargetType="{x:Type ScrollBar}">
         <Setter Property="Width" Value="10"/>
         <Setter Property="MinWidth" Value="10"/>
@@ -83,8 +80,7 @@
         </Setter>
     </Style>
 
-
-    <!-- ============ TextBox ============ -->
+    <!-- TextBox -->
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{StaticResource ZBrushWhite}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ZBrushLightGray}"/>
@@ -120,8 +116,7 @@
         </Setter>
     </Style>
 
-
-    <!-- ============ ListBox ============ -->
+    <!-- ListBox -->
     <Style TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -129,8 +124,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
 
-
-    <!-- ============ ContextMenu / MenuItem ============ -->
+    <!-- ContextMenu / MenuItem -->
     <Style TargetType="{x:Type ContextMenu}">
         <Setter Property="Background" Value="{StaticResource ZBrushWhite}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ZBrushLightGray}"/>
@@ -187,8 +181,7 @@
         </Setter>
     </Style>
 
-
-    <!-- ============ ComboBox ToggleButton Template ============ -->
+    <!-- ComboBox ToggleButton Template -->
     <ControlTemplate x:Key="ZComboBoxToggleButtonTemplate" TargetType="{x:Type ToggleButton}">
         <Border x:Name="Bd"
                 Background="{TemplateBinding Background}"
@@ -225,7 +218,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <!-- ============ ComboBox ============ -->
+    <!-- ComboBox -->
     <Style TargetType="{x:Type ComboBox}">
         <Setter Property="Background" Value="{StaticResource ZBrushWhite}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ZBrushLightGray}"/>
@@ -320,8 +313,7 @@
         </Setter>
     </Style>
 
-
-    <!-- ============ ListBoxItem for application list ============ -->
+    <!-- ListBoxItem for application list -->
     <Style x:Key="ZAppsListItemStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -354,8 +346,7 @@
         </Setter>
     </Style>
 
-
-    <!-- ============ ListBoxItem for startup list ============ -->
+    <!-- ListBoxItem for startup list -->
     <Style x:Key="ZStartupListItemStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>

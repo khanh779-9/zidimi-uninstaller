@@ -9,19 +9,8 @@ public class NoWayToUninstallException : Exception
 {
     public NoWayToUninstallException() : base("No uninstaller found for this application.") { }
 }
-
-/// <summary>
-/// Executes application uninstallers.
-/// Inspired by Bulk-Crap-Uninstaller: UninstallTools/Uninstaller/UninstallManager.cs
-/// </summary>
 public static class UninstallService
 {
-    /// <summary>
-    /// Runs the uninstaller for the application.
-    /// </summary>
-    /// <param name="entry">The application entry to uninstall.</param>
-    /// <param name="quiet">Prefer quiet/silent uninstall arguments if available.</param>
-    /// <param name="simulate">Simulate execution without running the actual process.</param>
     public static Process? Run(ApplicationEntry entry, bool quiet, bool simulate = false)
     {
         if (simulate)

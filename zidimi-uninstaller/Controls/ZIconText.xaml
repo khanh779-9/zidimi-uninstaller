@@ -2,8 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
 >
-
-    <!-- ============ ZIconText ============ -->
     <Style TargetType="{x:Type controls:ZIconText}">
         <Setter Property="Template">
             <Setter.Value>

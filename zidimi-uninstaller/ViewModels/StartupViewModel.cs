@@ -99,8 +99,6 @@ public class StartupViewModel : ObservableObject
     }
 
     private bool _reverting;
-
-    /// <summary>When switch state changes: write new state to registry.</summary>
     private void OnEntryPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName != nameof(StartupEntry.IsEnabled)) return;

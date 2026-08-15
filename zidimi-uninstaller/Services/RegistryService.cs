@@ -4,11 +4,6 @@ using zidimi_uninstaller.Models;
 using System.IO;
 
 namespace zidimi_uninstaller.Services;
-
-/// <summary>
-/// Reads installed applications from registry (HKLM + HKCU, both 64-bit and 32-bit views).
-/// Inspired by Bulk-Crap-Uninstaller: UninstallTools/Factory/RegistryFactory.cs
-/// </summary>
 public static class RegistryService
 {
     private const string UninstallPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
@@ -246,10 +241,6 @@ public static class RegistryService
         var match = System.Text.RegularExpressions.Regex.Match(text, @"\{?[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\}?");
         return match.Success && Guid.TryParse(match.Value, out guid);
     }
-
-    /// <summary>
-    /// Removes application uninstall entry from registry (forced removal action).
-    /// </summary>
     public static bool RemoveEntry(ApplicationEntry entry)
     {
         if (string.IsNullOrEmpty(entry.RegistryPath))

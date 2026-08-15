@@ -4,8 +4,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace zidimi_uninstaller.Controls;
-
-/// <summary>Indeterminate progress spinner ring.</summary>
 public class ZProgressRing : Control
 {
     static ZProgressRing()

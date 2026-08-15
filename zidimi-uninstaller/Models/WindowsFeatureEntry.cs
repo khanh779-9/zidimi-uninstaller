@@ -1,10 +1,6 @@
 using zidimi_uninstaller.ViewModels;
 
 namespace zidimi_uninstaller.Models;
-
-/// <summary>
-/// Represents a Windows Optional Feature / component.
-/// </summary>
 public class WindowsFeatureEntry : ObservableObject
 {
     public string Name { get; init; } = string.Empty;

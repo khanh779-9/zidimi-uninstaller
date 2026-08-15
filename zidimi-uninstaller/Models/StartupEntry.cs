@@ -2,10 +2,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace zidimi_uninstaller.Models;
-
-/// <summary>
-/// A Windows startup entry (Run / RunOnce keys).
-/// </summary>
 public class StartupEntry : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;

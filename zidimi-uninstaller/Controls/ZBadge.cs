@@ -4,8 +4,6 @@ using System.Windows.Controls;
 namespace zidimi_uninstaller.Controls;
 
 public enum ZBadgeVariant { Neutral, Accent, Danger, Info, Success }
-
-/// <summary>Pill badge indicator control.</summary>
 public class ZBadge : ContentControl
 {
     static ZBadge()

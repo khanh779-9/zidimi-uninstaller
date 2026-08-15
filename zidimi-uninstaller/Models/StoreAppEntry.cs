@@ -5,11 +5,6 @@ using System.Windows.Media;
 using zidimi_uninstaller.Services;
 
 namespace zidimi_uninstaller.Models;
-
-/// <summary>
-/// A Microsoft Store application (UWP/Appx), queried via Get-AppxPackage.
-/// Inspired by Bulk-Crap-Uninstaller: UninstallTools/Factory/StoreAppFactory.cs
-/// </summary>
 public class StoreAppEntry : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
