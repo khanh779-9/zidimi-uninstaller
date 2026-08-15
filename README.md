@@ -110,9 +110,12 @@ Zidimi Uninstaller is distributed as a standalone portable package that does not
 
 ### 1. Desktop Applications Management
 - **Full Inventory**: Queries 32-bit and 64-bit Registry uninstall keys (`HKLM` and `HKCU`) to identify all registered programs with installation date, size, publisher, architecture, and version.
-- **Silent Uninstall**: Automatically identifies and applies silent/unattended parameters (`/quiet`, `/qn`, `/s`, `/silent`, `/VERYSILENT`) for supported installers (MSI, Inno Setup, Nullsoft NSIS, InstallShield, WiX).
-- **Force Removal**: Cleans up program files, registry keys, and uninstall registration when an installer is corrupt or missing.
-- **Batch Processing**: Filter, sort, and select multiple applications for sequential processing.
+- **Smart Category Filters**: One-click filter pills for **All**, **64-Bit**, **32-Bit**, **Large Apps (>500 MB)**, **Recently Installed (<30 days)**, and **Broken/Orphaned** applications.
+- **Silent / Unattended Uninstall**: Automatically detects and applies silent parameters (`/quiet`, `/qn`, `/s`, `/silent`, `/VERYSILENT`) across installer architectures (MSI, Inno Setup, Nullsoft NSIS, InstallShield, WiX).
+- **Force Removal**: Purges orphaned program files, registry keys, and uninstall registry registration when uninstaller files are corrupt or deleted.
+- **Application Details Modal**: Inspect full publisher metadata, installation directories, installer source, official website URL, and exact Registry keys.
+- **Batch Processing**: Filter, sort, and select multiple applications for sequential queue processing.
+- **Contextual Actions**: Modify installations, reveal installation folders in Windows File Explorer, or navigate to official support websites.
 
 ### 2. Windows Store Apps (UWP / MSIX / AppX)
 - **AppX Package Enumeration**: Leverages Windows Package Manager APIs to discover installed modern apps across all user profiles.
@@ -127,11 +130,13 @@ Zidimi Uninstaller is distributed as a standalone portable package that does not
 ### 4. Package Manager (WinGet)
 - **CLI Bridge**: Integrates with the `winget` command-line tool.
 - **Package Control**: Inspect package identifiers, source repositories, installed versions, and available upgrades.
+- **One-Click Upgrades**: Upgrade outdated software packages directly to their latest upstream releases.
 
 ### 5. Startup Manager
 - **Multi-Location Inspection**: Aggregates startup entries from `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`, `HKLM\Software\Microsoft\Windows\CurrentVersion\Run`, 32-bit Wow6432Node equivalents, and user Startup folders (`%AppData%` and `%ProgramData%`).
 - **Icon Extraction & Inspection**: Automatically extracts high-resolution application icons and metadata.
-- **Startup Item Details Modal**: Dedicated dialog for inspecting executable path, arguments, publisher, and direct jump to Registry Editor.
+- **Startup Item Details Modal**: Dedicated dialog for inspecting executable path, arguments, publisher, version, and direct jump to Registry Editor (`regedit.exe`).
+- **Explorer Quick Jump**: Reveal startup executables or shortcut files directly in Windows File Explorer.
 
 ### 6. Deep Clean and Residue Removal
 - **Targeted Scanning**: Searches common residual paths:
@@ -139,11 +144,16 @@ Zidimi Uninstaller is distributed as a standalone portable package that does not
   - `%AppData%` (Roaming) and `%LocalAppData%`
   - `%ProgramData%`
   - Registry paths: `HKCU\Software`, `HKLM\Software`, `HKLM\Software\WOW6432Node`
+- **Safety Levels**: Color-coded safety classifications (Safe vs Caution) to protect shared dependencies.
 - **Safe Cleanup**: Choose between safe recycling (Windows Recycle Bin) or permanent file deletion.
 
 ### 7. Safety and Process Hunter
 - **Process Hunter**: Queries running processes matching application executable names and file paths, offering automated process termination to prevent file lock errors during uninstallation.
 - **Restore Point Engine**: Calls Windows System Restore APIs to snapshot the system state prior to modifications.
+
+### 8. Task Scheduler UAC Bypass
+- **Highest Privileges Task**: Register a Windows Task Scheduler job running with `/rl HIGHEST` to launch Zidimi Uninstaller with full administrator privileges without triggering the Windows User Account Control (UAC) prompt.
+- **Desktop Shortcut Creator**: Generate a dedicated `Zidimi Uninstaller (No UAC).lnk` shortcut on your desktop with one click.
 
 ---
 
