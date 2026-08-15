@@ -73,8 +73,8 @@
                                   Visibility="{Binding ShowNoResults, Converter={StaticResource BoolToVis}}"/>
 
             <!-- Loading overlay -->
-            <Border Background="#99FFFFFF" CornerRadius="12"
-                    Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}">
+            <Border Background="{StaticResource ZBrushBackground}"
+                    Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}" Panel.ZIndex="10">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <controls:ZProgressRing RingSize="42"/>
                     <TextBlock Text="{Binding [Packages_Scanning], Source={x:Static services:LanguageManager.Instance}}"

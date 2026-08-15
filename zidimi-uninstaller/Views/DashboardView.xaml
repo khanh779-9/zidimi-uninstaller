@@ -81,14 +81,14 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <Grid Grid.Row="1" Background="#CCF2F2F2"
-                      Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}" Panel.ZIndex="10">
+                <Border Grid.Row="1" Background="{StaticResource ZBrushWhite}" CornerRadius="10"
+                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}" Panel.ZIndex="10">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                         <controls:ZProgressRing RingSize="40"/>
                         <TextBlock Text="{Binding [Dashboard_Scanning], Source={x:Static services:LanguageManager.Instance}}" Margin="0,14,0,0" HorizontalAlignment="Center"
                                    Foreground="{StaticResource ZBrushGray}"/>
                     </StackPanel>
-                </Grid>
+                </Border>
             </Grid>
         </controls:ZCard>
     </Grid>

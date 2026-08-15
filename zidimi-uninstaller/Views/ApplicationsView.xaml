@@ -171,14 +171,14 @@
                                   Visibility="{Binding ShowNoResults, Converter={StaticResource BoolToVis}}"/>
 
             <!-- Loading -->
-            <Grid Background="#CCF2F2F2"
-                  Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}" Panel.ZIndex="10">
+            <Border Background="{StaticResource ZBrushBackground}"
+                    Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}" Panel.ZIndex="10">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <controls:ZProgressRing RingSize="40"/>
                     <TextBlock Text="{Binding [Apps_Scanning], Source={x:Static services:LanguageManager.Instance}}" Margin="0,14,0,0" HorizontalAlignment="Center"
                                Foreground="{StaticResource ZBrushGray}"/>
                 </StackPanel>
-            </Grid>
+            </Border>
         </Grid>
 
         <!-- Status bar -->

@@ -399,6 +399,185 @@ public static class DeepCleanService
         return (deleted, freed);
     }
 
+    public static List<LeftoverItem> ScanSystemOrphanedLeftovers(IProgress<string>? progress = null)
+    {
+        var items = new List<LeftoverItem>();
+        var seenPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        // 1. Gather all currently installed applications
+        progress?.Report("Reading installed software registry…");
+        var installedApps = RegistryService.GetInstalledApplications();
+
+        var activeKeywords = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var activeFolders = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        var systemVendors = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "Microsoft", "Windows", "Windows NT", "Windows Defender", "Windows Mail",
+            "Windows Media Player", "Windows Photo Viewer", "Windows Security",
+            "System", "Classes", "Clients", "Policies", "RegisteredApplications",
+            "DirectShow", "AppData", "Temp", "Common Files", "Internet Explorer",
+            "Edge", "Google", "NVIDIA Corporation", "NVIDIA", "Intel", "AMD",
+            "Realtek", "OEM", "Drivers", "Packages", "Uninstall", "dotnet",
+            "vshost", "Zidimi", "ZidimiUninstaller", "Git", "GitHub", "PowerShell"
+        };
+
+        foreach (var app in installedApps)
+        {
+            if (!string.IsNullOrWhiteSpace(app.DisplayName))
+            {
+                var clean = CleanName(app.DisplayName);
+                if (clean.Length >= 3)
+                {
+                    activeKeywords.Add(clean);
+                    var parts = clean.Split(' ', '-', '_');
+                    if (parts.Length > 0 && parts[0].Length >= 3)
+                        activeKeywords.Add(parts[0]);
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(app.Publisher))
+            {
+                var cleanPub = CleanName(app.Publisher);
+                if (cleanPub.Length >= 4)
+                    activeKeywords.Add(cleanPub);
+            }
+            if (!string.IsNullOrWhiteSpace(app.InstallLocation) && Directory.Exists(app.InstallLocation))
+            {
+                activeFolders.Add(Path.GetFullPath(app.InstallLocation).TrimEnd('\\', '/'));
+            }
+        }
+
+        // 2. Scan AppData & ProgramData for orphaned folders
+        progress?.Report("Scanning orphaned application data in AppData & ProgramData…");
+        var targetSearchRoots = new[]
+        {
+            (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AppData Roaming"),
+            (Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "AppData Local"),
+            (Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "ProgramData")
+        };
+
+        foreach (var (root, label) in targetSearchRoots)
+        {
+            if (string.IsNullOrWhiteSpace(root) || !Directory.Exists(root)) continue;
+
+            try
+            {
+                var subDirs = Directory.GetDirectories(root);
+                foreach (var dir in subDirs)
+                {
+                    var dirName = Path.GetFileName(dir);
+                    if (IsProtectedFolder(dir) || systemVendors.Contains(dirName) || seenPaths.Contains(dir))
+                        continue;
+
+                    // If it does NOT match any active installed application keyword
+                    if (!MatchesKeywords(dirName, activeKeywords))
+                    {
+                        var dirInfo = new DirectoryInfo(dir);
+                        long size = GetDirectorySize(dirInfo);
+
+                        // Only include if modified more than 2 days ago or contains non-empty data
+                        items.Add(new LeftoverItem
+                        {
+                            Type = LeftoverType.Directory,
+                            SafetyLevel = LeftoverSafetyLevel.Safe,
+                            Path = dir,
+                            Name = dirName,
+                            Description = $"Orphaned folder in {label}",
+                            SizeInBytes = size,
+                            IsSelected = true
+                        });
+                        seenPaths.Add(dir);
+                    }
+                }
+            }
+            catch { }
+        }
+
+        // 3. Scan Registry for orphaned software keys
+        progress?.Report("Scanning orphaned registry software keys…");
+        var regRoots = new[]
+        {
+            (Registry.CurrentUser, @"Software"),
+            (Registry.LocalMachine, @"SOFTWARE\WOW6432Node")
+        };
+
+        foreach (var (root, subPath) in regRoots)
+        {
+            try
+            {
+                using var baseKey = root.OpenSubKey(subPath, writable: false);
+                if (baseKey == null) continue;
+
+                var subKeyNames = baseKey.GetSubKeyNames();
+                foreach (var name in subKeyNames)
+                {
+                    if (systemVendors.Contains(name) || IsCommonWord(name) || IsCommonPublisher(name))
+                        continue;
+
+                    if (!MatchesKeywords(name, activeKeywords))
+                    {
+                        var fullRegPath = $@"{root.Name}\{subPath}\{name}";
+                        items.Add(new LeftoverItem
+                        {
+                            Type = LeftoverType.RegistryKey,
+                            SafetyLevel = LeftoverSafetyLevel.Review,
+                            Path = fullRegPath,
+                            Name = name,
+                            Description = $"Orphaned configuration key ({root.Name})",
+                            SizeInBytes = 0,
+                            IsSelected = true
+                        });
+                    }
+                }
+            }
+            catch { }
+        }
+
+        // 4. Scan broken shortcuts
+        progress?.Report("Scanning broken shortcuts on Desktop & Start Menu…");
+        var shortcutRoots = new[]
+        {
+            Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+            Environment.GetFolderPath(Environment.SpecialFolder.CommonDesktopDirectory),
+            Environment.GetFolderPath(Environment.SpecialFolder.Programs),
+            Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms)
+        };
+
+        foreach (var root in shortcutRoots)
+        {
+            if (string.IsNullOrWhiteSpace(root) || !Directory.Exists(root)) continue;
+            try
+            {
+                var files = Directory.GetFiles(root, "*.lnk", SearchOption.AllDirectories);
+                foreach (var file in files)
+                {
+                    if (seenPaths.Contains(file)) continue;
+                    var name = Path.GetFileNameWithoutExtension(file);
+
+                    // Check if shortcut name is completely unknown
+                    if (!MatchesKeywords(name, activeKeywords) && !systemVendors.Contains(name))
+                    {
+                        var fi = new FileInfo(file);
+                        items.Add(new LeftoverItem
+                        {
+                            Type = LeftoverType.Shortcut,
+                            SafetyLevel = LeftoverSafetyLevel.Safe,
+                            Path = file,
+                            Name = Path.GetFileName(file),
+                            Description = "Orphaned application shortcut",
+                            SizeInBytes = fi.Length,
+                            IsSelected = true
+                        });
+                        seenPaths.Add(file);
+                    }
+                }
+            }
+            catch { }
+        }
+
+        return items;
+    }
+
     private static void DeleteRegistryKey(string fullPath)
     {
         // e.g. HKEY_CURRENT_USER\Software\AppName

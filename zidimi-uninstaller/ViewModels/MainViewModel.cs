@@ -18,6 +18,7 @@ public class MainViewModel : ObservableObject
     public PackagesViewModel Packages { get; }
     public WindowsFeaturesViewModel WindowsFeatures { get; }
     public DeepCleanViewModel DeepClean { get; }
+    public LeftoversViewModel Leftovers { get; }
 
     private object? _currentView;
     public object? CurrentView
@@ -51,6 +52,7 @@ public class MainViewModel : ObservableObject
         WindowsFeatures = new WindowsFeaturesViewModel();
         Settings = new SettingsViewModel();
         DeepClean = new DeepCleanViewModel();
+        Leftovers = new LeftoversViewModel();
 
         NavigateCommand = new RelayCommand(p => Navigate(p as string ?? "dashboard"));
         ReloadAllCommand = new RelayCommand(async _ => await ReloadAllAsync());
@@ -86,6 +88,7 @@ public class MainViewModel : ObservableObject
         _pages["packages"] = (LanguageManager.T("Pages_PackagesTitle", "WinGet Packages"), LanguageManager.T("Pages_PackagesSubtitle", "Manage modern software packages"));
         _pages["features"] = (LanguageManager.T("Pages_FeaturesTitle", "Windows Features"), LanguageManager.T("Pages_FeaturesSubtitle", "Enable or disable optional features (DISM)"));
         _pages["startup"] = (LanguageManager.T("Pages_StartupTitle", "Windows Startup"), LanguageManager.T("Pages_StartupSubtitle", "Manage auto-start programs"));
+        _pages["leftovers"] = (LanguageManager.T("Pages_LeftoversTitle", "Leftovers Cleaner"), LanguageManager.T("Pages_LeftoversSubtitle", "Scan and clean orphaned files, folders, and registry keys"));
         _pages["settings"] = (LanguageManager.T("Pages_SettingsTitle", "Preferences"), LanguageManager.T("Pages_SettingsSubtitle", "Application behavior and configuration"));
 
         if (NavItems.Count == 0)
@@ -96,6 +99,7 @@ public class MainViewModel : ObservableObject
             NavItems.Add(new NavItem { Key = "packages", Title = LanguageManager.T("Sidebar_Packages", "WinGet"), Icon = Geom("IconFolder") });
             NavItems.Add(new NavItem { Key = "features", Title = LanguageManager.T("Sidebar_Features", "Features"), Icon = Geom("IconShield") });
             NavItems.Add(new NavItem { Key = "startup", Title = LanguageManager.T("Sidebar_Startup", "Startup"), Icon = Geom("IconStartup") });
+            NavItems.Add(new NavItem { Key = "leftovers", Title = LanguageManager.T("Sidebar_Leftovers", "Trace Cleaner"), Icon = Geom("IconTrash") });
             NavItems.Add(new NavItem { Key = "settings", Title = LanguageManager.T("Sidebar_Settings", "Settings"), Icon = Geom("IconSettings") });
         }
         else
@@ -110,6 +114,7 @@ public class MainViewModel : ObservableObject
                     "packages" => LanguageManager.T("Sidebar_Packages", "WinGet"),
                     "features" => LanguageManager.T("Sidebar_Features", "Features"),
                     "startup" => LanguageManager.T("Sidebar_Startup", "Startup"),
+                    "leftovers" => LanguageManager.T("Sidebar_Leftovers", "Trace Cleaner"),
                     "settings" => LanguageManager.T("Sidebar_Settings", "Settings"),
                     _ => item.Title
                 };
@@ -132,6 +137,7 @@ public class MainViewModel : ObservableObject
             "packages" => Packages,
             "features" => WindowsFeatures,
             "startup" => Startup,
+            "leftovers" => Leftovers,
             "settings" => Settings,
             _ => Dashboard
         };

@@ -38,12 +38,12 @@ public class LeftoverItem : ObservableObject
 
     public string TypeText => Type switch
     {
-        LeftoverType.Directory => "Folder",
-        LeftoverType.File => "File",
-        LeftoverType.RegistryKey => "Registry Key",
-        LeftoverType.RegistryValue => "Registry Value",
-        LeftoverType.Shortcut => "Shortcut",
-        _ => "Unknown"
+        LeftoverType.Directory => LanguageManager.T("Leftover_TypeFolder", "Folder"),
+        LeftoverType.File => LanguageManager.T("Leftover_TypeFile", "File"),
+        LeftoverType.RegistryKey => LanguageManager.T("Leftover_TypeRegistry", "Registry Key"),
+        LeftoverType.RegistryValue => LanguageManager.T("Leftover_TypeRegistryValue", "Registry Value"),
+        LeftoverType.Shortcut => LanguageManager.T("Leftover_TypeShortcut", "Shortcut"),
+        _ => LanguageManager.T("Leftover_TypeUnknown", "Unknown")
     };
 
     public string SafetyBadgeVariant => SafetyLevel switch
@@ -56,9 +56,9 @@ public class LeftoverItem : ObservableObject
 
     public string SafetyText => SafetyLevel switch
     {
-        LeftoverSafetyLevel.Safe => "Safe to remove",
-        LeftoverSafetyLevel.Review => "Review recommended",
-        LeftoverSafetyLevel.Warning => "Caution required",
-        _ => "Unknown"
+        LeftoverSafetyLevel.Safe => LanguageManager.T("Leftover_SafetySafe", "Safe to remove"),
+        LeftoverSafetyLevel.Review => LanguageManager.T("Leftover_SafetyReview", "Review recommended"),
+        LeftoverSafetyLevel.Warning => LanguageManager.T("Leftover_SafetyWarning", "Caution required"),
+        _ => LanguageManager.T("Leftover_SafetyUnknown", "Unknown")
     };
 }

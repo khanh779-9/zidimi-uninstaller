@@ -4,6 +4,7 @@
     <!-- Core color palette -->
     <Color x:Key="ZColorWhite">#FEFEFE</Color>
     <Color x:Key="ZColorCard">#F2F2F2</Color>
+    <Color x:Key="ZColorBackground">#F2F2F2</Color>
     <Color x:Key="ZColorBlack">#121012</Color>
     <Color x:Key="ZColorDark">#2C2B2C</Color>
     <Color x:Key="ZColorGray">#767475</Color>
@@ -25,6 +26,7 @@
     <!-- Brushes -->
     <SolidColorBrush x:Key="ZBrushWhite" Color="{StaticResource ZColorWhite}"/>
     <SolidColorBrush x:Key="ZBrushCard" Color="{StaticResource ZColorCard}"/>
+    <SolidColorBrush x:Key="ZBrushBackground" Color="{StaticResource ZColorBackground}"/>
     <SolidColorBrush x:Key="ZBrushBlack" Color="{StaticResource ZColorBlack}"/>
     <SolidColorBrush x:Key="ZBrushDark" Color="{StaticResource ZColorDark}"/>
     <SolidColorBrush x:Key="ZBrushGray" Color="{StaticResource ZColorGray}"/>

@@ -14,6 +14,8 @@ ReloadAll=Reload all data
 About=About Application
 
 [Pages]
+LeftoversSubtitle=Scan and clean orphaned files, folders, data, and registry keys from uninstalled software
+LeftoversTitle=Leftovers & Trace Cleaner
 DashboardTitle=Dashboard
 DashboardSubtitle=Quick overview of installed applications
 AppsTitle=Installed Applications
@@ -269,4 +271,43 @@ User=User (HKCU)
 SuccessTitle=Success
 WarningTitle=Warning
 ErrorTitle=Error
-InfoTitle=Information
+InfoTitle=Information
+
+[Leftovers]
+SearchPlaceholder=Search traces, folders, registry…
+SelectAll=Select All
+SelectSafeOnly=Select Safe Only
+ScanBtn=Start Scan
+CleanBtn=Clean Traces
+FilterAll=All
+FilterFolders=Folders & Data
+FilterRegistry=Registry Keys
+FilterShortcuts=Broken Shortcuts
+EmptyTitle=No Traces Scanned Yet
+EmptySubtitle=Click 'Start Scan' to inspect your system for orphaned data folders and leftover registry keys
+NoResultsTitle=No Matching Traces Found
+NoResultsSubtitle=Try a different search query or change filter category
+OpenItemTooltip=Open File Location / Open in Regedit
+TotalBadge={0} traces found
+SelectedBadge={0} selected ({1})
+ScanningStatus=Scanning system for orphaned traces and leftovers…
+ScanComplete=Scan complete. Found {0} orphaned traces ({1}).
+ScanError=Error during scan: {0}
+ConfirmCleanTitle=Clean Orphaned Traces
+ConfirmCleanMsg=Are you sure you want to clean {0} selected orphaned traces ({1})?
+CleaningStatus=Cleaning selected traces…
+CleanSuccess=Cleaned {0} traces, freed {1}!
+CleanSummary=Cleaned {0} items, freed {1}.
+CleanError=Error cleaning traces: {0}
+
+[Leftover]
+TypeFolder=Folder
+TypeFile=File
+TypeRegistry=Registry Key
+TypeRegistryValue=Registry Value
+TypeShortcut=Shortcut
+TypeUnknown=Unknown
+SafetySafe=Safe to remove
+SafetyReview=Review recommended
+SafetyWarning=Caution required
+SafetyUnknown=Unknown
