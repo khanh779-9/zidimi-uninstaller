@@ -109,12 +109,15 @@ Scanning=Đang quét gói từ WinGet CLI…
 [Features]
 SearchPlaceholder=Tìm kiếm tính năng Windows (Hyper-V, WSL, Sandbox, .NET…)
 RescanTooltip=Quét lại tính năng Windows
-CountBadge={0} tính năng
+TotalBadge={0} tính năng
 EnabledBadge={0} đã bật
 StatusEnabled=Đã bật
 StatusDisabled=Đã tắt
 EmptyTitle=Không có tính năng nào
-EmptySubtitle=Không thể đọc trạng thái tính năng DISM trên hệ thống này.
+EmptySubtitle=Không tìm thấy tính năng Windows nào trên hệ thống.
+ElevationTitle=Yêu cầu quyền Quản trị viên
+ElevationSubtitle=DISM yêu cầu quyền Administrator để đọc và quản lý các tính năng tuỳ chọn của Windows.
+RestartAdminBtn=Khởi chạy lại với quyền Quản trị viên
 NoResultsTitle=Không có tính năng phù hợp
 NoResultsSubtitle=Thử tìm kiếm với từ khoá khác.
 Scanning=Đang truy vấn tính năng Windows qua DISM…

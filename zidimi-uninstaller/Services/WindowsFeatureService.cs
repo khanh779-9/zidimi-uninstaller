@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using zidimi_uninstaller.Models;
 
 namespace zidimi_uninstaller.Services;
+
 public static class WindowsFeatureService
 {
     public static List<WindowsFeatureEntry> GetFeatures()
@@ -11,7 +12,7 @@ public static class WindowsFeatureService
 
         try
         {
-            var output = ProcessTools.RunAndReadOutput("dism.exe", "/Online /Get-Features /Format:Table", timeoutMs: 30_000);
+            var output = ProcessTools.RunAndReadOutput("dism.exe", "/Online /Get-Features /Format:Table", timeoutMs: 35_000);
             if (string.IsNullOrWhiteSpace(output)) return list;
 
             var lines = output.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
@@ -19,7 +20,7 @@ public static class WindowsFeatureService
 
             for (int i = 0; i < lines.Length; i++)
             {
-                if (lines[i].Contains("---") || (lines[i].Contains("Feature Name") && lines[i].Contains("State")))
+                if (lines[i].Contains("---") || (lines[i].Contains("Feature") && lines[i].Contains("State")))
                 {
                     headerIdx = i;
                     break;
@@ -31,22 +32,37 @@ public static class WindowsFeatureService
                 for (int i = headerIdx + 1; i < lines.Length; i++)
                 {
                     var line = lines[i];
-                    if (string.IsNullOrWhiteSpace(line) || line.StartsWith("---") || line.StartsWith("The operation")) continue;
+                    if (string.IsNullOrWhiteSpace(line) || line.StartsWith("---") || line.StartsWith("The operation") || line.StartsWith("Deployment Image")) continue;
 
-                    var parts = Regex.Split(line.Trim(), @"\s{2,}");
-                    if (parts.Length >= 2)
+                    string name;
+                    string state;
+
+                    if (line.Contains('|'))
                     {
-                        var name = parts[0].Trim();
-                        var state = parts[1].Trim();
-                        var isEnabled = state.Equals("Enabled", StringComparison.OrdinalIgnoreCase);
-
-                        list.Add(new WindowsFeatureEntry
-                        {
-                            Name = name,
-                            DisplayName = FormatDisplayName(name),
-                            IsEnabled = isEnabled
-                        });
+                        var parts = line.Split('|');
+                        if (parts.Length < 2) continue;
+                        name = parts[0].Trim();
+                        state = parts[1].Trim();
                     }
+                    else
+                    {
+                        var parts = Regex.Split(line.Trim(), @"\s{2,}");
+                        if (parts.Length < 2) continue;
+                        name = parts[0].Trim();
+                        state = parts[1].Trim();
+                    }
+
+                    if (string.IsNullOrWhiteSpace(name) || name.Equals("Feature Name", StringComparison.OrdinalIgnoreCase)) continue;
+
+                    var isEnabled = state.Contains("Enabled", StringComparison.OrdinalIgnoreCase)
+                                 || state.Contains("Enable Pending", StringComparison.OrdinalIgnoreCase);
+
+                    list.Add(new WindowsFeatureEntry
+                    {
+                        Name = name,
+                        DisplayName = FormatDisplayName(name),
+                        IsEnabled = isEnabled
+                    });
                 }
             }
         }
@@ -57,11 +73,11 @@ public static class WindowsFeatureService
 
     private static string FormatDisplayName(string name)
     {
-        // Make technical DISM feature names more readable
         return name
             .Replace("-", " ")
             .Replace("_", " ");
     }
+
     public static bool SetFeatureState(WindowsFeatureEntry feature, bool enable)
     {
         try
@@ -79,7 +95,7 @@ public static class WindowsFeatureService
             if (proc != null)
             {
                 proc.WaitForExit(60_000);
-                return proc.ExitCode == 0 || proc.ExitCode == 3010; // 3010 = reboot required
+                return proc.ExitCode == 0 || proc.ExitCode == 3010;
             }
         }
         catch { }

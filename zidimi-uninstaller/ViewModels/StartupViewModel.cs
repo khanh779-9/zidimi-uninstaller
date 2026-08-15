@@ -52,6 +52,10 @@ public class StartupViewModel : ObservableObject
     private int _disabledCount;
     public int DisabledCount { get => _disabledCount; set => SetProperty(ref _disabledCount, value); }
 
+    public string TotalBadgeText => string.Format(LanguageManager.T("Startup_TotalBadge", "{0} items"), TotalCount);
+    public string EnabledBadgeText => string.Format(LanguageManager.T("Startup_EnabledBadge", "{0} enabled"), EnabledCount);
+    public string DisabledBadgeText => string.Format(LanguageManager.T("Startup_DisabledBadge", "{0} disabled"), DisabledCount);
+
     private StartupEntry? _selectedEntry;
     public StartupEntry? SelectedEntry
     {
@@ -148,5 +152,8 @@ public class StartupViewModel : ObservableObject
         DisabledCount = Entries.Count(e => !e.IsEnabled);
         ShowEmptyState = !IsLoading && Entries.Count == 0;
         ShowNoResults = !IsLoading && Entries.Count > 0 && VisibleCount == 0;
+        OnPropertyChanged(nameof(TotalBadgeText));
+        OnPropertyChanged(nameof(EnabledBadgeText));
+        OnPropertyChanged(nameof(DisabledBadgeText));
     }
 }

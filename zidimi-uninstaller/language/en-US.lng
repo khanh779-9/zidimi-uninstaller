@@ -109,12 +109,15 @@ Scanning=Scanning packages from WinGet CLI…
 [Features]
 SearchPlaceholder=Search Windows Features (Hyper-V, WSL, Sandbox, .NET…)
 RescanTooltip=Rescan Windows Features
-CountBadge={0} features
+TotalBadge={0} features
 EnabledBadge={0} enabled
 StatusEnabled=Enabled
 StatusDisabled=Disabled
 EmptyTitle=No features available
-EmptySubtitle=Unable to read DISM feature state on this system.
+EmptySubtitle=No Windows features found on this system.
+ElevationTitle=Administrator Privileges Required
+ElevationSubtitle=DISM requires Administrator privileges to query and manage Windows Features.
+RestartAdminBtn=Restart as Administrator
 NoResultsTitle=No matching features
 NoResultsSubtitle=Try searching with a different keyword.
 Scanning=Querying DISM Windows Features…

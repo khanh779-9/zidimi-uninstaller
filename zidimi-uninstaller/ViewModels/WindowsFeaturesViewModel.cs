@@ -1,5 +1,8 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Reflection;
+using System.Windows;
 using System.Windows.Data;
 using zidimi_uninstaller.Controls;
 using zidimi_uninstaller.Models;
@@ -43,6 +46,14 @@ public class WindowsFeaturesViewModel : ObservableObject
     private int _enabledCount;
     public int EnabledCount { get => _enabledCount; set => SetProperty(ref _enabledCount, value); }
 
+    public string TotalBadgeText => string.Format(LanguageManager.T("Features_TotalBadge", "{0} features"), TotalCount);
+    public string EnabledBadgeText => string.Format(LanguageManager.T("Features_EnabledBadge", "{0} enabled"), EnabledCount);
+
+    public bool IsAdministrator => TaskSchedulerService.IsAdministrator();
+
+    private bool _showElevationRequired;
+    public bool ShowElevationRequired { get => _showElevationRequired; set => SetProperty(ref _showElevationRequired, value); }
+
     private bool _showEmptyState;
     public bool ShowEmptyState { get => _showEmptyState; set => SetProperty(ref _showEmptyState, value); }
 
@@ -50,11 +61,30 @@ public class WindowsFeaturesViewModel : ObservableObject
     public bool ShowNoResults { get => _showNoResults; set => SetProperty(ref _showNoResults, value); }
 
     public AsyncRelayCommand RefreshCommand { get; }
+    public RelayCommand RestartAsAdminCommand { get; }
 
     public WindowsFeaturesViewModel()
     {
         _itemsView = new ListCollectionView(Features) { Filter = Filter };
         RefreshCommand = new AsyncRelayCommand(async _ => await LoadAsync());
+        RestartAsAdminCommand = new RelayCommand(_ =>
+        {
+            try
+            {
+                var exe = Environment.ProcessPath ?? Assembly.GetEntryAssembly()?.Location;
+                if (!string.IsNullOrWhiteSpace(exe))
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = exe,
+                        UseShellExecute = true,
+                        Verb = "runas"
+                    });
+                    Application.Current.Shutdown();
+                }
+            }
+            catch { }
+        });
     }
 
     public async Task LoadAsync()
@@ -151,7 +181,10 @@ public class WindowsFeaturesViewModel : ObservableObject
         TotalCount = Features.Count;
         VisibleCount = _itemsView.Cast<object>().Count();
         EnabledCount = Features.Count(f => f.IsEnabled);
-        ShowEmptyState = !IsLoading && Features.Count == 0;
+        ShowElevationRequired = !IsLoading && !TaskSchedulerService.IsAdministrator() && Features.Count == 0;
+        ShowEmptyState = !IsLoading && TaskSchedulerService.IsAdministrator() && Features.Count == 0;
         ShowNoResults = !IsLoading && Features.Count > 0 && VisibleCount == 0;
+        OnPropertyChanged(nameof(TotalBadgeText));
+        OnPropertyChanged(nameof(EnabledBadgeText));
     }
 }

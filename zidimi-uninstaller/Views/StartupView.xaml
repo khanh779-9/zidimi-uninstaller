@@ -31,9 +31,9 @@
 
         <!-- Statistics bar -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12">
-            <controls:ZBadge Content="{Binding TotalCount, StringFormat={}{0} items}" Variant="Accent"/>
-            <controls:ZBadge Content="{Binding EnabledCount, StringFormat={}{0} enabled}" Variant="Info" Margin="8,0,0,0"/>
-            <controls:ZBadge Content="{Binding DisabledCount, StringFormat={}{0} disabled}" Variant="Danger" Margin="8,0,0,0"/>
+            <controls:ZBadge Content="{Binding TotalBadgeText}" Variant="Accent"/>
+            <controls:ZBadge Content="{Binding EnabledBadgeText}" Variant="Success" Margin="8,0,0,0"/>
+            <controls:ZBadge Content="{Binding DisabledBadgeText}" Variant="Danger" Margin="8,0,0,0"/>
         </StackPanel>
 
         <!-- List -->

@@ -31,8 +31,8 @@
 
         <!-- Stats Bar -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12">
-            <controls:ZBadge Content="{Binding TotalCount, StringFormat={}{0} features}" Variant="Accent"/>
-            <controls:ZBadge Content="{Binding EnabledCount, StringFormat={}{0} enabled}" Variant="Success" Margin="8,0,0,0"/>
+            <controls:ZBadge Content="{Binding TotalBadgeText}" Variant="Accent"/>
+            <controls:ZBadge Content="{Binding EnabledBadgeText}" Variant="Success" Margin="8,0,0,0"/>
         </StackPanel>
 
         <!-- List -->
@@ -55,6 +55,16 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+
+            <!-- Elevation Required state -->
+            <controls:ZEmptyState Icon="{StaticResource IconShield}"
+                                  Title="{Binding [Features_ElevationTitle], Source={x:Static services:LanguageManager.Instance}}"
+                                  Subtitle="{Binding [Features_ElevationSubtitle], Source={x:Static services:LanguageManager.Instance}}"
+                                  Visibility="{Binding ShowElevationRequired, Converter={StaticResource BoolToVis}}">
+                <controls:ZButton Content="{Binding [Features_RestartAdminBtn], Source={x:Static services:LanguageManager.Instance}}"
+                                  Variant="Primary" Icon="{StaticResource IconShield}"
+                                  Command="{Binding RestartAsAdminCommand}"/>
+            </controls:ZEmptyState>
 
             <!-- Empty state -->
             <controls:ZEmptyState Icon="{StaticResource IconSettings}"
