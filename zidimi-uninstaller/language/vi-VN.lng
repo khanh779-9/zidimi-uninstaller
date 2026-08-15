@@ -163,6 +163,13 @@ AutoDeepClean=Quét tàn dư sau khi gỡ cài đặt
 AutoDeepCleanDesc=Tự động kích hoạt quét Deep Clean khi trình gỡ cài đặt hoàn tất.
 RecycleBin=Đưa file đã xoá vào Thùng rác (Recycle Bin)
 RecycleBinDesc=Chuyển file an toàn vào Thùng rác thay vì xoá vĩnh viễn khỏi ổ đĩa.
+ElevationHeader=Bỏ qua UAC (Task Scheduler)
+ElevationSubtitle=Cấu hình chạy quyền Quản trị viên không cần bảng xác nhận UAC
+BypassUac=Bỏ qua xác nhận UAC qua Task Scheduler
+BypassUacDesc=Tạo tác vụ hệ thống để khởi chạy ứng dụng với quyền cao nhất mà không hiện popup UAC.
+CreateShortcut=Phím tắt bỏ qua UAC trên Desktop
+CreateShortcutDesc=Tạo biểu tượng ngoài màn hình chính để mở ứng dụng lập tức với full quyền Admin.
+CreateShortcutBtn=Tạo phím tắt
 DataHeader=Dữ liệu & Bộ nhớ đệm
 DataSubtitle=Quản lý bộ nhớ đệm và nạp lại dữ liệu từ hệ thống
 ReloadAllBtn=Nạp lại tất cả dữ liệu
@@ -218,6 +225,11 @@ DeepCleanNoLeftovers=Không phát hiện tàn dư của "{0}". Đã gỡ sạch 
 DeepCleanSuccess=Dọn dẹp tàn dư hoàn tất: đã xoá {0} mục, giải phóng {1}.
 DeepCleanFailed=Lỗi khi dọn dẹp tàn dư: {0}
 CacheCleared=Đã xoá bộ nhớ đệm Icon.
+TaskSchedulerRegistered=Đã kích hoạt Task Scheduler bỏ qua UAC thành công!
+TaskSchedulerRemoved=Đã gỡ bỏ cấu hình Task Scheduler.
+TaskSchedulerFailed=Không thể đăng ký Task Scheduler. Hãy đảm bảo bạn chạy quyền Admin.
+ShortcutCreated=Đã tạo phím tắt bỏ qua UAC trên Desktop thành công!
+ShortcutFailed=Không thể tạo phím tắt. Vui lòng thử lại.
 
 [Status]
 ScanningRegistry=Đang quét registry…

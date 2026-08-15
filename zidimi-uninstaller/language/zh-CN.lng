@@ -163,6 +163,13 @@ AutoDeepClean=卸载后自动扫描残留
 AutoDeepCleanDesc=当卸载程序运行结束后自动唤起 Deep Clean 扫描。
 RecycleBin=将删除的文件移至回收站
 RecycleBinDesc=安全将文件移入回收站，而非直接永久删除。
+ElevationHeader=UAC Bypass (Task Scheduler)
+ElevationSubtitle=Configure execution with highest privileges without UAC prompt
+BypassUac=Bypass UAC prompts via Task Scheduler
+BypassUacDesc=Registers a system task to launch the application with highest privileges without prompting UAC.
+CreateShortcut=No-UAC Desktop Shortcut
+CreateShortcutDesc=Create a desktop shortcut to launch Zidimi Uninstaller immediately with full admin privileges.
+CreateShortcutBtn=Create Shortcut
 DataHeader=数据与缓存
 DataSubtitle=管理缓存并从系统重新加载所有数据
 ReloadAllBtn=重新加载全部数据
@@ -218,6 +225,11 @@ DeepCleanNoLeftovers=未检测到 "{0}" 的任何残留，已干净卸载！
 DeepCleanSuccess=深度清理完成：移除了 {0} 项，释放了 {1} 空间。
 DeepCleanFailed=清理残留时出错: {0}
 CacheCleared=已清空图标缓存。
+TaskSchedulerRegistered=Task Scheduler UAC bypass activated successfully!
+TaskSchedulerRemoved=Task Scheduler configuration removed.
+TaskSchedulerFailed=Failed to register Task Scheduler. Ensure you have administrator rights.
+ShortcutCreated=No-UAC Desktop shortcut created successfully!
+ShortcutFailed=Failed to create desktop shortcut. Please try again.
 
 [Status]
 ScanningRegistry=正在扫描注册表…

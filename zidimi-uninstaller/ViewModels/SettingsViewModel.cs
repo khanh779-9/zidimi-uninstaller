@@ -92,6 +92,38 @@ public class SettingsViewModel : ObservableObject
         }
     }
 
+    public bool BypassUacViaTaskScheduler
+    {
+        get => AppSettings.Instance.BypassUacViaTaskScheduler || TaskSchedulerService.IsTaskRegistered();
+        set
+        {
+            if (value)
+            {
+                var ok = TaskSchedulerService.RegisterTask();
+                if (ok)
+                {
+                    AppSettings.Instance.BypassUacViaTaskScheduler = true;
+                    AppSettings.Instance.Save();
+                    AppServices.Toast.Show(LanguageManager.Instance["Toasts_TaskSchedulerRegistered"], ZToastType.Success);
+                }
+                else
+                {
+                    AppServices.Toast.Show(LanguageManager.Instance["Toasts_TaskSchedulerFailed"], ZToastType.Error);
+                }
+            }
+            else
+            {
+                TaskSchedulerService.UnregisterTask();
+                AppSettings.Instance.BypassUacViaTaskScheduler = false;
+                AppSettings.Instance.Save();
+                AppServices.Toast.Show(LanguageManager.Instance["Toasts_TaskSchedulerRemoved"], ZToastType.Info);
+            }
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsAdministrator => TaskSchedulerService.IsAdministrator();
+
     public ObservableCollection<LanguageInfo> AvailableLanguages => LanguageManager.Instance.AvailableLanguages;
 
     public LanguageInfo? SelectedLanguage
@@ -113,6 +145,7 @@ public class SettingsViewModel : ObservableObject
     public RelayCommand ClearIconCacheCommand { get; }
     public RelayCommand ReloadDataCommand { get; }
     public RelayCommand ReloadCommand => ReloadDataCommand;
+    public RelayCommand CreateNoUacShortcutCommand { get; }
     public event Action? ReloadDataRequested;
 
     public SettingsViewModel()
@@ -125,7 +158,21 @@ public class SettingsViewModel : ObservableObject
         ClearIconCacheCommand = new RelayCommand(_ =>
         {
             IconService.ClearCache();
-            AppServices.Toast.Show("Đã xoá bộ nhớ đệm icon.", ZToastType.Success);
+            AppServices.Toast.Show(LanguageManager.Instance["Toasts_CacheCleared"], ZToastType.Success);
+        });
+
+        CreateNoUacShortcutCommand = new RelayCommand(_ =>
+        {
+            TaskSchedulerService.RegisterTask();
+            var success = TaskSchedulerService.CreateDesktopShortcut();
+            if (success)
+            {
+                AppServices.Toast.Show(LanguageManager.Instance["Toasts_ShortcutCreated"], ZToastType.Success);
+            }
+            else
+            {
+                AppServices.Toast.Show(LanguageManager.Instance["Toasts_ShortcutFailed"], ZToastType.Error);
+            }
         });
 
         ReloadDataCommand = new RelayCommand(_ => ReloadDataRequested?.Invoke());

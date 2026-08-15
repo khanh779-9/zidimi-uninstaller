@@ -81,6 +81,37 @@
                 </StackPanel>
             </controls:ZCard>
 
+            <!-- UAC & Elevation (Task Scheduler) -->
+            <controls:ZCard Margin="0,14,0,0" Padding="20,14">
+                <StackPanel>
+                    <controls:ZSectionHeader Title="{Binding [Settings_ElevationHeader], Source={x:Static services:LanguageManager.Instance}}"
+                                             Subtitle="{Binding [Settings_ElevationSubtitle], Source={x:Static services:LanguageManager.Instance}}"
+                                             Icon="{StaticResource IconShield}"/>
+                    <controls:ZToggleRow Title="{Binding [Settings_BypassUac], Source={x:Static services:LanguageManager.Instance}}"
+                                         Subtitle="{Binding [Settings_BypassUacDesc], Source={x:Static services:LanguageManager.Instance}}"
+                                         IsOn="{Binding BypassUacViaTaskScheduler, Mode=TwoWay}"
+                                         Margin="0,8,0,0"/>
+                    <Separator Height="1" Background="{StaticResource ZBrushLightGray}" Margin="0,6"/>
+                    <Grid Margin="0,8,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="{Binding [Settings_CreateShortcut], Source={x:Static services:LanguageManager.Instance}}"
+                                       FontWeight="SemiBold" FontSize="14"
+                                       Foreground="{StaticResource ZBrushBlack}"/>
+                            <TextBlock Text="{Binding [Settings_CreateShortcutDesc], Source={x:Static services:LanguageManager.Instance}}"
+                                       FontSize="12" Foreground="{StaticResource ZBrushGray}" Margin="0,3,0,0"/>
+                        </StackPanel>
+                        <controls:ZButton Grid.Column="1"
+                                          Content="{Binding [Settings_CreateShortcutBtn], Source={x:Static services:LanguageManager.Instance}}"
+                                          Variant="Secondary"
+                                          Command="{Binding CreateNoUacShortcutCommand}"/>
+                    </Grid>
+                </StackPanel>
+            </controls:ZCard>
+
             <!-- Data & Cache -->
             <controls:ZCard Margin="0,14,0,0" Padding="20,14">
                 <StackPanel>

@@ -163,6 +163,13 @@ AutoDeepClean=Scan leftovers after uninstall
 AutoDeepCleanDesc=Automatically trigger Deep Clean scan when uninstaller finishes.
 RecycleBin=Send deleted files to Recycle Bin
 RecycleBinDesc=Safely send files to Recycle Bin instead of permanent deletion.
+ElevationHeader=UAC Bypass (Task Scheduler)
+ElevationSubtitle=Configure execution with highest privileges without UAC prompt
+BypassUac=Bypass UAC prompts via Task Scheduler
+BypassUacDesc=Registers a system task to launch the application with highest privileges without prompting UAC.
+CreateShortcut=No-UAC Desktop Shortcut
+CreateShortcutDesc=Create a desktop shortcut to launch Zidimi Uninstaller immediately with full admin privileges.
+CreateShortcutBtn=Create Shortcut
 DataHeader=Data & Cache
 DataSubtitle=Manage cache and reload data from system
 ReloadAllBtn=Reload All Data
@@ -218,6 +225,11 @@ DeepCleanNoLeftovers=No leftovers detected for "{0}". Clean uninstall!
 DeepCleanSuccess=Deep Clean complete: removed {0} items, freed {1}.
 DeepCleanFailed=Error cleaning leftovers: {0}
 CacheCleared=Icon cache cleared.
+TaskSchedulerRegistered=Task Scheduler UAC bypass activated successfully!
+TaskSchedulerRemoved=Task Scheduler configuration removed.
+TaskSchedulerFailed=Failed to register Task Scheduler. Ensure you have administrator rights.
+ShortcutCreated=No-UAC Desktop shortcut created successfully!
+ShortcutFailed=Failed to create desktop shortcut. Please try again.
 
 [Status]
 ScanningRegistry=Scanning registry…
