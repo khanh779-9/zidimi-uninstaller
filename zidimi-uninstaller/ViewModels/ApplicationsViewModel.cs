@@ -325,21 +325,19 @@ public class ApplicationsViewModel : ObservableObject
         var targets = GetTargets(param);
         if (targets.Count == 0) return;
 
-        if (AppSettings.Instance.ConfirmBeforeUninstall)
-        {
-            var title = targets.Count == 1
-                ? LanguageManager.T("Dialogs_ConfirmUninstallSingleTitle", "Uninstall Application")
-                : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiTitle", "Uninstall {0} Applications"), targets.Count);
-            var msg = targets.Count == 1
-                ? string.Format(LanguageManager.T("Dialogs_ConfirmUninstallSingleMsg", "Are you sure you want to uninstall \"{0}\"?"), targets[0].DisplayName)
-                : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiMsg", "Are you sure you want to uninstall {0} selected applications?"), targets.Count);
-            var btn = LanguageManager.T("Dialogs_ConfirmBtn", "Uninstall");
+        // 1. Mandatory confirmation step before any uninstallation
+        var title = targets.Count == 1
+            ? LanguageManager.T("Dialogs_ConfirmUninstallSingleTitle", "Uninstall Application")
+            : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiTitle", "Uninstall {0} Applications"), targets.Count);
+        var msg = targets.Count == 1
+            ? string.Format(LanguageManager.T("Dialogs_ConfirmUninstallSingleMsg", "Are you sure you want to uninstall \"{0}\"?"), targets[0].DisplayName)
+            : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiMsg", "Are you sure you want to uninstall {0} selected applications?"), targets.Count);
+        var btn = LanguageManager.T("Dialogs_ConfirmBtn", "Uninstall");
 
-            var ok = await AppServices.Dialog.ConfirmAsync(title, msg, btn);
-            if (!ok) return;
-        }
+        var ok = await AppServices.Dialog.ConfirmAsync(title, msg, btn);
+        if (!ok) return;
 
-        // 1. Create Restore Point if enabled
+        // 2. Create Restore Point if enabled
         if (AppSettings.Instance.CreateRestorePoint)
         {
             var appDesc = targets.Count == 1 ? targets[0].DisplayName : $"{targets.Count} applications";
@@ -352,7 +350,7 @@ public class ApplicationsViewModel : ObservableObject
         {
             try
             {
-                // 2. Terminate running processes holding locks if enabled
+                // 3. Terminate running processes holding locks if enabled
                 if (AppSettings.Instance.AutoKillProcesses)
                 {
                     var procs = await Task.Run(() => ProcessHunterService.FindRunningProcesses(entry));
@@ -364,7 +362,7 @@ public class ApplicationsViewModel : ObservableObject
                     }
                 }
 
-                // 3. Launch uninstaller process
+                // 4. Launch official uninstaller (standard GUI if not quiet)
                 var process = UninstallService.Run(entry, quiet);
                 if (process == null)
                 {
@@ -375,7 +373,7 @@ public class ApplicationsViewModel : ObservableObject
                 entry.IsUninstalling = true;
                 launched++;
 
-                // Track process exit to trigger Deep Clean and list cleanup
+                // Track process exit to trigger Deep Clean leftover review modal and list cleanup
                 _ = Task.Run(async () =>
                 {
                     try
@@ -384,7 +382,7 @@ public class ApplicationsViewModel : ObservableObject
                     }
                     catch { }
 
-                    await Task.Delay(1000);
+                    await Task.Delay(1500);
 
                     // Remove entry on UI thread
                     System.Windows.Application.Current?.Dispatcher.Invoke(() =>
@@ -395,14 +393,11 @@ public class ApplicationsViewModel : ObservableObject
                         ReloadRequested?.Invoke();
                     });
 
-                    // 4. Trigger Deep Clean if enabled
-                    if (AppSettings.Instance.EnableDeepClean)
+                    // 5. Open Deep Clean Modal to show all leftover files, folders & registry entries for user review
+                    System.Windows.Application.Current?.Dispatcher.Invoke(() =>
                     {
-                        System.Windows.Application.Current?.Dispatcher.Invoke(() =>
-                        {
-                            DeepCleanRequested?.Invoke(entry);
-                        });
-                    }
+                        DeepCleanRequested?.Invoke(entry);
+                    });
                 });
             }
             catch (NoWayToUninstallException)

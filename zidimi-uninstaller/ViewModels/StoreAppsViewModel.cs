@@ -131,19 +131,16 @@ public class StoreAppsViewModel : ObservableObject
         var targets = GetTargets(param);
         if (targets.Count == 0) return;
 
-        if (AppSettings.Instance.ConfirmBeforeUninstall)
-        {
-            var title = targets.Count == 1
-                ? LanguageManager.T("Dialogs_ConfirmUninstallSingleTitle", "Uninstall Application")
-                : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiTitle", "Uninstall {0} Applications"), targets.Count);
-            var msg = targets.Count == 1
-                ? string.Format(LanguageManager.T("Dialogs_ConfirmUninstallSingleMsg", "Are you sure you want to uninstall \"{0}\"?"), targets[0].DisplayName)
-                : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiMsg", "Are you sure you want to uninstall {0} selected applications?"), targets.Count);
-            var btn = LanguageManager.T("Dialogs_ConfirmBtn", "Uninstall");
+        var title = targets.Count == 1
+            ? LanguageManager.T("Dialogs_ConfirmUninstallSingleTitle", "Uninstall Application")
+            : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiTitle", "Uninstall {0} Applications"), targets.Count);
+        var msg = targets.Count == 1
+            ? string.Format(LanguageManager.T("Dialogs_ConfirmUninstallSingleMsg", "Are you sure you want to uninstall \"{0}\"?"), targets[0].DisplayName)
+            : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiMsg", "Are you sure you want to uninstall {0} selected applications?"), targets.Count);
+        var btn = LanguageManager.T("Dialogs_ConfirmBtn", "Uninstall");
 
-            var ok = await AppServices.Dialog.ConfirmAsync(title, msg, btn);
-            if (!ok) return;
-        }
+        var ok = await AppServices.Dialog.ConfirmAsync(title, msg, btn);
+        if (!ok) return;
 
         int removed = 0;
         foreach (var entry in targets)
