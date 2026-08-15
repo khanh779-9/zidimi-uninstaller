@@ -12,6 +12,7 @@ A modern, fast, and thorough software management and uninstallation utility for 
 ## Table of Contents
 
 - [Overview](#overview)
+- [Screenshots](#screenshots)
 - [Feature Overview Matrix](#feature-overview-matrix)
 - [Comparison with Windows Default Uninstaller](#comparison-with-windows-default-uninstaller)
 - [Detailed Module Capabilities](#detailed-module-capabilities)
@@ -37,6 +38,31 @@ A modern, fast, and thorough software management and uninstallation utility for 
 ## Overview
 
 **Zidimi Uninstaller** is an open-source Windows uninstallation and system maintenance tool built with **WPF (.NET 8)**. It provides a centralized, high-performance interface to monitor, manage, and thoroughly remove desktop applications, Windows Store apps (UWP/MSIX), Windows optional features, and package manager packages, while eliminating orphaned residue in the file system and Windows Registry.
+
+---
+
+## Screenshots
+
+### Dashboard
+![Dashboard](screenshot/dashboard.png)
+
+### Installed Applications
+![Installed Applications](screenshot/installed_app.png)
+
+### Microsoft Store Apps
+![Microsoft Store Apps](screenshot/store_app.png)
+
+### Windows Features (DISM)
+![Windows Features](screenshot/windows_features.png)
+
+### Startup Manager
+![Startup Manager](screenshot/startup_app.png)
+
+### WinGet Package Manager
+![WinGet Package Manager](screenshot/winget_package.png)
+
+### Settings and UAC Bypass Configuration
+![Settings](screenshot/settings.png)
 
 ---
 
@@ -158,7 +184,7 @@ Settings are persisted in `%LocalAppData%\ZidimiUninstaller\settings.json`.
 ## Download and Installation
 
 1. Go to the [Releases](https://github.com/khanh779-9/zidimi-uninstaller/releases) page.
-2. Download the latest release package (`zidimi-uninstaller-v1.0.0.zip`).
+2. Download the latest release package (`zidimi-uninstaller-v1.1.4.zip`).
 3. Extract the zip file into any folder.
 4. Run `zidimi-uninstaller.exe`.
 
