@@ -150,6 +150,16 @@
                                    Margin="24"/>
         </Grid>
 
+        <!-- Startup Details Modal Overlay -->
+        <Grid Grid.Column="0" Grid.ColumnSpan="2" Background="#7F000000"
+              Visibility="{Binding Startup.IsDetailsModalOpen, Converter={StaticResource BoolToVis}}"
+              PreviewMouseDown="OnModalBackdropMouseDown"
+              Panel.ZIndex="106">
+            <views:StartupDetailsModal DataContext="{Binding Startup}"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Margin="24"/>
+        </Grid>
+
         <!-- Deep Clean Modal Overlay -->
         <Grid Grid.Column="0" Grid.ColumnSpan="2" Background="#7F000000"
               Visibility="{Binding DeepClean.IsOpen, Converter={StaticResource BoolToVis}}"

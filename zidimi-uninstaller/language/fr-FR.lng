@@ -133,6 +133,14 @@ NoResultsSubtitle=Essayez de rechercher avec un autre mot-clé.
 Scanning=Interrogation des fonctionnalités Windows DISM…
 
 [Startup]
+ItemName=Nom de l'�l�ment
+CommandLabel=Ligne de commande
+ToggleBtn=Basculer
+ScopeLabel=Port�e
+StatusLabel=�tat
+ExecutableLabel=Fichier ex�cutable
+LocationLabel=Emplacement Registre / Dossier
+OpenRegedit=Ouvrir dans Regedit
 SearchPlaceholder=Rechercher des éléments de démarrage…
 RescanTooltip=Réanalyser les éléments de démarrage
 TotalBadge={0} éléments

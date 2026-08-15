@@ -133,6 +133,14 @@ NoResultsSubtitle=Prova a cercare con una parola chiave diversa.
 Scanning=Interrogazione funzionalità Windows DISM in corso…
 
 [Startup]
+ItemName=Nome elemento
+CommandLabel=Riga di comando
+ToggleBtn=Attiva / Disattiva
+ScopeLabel=Ambito
+StatusLabel=Stato
+ExecutableLabel=File eseguibile
+LocationLabel=Percorso Registro / Cartella
+OpenRegedit=Apri in Regedit
 SearchPlaceholder=Cerca elementi di avvio…
 RescanTooltip=Riscansiona gli elementi di avvio
 TotalBadge={0} elementi

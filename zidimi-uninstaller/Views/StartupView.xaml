@@ -80,12 +80,18 @@
                                                  Variant="{Binding StatusBadgeVariant}"
                                                  VerticalAlignment="Center" Margin="0,0,14,0"/>
 
-                                <!-- Open Location Button -->
-                                <controls:ZIconButton Grid.Column="3" Icon="{StaticResource IconFolder}"
-                                                      Command="{Binding DataContext.OpenLocationCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                      CommandParameter="{Binding}"
-                                                      ToolTip="{Binding [Apps_OpenFolder], Source={x:Static services:LanguageManager.Instance}}"
-                                                      Margin="0,0,12,0"/>
+                                <!-- Action Buttons -->
+                                <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,14,0">
+                                    <controls:ZIconButton Icon="{StaticResource IconInfo}"
+                                                          Command="{Binding DataContext.OpenDetailsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                          CommandParameter="{Binding}"
+                                                          ToolTip="{Binding [Apps_Details], Source={x:Static services:LanguageManager.Instance}}"
+                                                          Margin="0,0,8,0"/>
+                                    <controls:ZIconButton Icon="{StaticResource IconFolder}"
+                                                          Command="{Binding DataContext.OpenLocationCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                          CommandParameter="{Binding}"
+                                                          ToolTip="{Binding [Apps_OpenFolder], Source={x:Static services:LanguageManager.Instance}}"/>
+                                </StackPanel>
 
                                 <!-- Toggle Switch -->
                                 <controls:ZToggleButton Grid.Column="4" VerticalAlignment="Center"

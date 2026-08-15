@@ -15,6 +15,8 @@ public class StartupEntry : INotifyPropertyChanged
     public string Command { get; set; } = string.Empty;
     public string ExecutablePath { get; set; } = string.Empty;
     public string Location { get; set; } = string.Empty;
+    public string Publisher { get; set; } = string.Empty;
+    public string Version { get; set; } = string.Empty;
     public bool IsMachine { get; set; }
     public bool IsFolderEntry { get; set; }
 

@@ -44,7 +44,7 @@ public static class StartupService
 
                 var exePath = ExtractExecutablePath(value);
 
-                list.Add(new StartupEntry
+                var entry = new StartupEntry
                 {
                     Name = valueName,
                     Command = value,
@@ -52,7 +52,9 @@ public static class StartupService
                     Location = key.Name,
                     IsMachine = isMachine,
                     IsFolderEntry = false
-                });
+                };
+                PopulateMetadata(entry);
+                list.Add(entry);
             }
         }
         catch
@@ -79,7 +81,7 @@ public static class StartupService
                 if (name.EndsWith(".lnk", StringComparison.OrdinalIgnoreCase))
                     name = Path.GetFileNameWithoutExtension(name);
 
-                list.Add(new StartupEntry
+                var entry = new StartupEntry
                 {
                     Name = name,
                     Command = file,
@@ -88,12 +90,44 @@ public static class StartupService
                     IsMachine = isMachine,
                     IsFolderEntry = true,
                     IsEnabled = isEnabled
-                });
+                };
+                PopulateMetadata(entry);
+                list.Add(entry);
             }
         }
         catch
         {
             // Skip inaccessible directories
+        }
+    }
+
+    private static void PopulateMetadata(StartupEntry entry)
+    {
+        if (string.IsNullOrWhiteSpace(entry.ExecutablePath)) return;
+        try
+        {
+            var exp = Environment.ExpandEnvironmentVariables(entry.ExecutablePath.Trim('\"', '\''));
+            if (File.Exists(exp))
+            {
+                var vi = System.Diagnostics.FileVersionInfo.GetVersionInfo(exp);
+                entry.Publisher = vi.CompanyName ?? string.Empty;
+                entry.Version = vi.FileVersion ?? string.Empty;
+            }
+        }
+        catch { }
+    }
+
+    public static void OpenRegistryKey(string keyPath)
+    {
+        try
+        {
+            using var regKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Applets\Regedit", true);
+            regKey?.SetValue("LastKey", keyPath);
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("regedit.exe") { UseShellExecute = true });
+        }
+        catch
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("regedit.exe") { UseShellExecute = true });
         }
     }
 

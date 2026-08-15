@@ -133,6 +133,14 @@ NoResultsSubtitle=Versuchen Sie die Suche mit einem anderen Begriff.
 Scanning=Windows-Features werden über DISM abgefragt…
 
 [Startup]
+ItemName=Elementname
+CommandLabel=Befehlszeile
+ToggleBtn=Umschalten
+ScopeLabel=Bereich
+StatusLabel=Status
+ExecutableLabel=Ausf�hrbare Datei
+LocationLabel=Registry- / Ordnerspeicherort
+OpenRegedit=In Regedit �ffnen
 SearchPlaceholder=Autostart-Einträge suchen…
 RescanTooltip=Autostart-Einträge neu scannen
 TotalBadge={0} Einträge

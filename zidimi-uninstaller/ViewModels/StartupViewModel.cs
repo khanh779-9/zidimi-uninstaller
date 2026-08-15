@@ -63,8 +63,19 @@ public class StartupViewModel : ObservableObject
         set => SetProperty(ref _selectedEntry, value);
     }
 
+    private bool _isDetailsModalOpen;
+    public bool IsDetailsModalOpen
+    {
+        get => _isDetailsModalOpen;
+        set => SetProperty(ref _isDetailsModalOpen, value);
+    }
+
     public AsyncRelayCommand RefreshCommand { get; }
     public RelayCommand OpenLocationCommand { get; }
+    public RelayCommand OpenDetailsCommand { get; }
+    public RelayCommand CloseDetailsCommand { get; }
+    public RelayCommand OpenRegistryCommand { get; }
+    public RelayCommand ToggleSelectedCommand { get; }
 
     public StartupViewModel()
     {
@@ -72,6 +83,24 @@ public class StartupViewModel : ObservableObject
 
         RefreshCommand = new AsyncRelayCommand(async _ => await LoadAsync());
         OpenLocationCommand = new RelayCommand(p => OpenLocationSelected(p as StartupEntry ?? SelectedEntry));
+        OpenDetailsCommand = new RelayCommand(p =>
+        {
+            if (p is StartupEntry entry)
+                SelectedEntry = entry;
+            if (SelectedEntry != null)
+                IsDetailsModalOpen = true;
+        });
+        CloseDetailsCommand = new RelayCommand(_ => IsDetailsModalOpen = false);
+        OpenRegistryCommand = new RelayCommand(_ =>
+        {
+            if (SelectedEntry != null && !SelectedEntry.IsFolderEntry)
+                StartupService.OpenRegistryKey(SelectedEntry.Location);
+        });
+        ToggleSelectedCommand = new RelayCommand(_ =>
+        {
+            if (SelectedEntry != null)
+                SelectedEntry.IsEnabled = !SelectedEntry.IsEnabled;
+        });
     }
 
     public async Task LoadAsync()

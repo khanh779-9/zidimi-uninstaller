@@ -124,6 +124,14 @@ NoResultsSubtitle=Thử tìm kiếm với từ khoá khác.
 Scanning=Đang truy vấn tính năng Windows qua DISM…
 
 [Startup]
+ItemName=T�n m?c
+CommandLabel=D�ng l?nh kh?i d?ng
+ToggleBtn=B?t / T?t
+ScopeLabel=Ph?m vi
+StatusLabel=Tr?ng th�i
+ExecutableLabel=T?p tin th?c thi
+LocationLabel=V? tr� Registry / Thu m?c
+OpenRegedit=M? trong Regedit
 SearchPlaceholder=Tìm kiếm mục khởi động…
 RescanTooltip=Quét lại mục khởi động
 TotalBadge={0} mục

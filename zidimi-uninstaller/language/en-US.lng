@@ -124,6 +124,14 @@ NoResultsSubtitle=Try searching with a different keyword.
 Scanning=Querying DISM Windows Features…
 
 [Startup]
+ItemName=Item Name
+CommandLabel=Command Line
+ToggleBtn=Toggle State
+ScopeLabel=Scope
+StatusLabel=Status
+ExecutableLabel=Executable File
+LocationLabel=Registry / Folder Location
+OpenRegedit=Open in Regedit
 SearchPlaceholder=Search startup items…
 RescanTooltip=Rescan startup items
 TotalBadge={0} items
