@@ -283,43 +283,93 @@ User=Utilisateur (HKCU)
 SuccessTitle=Succès
 WarningTitle=Avertissement
 ErrorTitle=Erreur
-InfoTitle=Information
+InfoTitle=Information
+
+
+
+[Leftovers]
+
+SearchPlaceholder=Rechercher des traces, dossiers, registre…
+
+SelectAll=Tout sélectionner
+
+SelectSafeOnly=Sélectionner sécurisés uniquement
+
+ScanBtn=Lancer l'analyse
+
+CleanBtn=Nettoyer les traces
+
+FilterAll=Tous
+
+FilterFolders=Dossiers & Données
+
+FilterRegistry=Clés de Registre
+
+FilterShortcuts=Raccourcis cassés
+
+EmptyTitle=Aucune trace analysée
+
+EmptySubtitle=Cliquez sur 'Lancer l'analyse' pour rechercher les dossiers orphelins et clés de registre résiduelles
+
+NoResultsTitle=Aucune trace correspondante
+
+NoResultsSubtitle=Essayez une autre recherche ou changez de filtre
+
+OpenItemTooltip=Ouvrir l'emplacement / Ouvrir dans Regedit
+
+TotalBadge={0} traces trouvées
+
+SelectedBadge={0} sélectionnées ({1})
+
+ScanningStatus=Analyse des traces et résidus orphelins…
+
+ScanComplete=Analyse terminée. {0} traces orphelines trouvées ({1}).
+
+ScanError=Erreur lors de l'analyse : {0}
+
+ConfirmCleanTitle=Nettoyer les traces orphelines
+
+ConfirmCleanMsg=Êtes-vous sûr de vouloir nettoyer {0} traces sélectionnées ({1}) ?
+
+CleaningStatus=Nettoyage des traces sélectionnées…
+
+CleanSuccess={0} traces nettoyées, {1} libérés !
+
+CleanSummary={0} éléments nettoyés, {1} libérés.
+
+CleanError=Erreur lors du nettoyage des traces : {0}
+
+
+
+[Leftover]
+
+TypeFolder=Dossier
+
+TypeFile=Fichier
+
+TypeRegistry=Clé de Registre
+
+TypeRegistryValue=Valeur de Registre
+
+TypeShortcut=Raccourci
+
+TypeUnknown=Inconnu
+
+SafetySafe=Sûr à supprimer
+
+SafetyReview=Examen recommandé
+
+SafetyWarning=Prudence requise
+
+SafetyUnknown=Inconnu
 
-[Leftovers]
-SearchPlaceholder=Rechercher des traces, dossiers, registre…
-SelectAll=Tout sélectionner
-SelectSafeOnly=Sélectionner sécurisés uniquement
-ScanBtn=Lancer l'analyse
-CleanBtn=Nettoyer les traces
-FilterAll=Tous
-FilterFolders=Dossiers & Données
-FilterRegistry=Clés de Registre
-FilterShortcuts=Raccourcis cassés
-EmptyTitle=Aucune trace analysée
-EmptySubtitle=Cliquez sur 'Lancer l'analyse' pour rechercher les dossiers orphelins et clés de registre résiduelles
-NoResultsTitle=Aucune trace correspondante
-NoResultsSubtitle=Essayez une autre recherche ou changez de filtre
-OpenItemTooltip=Ouvrir l'emplacement / Ouvrir dans Regedit
-TotalBadge={0} traces trouvées
-SelectedBadge={0} sélectionnées ({1})
-ScanningStatus=Analyse des traces et résidus orphelins…
-ScanComplete=Analyse terminée. {0} traces orphelines trouvées ({1}).
-ScanError=Erreur lors de l'analyse : {0}
-ConfirmCleanTitle=Nettoyer les traces orphelines
-ConfirmCleanMsg=Êtes-vous sûr de vouloir nettoyer {0} traces sélectionnées ({1}) ?
-CleaningStatus=Nettoyage des traces sélectionnées…
-CleanSuccess={0} traces nettoyées, {1} libérés !
-CleanSummary={0} éléments nettoyés, {1} libérés.
-CleanError=Erreur lors du nettoyage des traces : {0}
-
-[Leftover]
-TypeFolder=Dossier
-TypeFile=Fichier
-TypeRegistry=Clé de Registre
-TypeRegistryValue=Valeur de Registre
-TypeShortcut=Raccourci
-TypeUnknown=Inconnu
-SafetySafe=Sûr à supprimer
-SafetyReview=Examen recommandé
-SafetyWarning=Prudence requise
-SafetyUnknown=Inconnu
+[About]
+Tagline=Un utilitaire de gestion et de désinstallation de logiciels moderne, rapide et approfondi pour Windows avec nettoyage en profondeur des résidus.
+AuthorLabel=Auteur / Développeur
+LicenseLabel=Licence logicielle
+PlatformLabel=Plateforme
+FrameworkLabel=Environnement d'exécution
+ArchitectureLabel=Architecture
+StatusLabel=Statut de version
+ReleasesBtn=Versions
+IssuesBtn=Signaler un problème

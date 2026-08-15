@@ -84,7 +84,7 @@
                                                   Foreground="{StaticResource ZBrushLighterGray}"
                                                   ToolTip="{Binding [Sidebar_About], Source={x:Static services:LanguageManager.Instance}}"
                                                   Margin="8,0,0,0"
-                                                  Click="OnAboutClick"/>
+                                                  Command="{Binding OpenAboutCommand}"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -142,6 +142,16 @@
         <!-- Confirmation dialog -->
         <controls:ZDialog Grid.Column="0" Grid.ColumnSpan="2" x:Name="ConfirmDialog"
                           Panel.ZIndex="100"/>
+
+        <!-- About Modal Overlay -->
+        <Grid Grid.Column="0" Grid.ColumnSpan="2" Background="#7F000000"
+              Visibility="{Binding IsAboutModalOpen, Converter={StaticResource BoolToVis}}"
+              PreviewMouseDown="OnModalBackdropMouseDown"
+              Panel.ZIndex="110">
+            <views:AboutModal DataContext="{Binding}"
+                              HorizontalAlignment="Center" VerticalAlignment="Center"
+                              Margin="24"/>
+        </Grid>
 
         <!-- Application Details Modal Overlay -->
         <Grid Grid.Column="0" Grid.ColumnSpan="2" Background="#7F000000"

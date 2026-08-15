@@ -283,43 +283,93 @@ User=Utente (HKCU)
 SuccessTitle=Successo
 WarningTitle=Avviso
 ErrorTitle=Errore
-InfoTitle=Informazioni
+InfoTitle=Informazioni
+
+
+
+[Leftovers]
+
+SearchPlaceholder=Cerca tracce, cartelle, registro…
+
+SelectAll=Seleziona tutto
+
+SelectSafeOnly=Seleziona solo sicuri
+
+ScanBtn=Avvia scansione
+
+CleanBtn=Pulisci tracce
+
+FilterAll=Tutti
+
+FilterFolders=Cartelle e Dati
+
+FilterRegistry=Chiavi di Registro
+
+FilterShortcuts=Collegamenti interrotti
+
+EmptyTitle=Nessuna traccia scansionata
+
+EmptySubtitle=Fai clic su 'Avvia scansione' per cercare cartelle orfane e chiavi di registro residue
+
+NoResultsTitle=Nessuna traccia corrispondente
+
+NoResultsSubtitle=Prova un'altra query o cambia categoria di filtro
+
+OpenItemTooltip=Apri percorso / Apri in Regedit
+
+TotalBadge={0} tracce trovate
+
+SelectedBadge={0} selezionate ({1})
+
+ScanningStatus=Scansione tracce e residui orfani in corso…
+
+ScanComplete=Scansione completata. Trovate {0} tracce orfane ({1}).
+
+ScanError=Errore durante la scansione: {0}
+
+ConfirmCleanTitle=Pulisci tracce orfane
+
+ConfirmCleanMsg=Sei sicuro di voler pulire {0} tracce selezionate ({1})?
+
+CleaningStatus=Pulizia delle tracce selezionate in corso…
+
+CleanSuccess={0} tracce pulite, {1} liberati!
+
+CleanSummary={0} elementi puliti, {1} liberati.
+
+CleanError=Errore durante la pulizia delle tracce: {0}
+
+
+
+[Leftover]
+
+TypeFolder=Cartella
+
+TypeFile=File
+
+TypeRegistry=Chiave di Registro
+
+TypeRegistryValue=Valore di Registro
+
+TypeShortcut=Collegamento
+
+TypeUnknown=Sconosciuto
+
+SafetySafe=Sicuro da rimuovere
+
+SafetyReview=Revisione consigliata
+
+SafetyWarning=Attenzione richiesta
+
+SafetyUnknown=Sconosciuto
 
-[Leftovers]
-SearchPlaceholder=Cerca tracce, cartelle, registro…
-SelectAll=Seleziona tutto
-SelectSafeOnly=Seleziona solo sicuri
-ScanBtn=Avvia scansione
-CleanBtn=Pulisci tracce
-FilterAll=Tutti
-FilterFolders=Cartelle e Dati
-FilterRegistry=Chiavi di Registro
-FilterShortcuts=Collegamenti interrotti
-EmptyTitle=Nessuna traccia scansionata
-EmptySubtitle=Fai clic su 'Avvia scansione' per cercare cartelle orfane e chiavi di registro residue
-NoResultsTitle=Nessuna traccia corrispondente
-NoResultsSubtitle=Prova un'altra query o cambia categoria di filtro
-OpenItemTooltip=Apri percorso / Apri in Regedit
-TotalBadge={0} tracce trovate
-SelectedBadge={0} selezionate ({1})
-ScanningStatus=Scansione tracce e residui orfani in corso…
-ScanComplete=Scansione completata. Trovate {0} tracce orfane ({1}).
-ScanError=Errore durante la scansione: {0}
-ConfirmCleanTitle=Pulisci tracce orfane
-ConfirmCleanMsg=Sei sicuro di voler pulire {0} tracce selezionate ({1})?
-CleaningStatus=Pulizia delle tracce selezionate in corso…
-CleanSuccess={0} tracce pulite, {1} liberati!
-CleanSummary={0} elementi puliti, {1} liberati.
-CleanError=Errore durante la pulizia delle tracce: {0}
-
-[Leftover]
-TypeFolder=Cartella
-TypeFile=File
-TypeRegistry=Chiave di Registro
-TypeRegistryValue=Valore di Registro
-TypeShortcut=Collegamento
-TypeUnknown=Sconosciuto
-SafetySafe=Sicuro da rimuovere
-SafetyReview=Revisione consigliata
-SafetyWarning=Attenzione richiesta
-SafetyUnknown=Sconosciuto
+[About]
+Tagline=Un'utilità di gestione e disinstallazione software moderna, veloce e approfondita per Windows con pulizia profonda dei residui.
+AuthorLabel=Autore / Sviluppatore
+LicenseLabel=Licenza software
+PlatformLabel=Piattaforma operativa
+FrameworkLabel=Runtime del framework
+ArchitectureLabel=Architettura
+StatusLabel=Stato di rilascio
+ReleasesBtn=Versioni
+IssuesBtn=Segnala un problema

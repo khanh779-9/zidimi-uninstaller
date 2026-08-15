@@ -271,43 +271,93 @@ User=Ngu?i dùng (HKCU)
 SuccessTitle=Thành công
 WarningTitle=C?nh báo
 ErrorTitle=L?i
-InfoTitle=Thông tin
+InfoTitle=Thông tin
+
+
+
+[Leftovers]
+
+SearchPlaceholder=Tìm kiếm dấu vết, thư mục, registry…
+
+SelectAll=Chọn tất cả
+
+SelectSafeOnly=Chỉ chọn an toàn
+
+ScanBtn=Bắt đầu quét
+
+CleanBtn=Dọn dẹp dấu vết
+
+FilterAll=Tất cả
+
+FilterFolders=Thư mục & Dữ liệu
+
+FilterRegistry=Khóa Registry
+
+FilterShortcuts=Phím tắt hỏng
+
+EmptyTitle=Chưa quét dấu vết
+
+EmptySubtitle=Nhấn 'Bắt đầu quét' để phát hiện các thư mục, dữ liệu và khóa registry mồ côi của ứng dụng cũ
+
+NoResultsTitle=Không tìm thấy dấu vết phù hợp
+
+NoResultsSubtitle=Thử tìm kiếm với từ khóa khác hoặc chuyển danh mục bộ lọc
+
+OpenItemTooltip=Mở vị trí tệp / Mở trong Regedit
+
+TotalBadge={0} dấu vết
+
+SelectedBadge=Đã chọn {0} ({1})
+
+ScanningStatus=Đang quét hệ thống tìm kiếm dấu vết và tàn dư mồ côi…
+
+ScanComplete=Quét hoàn tất. Tìm thấy {0} dấu vết mồ côi ({1}).
+
+ScanError=Lỗi trong khi quét: {0}
+
+ConfirmCleanTitle=Xác nhận dọn dẹp dấu vết mồ côi
+
+ConfirmCleanMsg=Bạn có chắc chắn muốn dọn dẹp {0} dấu vết đã chọn ({1}) không?
+
+CleaningStatus=Đang dọn dẹp các dấu vết đã chọn…
+
+CleanSuccess=Đã dọn dẹp {0} dấu vết, giải phóng {1}!
+
+CleanSummary=Đã dọn {0} mục, giải phóng {1}.
+
+CleanError=Lỗi khi dọn dẹp dấu vết: {0}
+
+
+
+[Leftover]
+
+TypeFolder=Thư mục
+
+TypeFile=Tập tin
+
+TypeRegistry=Khóa Registry
+
+TypeRegistryValue=Giá trị Registry
+
+TypeShortcut=Phím tắt
+
+TypeUnknown=Không rõ
+
+SafetySafe=An toàn để xóa
+
+SafetyReview=Nên xem lại
+
+SafetyWarning=Cần thận trọng
+
+SafetyUnknown=Không rõ
 
-[Leftovers]
-SearchPlaceholder=Tìm kiếm dấu vết, thư mục, registry…
-SelectAll=Chọn tất cả
-SelectSafeOnly=Chỉ chọn an toàn
-ScanBtn=Bắt đầu quét
-CleanBtn=Dọn dẹp dấu vết
-FilterAll=Tất cả
-FilterFolders=Thư mục & Dữ liệu
-FilterRegistry=Khóa Registry
-FilterShortcuts=Phím tắt hỏng
-EmptyTitle=Chưa quét dấu vết
-EmptySubtitle=Nhấn 'Bắt đầu quét' để phát hiện các thư mục, dữ liệu và khóa registry mồ côi của ứng dụng cũ
-NoResultsTitle=Không tìm thấy dấu vết phù hợp
-NoResultsSubtitle=Thử tìm kiếm với từ khóa khác hoặc chuyển danh mục bộ lọc
-OpenItemTooltip=Mở vị trí tệp / Mở trong Regedit
-TotalBadge={0} dấu vết
-SelectedBadge=Đã chọn {0} ({1})
-ScanningStatus=Đang quét hệ thống tìm kiếm dấu vết và tàn dư mồ côi…
-ScanComplete=Quét hoàn tất. Tìm thấy {0} dấu vết mồ côi ({1}).
-ScanError=Lỗi trong khi quét: {0}
-ConfirmCleanTitle=Xác nhận dọn dẹp dấu vết mồ côi
-ConfirmCleanMsg=Bạn có chắc chắn muốn dọn dẹp {0} dấu vết đã chọn ({1}) không?
-CleaningStatus=Đang dọn dẹp các dấu vết đã chọn…
-CleanSuccess=Đã dọn dẹp {0} dấu vết, giải phóng {1}!
-CleanSummary=Đã dọn {0} mục, giải phóng {1}.
-CleanError=Lỗi khi dọn dẹp dấu vết: {0}
-
-[Leftover]
-TypeFolder=Thư mục
-TypeFile=Tập tin
-TypeRegistry=Khóa Registry
-TypeRegistryValue=Giá trị Registry
-TypeShortcut=Phím tắt
-TypeUnknown=Không rõ
-SafetySafe=An toàn để xóa
-SafetyReview=Nên xem lại
-SafetyWarning=Cần thận trọng
-SafetyUnknown=Không rõ
+[About]
+Tagline=Tiện ích quản lý và gỡ cài đặt phần mềm mạnh mẽ, hiện đại và triệt để dành cho Windows, tích hợp công nghệ dọn dẹp tàn dư chuyên sâu.
+AuthorLabel=Tác giả / Nhà phát triển
+LicenseLabel=Giấy phép bản quyền
+PlatformLabel=Nền tảng hệ điều hành
+FrameworkLabel=Môi trường phát triển
+ArchitectureLabel=Kiến trúc hệ thống
+StatusLabel=Trạng thái phát hành
+ReleasesBtn=Bản phát hành
+IssuesBtn=Báo cáo lỗi

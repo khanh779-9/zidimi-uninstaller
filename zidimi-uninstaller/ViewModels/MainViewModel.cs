@@ -35,14 +35,26 @@ public class MainViewModel : ObservableObject
 
     public string AppVersion { get; }
 
+    private bool _isAboutModalOpen;
+    public bool IsAboutModalOpen
+    {
+        get => _isAboutModalOpen;
+        set => SetProperty(ref _isAboutModalOpen, value);
+    }
+
     public RelayCommand NavigateCommand { get; }
     public RelayCommand ReloadAllCommand { get; }
+    public RelayCommand OpenAboutCommand { get; }
+    public RelayCommand CloseAboutCommand { get; }
+    public RelayCommand OpenGitHubCommand { get; }
+    public RelayCommand OpenReleasesCommand { get; }
+    public RelayCommand OpenIssuesCommand { get; }
 
     private readonly Dictionary<string, (string Title, string Subtitle)> _pages = new();
 
     public MainViewModel()
     {
-        AppVersion = (Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3)) ?? "1.0.0";
+        AppVersion = (Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3)) ?? "1.2.0";
 
         Dashboard = new DashboardViewModel();
         Applications = new ApplicationsViewModel();
@@ -56,6 +68,12 @@ public class MainViewModel : ObservableObject
 
         NavigateCommand = new RelayCommand(p => Navigate(p as string ?? "dashboard"));
         ReloadAllCommand = new RelayCommand(async _ => await ReloadAllAsync());
+
+        OpenAboutCommand = new RelayCommand(_ => IsAboutModalOpen = true);
+        CloseAboutCommand = new RelayCommand(_ => IsAboutModalOpen = false);
+        OpenGitHubCommand = new RelayCommand(_ => UninstallService.OpenUrl("https://github.com/khanh779-9/zidimi-uninstaller"));
+        OpenReleasesCommand = new RelayCommand(_ => UninstallService.OpenUrl("https://github.com/khanh779-9/zidimi-uninstaller/releases"));
+        OpenIssuesCommand = new RelayCommand(_ => UninstallService.OpenUrl("https://github.com/khanh779-9/zidimi-uninstaller/issues"));
 
         RefreshNavItems();
 

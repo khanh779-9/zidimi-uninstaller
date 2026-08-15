@@ -283,43 +283,93 @@ User=?? (HKCU)
 SuccessTitle=??
 WarningTitle=??
 ErrorTitle=??
-InfoTitle=??
+InfoTitle=??
+
+
+
+[Leftovers]
+
+SearchPlaceholder=搜索痕迹、文件夹、注册表…
+
+SelectAll=全选
+
+SelectSafeOnly=仅选择安全项
+
+ScanBtn=开始扫描
+
+CleanBtn=清理痕迹
+
+FilterAll=全部
+
+FilterFolders=文件夹与数据
+
+FilterRegistry=注册表项
+
+FilterShortcuts=损坏的快捷方式
+
+EmptyTitle=尚未扫描痕迹
+
+EmptySubtitle=点击“开始扫描”以检测系统中残留的孤立数据文件夹和注册表项
+
+NoResultsTitle=未找到匹配的痕迹
+
+NoResultsSubtitle=请尝试输入其他关键词或切换筛选分类
+
+OpenItemTooltip=打开文件位置 / 在注册表编辑器中打开
+
+TotalBadge=找到 {0} 项痕迹
+
+SelectedBadge=已选择 {0} 项 ({1})
+
+ScanningStatus=正在扫描系统中的残留痕迹…
+
+ScanComplete=扫描完成。找到 {0} 项孤立痕迹 ({1})。
+
+ScanError=扫描出错：{0}
+
+ConfirmCleanTitle=清理孤立残留痕迹
+
+ConfirmCleanMsg=您确定要清理选中的 {0} 项残留痕迹 ({1}) 吗？
+
+CleaningStatus=正在清理选中的痕迹…
+
+CleanSuccess=已清理 {0} 项痕迹，释放了 {1} 空间！
+
+CleanSummary=已清理 {0} 项，释放 {1}。
+
+CleanError=清理痕迹时出错：{0}
+
+
+
+[Leftover]
+
+TypeFolder=文件夹
+
+TypeFile=文件
+
+TypeRegistry=注册表项
+
+TypeRegistryValue=注册表值
+
+TypeShortcut=快捷方式
+
+TypeUnknown=未知
+
+SafetySafe=可安全删除
+
+SafetyReview=建议检查
+
+SafetyWarning=需谨慎
+
+SafetyUnknown=未知
 
-[Leftovers]
-SearchPlaceholder=搜索痕迹、文件夹、注册表…
-SelectAll=全选
-SelectSafeOnly=仅选择安全项
-ScanBtn=开始扫描
-CleanBtn=清理痕迹
-FilterAll=全部
-FilterFolders=文件夹与数据
-FilterRegistry=注册表项
-FilterShortcuts=损坏的快捷方式
-EmptyTitle=尚未扫描痕迹
-EmptySubtitle=点击“开始扫描”以检测系统中残留的孤立数据文件夹和注册表项
-NoResultsTitle=未找到匹配的痕迹
-NoResultsSubtitle=请尝试输入其他关键词或切换筛选分类
-OpenItemTooltip=打开文件位置 / 在注册表编辑器中打开
-TotalBadge=找到 {0} 项痕迹
-SelectedBadge=已选择 {0} 项 ({1})
-ScanningStatus=正在扫描系统中的残留痕迹…
-ScanComplete=扫描完成。找到 {0} 项孤立痕迹 ({1})。
-ScanError=扫描出错：{0}
-ConfirmCleanTitle=清理孤立残留痕迹
-ConfirmCleanMsg=您确定要清理选中的 {0} 项残留痕迹 ({1}) 吗？
-CleaningStatus=正在清理选中的痕迹…
-CleanSuccess=已清理 {0} 项痕迹，释放了 {1} 空间！
-CleanSummary=已清理 {0} 项，释放 {1}。
-CleanError=清理痕迹时出错：{0}
-
-[Leftover]
-TypeFolder=文件夹
-TypeFile=文件
-TypeRegistry=注册表项
-TypeRegistryValue=注册表值
-TypeShortcut=快捷方式
-TypeUnknown=未知
-SafetySafe=可安全删除
-SafetyReview=建议检查
-SafetyWarning=需谨慎
-SafetyUnknown=未知
+[About]
+Tagline=专为 Windows 打造的现代化、高速且彻底的软件管理与卸载实用工具，具备深度残留清理功能。
+AuthorLabel=作者 / 开发者
+LicenseLabel=软件许可证
+PlatformLabel=运行平台
+FrameworkLabel=框架运行环境
+ArchitectureLabel=系统架构
+StatusLabel=发布状态
+ReleasesBtn=发行版本
+IssuesBtn=反馈问题

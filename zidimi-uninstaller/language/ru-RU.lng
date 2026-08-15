@@ -283,43 +283,93 @@ User=???????????? (HKCU)
 SuccessTitle=???????
 WarningTitle=??????????????
 ErrorTitle=??????
-InfoTitle=??????????
+InfoTitle=??????????
+
+
+
+[Leftovers]
+
+SearchPlaceholder=Поиск следов, папок, реестра…
+
+SelectAll=Выбрать все
+
+SelectSafeOnly=Выбрать только безопасные
+
+ScanBtn=Начать сканирование
+
+CleanBtn=Очистить следы
+
+FilterAll=Все
+
+FilterFolders=Папки и данные
+
+FilterRegistry=Ключи реестра
+
+FilterShortcuts=Неработающие ярлыки
+
+EmptyTitle=Сканирование еще не проводилось
+
+EmptySubtitle=Нажмите 'Начать сканирование' для поиска потерянных папок данных и оставшихся ключей реестра
+
+NoResultsTitle=Следы не найдены
+
+NoResultsSubtitle=Попробуйте изменить поисковый запрос или категорию фильтра
+
+OpenItemTooltip=Открыть папку с файлом / Открыть в Regedit
+
+TotalBadge=Найдено следов: {0}
+
+SelectedBadge=Выбрано: {0} ({1})
+
+ScanningStatus=Сканирование системы на наличие оставшихся следов…
+
+ScanComplete=Сканирование завершено. Найдено {0} следов ({1}).
+
+ScanError=Ошибка при сканировании: {0}
+
+ConfirmCleanTitle=Очистка оставшихся следов
+
+ConfirmCleanMsg=Вы уверены, что хотите удалить {0} выбранных следов ({1})?
+
+CleaningStatus=Очистка выбранных следов…
+
+CleanSuccess=Очищено {0} следов, освобождено {1}!
+
+CleanSummary=Очищено {0} элементов, освобождено {1}.
+
+CleanError=Ошибка при очистке следов: {0}
+
+
+
+[Leftover]
+
+TypeFolder=Папка
+
+TypeFile=Файл
+
+TypeRegistry=Ключ реестра
+
+TypeRegistryValue=Значение реестра
+
+TypeShortcut=Ярлык
+
+TypeUnknown=Неизвестно
+
+SafetySafe=Безопасно для удаления
+
+SafetyReview=Рекомендуется проверить
+
+SafetyWarning=Требуется осторожность
+
+SafetyUnknown=Неизвестно
 
-[Leftovers]
-SearchPlaceholder=Поиск следов, папок, реестра…
-SelectAll=Выбрать все
-SelectSafeOnly=Выбрать только безопасные
-ScanBtn=Начать сканирование
-CleanBtn=Очистить следы
-FilterAll=Все
-FilterFolders=Папки и данные
-FilterRegistry=Ключи реестра
-FilterShortcuts=Неработающие ярлыки
-EmptyTitle=Сканирование еще не проводилось
-EmptySubtitle=Нажмите 'Начать сканирование' для поиска потерянных папок данных и оставшихся ключей реестра
-NoResultsTitle=Следы не найдены
-NoResultsSubtitle=Попробуйте изменить поисковый запрос или категорию фильтра
-OpenItemTooltip=Открыть папку с файлом / Открыть в Regedit
-TotalBadge=Найдено следов: {0}
-SelectedBadge=Выбрано: {0} ({1})
-ScanningStatus=Сканирование системы на наличие оставшихся следов…
-ScanComplete=Сканирование завершено. Найдено {0} следов ({1}).
-ScanError=Ошибка при сканировании: {0}
-ConfirmCleanTitle=Очистка оставшихся следов
-ConfirmCleanMsg=Вы уверены, что хотите удалить {0} выбранных следов ({1})?
-CleaningStatus=Очистка выбранных следов…
-CleanSuccess=Очищено {0} следов, освобождено {1}!
-CleanSummary=Очищено {0} элементов, освобождено {1}.
-CleanError=Ошибка при очистке следов: {0}
-
-[Leftover]
-TypeFolder=Папка
-TypeFile=Файл
-TypeRegistry=Ключ реестра
-TypeRegistryValue=Значение реестра
-TypeShortcut=Ярлык
-TypeUnknown=Неизвестно
-SafetySafe=Безопасно для удаления
-SafetyReview=Рекомендуется проверить
-SafetyWarning=Требуется осторожность
-SafetyUnknown=Неизвестно
+[About]
+Tagline=Современная, быстрая и тщательная утилита для управления и удаления программного обеспечения для Windows с глубокой очисткой остатков.
+AuthorLabel=Автор / Разработчик
+LicenseLabel=Лицензия ПО
+PlatformLabel=Операционная система
+FrameworkLabel=Среда выполнения
+ArchitectureLabel=Архитектура
+StatusLabel=Статус выпуска
+ReleasesBtn=Релизы
+IssuesBtn=Сообщить об ошибке

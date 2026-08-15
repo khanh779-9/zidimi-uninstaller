@@ -56,11 +56,6 @@ public partial class MainWindow : ZWindow
         return tcs.Task;
     }
 
-    private void OnAboutClick(object sender, RoutedEventArgs e)
-        => _ = ShowMessageAsync(
-            LanguageManager.T("Dialogs_AboutTitle", "About Zidimi Uninstaller"),
-            string.Format(LanguageManager.T("Dialogs_AboutDesc", "Zidimi Uninstaller is a high-performance uninstaller.\n\nVersion: {0}"), _vm.AppVersion));
-
     private void OnModalBackdropMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (e.OriginalSource == sender)

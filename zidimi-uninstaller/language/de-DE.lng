@@ -283,43 +283,93 @@ User=Benutzer (HKCU)
 SuccessTitle=Erfolg
 WarningTitle=Warnung
 ErrorTitle=Fehler
-InfoTitle=Information
+InfoTitle=Information
+
+
+
+[Leftovers]
+
+SearchPlaceholder=Spuren, Ordner, Registry durchsuchen…
+
+SelectAll=Alle auswählen
+
+SelectSafeOnly=Nur sichere auswählen
+
+ScanBtn=Scan starten
+
+CleanBtn=Spuren bereinigen
+
+FilterAll=Alle
+
+FilterFolders=Ordner & Daten
+
+FilterRegistry=Registry-Schlüssel
+
+FilterShortcuts=Defekte Verknüpfungen
+
+EmptyTitle=Noch keine Spuren gescannt
+
+EmptySubtitle=Klicken Sie auf 'Scan starten', um Ihr System nach verwaisten Datenordnern und Registry-Schlüsseln zu durchsuchen
+
+NoResultsTitle=Keine passenden Spuren gefunden
+
+NoResultsSubtitle=Versuchen Sie einen anderen Suchbegriff oder ändern Sie die Filterkategorie
+
+OpenItemTooltip=Dateispeicherort öffnen / In Regedit öffnen
+
+TotalBadge={0} Spuren gefunden
+
+SelectedBadge={0} ausgewählt ({1})
+
+ScanningStatus=System wird nach verwaisten Spuren durchsucht…
+
+ScanComplete=Scan abgeschlossen. {0} verwaiste Spuren gefunden ({1}).
+
+ScanError=Fehler beim Scannen: {0}
+
+ConfirmCleanTitle=Verwaiste Spuren bereinigen
+
+ConfirmCleanMsg=Möchten Sie wirklich {0} ausgewählte verwaiste Spuren bereinigen ({1})?
+
+CleaningStatus=Ausgewählte Spuren werden bereinigt…
+
+CleanSuccess={0} Spuren bereinigt, {1} freigegeben!
+
+CleanSummary={0} Elemente bereinigt, {1} freigegeben.
+
+CleanError=Fehler beim Bereinigen von Spuren: {0}
+
+
+
+[Leftover]
+
+TypeFolder=Ordner
+
+TypeFile=Datei
+
+TypeRegistry=Registry-Schlüssel
+
+TypeRegistryValue=Registry-Wert
+
+TypeShortcut=Verknüpfung
+
+TypeUnknown=Unbekannt
+
+SafetySafe=Sicher zu entfernen
+
+SafetyReview=Überprüfung empfohlen
+
+SafetyWarning=Vorsicht geboten
+
+SafetyUnknown=Unbekannt
 
-[Leftovers]
-SearchPlaceholder=Spuren, Ordner, Registry durchsuchen…
-SelectAll=Alle auswählen
-SelectSafeOnly=Nur sichere auswählen
-ScanBtn=Scan starten
-CleanBtn=Spuren bereinigen
-FilterAll=Alle
-FilterFolders=Ordner & Daten
-FilterRegistry=Registry-Schlüssel
-FilterShortcuts=Defekte Verknüpfungen
-EmptyTitle=Noch keine Spuren gescannt
-EmptySubtitle=Klicken Sie auf 'Scan starten', um Ihr System nach verwaisten Datenordnern und Registry-Schlüsseln zu durchsuchen
-NoResultsTitle=Keine passenden Spuren gefunden
-NoResultsSubtitle=Versuchen Sie einen anderen Suchbegriff oder ändern Sie die Filterkategorie
-OpenItemTooltip=Dateispeicherort öffnen / In Regedit öffnen
-TotalBadge={0} Spuren gefunden
-SelectedBadge={0} ausgewählt ({1})
-ScanningStatus=System wird nach verwaisten Spuren durchsucht…
-ScanComplete=Scan abgeschlossen. {0} verwaiste Spuren gefunden ({1}).
-ScanError=Fehler beim Scannen: {0}
-ConfirmCleanTitle=Verwaiste Spuren bereinigen
-ConfirmCleanMsg=Möchten Sie wirklich {0} ausgewählte verwaiste Spuren bereinigen ({1})?
-CleaningStatus=Ausgewählte Spuren werden bereinigt…
-CleanSuccess={0} Spuren bereinigt, {1} freigegeben!
-CleanSummary={0} Elemente bereinigt, {1} freigegeben.
-CleanError=Fehler beim Bereinigen von Spuren: {0}
-
-[Leftover]
-TypeFolder=Ordner
-TypeFile=Datei
-TypeRegistry=Registry-Schlüssel
-TypeRegistryValue=Registry-Wert
-TypeShortcut=Verknüpfung
-TypeUnknown=Unbekannt
-SafetySafe=Sicher zu entfernen
-SafetyReview=Überprüfung empfohlen
-SafetyWarning=Vorsicht geboten
-SafetyUnknown=Unbekannt
+[About]
+Tagline=Ein modernes, schnelles und gründliches Softwareverwaltungs- und Deinstallationsprogramm für Windows mit Tiefenreinigung von Rückständen.
+AuthorLabel=Autor / Entwickler
+LicenseLabel=Softwarelizenz
+PlatformLabel=Betriebssystem
+FrameworkLabel=Framework-Laufzeit
+ArchitectureLabel=Architektur
+StatusLabel=Release-Status
+ReleasesBtn=Releases
+IssuesBtn=Problem melden
