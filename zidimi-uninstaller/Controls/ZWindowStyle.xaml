@@ -41,15 +41,15 @@
 
     <!-- ZWindow - window chrome -->
     <Style x:Key="ZWindowStyle" TargetType="{x:Type controls:ZWindow}">
-        <Setter Property="shell:WindowChrome.WindowChrome">
+        <!--<Setter Property="shell:WindowChrome.WindowChrome">
             <Setter.Value>
-                <shell:WindowChrome CaptionHeight="48"
+                <shell:WindowChrome CaptionHeight="30"
                                     ResizeBorderThickness="6"
                                     GlassFrameThickness="0"
                                     CornerRadius="0"
                                     UseAeroCaptionButtons="False"/>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="ResizeMode" Value="CanResize"/>
         <Setter Property="Background" Value="{StaticResource ZBrushWhite}"/>
@@ -58,14 +58,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ZWindow}">
-                    <Grid Background="Transparent">
+                    <Grid Background="Transparent" x:Name="WindowGrid">
                         <Border x:Name="ChromeBorder"
                                 Background="{StaticResource ZBrushWhite}"
                                 BorderBrush="{StaticResource ZBrushLightGray}"
                                 BorderThickness="1">
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="48"/>
+                                    <RowDefinition Height="35"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
@@ -80,10 +80,7 @@
 
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0,0,0">
                                             <Image Source="/zidimi-icon.ico" Height="24" Width="24"/>
-                                            <!--<TextBlock Text="Zidimi" Foreground="White" FontWeight="SemiBold" FontSize="14"
-                                                       Margin="10,0,0,0" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Uninstaller" Foreground="{StaticResource ZBrushAccentLight}" FontSize="12"
-                                                       Margin="6,0,0,0" VerticalAlignment="Center"/>-->
+                                   
                                         </StackPanel>
 
                                         <TextBlock Grid.Column="1" Text="{TemplateBinding Title}"

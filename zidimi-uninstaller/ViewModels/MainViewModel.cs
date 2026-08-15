@@ -54,7 +54,7 @@ public class MainViewModel : ObservableObject
 
     public MainViewModel()
     {
-        AppVersion = (Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3)) ?? "1.2.0";
+        AppVersion = (Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3)) ?? "1.2.1";
 
         Dashboard = new DashboardViewModel();
         Applications = new ApplicationsViewModel();

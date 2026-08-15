@@ -25,16 +25,19 @@ public class ZWindow : Window
         UpdateMaximizeState();
     }
 
+    Grid? WindowGrid=> Template.FindName("WindowGrid", this) as Grid;
+    
+
     private void ApplyChrome()
     {
         WindowChrome.SetWindowChrome(this, new WindowChrome
         {
-            CaptionHeight = 40,
+            CaptionHeight = 35,
             // GlassFrameThickness must be non-zero so Windows keeps the DWM shadow and minimize/maximize animation
-            GlassFrameThickness = new Thickness(0, 0, 0, 1),
+            GlassFrameThickness = new Thickness(-1),
             ResizeBorderThickness = new Thickness(6),
             CornerRadius = new CornerRadius(0),
-            UseAeroCaptionButtons = UseNativeCaption,
+            UseAeroCaptionButtons = false,
         });
     }
 
@@ -74,12 +77,8 @@ public class ZWindow : Window
     {
         bool IsMaximized = false;
         IsMaximized = WindowState == WindowState.Maximized;
-        Thickness MaximizedPadding = this.Padding;
-        // Inset the RootGrid when maximized so the border stays visible (the template binds Margin to MaximizedPadding)
-        MaximizedPadding = IsMaximized ? new Thickness(8) : new Thickness(0);
-
         //PaddingProperty.OverrideMetadata(typeof(ZWindow), new FrameworkPropertyMetadata(MaximizedPadding));
-        Padding = MaximizedPadding;
+        WindowGrid?.SetValue(MarginProperty, IsMaximized ? new Thickness(8) : new Thickness(0));
     }
 
 }

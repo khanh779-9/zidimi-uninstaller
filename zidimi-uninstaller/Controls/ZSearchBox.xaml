@@ -9,6 +9,7 @@
         <Setter Property="SelectionBrush" Value="{StaticResource ZBrushAccent}"/>
         <Setter Property="Background" Value="{StaticResource ZBrushWhite}"/>
         <Setter Property="Height" Value="40"/>
+        <Setter Property="Width" Value="400"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
@@ -22,15 +23,18 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Path Data="{StaticResource IconSearch}" Width="15" Height="15" Fill="{StaticResource ZBrushGray}"
-                                  Margin="12,0,0,0" VerticalAlignment="Center"/>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Path Data="{StaticResource IconSearch}" Width="20" Height="20" Fill="{StaticResource ZBrushGray}"
+                                  Margin="6,0,0,0" VerticalAlignment="Center"/>
                             <TextBlock x:Name="PART_Placeholder" Grid.Column="1" Text="{TemplateBinding Placeholder}"
-                                       Foreground="{StaticResource ZBrushGray}" FontSize="13" Margin="9,0,0,0"
+                                       Foreground="{StaticResource ZBrushGray}" FontSize="13" Margin="4,0,4,0"
                                        VerticalAlignment="Center" IsHitTestVisible="False"/>
-                            <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1" Margin="9,0,0,0" VerticalAlignment="Center"/>
-                            <Button x:Name="PART_Clear" Grid.Column="2" Width="24" Height="24" Margin="6,0,8,0" Cursor="Hand"
+                            <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1" Margin="2" VerticalAlignment="Center"/>
+                            <Button x:Name="PART_Clear" Grid.Column="2" Width="24" Height="24" Margin="3,0,4,0" Cursor="Hand"
                                     Background="Transparent" BorderThickness="0" Focusable="False" Visibility="Collapsed">
-                                <Path Data="{StaticResource IconClose}" Width="10" Height="10" Fill="{StaticResource ZBrushGray}"/>
+                                <Path Data="{StaticResource IconClose}" Width="24" Height="24" Fill="{StaticResource ZBrushGray}"/>
                             </Button>
                         </Grid>
                     </Border>
