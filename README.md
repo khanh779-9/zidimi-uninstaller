@@ -3,8 +3,8 @@
 A modern, fast, and thorough software management and uninstallation utility for Windows.
 
 [![Release](https://img.shields.io/github/v/release/khanh779-9/zidimi-uninstaller?style=flat-square&color=0078D4)](https://github.com/khanh779-9/zidimi-uninstaller/releases)
-[![License: MIT](https://img.shields.io/badge/License-MIT%20with%20Trademark%20Protection-blue.svg?style=flat-square)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D4?style=flat-square&logo=windows)](https://github.com/khanh779-9/zidimi-uninstaller)
+[![License: MIT](<https://img.shields.io/badge/License-MIT%20with%20Trademark%20Protection-blue.svg?style=flat-square>)](LICENSE)
+[![Platform](<https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D4?style=flat-square&logo=windows>)](https://github.com/khanh779-9/zidimi-uninstaller)
 [![.NET](https://img.shields.io/badge/.NET-8.0--windows-512BD4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
 
 ---
@@ -44,24 +44,31 @@ A modern, fast, and thorough software management and uninstallation utility for 
 ## Screenshots
 
 ### Dashboard
+
 ![Dashboard](screenshot/dashboard.png)
 
 ### Installed Applications
+
 ![Installed Applications](screenshot/installed_app.png)
 
-### Microsoft Store Apps
+### Store Apps
+
 ![Microsoft Store Apps](screenshot/store_app.png)
 
 ### Windows Features (DISM)
+
 ![Windows Features](screenshot/windows_features.png)
 
 ### Startup Manager
+
 ![Startup Manager](screenshot/startup_app.png)
 
 ### WinGet Package Manager
+
 ![WinGet Package Manager](screenshot/winget_package.png)
 
-### Settings and UAC Bypass Configuration
+### Settings
+
 ![Settings](screenshot/settings.png)
 
 ---
@@ -69,7 +76,7 @@ A modern, fast, and thorough software management and uninstallation utility for 
 ## Feature Overview Matrix
 
 | Module | Core Functionality | Supported Actions | Target Scope |
-| :--- | :--- | :--- | :--- |
+| :----------------------------- | :--------------------------------------------------------------- | :------------------------------------------------------------------------- | :------------------------------------------------------------------ |
 | **Desktop Applications** | Comprehensive inventory of Win32 and 64-bit software | Standard Uninstall, Quiet/Silent Uninstall, Force Uninstall, Leftover Scan | Installed programs across machine and user scopes |
 | **Store Apps** | Management of Microsoft Store, UWP, and MSIX applications | Standard Remove, Forced Removal, Package Inspection | User packages and system-wide provisioned packages |
 | **Windows Features** | Toggle optional Windows system components | Enable, Disable, Status Inspection | Windows optional features (Hyper-V, WSL, Sandbox, etc.) |
@@ -83,49 +90,55 @@ A modern, fast, and thorough software management and uninstallation utility for 
 
 ## Comparison with Windows Default Uninstaller
 
-| Feature | Windows Default ("Apps & Features") | Zidimi Uninstaller |
-| :--- | :---: | :---: |
-| Win32 / 64-bit Desktop Application Uninstallation | Supported | Supported |
-| Microsoft Store (UWP / MSIX) App Management | Supported | Supported |
-| Silent / Unattended Uninstallation Mode | Not Available | Supported |
-| Force Uninstall for Broken Uninstallers | Not Available | Supported |
-| Post-Uninstall Leftover & Registry Scanning | Not Available | Supported |
-| Windows Optional Features Management | Separate Control Panel | Integrated |
-| WinGet Package Manager Integration | CLI Only | Integrated GUI |
-| Startup Program Management | Task Manager Only | Integrated |
-| Automatic Process Termination before Uninstall | Not Available | Supported |
-| Automatic System Restore Point Creation | Not Available | Supported |
-| Multi-language Support with Hot-Switching | System Language Dependent | 7 Built-in Languages |
-| Portable Execution (No Installation Required) | Not Applicable | Supported |
+| Feature                                           | Windows Default ("Apps & Features") |  Zidimi Uninstaller  |
+| :------------------------------------------------ | :---------------------------------: | :------------------: |
+| Win32 / 64-bit Desktop Application Uninstallation |              Supported              |      Supported      |
+| Microsoft Store (UWP / MSIX) App Management       |              Supported              |      Supported      |
+| Silent / Unattended Uninstallation Mode           |            Not Available            |      Supported      |
+| Force Uninstall for Broken Uninstallers           |            Not Available            |      Supported      |
+| Post-Uninstall Leftover & Registry Scanning       |            Not Available            |      Supported      |
+| Windows Optional Features Management              |       Separate Control Panel       |      Integrated      |
+| WinGet Package Manager Integration                |              CLI Only              |    Integrated GUI    |
+| Startup Program Management                        |          Task Manager Only          |      Integrated      |
+| Automatic Process Termination before Uninstall    |            Not Available            |      Supported      |
+| Automatic System Restore Point Creation           |            Not Available            |      Supported      |
+| Multi-language Support with Hot-Switching         |      System Language Dependent      | 7 Built-in Languages |
+| Portable Execution (No Installation Required)     |           Not Applicable           |      Supported      |
 
 ---
 
 ## Detailed Module Capabilities
 
 ### 1. Desktop Applications Management
+
 - **Full Inventory**: Queries 32-bit and 64-bit Registry uninstall keys (`HKLM` and `HKCU`) to identify all registered programs with installation date, size, publisher, and version.
 - **Silent Uninstall**: Automatically identifies and applies silent/unattended flags (`/quiet`, `/qn`, `/s`, `/silent`, `/VERYSILENT`) for supported installers (MSI, Inno Setup, Nullsoft NSIS, InstallShield, WiX).
 - **Force Removal**: Cleans up program files, registry keys, and uninstall registration when an installer is corrupt or missing.
 - **Batch Processing**: Filter, sort, and select multiple applications for sequential processing.
 
 ### 2. Windows Store Apps (UWP / MSIX / AppX)
+
 - **AppX Package Enumeration**: Leverages Windows Package Manager APIs to discover installed modern apps across all user profiles.
 - **Bloatware Cleanup**: Easily remove pre-installed Windows applications and background service packages.
 - **Package Manifest Details**: View package family names, publishers, architecture, and installation paths.
 
 ### 3. Windows Optional Features
+
 - **Integrated State Management**: Reads optional Windows components and displays current state (Enabled / Disabled / Pending).
 - **One-Click Toggles**: Dispatch DISM operations in the background without needing to open the legacy Control Panel.
 
 ### 4. Package Manager (WinGet)
+
 - **CLI Bridge**: Integrates with the `winget` command-line tool.
 - **Package Control**: Inspect package identifiers, source repositories, installed versions, and available upgrades.
 
 ### 5. Startup Manager
+
 - **Multi-Location Inspection**: Aggregates startup entries from `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`, `HKLM\Software\Microsoft\Windows\CurrentVersion\Run`, 32-bit Wow6432Node equivalents, and user Startup folders.
 - **Performance Optimization**: Disable high-impact startup items to reduce boot times without deleting them permanently.
 
 ### 6. Deep Clean and Residue Removal
+
 - **Targeted Scanning**: Searches common residual paths:
   - `%ProgramFiles%` and `%ProgramFiles(x86)%`
   - `%AppData%` (Roaming) and `%LocalAppData%`
@@ -134,6 +147,7 @@ A modern, fast, and thorough software management and uninstallation utility for 
 - **Safe Cleanup**: Choose between safe recycling (Windows Recycle Bin) or permanent file deletion.
 
 ### 7. Safety and Process Hunter
+
 - **Process Hunter**: Queries running processes matching application executable names and file paths, offering automated process termination to prevent file lock errors during uninstallation.
 - **Restore Point Engine**: Calls Windows System Restore APIs to snapshot the system state prior to modifications.
 
@@ -144,7 +158,7 @@ A modern, fast, and thorough software management and uninstallation utility for 
 Zidimi Uninstaller includes localization for 7 languages:
 
 | Language Code | Language Name | Native Name | Status |
-| :--- | :--- | :--- | :---: |
+| :------------ | :---------------------- | :------------- | :------: |
 | `en-US` | English (United States) | English | Complete |
 | `vi-VN` | Vietnamese | Tiếng Việt | Complete |
 | `de-DE` | German | Deutsch | Complete |
@@ -160,7 +174,7 @@ Language selection can be changed on the fly in the Settings view without restar
 ## Configuration and Settings
 
 | Setting Key | Default | Description |
-| :--- | :--- | :--- |
+| :------------------------- | :-------- | :-------------------------------------------------------------------------------- |
 | `HideSystemComponents` | `true` | Hides Windows core components and update patches from the main application list. |
 | `PreferQuietUninstall` | `false` | Attempts to run quiet/unattended uninstall commands by default when available. |
 | `ConfirmBeforeUninstall` | `true` | Prompts for user confirmation before initiating an uninstall routine. |
@@ -193,6 +207,7 @@ Settings are persisted in `%LocalAppData%\ZidimiUninstaller\settings.json`.
 ## Building from Source
 
 ### Prerequisites
+
 - [Visual Studio 2022](https://visualstudio.microsoft.com/) (version 17.8+) with the **.NET Desktop Development** workload, or the [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0).
 
 ### Build Steps
@@ -222,7 +237,8 @@ This project is licensed under the **MIT License with Trademark Protection**.
 Copyright (c) 2026 khanh779-9 (Zidimi Uninstaller)
 ```
 
-### Trademark Notice:
+### Trademark Notice
+
 - The names **"Zidimi"**, **"Zidimi Uninstaller"**, the product logo, and related brand identifiers are proprietary trademarks and intellectual property of the author (**khanh779-9**).
 - This license does not grant rights or permissions to use the "Zidimi" name, trademark, or logo for third-party commercial, marketing, or endorsement purposes without prior written authorization.
 - Any modified versions, forks, or derivative works distributed publicly must rebrand and use distinct names and logos that do not cause confusion regarding the origin of the software.
