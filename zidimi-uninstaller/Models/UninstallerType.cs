@@ -30,10 +30,10 @@ public static class UninstallerTypeExtensions
         UninstallerType.WindowsFeature => "Windows Feature",
         UninstallerType.WindowsUpdate => "Windows Update",
         UninstallerType.StoreApp => "Store App",
-        UninstallerType.SimpleDelete => "Xóa đơn giản",
+        UninstallerType.SimpleDelete => "Folder Removal",
         UninstallerType.Chocolatey => "Chocolatey",
         UninstallerType.Oculus => "Oculus",
         UninstallerType.PowerShell => "PowerShell",
-        _ => "Không xác định"
+        _ => "Standard"
     };
 }

@@ -58,6 +58,9 @@ public class DeepCleanViewModel : ObservableObject
     }
 
     public string TotalSizeText => TotalSizeInBytes > 0 ? ProcessTools.FormatBytes(TotalSizeInBytes) : "0 B";
+    public string HeaderTitle => string.Format(LanguageManager.T("DeepClean_Title", "Deep Clean: {0}"), AppName);
+    public string FoundSummaryText => string.Format(LanguageManager.T("DeepClean_FoundStats", "Found {0} leftover items  ·  Size: {1}"), TotalFound, TotalSizeText);
+    public string CleanButtonText => string.Format(LanguageManager.T("DeepClean_CleanSelected", "Clean {0} items"), SelectedCount);
 
     public RelayCommand SelectAllCommand { get; }
     public RelayCommand SelectSafeOnlyCommand { get; }
@@ -127,6 +130,9 @@ public class DeepCleanViewModel : ObservableObject
         SelectedCount = Items.Count(i => i.IsSelected);
         TotalSizeInBytes = Items.Where(i => i.IsSelected).Sum(i => i.SizeInBytes);
         OnPropertyChanged(nameof(TotalSizeText));
+        OnPropertyChanged(nameof(HeaderTitle));
+        OnPropertyChanged(nameof(FoundSummaryText));
+        OnPropertyChanged(nameof(CleanButtonText));
     }
 
     private async Task CleanSelectedAsync()

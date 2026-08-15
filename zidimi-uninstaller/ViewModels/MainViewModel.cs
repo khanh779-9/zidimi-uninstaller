@@ -80,23 +80,23 @@ public class MainViewModel : ObservableObject
 
     private void RefreshNavItems()
     {
-        _pages["dashboard"] = (LanguageManager.T("Pages_DashboardTitle", "Tổng quan"), LanguageManager.T("Pages_DashboardSubtitle", "Thông tin nhanh về các ứng dụng đã cài"));
-        _pages["apps"] = (LanguageManager.T("Pages_AppsTitle", "Ứng dụng đã cài"), LanguageManager.T("Pages_AppsSubtitle", "Quản lý và gỡ cài đặt phần mềm"));
-        _pages["store"] = (LanguageManager.T("Pages_StoreTitle", "Ứng dụng Microsoft Store"), LanguageManager.T("Pages_StoreSubtitle", "Quản lý ứng dụng UWP/Appx"));
-        _pages["packages"] = (LanguageManager.T("Pages_PackagesTitle", "Gói WinGet / Scoop"), LanguageManager.T("Pages_PackagesSubtitle", "Quản lý các gói phần mềm hiện đại"));
-        _pages["features"] = (LanguageManager.T("Pages_FeaturesTitle", "Tính năng Windows"), LanguageManager.T("Pages_FeaturesSubtitle", "Bật hoặc tắt các tính năng tùy chọn (DISM)"));
-        _pages["startup"] = (LanguageManager.T("Pages_StartupTitle", "Khởi động cùng Windows"), LanguageManager.T("Pages_StartupSubtitle", "Quản lý chương trình tự khởi động"));
-        _pages["settings"] = (LanguageManager.T("Pages_SettingsTitle", "Cài đặt"), LanguageManager.T("Pages_SettingsSubtitle", "Tuỳ chỉnh hoạt động của Zidimi"));
+        _pages["dashboard"] = (LanguageManager.T("Pages_DashboardTitle", "Dashboard"), LanguageManager.T("Pages_DashboardSubtitle", "Quick overview of installed applications"));
+        _pages["apps"] = (LanguageManager.T("Pages_AppsTitle", "Installed Applications"), LanguageManager.T("Pages_AppsSubtitle", "Manage and uninstall software"));
+        _pages["store"] = (LanguageManager.T("Pages_StoreTitle", "Microsoft Store Apps"), LanguageManager.T("Pages_StoreSubtitle", "Manage UWP/MSIX packages"));
+        _pages["packages"] = (LanguageManager.T("Pages_PackagesTitle", "WinGet Packages"), LanguageManager.T("Pages_PackagesSubtitle", "Manage modern software packages"));
+        _pages["features"] = (LanguageManager.T("Pages_FeaturesTitle", "Windows Features"), LanguageManager.T("Pages_FeaturesSubtitle", "Enable or disable optional features (DISM)"));
+        _pages["startup"] = (LanguageManager.T("Pages_StartupTitle", "Windows Startup"), LanguageManager.T("Pages_StartupSubtitle", "Manage auto-start programs"));
+        _pages["settings"] = (LanguageManager.T("Pages_SettingsTitle", "Preferences"), LanguageManager.T("Pages_SettingsSubtitle", "Application behavior and configuration"));
 
         if (NavItems.Count == 0)
         {
-            NavItems.Add(new NavItem { Key = "dashboard", Title = LanguageManager.T("Sidebar_Dashboard", "Tổng quan"), Icon = Geom("IconDashboard") });
-            NavItems.Add(new NavItem { Key = "apps", Title = LanguageManager.T("Sidebar_Applications", "Ứng dụng đã cài"), Icon = Geom("IconApps") });
-            NavItems.Add(new NavItem { Key = "store", Title = LanguageManager.T("Sidebar_StoreApps", "Ứng dụng Store"), Icon = Geom("IconStore") });
-            NavItems.Add(new NavItem { Key = "packages", Title = LanguageManager.T("Sidebar_Packages", "Gói WinGet"), Icon = Geom("IconFolder") });
-            NavItems.Add(new NavItem { Key = "features", Title = LanguageManager.T("Sidebar_Features", "Tính năng Windows"), Icon = Geom("IconShield") });
-            NavItems.Add(new NavItem { Key = "startup", Title = LanguageManager.T("Sidebar_Startup", "Khởi động"), Icon = Geom("IconStartup") });
-            NavItems.Add(new NavItem { Key = "settings", Title = LanguageManager.T("Sidebar_Settings", "Cài đặt"), Icon = Geom("IconSettings") });
+            NavItems.Add(new NavItem { Key = "dashboard", Title = LanguageManager.T("Sidebar_Dashboard", "Dashboard"), Icon = Geom("IconDashboard") });
+            NavItems.Add(new NavItem { Key = "apps", Title = LanguageManager.T("Sidebar_Applications", "Applications"), Icon = Geom("IconApps") });
+            NavItems.Add(new NavItem { Key = "store", Title = LanguageManager.T("Sidebar_StoreApps", "Store Apps"), Icon = Geom("IconStore") });
+            NavItems.Add(new NavItem { Key = "packages", Title = LanguageManager.T("Sidebar_Packages", "WinGet"), Icon = Geom("IconFolder") });
+            NavItems.Add(new NavItem { Key = "features", Title = LanguageManager.T("Sidebar_Features", "Features"), Icon = Geom("IconShield") });
+            NavItems.Add(new NavItem { Key = "startup", Title = LanguageManager.T("Sidebar_Startup", "Startup"), Icon = Geom("IconStartup") });
+            NavItems.Add(new NavItem { Key = "settings", Title = LanguageManager.T("Sidebar_Settings", "Settings"), Icon = Geom("IconSettings") });
         }
         else
         {
@@ -104,13 +104,13 @@ public class MainViewModel : ObservableObject
             {
                 item.Title = item.Key switch
                 {
-                    "dashboard" => LanguageManager.T("Sidebar_Dashboard", "Tổng quan"),
-                    "apps" => LanguageManager.T("Sidebar_Applications", "Ứng dụng đã cài"),
-                    "store" => LanguageManager.T("Sidebar_StoreApps", "Ứng dụng Store"),
-                    "packages" => LanguageManager.T("Sidebar_Packages", "Gói WinGet"),
-                    "features" => LanguageManager.T("Sidebar_Features", "Tính năng Windows"),
-                    "startup" => LanguageManager.T("Sidebar_Startup", "Khởi động"),
-                    "settings" => LanguageManager.T("Sidebar_Settings", "Cài đặt"),
+                    "dashboard" => LanguageManager.T("Sidebar_Dashboard", "Dashboard"),
+                    "apps" => LanguageManager.T("Sidebar_Applications", "Applications"),
+                    "store" => LanguageManager.T("Sidebar_StoreApps", "Store Apps"),
+                    "packages" => LanguageManager.T("Sidebar_Packages", "WinGet"),
+                    "features" => LanguageManager.T("Sidebar_Features", "Features"),
+                    "startup" => LanguageManager.T("Sidebar_Startup", "Startup"),
+                    "settings" => LanguageManager.T("Sidebar_Settings", "Settings"),
                     _ => item.Title
                 };
             }

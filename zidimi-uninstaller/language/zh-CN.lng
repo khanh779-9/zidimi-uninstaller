@@ -41,6 +41,7 @@ RecentSubtitle=最新安装的软件列表
 Scanning=正在扫描系统…
 
 [Apps]
+SelectedCountText=??? {0} ???
 SearchPlaceholder=搜索应用程序…
 SortName=程序名称
 SortPublisher=发布者
@@ -262,3 +263,14 @@ CannotReadStore=无法读取 Store 应用列表
 CannotReadPackages=无法读取 WinGet 软件包
 CannotReadFeatures=无法读取 Windows 功能列表
 CannotReadStartup=无法读取自启动项列表
+
+
+[Scope]
+Machine=?? (HKLM)
+User=?? (HKCU)
+
+[Toast]
+SuccessTitle=??
+WarningTitle=??
+ErrorTitle=??
+InfoTitle=??

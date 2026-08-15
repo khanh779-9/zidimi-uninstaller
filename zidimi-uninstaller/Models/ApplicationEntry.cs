@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
+using zidimi_uninstaller.Services;
 
 namespace zidimi_uninstaller.Models;
 public class ApplicationEntry : INotifyPropertyChanged
@@ -72,8 +73,8 @@ public class ApplicationEntry : INotifyPropertyChanged
     public string RegistryHive => string.IsNullOrEmpty(RegistryPath)
         ? string.Empty
         : RegistryPath.StartsWith(@"HKEY_LOCAL_MACHINE", StringComparison.OrdinalIgnoreCase)
-            ? "Máy tính (HKLM)"
-            : "Người dùng (HKCU)";
+            ? LanguageManager.T("Scope_Machine", "Machine (HKLM)")
+            : LanguageManager.T("Scope_User", "User (HKCU)");
 
     internal string CacheKey => string.IsNullOrEmpty(RegistryPath) ? DisplayName : RegistryPath;
 

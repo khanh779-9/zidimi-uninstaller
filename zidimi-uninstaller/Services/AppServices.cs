@@ -6,7 +6,7 @@ public class DialogService
     public Func<string, string, string, string, Task<bool>>? ConfirmHandler { get; set; }
     public Func<string, string, Task<bool>>? MessageHandler { get; set; }
 
-    public Task<bool> ConfirmAsync(string title, string message, string confirmText = "Xác nhận", string cancelText = "Huỷ bỏ")
+    public Task<bool> ConfirmAsync(string title, string message, string confirmText = "Confirm", string cancelText = "Cancel")
         => ConfirmHandler != null
             ? ConfirmHandler(title, message, confirmText, cancelText)
             : Task.FromResult(true);

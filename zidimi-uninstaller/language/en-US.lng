@@ -41,6 +41,7 @@ RecentSubtitle=Latest software installations
 Scanning=Scanning system…
 
 [Apps]
+SelectedCountText={0} apps selected
 SearchPlaceholder=Search applications…
 SortName=App Name
 SortPublisher=Publisher
@@ -250,3 +251,14 @@ CannotReadStore=Unable to read Store applications
 CannotReadPackages=Unable to read WinGet packages
 CannotReadFeatures=Unable to read Windows features
 CannotReadStartup=Unable to read startup items
+
+
+[Scope]
+Machine=Machine (HKLM)
+User=User (HKCU)
+
+[Toast]
+SuccessTitle=Success
+WarningTitle=Warning
+ErrorTitle=Error
+InfoTitle=Information

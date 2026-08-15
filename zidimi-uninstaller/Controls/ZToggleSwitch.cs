@@ -10,7 +10,7 @@ public class ZToggleSwitch : ToggleButton
     }
 
     public static readonly DependencyProperty OnTextProperty =
-        DependencyProperty.Register(nameof(OnText), typeof(string), typeof(ZToggleSwitch), new PropertyMetadata("Bật"));
+        DependencyProperty.Register(nameof(OnText), typeof(string), typeof(ZToggleSwitch), new PropertyMetadata("On"));
 
     public string OnText
     {
@@ -19,7 +19,7 @@ public class ZToggleSwitch : ToggleButton
     }
 
     public static readonly DependencyProperty OffTextProperty =
-        DependencyProperty.Register(nameof(OffText), typeof(string), typeof(ZToggleSwitch), new PropertyMetadata("Tắt"));
+        DependencyProperty.Register(nameof(OffText), typeof(string), typeof(ZToggleSwitch), new PropertyMetadata("Off"));
 
     public string OffText
     {

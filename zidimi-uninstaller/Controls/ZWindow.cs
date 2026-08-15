@@ -14,6 +14,8 @@ public class ZWindow : Window
         CommandBindings.Add(new CommandBinding(SystemCommands.MinimizeWindowCommand, OnMinimizeWindow, OnCanMinimizeWindow));
         CommandBindings.Add(new CommandBinding(SystemCommands.RestoreWindowCommand, OnRestoreWindow, OnCanResizeWindow));
 
+        Style = (Style)FindResource("ZWindowStyle");
+
         StateChanged += ZWindow_StateChanged;
         ApplyChrome();
     }

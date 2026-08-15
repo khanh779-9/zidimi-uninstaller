@@ -43,6 +43,8 @@ public class StoreAppsViewModel : ObservableObject
     private int _selectedCount;
     public int SelectedCount { get => _selectedCount; set => SetProperty(ref _selectedCount, value); }
 
+    public string SelectedCountText => string.Format(LanguageManager.T("Store_SelectedCountText", "{0} Store apps selected"), SelectedCount);
+
     public bool HasSelection => SelectedCount > 0;
 
     private bool _showEmptyState;
@@ -110,6 +112,7 @@ public class StoreAppsViewModel : ObservableObject
         ShowEmptyState = !IsLoading && Apps.Count == 0;
         ShowNoResults = !IsLoading && Apps.Count > 0 && VisibleCount == 0;
         OnPropertyChanged(nameof(HasSelection));
+        OnPropertyChanged(nameof(SelectedCountText));
     }
 
     private List<StoreAppEntry> GetTargets(object? param = null)

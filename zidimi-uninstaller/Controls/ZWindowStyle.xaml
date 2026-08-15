@@ -87,7 +87,7 @@
                                         </StackPanel>
 
                                         <TextBlock Grid.Column="1" Text="{TemplateBinding Title}"
-                                                   Foreground="{StaticResource ZBrushLighterGray}" FontSize="12"
+                                                   Foreground="{StaticResource ZBrushLighterGray}" FontSize="16"
                                                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"
                                                    TextTrimming="CharacterEllipsis"/>
 

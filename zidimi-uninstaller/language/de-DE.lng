@@ -41,6 +41,7 @@ RecentSubtitle=Neueste Software-Installationen
 Scanning=System wird gescannt…
 
 [Apps]
+SelectedCountText={0} Apps ausgew�hlt
 SearchPlaceholder=Anwendungen suchen…
 SortName=App-Name
 SortPublisher=Herausgeber
@@ -262,3 +263,14 @@ CannotReadStore=Store Apps konnten nicht gelesen werden
 CannotReadPackages=WinGet Pakete konnten nicht gelesen werden
 CannotReadFeatures=Windows-Features konnten nicht gelesen werden
 CannotReadStartup=Autostart-Einträge konnten nicht gelesen werden
+
+
+[Scope]
+Machine=System (HKLM)
+User=Benutzer (HKCU)
+
+[Toast]
+SuccessTitle=Erfolg
+WarningTitle=Warnung
+ErrorTitle=Fehler
+InfoTitle=Information

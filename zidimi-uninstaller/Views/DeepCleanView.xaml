@@ -33,15 +33,8 @@
                 </Border>
 
                 <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
-                    <TextBlock FontSize="18" FontWeight="Bold" Foreground="{StaticResource ZBrushBlack}">
-                        <Run Text="Deep Clean: "/>
-                        <Run Text="{Binding AppName, Mode=OneWay}"/>
-                    </TextBlock>
-                    <TextBlock FontSize="13" Foreground="{StaticResource ZBrushGray}" Margin="0,3,0,0">
-                        <Run Text="{Binding TotalFound, Mode=OneWay}" FontWeight="SemiBold"/>
-                        <Run Text=" items  ·  "/>
-                        <Run Text="{Binding TotalSizeText, Mode=OneWay}" FontWeight="SemiBold" Foreground="{StaticResource ZBrushAccent}"/>
-                    </TextBlock>
+                    <TextBlock Text="{Binding HeaderTitle}" FontSize="18" FontWeight="Bold" Foreground="{StaticResource ZBrushBlack}"/>
+                    <TextBlock Text="{Binding FoundSummaryText}" FontSize="13" Foreground="{StaticResource ZBrushGray}" Margin="0,3,0,0"/>
                 </StackPanel>
 
                 <controls:ZIconButton Grid.Column="2" Icon="{StaticResource IconClose}"
@@ -108,7 +101,7 @@
                     <controls:ZButton Content="{Binding [DeepClean_Skip], Source={x:Static services:LanguageManager.Instance}}" Variant="Secondary"
                                       Command="{Binding CloseCommand}"
                                       Margin="0,0,10,0"/>
-                    <controls:ZButton Content="{Binding SelectedCount, StringFormat={}{0} items}"
+                    <controls:ZButton Content="{Binding CleanButtonText}"
                                       Variant="Danger"
                                       Icon="{StaticResource IconTrash}"
                                       Command="{Binding CleanCommand}"

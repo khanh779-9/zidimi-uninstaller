@@ -138,9 +138,6 @@
 
         <!-- Confirmation dialog -->
         <controls:ZDialog Grid.Column="0" Grid.ColumnSpan="2" x:Name="ConfirmDialog"
-                          Title="Xác nhận gỡ cài đặt"
-                          Message="Bạn có chắc muốn gỡ cài đặt ứng dụng này?"
-                          ConfirmText="Gỡ cài đặt" CancelText="Huỷ bỏ"
                           Panel.ZIndex="100"/>
 
         <!-- Application Details Modal Overlay -->

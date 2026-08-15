@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
+using zidimi_uninstaller.Services;
 
 namespace zidimi_uninstaller.Controls;
 
@@ -74,9 +75,9 @@ public class ZToastHost : Control
 
     private static string TypeTitle(ZToastType type) => type switch
     {
-        ZToastType.Success => "Thành công",
-        ZToastType.Warning => "Cảnh báo",
-        ZToastType.Error => "Lỗi",
-        _ => "Thông tin"
+        ZToastType.Success => LanguageManager.T("Toast_SuccessTitle", "Success"),
+        ZToastType.Warning => LanguageManager.T("Toast_WarningTitle", "Warning"),
+        ZToastType.Error => LanguageManager.T("Toast_ErrorTitle", "Error"),
+        _ => LanguageManager.T("Toast_InfoTitle", "Information")
     };
 }

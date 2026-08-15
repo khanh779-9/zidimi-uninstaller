@@ -50,7 +50,7 @@ public class ZDialog : ContentControl
     }
 
     public static readonly DependencyProperty CancelTextProperty =
-        DependencyProperty.Register(nameof(CancelText), typeof(string), typeof(ZDialog), new PropertyMetadata("Huỷ bỏ"));
+        DependencyProperty.Register(nameof(CancelText), typeof(string), typeof(ZDialog), new PropertyMetadata("Cancel"));
 
     public string CancelText
     {

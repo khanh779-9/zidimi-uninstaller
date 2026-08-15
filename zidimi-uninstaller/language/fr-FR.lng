@@ -41,6 +41,7 @@ RecentSubtitle=Dernières installations logicielles
 Scanning=Analyse du système…
 
 [Apps]
+SelectedCountText={0} applications s�lectionn�es
 SearchPlaceholder=Rechercher des applications…
 SortName=Nom de l'application
 SortPublisher=Éditeur
@@ -262,3 +263,14 @@ CannotReadStore=Impossible de lire les applications Store
 CannotReadPackages=Impossible de lire les paquets WinGet
 CannotReadFeatures=Impossible de lire les fonctionnalités Windows
 CannotReadStartup=Impossible de lire les éléments au démarrage
+
+
+[Scope]
+Machine=Syst�me (HKLM)
+User=Utilisateur (HKCU)
+
+[Toast]
+SuccessTitle=Succ�s
+WarningTitle=Avertissement
+ErrorTitle=Erreur
+InfoTitle=Information

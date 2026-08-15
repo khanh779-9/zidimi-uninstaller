@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using zidimi_uninstaller.Services;
 
 namespace zidimi_uninstaller.Models;
 public class StartupEntry : INotifyPropertyChanged
@@ -14,7 +15,7 @@ public class StartupEntry : INotifyPropertyChanged
     public string Location { get; set; } = string.Empty;
     public bool IsMachine { get; set; }
 
-    public string ScopeText => IsMachine ? "Máy tính" : "Người dùng";
+    public string ScopeText => IsMachine ? LanguageManager.T("Scope_Machine", "Machine") : LanguageManager.T("Scope_User", "User");
     public bool HasCommand => !string.IsNullOrWhiteSpace(Command);
 
     private bool _isEnabled = true;
@@ -24,7 +25,7 @@ public class StartupEntry : INotifyPropertyChanged
         set { _isEnabled = value; OnPropertyChanged(); }
     }
 
-    public string StatusText => IsEnabled ? "Đang bật" : "Đã tắt";
+    public string StatusText => IsEnabled ? LanguageManager.T("Features_StatusEnabled", "Enabled") : LanguageManager.T("Features_StatusDisabled", "Disabled");
 
     public override string ToString() => Name;
 }

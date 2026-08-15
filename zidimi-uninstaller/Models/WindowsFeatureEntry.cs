@@ -1,3 +1,4 @@
+using zidimi_uninstaller.Services;
 using zidimi_uninstaller.ViewModels;
 
 namespace zidimi_uninstaller.Models;
@@ -21,6 +22,8 @@ public class WindowsFeatureEntry : ObservableObject
         set => SetProperty(ref _isOperating, value);
     }
 
-    public string StatusText => IsEnabled ? "Đã bật (Enabled)" : "Đã tắt (Disabled)";
+    public string StatusText => IsEnabled
+        ? LanguageManager.T("Features_StatusEnabled", "Enabled")
+        : LanguageManager.T("Features_StatusDisabled", "Disabled");
     public string StatusBadgeVariant => IsEnabled ? "Success" : "Neutral";
 }

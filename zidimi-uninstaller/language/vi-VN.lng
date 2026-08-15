@@ -41,6 +41,7 @@ RecentSubtitle=Những ứng dụng được cài đặt mới nhất
 Scanning=Đang quét hệ thống…
 
 [Apps]
+SelectedCountText={0} ?ng d?ng d� ch?n
 SearchPlaceholder=Tìm kiếm ứng dụng…
 SortName=Tên ứng dụng
 SortPublisher=Nhà phát hành
@@ -250,3 +251,14 @@ CannotReadStore=Không đọc được danh sách ứng dụng Store
 CannotReadPackages=Không đọc được danh sách gói WinGet
 CannotReadFeatures=Không đọc được danh sách tính năng Windows
 CannotReadStartup=Không đọc được danh sách khởi động
+
+
+[Scope]
+Machine=M�y t�nh (HKLM)
+User=Ngu?i d�ng (HKCU)
+
+[Toast]
+SuccessTitle=Th�nh c�ng
+WarningTitle=C?nh b�o
+ErrorTitle=L?i
+InfoTitle=Th�ng tin

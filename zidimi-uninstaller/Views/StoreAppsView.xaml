@@ -36,7 +36,7 @@
                 Margin="0,0,0,12"
                 Visibility="{Binding HasSelection, Converter={StaticResource BoolToVis}}">
             <Grid>
-                <TextBlock Text="{Binding SelectedCount, StringFormat={}{0} apps}"
+                <TextBlock Text="{Binding SelectedCountText}"
                            FontWeight="SemiBold" VerticalAlignment="Center"
                            Foreground="{StaticResource ZBrushAccent}"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

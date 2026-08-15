@@ -34,10 +34,10 @@ public class ApplicationsViewModel : ObservableObject
 
     public ObservableCollection<SortOption> SortOptions { get; } = new()
     {
-        new SortOption("Name", "Tên ứng dụng"),
-        new SortOption("Publisher", "Nhà phát hành"),
-        new SortOption("Size", "Kích thước"),
-        new SortOption("Date", "Ngày cài đặt")
+        new SortOption("Name", LanguageManager.T("Apps_SortName", "Application Name")),
+        new SortOption("Publisher", LanguageManager.T("Apps_SortPublisher", "Publisher")),
+        new SortOption("Size", LanguageManager.T("Apps_SortSize", "Size")),
+        new SortOption("Date", LanguageManager.T("Apps_SortDate", "Installation Date"))
     };
 
     private SortOption _selectedSort;
@@ -123,6 +123,8 @@ public class ApplicationsViewModel : ObservableObject
     private int _selectedCount;
     public int SelectedCount { get => _selectedCount; set => SetProperty(ref _selectedCount, value); }
 
+    public string SelectedCountText => string.Format(LanguageManager.T("Apps_SelectedCountText", "{0} apps selected"), SelectedCount);
+
     public bool HasSelection => SelectedCount > 0;
     public bool NoSelection => SelectedCount == 0;
 
@@ -202,10 +204,10 @@ public class ApplicationsViewModel : ObservableObject
 
     private void OnLanguageChanged()
     {
-        SortOptions[0].Label = LanguageManager.T("Apps_SortName", "Tên ứng dụng");
-        SortOptions[1].Label = LanguageManager.T("Apps_SortPublisher", "Nhà phát hành");
-        SortOptions[2].Label = LanguageManager.T("Apps_SortSize", "Kích thước");
-        SortOptions[3].Label = LanguageManager.T("Apps_SortDate", "Ngày cài đặt");
+        SortOptions[0].Label = LanguageManager.T("Apps_SortName", "Application Name");
+        SortOptions[1].Label = LanguageManager.T("Apps_SortPublisher", "Publisher");
+        SortOptions[2].Label = LanguageManager.T("Apps_SortSize", "Size");
+        SortOptions[3].Label = LanguageManager.T("Apps_SortDate", "Installation Date");
         UpdateCounts();
     }
 
@@ -304,6 +306,7 @@ public class ApplicationsViewModel : ObservableObject
         ShowNoResults = !IsLoading && Apps.Count > 0 && VisibleCount == 0;
         OnPropertyChanged(nameof(HasSelection));
         OnPropertyChanged(nameof(NoSelection));
+        OnPropertyChanged(nameof(SelectedCountText));
     }
 
     private List<ApplicationEntry> GetTargets(object? param = null)
