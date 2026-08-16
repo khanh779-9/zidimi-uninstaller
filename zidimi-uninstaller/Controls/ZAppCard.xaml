@@ -14,9 +14,9 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Border x:Name="IconWrap" Width="44" Height="44" CornerRadius="10" Background="{StaticResource ZBrushCard}">
+                            <Border x:Name="IconWrap" Width="44" Height="44" CornerRadius="10" Background="{StaticResource ZBrushSurfaceMuted}" BorderBrush="{StaticResource ZBrushBorder}" BorderThickness="1">
                                 <Image x:Name="IconImage" Source="{TemplateBinding Icon}" Width="28" Height="28" Stretch="Uniform"
-                                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                                       RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True"/>
                             </Border>
                             <StackPanel Grid.Column="1" Margin="12,0,12,0" VerticalAlignment="Center">
                                 <TextBlock Text="{TemplateBinding Title}" FontSize="13.5" FontWeight="SemiBold"

@@ -12,6 +12,7 @@ Settings=Settings
 Version=Version {0}
 ReloadAll=Reload all data
 About=About Application
+Leftovers=Trace Cleaner
 
 [Pages]
 LeftoversSubtitle=Scan and clean orphaned files, folders, data, and registry keys from uninstalled software
@@ -96,6 +97,7 @@ EmptySubtitle=All Store apps have been removed or are not installed for this acc
 NoResultsTitle=No matching apps
 NoResultsSubtitle=Try searching with a different keyword.
 Scanning=Scanning Microsoft Store apps…
+SelectedCountText={0} Store apps selected
 
 [Packages]
 SearchPlaceholder=Search WinGet / Scoop / Chocolatey packages…
@@ -144,6 +146,7 @@ EmptySubtitle=No startup entries found in registry.
 NoResultsTitle=No matching results
 NoResultsSubtitle=Try a different keyword.
 Scanning=Scanning startup entries…
+PublisherLabel=Publisher
 
 [DeepClean]
 Title=Deep Clean: {0}
@@ -153,6 +156,7 @@ SelectSafeOnly=Select Safe Only
 Skip=Skip
 CleanSelected=Clean {0} items
 CleaningProgress=Purging leftover items…
+ScanningProgress=Scanning for leftover files and registry traces…
 
 [Settings]
 SectionTitle=Preferences
@@ -244,6 +248,7 @@ TaskSchedulerRemoved=Task Scheduler configuration removed.
 TaskSchedulerFailed=Failed to register Task Scheduler. Ensure you have administrator rights.
 ShortcutCreated=No-UAC Desktop shortcut created successfully!
 ShortcutFailed=Failed to create desktop shortcut. Please try again.
+UninstallNotConfirmed=Uninstallation of "{0}" was not confirmed. The application is still registered.
 
 [Status]
 ScanningRegistry=Scanning registry…
@@ -349,15 +354,27 @@ SafetyReview=Review recommended
 
 SafetyWarning=Caution required
 
-SafetyUnknown=Unknown
-
-[About]
-Tagline=A modern, fast, and thorough software management and uninstallation utility for Windows with deep leftover residue cleanup.
-AuthorLabel=Author / Developer
-LicenseLabel=Software License
-PlatformLabel=Operating Platform
-FrameworkLabel=Framework Runtime
-ArchitectureLabel=Architecture
-StatusLabel=Release Status
-ReleasesBtn=Releases
+SafetyUnknown=Unknown
+
+
+
+[About]
+
+Tagline=A modern, fast, and thorough software management and uninstallation utility for Windows with deep leftover residue cleanup.
+
+AuthorLabel=Author / Developer
+
+LicenseLabel=Software License
+
+PlatformLabel=Operating Platform
+
+FrameworkLabel=Framework Runtime
+
+ArchitectureLabel=Architecture
+
+StatusLabel=Release Status
+
+ReleasesBtn=Releases
+
 IssuesBtn=Report Issue
+

@@ -7,7 +7,7 @@
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="900">
-    <Grid Margin="28">
+    <Grid Margin="24,20,24,18">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -23,17 +23,17 @@
             </Grid.ColumnDefinitions>
             <controls:ZSearchBox Placeholder="{Binding [Features_SearchPlaceholder], Source={x:Static services:LanguageManager.Instance}}"
                                  Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                                 MaxWidth="500" HorizontalAlignment="Left"/>
-            <controls:ZIconButton Grid.Column="1" Icon="{StaticResource IconRefresh}"
-                                  Command="{Binding RefreshCommand}"
+                                 MaxWidth="500" HorizontalAlignment="Stretch" Margin="0,0,12,0"/>
+            <controls:ZIconButton Grid.Column="1" Icon="{StaticResource StrokeIconRescan}"
+                                  Command="{Binding RescanCommand}"
                                   ToolTip="{Binding [Features_RescanTooltip], Source={x:Static services:LanguageManager.Instance}}"/>
         </Grid>
 
         <!-- Stats Bar -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12">
+        <WrapPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12">
             <controls:ZBadge Content="{Binding TotalBadgeText}" Variant="Accent"/>
             <controls:ZBadge Content="{Binding EnabledBadgeText}" Variant="Success" Margin="8,0,0,0"/>
-        </StackPanel>
+        </WrapPanel>
 
         <!-- List -->
         <Grid Grid.Row="2">
@@ -45,10 +45,12 @@
                     <DataTemplate>
                         <controls:ZToggleRow Title="{Binding DisplayName}"
                                              Subtitle="{Binding Name}"
-                                             IsOn="{Binding IsEnabled, Mode=TwoWay}">
+                                             IsOn="{Binding IsEnabled, Mode=TwoWay}"
+                                             IsEnabled="{Binding IsOperating, Converter={StaticResource InverseBool}}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <controls:ZBadge Content="{Binding StatusText}" Variant="{Binding StatusBadgeVariant}" Margin="0,0,8,0"/>
                                 <controls:ZProgressRing RingSize="18" Margin="8,0,0,0"
+                                                        IsActive="{Binding IsOperating}"
                                                         Visibility="{Binding IsOperating, Converter={StaticResource BoolToVis}}"/>
                             </StackPanel>
                         </controls:ZToggleRow>
@@ -57,22 +59,22 @@
             </ListBox>
 
             <!-- Elevation Required state -->
-            <controls:ZEmptyState Icon="{StaticResource IconShield}"
+            <controls:ZEmptyState Icon="{StaticResource StrokeIconShield}"
                                   Title="{Binding [Features_ElevationTitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Subtitle="{Binding [Features_ElevationSubtitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Visibility="{Binding ShowElevationRequired, Converter={StaticResource BoolToVis}}">
                 <controls:ZButton Content="{Binding [Features_RestartAdminBtn], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Primary" Icon="{StaticResource IconShield}"
+                                  Variant="Primary" Icon="{StaticResource StrokeIconRestart}"
                                   Command="{Binding RestartAsAdminCommand}"/>
             </controls:ZEmptyState>
 
             <!-- Empty state -->
-            <controls:ZEmptyState Icon="{StaticResource IconSettings}"
+            <controls:ZEmptyState Icon="{StaticResource StrokeIconSettings}"
                                   Title="{Binding [Features_EmptyTitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Subtitle="{Binding [Features_EmptySubtitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Visibility="{Binding ShowEmptyState, Converter={StaticResource BoolToVis}}"/>
 
-            <controls:ZEmptyState Icon="{StaticResource IconSearch}"
+            <controls:ZEmptyState Icon="{StaticResource StrokeIconSearch}"
                                   Title="{Binding [Features_NoResultsTitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Subtitle="{Binding [Features_NoResultsSubtitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Visibility="{Binding ShowNoResults, Converter={StaticResource BoolToVis}}"/>
@@ -81,7 +83,7 @@
             <Border Background="{StaticResource ZBrushBackground}"
                     Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}" Panel.ZIndex="10">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <controls:ZProgressRing RingSize="40"/>
+                    <controls:ZProgressRing RingSize="40" IsActive="{Binding IsLoading}"/>
                     <TextBlock Text="{Binding [Features_Scanning], Source={x:Static services:LanguageManager.Instance}}" Margin="0,14,0,0" HorizontalAlignment="Center"
                                Foreground="{StaticResource ZBrushGray}"/>
                 </StackPanel>

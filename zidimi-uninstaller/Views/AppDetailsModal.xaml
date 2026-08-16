@@ -7,12 +7,12 @@
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800">
-    <Border Background="{StaticResource ZBrushWhite}" CornerRadius="16"
-            BorderBrush="{StaticResource ZBrushLightGray}" BorderThickness="1"
+    <Border Background="{StaticResource ZBrushSurface}" CornerRadius="16"
+            BorderBrush="{StaticResource ZBrushBorderStrong}" BorderThickness="1"
             Padding="26" Width="720" MaxWidth="760"
             HorizontalAlignment="Center" VerticalAlignment="Center">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="36" ShadowDepth="10" Opacity="0.28" Color="#000000"/>
+            <DropShadowEffect BlurRadius="18" ShadowDepth="4" Opacity="0.18" Color="#000000"/>
         </Border.Effect>
 
         <StackPanel>
@@ -24,7 +24,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Border Width="52" Height="52" CornerRadius="13" Background="{StaticResource ZBrushCard}" VerticalAlignment="Center">
+                <Border Width="52" Height="52" CornerRadius="13" Background="{StaticResource ZBrushSurfaceMuted}" VerticalAlignment="Center">
                     <Image Source="{Binding SelectedApp.Icon}" Width="36" Height="36" Stretch="Uniform"
                            RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Border>
@@ -46,12 +46,12 @@
                     </WrapPanel>
                 </StackPanel>
 
-                <controls:ZIconButton Grid.Column="2" Icon="{StaticResource IconClose}"
+                <controls:ZIconButton Grid.Column="2" Icon="{StaticResource StrokeIconClose}"
                                       Command="{Binding CloseDetailsCommand}"
                                       ToolTip="{Binding [Apps_CloseTooltip], Source={x:Static services:LanguageManager.Instance}}"/>
             </Grid>
 
-            <Separator Height="1" Background="{StaticResource ZBrushLightGray}" Margin="0,0,0,16"/>
+            <Separator Height="1" Background="{StaticResource ZBrushBorder}" Margin="0,0,0,16"/>
 
             <!-- Details Grid -->
             <Grid Margin="4,0,4,16">
@@ -73,31 +73,31 @@
                 </StackPanel>
             </Grid>
 
-            <Separator Height="1" Background="{StaticResource ZBrushLightGray}" Margin="0,0,0,16"/>
+            <Separator Height="1" Background="{StaticResource ZBrushBorder}" Margin="0,0,0,16"/>
 
             <!-- Single Unified WrapPanel for all action buttons -->
             <WrapPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <controls:ZButton Content="{Binding [Apps_Uninstall], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Primary" Icon="{StaticResource IconTrash}"
-                                  Command="{Binding UninstallCommand}" Margin="0,0,8,8"/>
+                                  Variant="Primary" Icon="{StaticResource StrokeIconTrash}"
+                                  Command="{Binding UninstallCommand}" CommandParameter="{Binding SelectedApp}" Margin="0,0,8,8"/>
                 <controls:ZButton Content="{Binding [Apps_QuietUninstall], Source={x:Static services:LanguageManager.Instance}}"
                                   Variant="Secondary"
-                                  Command="{Binding QuietUninstallCommand}" Margin="0,0,8,8"/>
+                                  Command="{Binding QuietUninstallCommand}" CommandParameter="{Binding SelectedApp}" Margin="0,0,8,8"/>
                 <controls:ZButton Content="{Binding [Apps_DeepClean], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Secondary" Icon="{StaticResource IconSearch}"
+                                  Variant="Secondary" Icon="{StaticResource StrokeIconRescan}"
                                   Command="{Binding DeepCleanSelectedCommand}" Margin="0,0,8,8"/>
                 <controls:ZButton Content="{Binding [Apps_Modify], Source={x:Static services:LanguageManager.Instance}}"
                                   Variant="Secondary"
                                   Command="{Binding ModifyCommand}" Margin="0,0,8,8"/>
                 <controls:ZButton Content="{Binding [Apps_OpenFolder], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Ghost" Icon="{StaticResource IconFolder}"
+                                  Variant="Ghost" Icon="{StaticResource StrokeIconFolder}"
                                   Command="{Binding OpenLocationCommand}" Margin="0,0,8,8"/>
                 <controls:ZButton Content="{Binding [Apps_OpenWebsite], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Ghost" Icon="{StaticResource IconGlobe}"
+                                  Variant="Ghost" Icon="{StaticResource StrokeIconGlobe}"
                                   Command="{Binding OpenUrlCommand}" Margin="0,0,8,8"/>
                 <controls:ZButton Content="{Binding [Apps_DeleteRegistry], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Danger" Icon="{StaticResource IconError}"
-                                  Command="{Binding ForceRemoveCommand}" Margin="0,0,8,8"/>
+                                  Variant="Danger" Icon="{StaticResource StrokeIconError}"
+                                  Command="{Binding ForceRemoveCommand}" CommandParameter="{Binding SelectedApp}" Margin="0,0,8,8"/>
                 <controls:ZButton Content="{Binding [Apps_Close], Source={x:Static services:LanguageManager.Instance}}" Variant="Secondary"
                                   Command="{Binding CloseDetailsCommand}" Margin="0,0,0,8"/>
             </WrapPanel>

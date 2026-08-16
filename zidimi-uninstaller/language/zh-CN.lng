@@ -12,6 +12,7 @@ Settings=设置
 Version=版本 {0}
 ReloadAll=重新加载所有数据
 About=关于软件
+Leftovers=痕迹清理
 
 [Pages]
 LeftoversSubtitle=扫描并清理已卸载软件遗留的孤立文件、文件夹、应用数据和注册表项
@@ -43,7 +44,7 @@ RecentSubtitle=最新安装的软件列表
 Scanning=正在扫描系统…
 
 [Apps]
-SelectedCountText=??? {0} ???
+SelectedCountText=已选择 {0} 个应用
 SearchPlaceholder=搜索应用程序…
 SortName=程序名称
 SortPublisher=发布者
@@ -67,9 +68,9 @@ BrokenBadge=未知/损坏
 SystemComponentBadge=系统组件
 EmptyTitle=未找到应用程序
 EmptySubtitle=点击右上角的刷新按钮重新扫描。
-ElevationTitle=???????
-ElevationSubtitle=DISM ????????????????? Windows ???
-RestartAdminBtn=??????????
+ElevationTitle=需要管理员权限
+ElevationSubtitle=DISM 需要管理员权限才能读取和管理 Windows 可选功能。
+RestartAdminBtn=以管理员身份重新启动
 NoResultsTitle=无匹配结果
 NoResultsSubtitle=尝试其他搜索关键词或调整系统组件筛选。
 Scanning=正在扫描注册表…
@@ -96,12 +97,13 @@ UninstallSelected=卸载所选应用
 Uninstall=卸载
 EmptyTitle=没有 Store 应用
 EmptySubtitle=所有 Store 应用已移除或当前用户账户未安装。
-ElevationTitle=???????
-ElevationSubtitle=DISM ????????????????? Windows ???
-RestartAdminBtn=??????????
+ElevationTitle=需要管理员权限
+ElevationSubtitle=DISM 需要管理员权限才能读取和管理 Windows 可选功能。
+RestartAdminBtn=以管理员身份重新启动
 NoResultsTitle=未找到匹配应用
 NoResultsSubtitle=尝试使用其他关键词搜索。
 Scanning=正在扫描 Microsoft Store 应用…
+SelectedCountText=已选择 {0} 个 Store 应用
 
 [Packages]
 SearchPlaceholder=搜索 WinGet / Scoop / Chocolatey 软件包…
@@ -111,9 +113,9 @@ Upgrade=更新
 Uninstall=卸载
 EmptyTitle=未找到软件包
 EmptySubtitle=未安装 WinGet/Scoop 软件包或尚未配置 WinGet。
-ElevationTitle=???????
-ElevationSubtitle=DISM ????????????????? Windows ???
-RestartAdminBtn=??????????
+ElevationTitle=需要管理员权限
+ElevationSubtitle=DISM 需要管理员权限才能读取和管理 Windows 可选功能。
+RestartAdminBtn=以管理员身份重新启动
 NoResultsTitle=未找到匹配软件包
 NoResultsSubtitle=尝试使用其他关键词搜索。
 Scanning=正在通过 WinGet CLI 扫描软件包…
@@ -127,22 +129,22 @@ StatusEnabled=已启用
 StatusDisabled=已禁用
 EmptyTitle=无可用功能
 EmptySubtitle=无法读取当前系统的 DISM 功能状态。
-ElevationTitle=???????
-ElevationSubtitle=DISM ????????????????? Windows ???
-RestartAdminBtn=??????????
+ElevationTitle=需要管理员权限
+ElevationSubtitle=DISM 需要管理员权限才能读取和管理 Windows 可选功能。
+RestartAdminBtn=以管理员身份重新启动
 NoResultsTitle=未找到匹配功能
 NoResultsSubtitle=尝试使用其他关键词搜索。
 Scanning=正在通过 DISM 查询 Windows 功能…
 
 [Startup]
-ItemName=????
-CommandLabel=???
-ToggleBtn=????
-ScopeLabel=??
-StatusLabel=??
-ExecutableLabel=?????
-LocationLabel=??? / ?????
-OpenRegedit=??????????
+ItemName=项目名称
+CommandLabel=启动命令
+ToggleBtn=切换
+ScopeLabel=范围
+StatusLabel=状态
+ExecutableLabel=可执行文件
+LocationLabel=注册表 / 文件夹
+OpenRegedit=在 Regedit 中打开
 SearchPlaceholder=搜索自启动项…
 RescanTooltip=重新扫描自启动项
 TotalBadge=共 {0} 项
@@ -150,12 +152,13 @@ EnabledBadge=已启用 {0} 项
 DisabledBadge=已禁用 {0} 项
 EmptyTitle=无自启动项
 EmptySubtitle=在注册表中未检测到自启动项目。
-ElevationTitle=???????
-ElevationSubtitle=DISM ????????????????? Windows ???
-RestartAdminBtn=??????????
+ElevationTitle=需要管理员权限
+ElevationSubtitle=DISM 需要管理员权限才能读取和管理 Windows 可选功能。
+RestartAdminBtn=以管理员身份重新启动
 NoResultsTitle=无匹配结果
 NoResultsSubtitle=尝试使用其他关键词搜索。
 Scanning=正在扫描自启动项…
+PublisherLabel=发布者
 
 [DeepClean]
 Title=深度强力清理: {0}
@@ -165,6 +168,7 @@ SelectSafeOnly=仅选安全项
 Skip=跳过
 CleanSelected=清理 {0} 个项目
 CleaningProgress=正在清理残留文件与注册表项…
+ScanningProgress=正在扫描残留文件和注册表痕迹…
 
 [Settings]
 SectionTitle=偏好设置
@@ -256,6 +260,7 @@ TaskSchedulerRemoved=Task Scheduler configuration removed.
 TaskSchedulerFailed=Failed to register Task Scheduler. Ensure you have administrator rights.
 ShortcutCreated=No-UAC Desktop shortcut created successfully!
 ShortcutFailed=Failed to create desktop shortcut. Please try again.
+UninstallNotConfirmed=未能确认“{0}”已卸载。该应用仍在系统中注册。
 
 [Status]
 ScanningRegistry=正在扫描注册表…
@@ -276,14 +281,14 @@ CannotReadStartup=无法读取自启动项列表
 
 
 [Scope]
-Machine=?? (HKLM)
-User=?? (HKCU)
+Machine=计算机 (HKLM)
+User=用户 (HKCU)
 
 [Toast]
-SuccessTitle=??
-WarningTitle=??
-ErrorTitle=??
-InfoTitle=??
+SuccessTitle=成功
+WarningTitle=警告
+ErrorTitle=错误
+InfoTitle=信息
 
 
 
@@ -361,15 +366,27 @@ SafetyReview=建议检查
 
 SafetyWarning=需谨慎
 
-SafetyUnknown=未知
-
-[About]
-Tagline=专为 Windows 打造的现代化、高速且彻底的软件管理与卸载实用工具，具备深度残留清理功能。
-AuthorLabel=作者 / 开发者
-LicenseLabel=软件许可证
-PlatformLabel=运行平台
-FrameworkLabel=框架运行环境
-ArchitectureLabel=系统架构
-StatusLabel=发布状态
-ReleasesBtn=发行版本
+SafetyUnknown=未知
+
+
+
+[About]
+
+Tagline=专为 Windows 打造的现代化、高速且彻底的软件管理与卸载实用工具，具备深度残留清理功能。
+
+AuthorLabel=作者 / 开发者
+
+LicenseLabel=软件许可证
+
+PlatformLabel=运行平台
+
+FrameworkLabel=框架运行环境
+
+ArchitectureLabel=系统架构
+
+StatusLabel=发布状态
+
+ReleasesBtn=发行版本
+
 IssuesBtn=反馈问题
+

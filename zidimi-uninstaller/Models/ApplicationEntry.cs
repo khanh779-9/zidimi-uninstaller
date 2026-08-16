@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
+using Microsoft.Win32;
 using zidimi_uninstaller.Services;
 
 namespace zidimi_uninstaller.Models;
@@ -31,6 +32,7 @@ public class ApplicationEntry : INotifyPropertyChanged
     public bool IsProtected { get; set; }
     public bool IsUpdate { get; set; }
     public bool Is64Bit { get; set; }
+    public RegistryView RegistryView { get; set; } = RegistryView.Default;
     public bool IsBroken { get; set; }
 
     public bool CanUninstall => !string.IsNullOrWhiteSpace(UninstallString) && !IsBroken;

@@ -7,7 +7,7 @@
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="900">
-    <Grid Margin="28">
+    <Grid Margin="24,20,24,18">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -23,18 +23,18 @@
             </Grid.ColumnDefinitions>
             <controls:ZSearchBox Placeholder="{Binding [Startup_SearchPlaceholder], Source={x:Static services:LanguageManager.Instance}}"
                                  Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                                 MaxWidth="460" HorizontalAlignment="Left"/>
-            <controls:ZIconButton Grid.Column="1" Icon="{StaticResource IconRefresh}"
-                                  Command="{Binding RefreshCommand}"
+                                 MaxWidth="460" HorizontalAlignment="Stretch" Margin="0,0,12,0"/>
+            <controls:ZIconButton Grid.Column="1" Icon="{StaticResource StrokeIconRescan}"
+                                  Command="{Binding RescanCommand}"
                                   ToolTip="{Binding [Startup_RescanTooltip], Source={x:Static services:LanguageManager.Instance}}"/>
         </Grid>
 
         <!-- Statistics bar -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12">
+        <WrapPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12">
             <controls:ZBadge Content="{Binding TotalBadgeText}" Variant="Accent"/>
             <controls:ZBadge Content="{Binding EnabledBadgeText}" Variant="Success" Margin="8,0,0,0"/>
             <controls:ZBadge Content="{Binding DisabledBadgeText}" Variant="Danger" Margin="8,0,0,0"/>
-        </StackPanel>
+        </WrapPanel>
 
         <!-- List -->
         <Grid Grid.Row="2">
@@ -46,12 +46,13 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Border Background="{StaticResource ZBrushWhite}" CornerRadius="12"
-                                BorderBrush="{StaticResource ZBrushLightGray}" BorderThickness="1"
+                                BorderBrush="{StaticResource ZBrushBorder}" BorderThickness="1"
                                 Padding="16,12" Margin="0,3">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
@@ -65,36 +66,39 @@
 
                                 <!-- Name & Command -->
                                 <StackPanel Grid.Column="1" Margin="14,0,16,0" VerticalAlignment="Center">
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="13.5"
-                                                   Foreground="{StaticResource ZBrushBlack}" TextTrimming="CharacterEllipsis"
-                                                   MaxWidth="360"/>
-                                        <controls:ZBadge Content="{Binding LocationShort}" Variant="Neutral" Margin="10,0,0,0"/>
-                                    </StackPanel>
+                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="13.5"
+                                               Foreground="{StaticResource ZBrushBlack}" TextTrimming="CharacterEllipsis"/>
                                     <TextBlock Text="{Binding Command}" FontSize="12" Foreground="{StaticResource ZBrushGray}"
                                                TextTrimming="CharacterEllipsis" Margin="0,4,0,0" ToolTip="{Binding Command}"/>
                                 </StackPanel>
 
+                                <!-- Registry location -->
+                                <controls:ZBadge Grid.Column="2"
+                                                 Content="{Binding LocationShort}"
+                                                 Variant="Neutral"
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,0,12,0"/>
+
                                 <!-- Status Badge -->
-                                <controls:ZBadge Grid.Column="2" Content="{Binding StatusText}"
+                                <controls:ZBadge Grid.Column="3" Content="{Binding StatusText}"
                                                  Variant="{Binding StatusBadgeVariant}"
                                                  VerticalAlignment="Center" Margin="0,0,14,0"/>
 
                                 <!-- Action Buttons -->
-                                <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,14,0">
-                                    <controls:ZIconButton Icon="{StaticResource IconInfo}"
+                                <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,14,0">
+                                    <controls:ZIconButton Icon="{StaticResource StrokeIconInfo}"
                                                           Command="{Binding DataContext.OpenDetailsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                           CommandParameter="{Binding}"
                                                           ToolTip="{Binding [Apps_Details], Source={x:Static services:LanguageManager.Instance}}"
                                                           Margin="0,0,8,0"/>
-                                    <controls:ZIconButton Icon="{StaticResource IconFolder}"
+                                    <controls:ZIconButton Icon="{StaticResource StrokeIconFolder}"
                                                           Command="{Binding DataContext.OpenLocationCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                           CommandParameter="{Binding}"
                                                           ToolTip="{Binding [Apps_OpenFolder], Source={x:Static services:LanguageManager.Instance}}"/>
                                 </StackPanel>
 
                                 <!-- Toggle Switch -->
-                                <controls:ZToggleButton Grid.Column="4" VerticalAlignment="Center"
+                                <controls:ZToggleButton Grid.Column="5" VerticalAlignment="Center"
                                                         IsChecked="{Binding IsEnabled, Mode=TwoWay}"/>
                             </Grid>
                         </Border>
@@ -102,12 +106,12 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <controls:ZEmptyState Icon="{StaticResource IconStartup}"
+            <controls:ZEmptyState Icon="{StaticResource StrokeIconStartup}"
                                   Title="{Binding [Startup_EmptyTitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Subtitle="{Binding [Startup_EmptySubtitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Visibility="{Binding ShowEmptyState, Converter={StaticResource BoolToVis}}"/>
 
-            <controls:ZEmptyState Icon="{StaticResource IconSearch}"
+            <controls:ZEmptyState Icon="{StaticResource StrokeIconSearch}"
                                   Title="{Binding [Startup_NoResultsTitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Subtitle="{Binding [Startup_NoResultsSubtitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Visibility="{Binding ShowNoResults, Converter={StaticResource BoolToVis}}"/>
@@ -116,7 +120,7 @@
             <Border Background="{StaticResource ZBrushBackground}"
                     Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}" Panel.ZIndex="10">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <controls:ZProgressRing RingSize="40"/>
+                    <controls:ZProgressRing RingSize="40" IsActive="{Binding IsLoading}"/>
                     <TextBlock Text="{Binding [Startup_Scanning], Source={x:Static services:LanguageManager.Instance}}" Margin="0,14,0,0" HorizontalAlignment="Center"
                                Foreground="{StaticResource ZBrushGray}"/>
                 </StackPanel>

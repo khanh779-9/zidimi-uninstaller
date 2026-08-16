@@ -7,7 +7,7 @@
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="900">
-    <Grid Margin="28">
+    <Grid Margin="24,20,24,18">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -22,10 +22,10 @@
             </Grid.ColumnDefinitions>
             <controls:ZSearchBox Placeholder="{Binding [Packages_SearchPlaceholder], Source={x:Static services:LanguageManager.Instance}}"
                                  Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                                 MaxWidth="460" HorizontalAlignment="Left"/>
+                                 MaxWidth="460" HorizontalAlignment="Stretch" Margin="0,0,12,0"/>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <controls:ZIconButton Icon="{StaticResource IconRefresh}"
-                                      Command="{Binding RefreshCommand}"
+                <controls:ZIconButton Icon="{StaticResource StrokeIconRescan}"
+                                      Command="{Binding RescanCommand}"
                                       ToolTip="{Binding [Packages_RescanTooltip], Source={x:Static services:LanguageManager.Instance}}"/>
             </StackPanel>
         </Grid>
@@ -39,7 +39,7 @@
                     <DataTemplate>
                         <controls:ZAppCard Title="{Binding Name}"
                                            Subtitle="{Binding Id}">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" MaxWidth="390">
                                 <controls:ZBadge Content="{Binding Version, StringFormat='v{0}'}" Variant="Neutral" Margin="0,0,8,0"/>
                                 <controls:ZBadge Content="{Binding AvailableVersion, StringFormat='v{0}'}"
                                                  Variant="Accent" Margin="0,0,8,0"
@@ -47,7 +47,7 @@
                                 <controls:ZBadge Content="{Binding ManagerText}"
                                                  Variant="{Binding ManagerBadgeVariant}" Margin="0,0,8,0"/>
 
-                                <controls:ZButton Content="{Binding [Packages_Upgrade], Source={x:Static services:LanguageManager.Instance}}" Variant="Primary" Margin="0,0,8,0"
+                                <controls:ZButton Content="{Binding [Packages_Upgrade], Source={x:Static services:LanguageManager.Instance}}" Variant="Primary" Icon="{StaticResource StrokeIconUpdate}" Margin="0,0,8,0"
                                                   Command="{Binding DataContext.UpgradeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                   CommandParameter="{Binding}"
                                                   Visibility="{Binding HasUpdate, Converter={StaticResource BoolToVis}}"/>
@@ -55,19 +55,19 @@
                                 <controls:ZButton Content="{Binding [Packages_Uninstall], Source={x:Static services:LanguageManager.Instance}}" Variant="Ghost"
                                                   Command="{Binding DataContext.UninstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                   CommandParameter="{Binding}"/>
-                            </StackPanel>
+                            </WrapPanel>
                         </controls:ZAppCard>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
             <!-- Empty state -->
-            <controls:ZEmptyState Icon="{StaticResource IconApps}"
+            <controls:ZEmptyState Icon="{StaticResource StrokeIconFolder}"
                                   Title="{Binding [Packages_EmptyTitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Subtitle="{Binding [Packages_EmptySubtitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Visibility="{Binding ShowEmptyState, Converter={StaticResource BoolToVis}}"/>
 
-            <controls:ZEmptyState Icon="{StaticResource IconSearch}"
+            <controls:ZEmptyState Icon="{StaticResource StrokeIconSearch}"
                                   Title="{Binding [Packages_NoResultsTitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Subtitle="{Binding [Packages_NoResultsSubtitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Visibility="{Binding ShowNoResults, Converter={StaticResource BoolToVis}}"/>
@@ -76,7 +76,7 @@
             <Border Background="{StaticResource ZBrushBackground}"
                     Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}" Panel.ZIndex="10">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <controls:ZProgressRing RingSize="42"/>
+                    <controls:ZProgressRing RingSize="42" IsActive="{Binding IsLoading}"/>
                     <TextBlock Text="{Binding [Packages_Scanning], Source={x:Static services:LanguageManager.Instance}}"
                                Foreground="{StaticResource ZBrushGray}" Margin="0,14,0,0"/>
                 </StackPanel>

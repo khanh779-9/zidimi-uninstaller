@@ -9,13 +9,14 @@
         <Setter Property="SelectionBrush" Value="{StaticResource ZBrushAccent}"/>
         <Setter Property="Background" Value="{StaticResource ZBrushWhite}"/>
         <Setter Property="Height" Value="40"/>
-        <Setter Property="Width" Value="400"/>
+        <Setter Property="MinWidth" Value="220"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ZSearchBox}">
-                    <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{StaticResource ZBrushLightGray}"
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{StaticResource ZBrushBorder}"
                             BorderThickness="1" CornerRadius="{TemplateBinding CornerRadius}">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -26,15 +27,30 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Path Data="{StaticResource IconSearch}" Width="20" Height="20" Fill="{StaticResource ZBrushGray}"
-                                  Margin="6,0,0,0" VerticalAlignment="Center"/>
+                            <Path Data="{StaticResource StrokeIconSearch}"
+                                  Width="17" Height="17"
+                                  Margin="10,0,2,0"
+                                  VerticalAlignment="Center"
+                                  Fill="Transparent"
+                                  Stroke="{StaticResource ZBrushGray}"
+                                  StrokeThickness="1.75"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"
+                                  Stretch="Uniform"/>
                             <TextBlock x:Name="PART_Placeholder" Grid.Column="1" Text="{TemplateBinding Placeholder}"
                                        Foreground="{StaticResource ZBrushGray}" FontSize="13" Margin="4,0,4,0"
                                        VerticalAlignment="Center" IsHitTestVisible="False"/>
                             <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1" Margin="2" VerticalAlignment="Center"/>
                             <Button x:Name="PART_Clear" Grid.Column="2" Width="24" Height="24" Margin="3,0,4,0" Cursor="Hand"
                                     Background="Transparent" BorderThickness="0" Focusable="False" Visibility="Collapsed">
-                                <Path Data="{StaticResource IconClose}" Width="24" Height="24" Fill="{StaticResource ZBrushGray}"/>
+                                <Path Data="{StaticResource StrokeIconClose}"
+                                      Width="12" Height="12"
+                                      Fill="Transparent"
+                                      Stroke="{StaticResource ZBrushGray}"
+                                      StrokeThickness="1.75"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      Stretch="Uniform"/>
                             </Button>
                         </Grid>
                     </Border>
@@ -44,7 +60,7 @@
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
                             <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ZBrushAccent}"/>
-                            <Setter TargetName="Bd" Property="BorderThickness" Value="1.5"/>
+                            <Setter TargetName="Bd" Property="BorderThickness" Value="2"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -1,80 +1,81 @@
 [Info]
-LanguageName=FranÃ§ais
+LanguageName=Français
 
 [Sidebar]
 Dashboard=Tableau de bord
-Applications=Applications installÃ©es
+Applications=Applications installées
 StoreApps=Applications Store
 Packages=Paquets WinGet
-Features=FonctionnalitÃ©s Windows
-Startup=DÃ©marrage
-Settings=ParamÃ¨tres
+Features=Fonctionnalités Windows
+Startup=Démarrage
+Settings=Paramètres
 Version=Version {0}
-ReloadAll=Recharger toutes les donnÃ©es
-About=Ã propos de l'application
+ReloadAll=Recharger toutes les données
+About=À propos de l'application
+Leftovers=Nettoyeur de traces
 
 [Pages]
 LeftoversSubtitle=Analyser et nettoyer les fichiers, dossiers et clés de registre orphelins de logiciels désinstallés
 LeftoversTitle=Nettoyeur de résidus & traces
 DashboardTitle=Tableau de bord
-DashboardSubtitle=AperÃ§u rapide des applications installÃ©es
-AppsTitle=Applications installÃ©es
-AppsSubtitle=GÃ©rer et dÃ©sinstaller des logiciels
+DashboardSubtitle=Aperçu rapide des applications installées
+AppsTitle=Applications installées
+AppsSubtitle=Gérer et désinstaller des logiciels
 StoreTitle=Applications Microsoft Store
-StoreSubtitle=GÃ©rer les applications UWP/Appx
+StoreSubtitle=Gérer les applications UWP/Appx
 PackagesTitle=Paquets WinGet / Scoop
-PackagesSubtitle=GÃ©rer les paquets logiciels modernes
-FeaturesTitle=FonctionnalitÃ©s Windows
-FeaturesSubtitle=Activer ou dÃ©sactiver des fonctionnalitÃ©s facultatives (DISM)
-StartupTitle=Applications au dÃ©marrage
-StartupSubtitle=GÃ©rer les programmes lancÃ©s au dÃ©marrage
-SettingsTitle=ParamÃ¨tres
+PackagesSubtitle=Gérer les paquets logiciels modernes
+FeaturesTitle=Fonctionnalités Windows
+FeaturesSubtitle=Activer ou désactiver des fonctionnalités facultatives (DISM)
+StartupTitle=Applications au démarrage
+StartupSubtitle=Gérer les programmes lancés au démarrage
+SettingsTitle=Paramètres
 SettingsSubtitle=Personnaliser le comportement de Zidimi Uninstaller
 
 [Dashboard]
-AppCount=Applications installÃ©es
+AppCount=Applications installées
 StoreAppCount=Applications Store
-StartupCount=ÃlÃ©ments au dÃ©marrage
+StartupCount=Éléments au démarrage
 TotalSize=Taille totale
 Rescan=Rebalayer
 ReloadAll=Tout recharger
-RecentInstalled=RÃ©cemment installÃ©es
-RecentSubtitle=DerniÃ¨res installations logicielles
-Scanning=Analyse du systÃ¨meâ¦
+RecentInstalled=Récemment installées
+RecentSubtitle=Dernières installations logicielles
+Scanning=Analyse du système…
 
 [Apps]
 SelectedCountText={0} applications sélectionnées
-SearchPlaceholder=Rechercher des applicationsâ¦
+SearchPlaceholder=Rechercher des applications…
 SortName=Nom de l'application
-SortPublisher=Ãditeur
+SortPublisher=Éditeur
 SortSize=Taille
 SortDate=Date d'installation
 FilterAll=Tout
 Filter64Bit=64-bit
 Filter32Bit=32-bit
 FilterLarge=Grande taille (>500 Mo)
-FilterRecent=RÃ©cemment installÃ©es (30j)
-FilterBroken=EndommagÃ© / DÃ©sinstallateur manquant
-SelectedCount={0} applications sÃ©lectionnÃ©es
-Uninstall=DÃ©sinstaller
-QuietUninstall=DÃ©sinstallation silencieuse
+FilterRecent=Récemment installées (30j)
+FilterBroken=Endommagé / Désinstallateur manquant
+SelectedCount={0} applications sélectionnées
+Uninstall=Désinstaller
+QuietUninstall=Désinstallation silencieuse
 DeepClean=Nettoyage approfondi
 Modify=Modifier
 OpenFolder=Dossier
 OpenWebsite=Site web
 DeleteRegistry=Supprimer du Registre
-BrokenBadge=EndommagÃ©
-SystemComponentBadge=Composant systÃ¨me
-EmptyTitle=Aucune application trouvÃ©e
-EmptySubtitle=Cliquez sur le bouton de rÃ©analyse en haut Ã  droite pour actualiser.
+BrokenBadge=Endommagé
+SystemComponentBadge=Composant système
+EmptyTitle=Aucune application trouvée
+EmptySubtitle=Cliquez sur le bouton de réanalyse en haut à droite pour actualiser.
 ElevationTitle=Privilèges d'administrateur requis
 ElevationSubtitle=DISM nécessite des droits d'administrateur pour afficher et gérer les fonctionnalités Windows facultatives.
 RestartAdminBtn=Redémarrer en tant qu'administrateur
-NoResultsTitle=Aucun rÃ©sultat correspondant
-NoResultsSubtitle=Essayez un autre mot-clÃ© ou modifiez le filtre des composants systÃ¨me.
-Scanning=Analyse du Registreâ¦
+NoResultsTitle=Aucun résultat correspondant
+NoResultsSubtitle=Essayez un autre mot-clé ou modifiez le filtre des composants système.
+Scanning=Analyse du Registre…
 DisplayCount=Affichage de {0} sur {1}
-PublisherLabel=Ãditeur
+PublisherLabel=Éditeur
 VersionLabel=Version
 SizeLabel=Taille
 InstallDateLabel=Date d'installation
@@ -82,57 +83,58 @@ ArchLabel=Architecture
 InstallLocationLabel=Emplacement d'installation
 InstallSourceLabel=Source d'installation
 WebsiteLabel=Site web
-RegistryKeyLabel=ClÃ© de Registre
-Details=DÃ©tails
+RegistryKeyLabel=Clé de Registre
+Details=Détails
 Close=Fermer
 CloseTooltip=Fermer
 CloseActionBar=Fermer la barre d'action
 
 [Store]
-SearchPlaceholder=Rechercher des applications Storeâ¦
-RescanTooltip=RÃ©analyser les applications Store
-SelectedCount={0} applications sÃ©lectionnÃ©es
-UninstallSelected=DÃ©sinstaller la sÃ©lection
-Uninstall=DÃ©sinstaller
+SearchPlaceholder=Rechercher des applications Store…
+RescanTooltip=Réanalyser les applications Store
+SelectedCount={0} applications sélectionnées
+UninstallSelected=Désinstaller la sélection
+Uninstall=Désinstaller
 EmptyTitle=Aucune application Store
-EmptySubtitle=Toutes les applications Store ont Ã©tÃ© supprimÃ©es ou ne sont pas installÃ©es pour ce compte.
+EmptySubtitle=Toutes les applications Store ont été supprimées ou ne sont pas installées pour ce compte.
 ElevationTitle=Privilèges d'administrateur requis
 ElevationSubtitle=DISM nécessite des droits d'administrateur pour afficher et gérer les fonctionnalités Windows facultatives.
 RestartAdminBtn=Redémarrer en tant qu'administrateur
 NoResultsTitle=Aucune application correspondante
-NoResultsSubtitle=Essayez de rechercher avec un autre mot-clÃ©.
-Scanning=Analyse des applications Microsoft Storeâ¦
+NoResultsSubtitle=Essayez de rechercher avec un autre mot-clé.
+Scanning=Analyse des applications Microsoft Store…
+SelectedCountText={0} applications Store sélectionnées
 
 [Packages]
-SearchPlaceholder=Rechercher des paquets WinGet / Scoop / Chocolateyâ¦
-RescanTooltip=RÃ©analyser la liste des paquets
-HasUpdate=Mise Ã  jour v{0}
-Upgrade=Mettre Ã  niveau
-Uninstall=DÃ©sinstaller
-EmptyTitle=Aucun paquet trouvÃ©
-EmptySubtitle=Aucun paquet WinGet/Scoop installÃ© ou WinGet n'est pas configurÃ©.
+SearchPlaceholder=Rechercher des paquets WinGet / Scoop / Chocolatey…
+RescanTooltip=Réanalyser la liste des paquets
+HasUpdate=Mise à jour v{0}
+Upgrade=Mettre à niveau
+Uninstall=Désinstaller
+EmptyTitle=Aucun paquet trouvé
+EmptySubtitle=Aucun paquet WinGet/Scoop installé ou WinGet n'est pas configuré.
 ElevationTitle=Privilèges d'administrateur requis
 ElevationSubtitle=DISM nécessite des droits d'administrateur pour afficher et gérer les fonctionnalités Windows facultatives.
 RestartAdminBtn=Redémarrer en tant qu'administrateur
 NoResultsTitle=Aucun paquet correspondant
-NoResultsSubtitle=Essayez de rechercher avec un autre mot-clÃ©.
-Scanning=Analyse des paquets depuis WinGet CLIâ¦
+NoResultsSubtitle=Essayez de rechercher avec un autre mot-clé.
+Scanning=Analyse des paquets depuis WinGet CLI…
 
 [Features]
-SearchPlaceholder=Rechercher des fonctionnalitÃ©s Windows (Hyper-V, WSL, Sandbox, .NETâ¦)
-RescanTooltip=RÃ©analyser les fonctionnalitÃ©s Windows
-TotalBadge={0} fonctionnalitÃ©s
-EnabledBadge={0} activÃ©es
-StatusEnabled=ActivÃ©
-StatusDisabled=DÃ©sactivÃ©
-EmptyTitle=Aucune fonctionnalitÃ© disponible
-EmptySubtitle=Impossible de lire l'Ã©tat des fonctionnalitÃ©s DISM sur ce systÃ¨me.
+SearchPlaceholder=Rechercher des fonctionnalités Windows (Hyper-V, WSL, Sandbox, .NET…)
+RescanTooltip=Réanalyser les fonctionnalités Windows
+TotalBadge={0} fonctionnalités
+EnabledBadge={0} activées
+StatusEnabled=Activé
+StatusDisabled=Désactivé
+EmptyTitle=Aucune fonctionnalité disponible
+EmptySubtitle=Impossible de lire l'état des fonctionnalités DISM sur ce système.
 ElevationTitle=Privilèges d'administrateur requis
 ElevationSubtitle=DISM nécessite des droits d'administrateur pour afficher et gérer les fonctionnalités Windows facultatives.
 RestartAdminBtn=Redémarrer en tant qu'administrateur
-NoResultsTitle=Aucune fonctionnalitÃ© correspondante
-NoResultsSubtitle=Essayez de rechercher avec un autre mot-clÃ©.
-Scanning=Interrogation des fonctionnalitÃ©s Windows DISMâ¦
+NoResultsTitle=Aucune fonctionnalité correspondante
+NoResultsSubtitle=Essayez de rechercher avec un autre mot-clé.
+Scanning=Interrogation des fonctionnalités Windows DISM…
 
 [Startup]
 ItemName=Nom de l'élément
@@ -143,52 +145,54 @@ StatusLabel=État
 ExecutableLabel=Fichier exécutable
 LocationLabel=Emplacement Registre / Dossier
 OpenRegedit=Ouvrir dans Regedit
-SearchPlaceholder=Rechercher des Ã©lÃ©ments de dÃ©marrageâ¦
-RescanTooltip=RÃ©analyser les Ã©lÃ©ments de dÃ©marrage
-TotalBadge={0} Ã©lÃ©ments
-EnabledBadge={0} activÃ©s
-DisabledBadge={0} dÃ©sactivÃ©s
-EmptyTitle=Aucun Ã©lÃ©ment de dÃ©marrage
-EmptySubtitle=Aucune entrÃ©e de dÃ©marrage trouvÃ©e dans le Registre.
+SearchPlaceholder=Rechercher des éléments de démarrage…
+RescanTooltip=Réanalyser les éléments de démarrage
+TotalBadge={0} éléments
+EnabledBadge={0} activés
+DisabledBadge={0} désactivés
+EmptyTitle=Aucun élément de démarrage
+EmptySubtitle=Aucune entrée de démarrage trouvée dans le Registre.
 ElevationTitle=Privilèges d'administrateur requis
 ElevationSubtitle=DISM nécessite des droits d'administrateur pour afficher et gérer les fonctionnalités Windows facultatives.
 RestartAdminBtn=Redémarrer en tant qu'administrateur
-NoResultsTitle=Aucun rÃ©sultat correspondant
-NoResultsSubtitle=Essayez un autre mot-clÃ©.
-Scanning=Analyse des entrÃ©es de dÃ©marrageâ¦
+NoResultsTitle=Aucun résultat correspondant
+NoResultsSubtitle=Essayez un autre mot-clé.
+Scanning=Analyse des entrées de démarrage…
+PublisherLabel=Éditeur
 
 [DeepClean]
 Title=Nettoyage approfondi : {0}
-FoundStats={0} Ã©lÃ©ments rÃ©siduels trouvÃ©s  Â·  Taille : {1}
-SelectAll=Tout sÃ©lectionner
-SelectSafeOnly=SÃ©lectionner uniquement sÃ»rs
+FoundStats={0} éléments résiduels trouvés  ·  Taille : {1}
+SelectAll=Tout sélectionner
+SelectSafeOnly=Sélectionner uniquement sûrs
 Skip=Ignorer
-CleanSelected=Nettoyer {0} Ã©lÃ©ments
-CleaningProgress=Suppression des Ã©lÃ©ments rÃ©siduelsâ¦
+CleanSelected=Nettoyer {0} éléments
+CleaningProgress=Suppression des éléments résiduels…
+ScanningProgress=Analyse des fichiers résiduels et des traces du Registre…
 
 [Settings]
-SectionTitle=PrÃ©fÃ©rences
+SectionTitle=Préférences
 SectionSubtitle=Comportement et configuration de l'application
 LanguageHeader=Langue d'affichage
 LanguageSubtitle=Choisissez la langue de l'interface pour Zidimi Uninstaller
 ProtectionHeader=Comportement & Protection
-ProtectionSubtitle=MÃ©canismes de sÃ©curitÃ© pendant la dÃ©sinstallation
-HideSystem=Masquer les composants systÃ¨me
-HideSystemDesc=Exclure les paquets systÃ¨me Windows prÃ©installÃ©s (gÃ©nÃ©ralement non supprimables).
-PreferQuiet=PrÃ©fÃ©rer la dÃ©sinstallation silencieuse
-PreferQuietDesc=Transmettre automatiquement les paramÃ¨tres de dÃ©sinstallation silencieuse lorsqu'ils sont pris en charge.
-ConfirmBefore=Confirmer avant de dÃ©sinstaller
-ConfirmBeforeDesc=Afficher une boÃ®te de dialogue de confirmation avant les opÃ©rations de dÃ©sinstallation.
-AutoKill=ArrÃªter automatiquement les processus en cours
-AutoKillDesc=Analyser et fermer les processus actifs verrouillant des fichiers avant la dÃ©sinstallation.
-RestorePoint=CrÃ©er un point de restauration systÃ¨me
-RestorePointDesc=CrÃ©er automatiquement un point de restauration systÃ¨me avant les opÃ©rations de suppression.
-DeepCleanHeader=Nettoyage des rÃ©sidus (Deep Clean)
-DeepCleanSubtitle=Analyser et supprimer automatiquement les fichiers, dossiers et clÃ©s de Registre rÃ©siduels
-AutoDeepClean=Rechercher les rÃ©sidus aprÃ¨s dÃ©sinstallation
-AutoDeepCleanDesc=DÃ©clencher automatiquement l'analyse Deep Clean une fois la dÃ©sinstallation terminÃ©e.
-RecycleBin=Envoyer les fichiers supprimÃ©s Ã  la Corbeille
-RecycleBinDesc=Envoyer en toute sÃ©curitÃ© les fichiers Ã  la Corbeille au lieu d'une suppression dÃ©finitive.
+ProtectionSubtitle=Mécanismes de sécurité pendant la désinstallation
+HideSystem=Masquer les composants système
+HideSystemDesc=Exclure les paquets système Windows préinstallés (généralement non supprimables).
+PreferQuiet=Préférer la désinstallation silencieuse
+PreferQuietDesc=Transmettre automatiquement les paramètres de désinstallation silencieuse lorsqu'ils sont pris en charge.
+ConfirmBefore=Confirmer avant de désinstaller
+ConfirmBeforeDesc=Afficher une boîte de dialogue de confirmation avant les opérations de désinstallation.
+AutoKill=Arrêter automatiquement les processus en cours
+AutoKillDesc=Analyser et fermer les processus actifs verrouillant des fichiers avant la désinstallation.
+RestorePoint=Créer un point de restauration système
+RestorePointDesc=Créer automatiquement un point de restauration système avant les opérations de suppression.
+DeepCleanHeader=Nettoyage des résidus (Deep Clean)
+DeepCleanSubtitle=Analyser et supprimer automatiquement les fichiers, dossiers et clés de Registre résiduels
+AutoDeepClean=Rechercher les résidus après désinstallation
+AutoDeepCleanDesc=Déclencher automatiquement l'analyse Deep Clean une fois la désinstallation terminée.
+RecycleBin=Envoyer les fichiers supprimés à la Corbeille
+RecycleBinDesc=Envoyer en toute sécurité les fichiers à la Corbeille au lieu d'une suppression définitive.
 ElevationHeader=UAC Bypass (Task Scheduler)
 ElevationSubtitle=Configure execution with highest privileges without UAC prompt
 BypassUac=Bypass UAC prompts via Task Scheduler
@@ -196,83 +200,84 @@ BypassUacDesc=Registers a system task to launch the application with highest pri
 CreateShortcut=No-UAC Desktop Shortcut
 CreateShortcutDesc=Create a desktop shortcut to launch Zidimi Uninstaller immediately with full admin privileges.
 CreateShortcutBtn=Create Shortcut
-DataHeader=DonnÃ©es & Cache
-DataSubtitle=GÃ©rer le cache et recharger les donnÃ©es du systÃ¨me
+DataHeader=Données & Cache
+DataSubtitle=Gérer le cache et recharger les données du système
 ReloadAllBtn=Tout recharger
-ClearCacheBtn=Vider le cache d'icÃ´nes
+ClearCacheBtn=Vider le cache d'icônes
 
 [Dialogs]
-ConfirmUninstallSingleTitle=DÃ©sinstaller l'application
-ConfirmUninstallSingleMsg=Voulez-vous vraiment dÃ©sinstaller "{0}" ?
-ConfirmUninstallMultiTitle=DÃ©sinstaller {0} applications
-ConfirmUninstallMultiMsg=Voulez-vous vraiment dÃ©sinstaller les {0} applications sÃ©lectionnÃ©es ?
-ConfirmBtn=DÃ©sinstaller
+ConfirmUninstallSingleTitle=Désinstaller l'application
+ConfirmUninstallSingleMsg=Voulez-vous vraiment désinstaller "{0}" ?
+ConfirmUninstallMultiTitle=Désinstaller {0} applications
+ConfirmUninstallMultiMsg=Voulez-vous vraiment désinstaller les {0} applications sélectionnées ?
+ConfirmBtn=Désinstaller
 CancelBtn=Annuler
 CloseBtn=Fermer
-ForceRemoveTitle=Supprimer l'enregistrement de dÃ©sinstallation
-ForceRemoveMsg=Cette action supprimera l'entrÃ©e de dÃ©sinstallation de "{0}" du Registre.\nÃ utiliser uniquement si la dÃ©sinstallation normale Ã©choue. Continuer ?
+ForceRemoveTitle=Supprimer l'enregistrement de désinstallation
+ForceRemoveMsg=Cette action supprimera l'entrée de désinstallation de "{0}" du Registre.\nÀ utiliser uniquement si la désinstallation normale échoue. Continuer ?
 ForceRemoveBtn=Supprimer
-FeatureEnableTitle=Activer la fonctionnalitÃ© Windows
-FeatureDisableTitle=DÃ©sactiver la fonctionnalitÃ© Windows
-FeatureToggleMsg=Voulez-vous vraiment {0} la fonctionnalitÃ© "{1}" ?\nCette opÃ©ration peut prendre plusieurs minutes.
+FeatureEnableTitle=Activer la fonctionnalité Windows
+FeatureDisableTitle=Désactiver la fonctionnalité Windows
+FeatureToggleMsg=Voulez-vous vraiment {0} la fonctionnalité "{1}" ?\nCette opération peut prendre plusieurs minutes.
 ActionEnable=activer
-ActionDisable=dÃ©sactiver
+ActionDisable=désactiver
 ActionEnableCapital=Activer
-ActionDisableCapital=DÃ©sactiver
-PackageUninstallTitle=DÃ©sinstaller le paquet WinGet
+ActionDisableCapital=Désactiver
+PackageUninstallTitle=Désinstaller le paquet WinGet
 PackageUninstallMsg=Voulez-vous vraiment supprimer le paquet "{0}" (ID: {1}) ?
-AboutTitle=Ã propos de Zidimi Uninstaller
-AboutDesc=Zidimi Uninstaller est un outil de dÃ©sinstallation haute performance.\n\nVersion : {0}
+AboutTitle=À propos de Zidimi Uninstaller
+AboutDesc=Zidimi Uninstaller est un outil de désinstallation haute performance.\n\nVersion : {0}
 
 [Toasts]
-CreatingRestorePoint=CrÃ©ation du point de restauration systÃ¨me en coursâ¦
-KilledProcesses={0} processus bloquant(s) fermÃ©(s) pour "{1}".
-UninstallerNotFound=DÃ©sinstallateur introuvable pour "{0}".
-LaunchedUninstallers={0} dÃ©sinstallateur(s) lancÃ©(s).
-RemovedRegistryEntries={0} entrÃ©es supprimÃ©es du Registre.
-CannotRemoveRegistry=Impossible de supprimer l'entrÃ©e de Registre.
+CreatingRestorePoint=Création du point de restauration système en cours…
+KilledProcesses={0} processus bloquant(s) fermé(s) pour "{1}".
+UninstallerNotFound=Désinstallateur introuvable pour "{0}".
+LaunchedUninstallers={0} désinstallateur(s) lancé(s).
+RemovedRegistryEntries={0} entrées supprimées du Registre.
+CannotRemoveRegistry=Impossible de supprimer l'entrée de Registre.
 ModifyNotSupported=Cette application ne prend pas en charge la modification.
 NoInstallLocation=Aucune information d'emplacement d'installation disponible.
 NoWebsiteUrl=Aucune URL de site web disponible.
-NoExecutable=Fichier exÃ©cutable introuvable.
-StoreUninstallFailed=Ãchec de la dÃ©sinstallation de "{0}". VÃ©rifiez les droits administrateur.
-StoreUninstallSuccess={0} application(s) Store dÃ©sinstallÃ©e(s) avec succÃ¨s.
-PackageUninstallSuccess="{0}" dÃ©sinstallÃ© avec succÃ¨s.
-PackageUninstallFailed=Ãchec de la dÃ©sinstallation de "{0}".
-PackageUpgrading=Mise Ã  niveau de "{0}" vers la derniÃ¨re versionâ¦
-PackageUpgradeSuccess="{0}" mis Ã  niveau avec succÃ¨s !
-PackageUpgradeFailed=Ãchec de la mise Ã  niveau de "{0}".
-FeatureToggling=Application de l'Ã©tat pour "{0}" via DISMâ¦
-FeatureToggleSuccess="{1}" {0} avec succÃ¨s !
-FeatureToggleFailed=Impossible de modifier l'Ã©tat de "{0}". Droits administrateur requis.
-StartupToggleSuccess="{1}" {0} avec succÃ¨s.
-StartupToggleFailed=Impossible de mettre Ã  jour "{0}". Droits administrateur requis.
-DeepCleanNoLeftovers=Aucun rÃ©sidu dÃ©tectÃ© pour "{0}". DÃ©sinstallation propre !
-DeepCleanSuccess=Nettoyage approfondi terminÃ© : {0} Ã©lÃ©ments supprimÃ©s, {1} libÃ©rÃ©s.
-DeepCleanFailed=Erreur lors du nettoyage des rÃ©sidus : {0}
-CacheCleared=Cache d'icÃ´nes vidÃ©.
+NoExecutable=Fichier exécutable introuvable.
+StoreUninstallFailed=Échec de la désinstallation de "{0}". Vérifiez les droits administrateur.
+StoreUninstallSuccess={0} application(s) Store désinstallée(s) avec succès.
+PackageUninstallSuccess="{0}" désinstallé avec succès.
+PackageUninstallFailed=Échec de la désinstallation de "{0}".
+PackageUpgrading=Mise à niveau de "{0}" vers la dernière version…
+PackageUpgradeSuccess="{0}" mis à niveau avec succès !
+PackageUpgradeFailed=Échec de la mise à niveau de "{0}".
+FeatureToggling=Application de l'état pour "{0}" via DISM…
+FeatureToggleSuccess="{1}" {0} avec succès !
+FeatureToggleFailed=Impossible de modifier l'état de "{0}". Droits administrateur requis.
+StartupToggleSuccess="{1}" {0} avec succès.
+StartupToggleFailed=Impossible de mettre à jour "{0}". Droits administrateur requis.
+DeepCleanNoLeftovers=Aucun résidu détecté pour "{0}". Désinstallation propre !
+DeepCleanSuccess=Nettoyage approfondi terminé : {0} éléments supprimés, {1} libérés.
+DeepCleanFailed=Erreur lors du nettoyage des résidus : {0}
+CacheCleared=Cache d'icônes vidé.
 TaskSchedulerRegistered=Task Scheduler UAC bypass activated successfully!
 TaskSchedulerRemoved=Task Scheduler configuration removed.
 TaskSchedulerFailed=Failed to register Task Scheduler. Ensure you have administrator rights.
 ShortcutCreated=No-UAC Desktop shortcut created successfully!
 ShortcutFailed=Failed to create desktop shortcut. Please try again.
+UninstallNotConfirmed=La désinstallation de « {0} » n’a pas été confirmée. L’application est toujours enregistrée.
 
 [Status]
-ScanningRegistry=Analyse du Registreâ¦
-ScanningStore=Analyse des applications Storeâ¦
-ScanningPackages=Analyse des paquets WinGetâ¦
-ScanningFeatures=Lecture des fonctionnalitÃ©s Windows (DISM)â¦
-ScanningStartup=Lecture des entrÃ©es au dÃ©marrageâ¦
+ScanningRegistry=Analyse du Registre…
+ScanningStore=Analyse des applications Store…
+ScanningPackages=Analyse des paquets WinGet…
+ScanningFeatures=Lecture des fonctionnalités Windows (DISM)…
+ScanningStartup=Lecture des entrées au démarrage…
 AppsCount={0} applications
 StoreAppsCount={0} applications Store
 PackagesCount={0} paquets
-FeaturesCount={0} fonctionnalitÃ©s Windows
-StartupCount={0} Ã©lÃ©ments au dÃ©marrage
-CannotReadApps=Impossible de lire les applications installÃ©es
+FeaturesCount={0} fonctionnalités Windows
+StartupCount={0} éléments au démarrage
+CannotReadApps=Impossible de lire les applications installées
 CannotReadStore=Impossible de lire les applications Store
 CannotReadPackages=Impossible de lire les paquets WinGet
-CannotReadFeatures=Impossible de lire les fonctionnalitÃ©s Windows
-CannotReadStartup=Impossible de lire les Ã©lÃ©ments au dÃ©marrage
+CannotReadFeatures=Impossible de lire les fonctionnalités Windows
+CannotReadStartup=Impossible de lire les éléments au démarrage
 
 
 [Scope]
@@ -361,15 +366,27 @@ SafetyReview=Examen recommandé
 
 SafetyWarning=Prudence requise
 
-SafetyUnknown=Inconnu
-
-[About]
-Tagline=Un utilitaire de gestion et de désinstallation de logiciels moderne, rapide et approfondi pour Windows avec nettoyage en profondeur des résidus.
-AuthorLabel=Auteur / Développeur
-LicenseLabel=Licence logicielle
-PlatformLabel=Plateforme
-FrameworkLabel=Environnement d'exécution
-ArchitectureLabel=Architecture
-StatusLabel=Statut de version
-ReleasesBtn=Versions
+SafetyUnknown=Inconnu
+
+
+
+[About]
+
+Tagline=Un utilitaire de gestion et de désinstallation de logiciels moderne, rapide et approfondi pour Windows avec nettoyage en profondeur des résidus.
+
+AuthorLabel=Auteur / Développeur
+
+LicenseLabel=Licence logicielle
+
+PlatformLabel=Plateforme
+
+FrameworkLabel=Environnement d'exécution
+
+ArchitectureLabel=Architecture
+
+StatusLabel=Statut de version
+
+ReleasesBtn=Versions
+
 IssuesBtn=Signaler un problème
+

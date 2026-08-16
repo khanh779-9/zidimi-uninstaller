@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace zidimi_uninstaller.Controls;
 
-public enum ZIconButtonVariant { Default, Close }
+public enum ZIconButtonVariant { Default, Sidebar, Close }
 public class ZIconButton : Button
 {
     static ZIconButton()

@@ -9,7 +9,7 @@ public class DialogService
     public Task<bool> ConfirmAsync(string title, string message, string confirmText = "Confirm", string cancelText = "Cancel")
         => ConfirmHandler != null
             ? ConfirmHandler(title, message, confirmText, cancelText)
-            : Task.FromResult(true);
+            : Task.FromResult(false);
 
     public Task ShowMessageAsync(string title, string message)
         => MessageHandler != null

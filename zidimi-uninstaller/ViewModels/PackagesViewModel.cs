@@ -56,7 +56,7 @@ public class PackagesViewModel : ObservableObject
         set => SetProperty(ref _selectedPackage, value);
     }
 
-    public AsyncRelayCommand RefreshCommand { get; }
+    public AsyncRelayCommand RescanCommand { get; }
     public AsyncRelayCommand UninstallCommand { get; }
     public AsyncRelayCommand UpgradeCommand { get; }
 
@@ -64,7 +64,7 @@ public class PackagesViewModel : ObservableObject
     {
         _itemsView = new ListCollectionView(Packages) { Filter = Filter };
 
-        RefreshCommand = new AsyncRelayCommand(async _ => await LoadAsync());
+        RescanCommand = new AsyncRelayCommand(async _ => await LoadAsync());
         UninstallCommand = new AsyncRelayCommand(async p => await UninstallAsync(p));
         UpgradeCommand = new AsyncRelayCommand(async p => await UpgradeAsync(p));
     }

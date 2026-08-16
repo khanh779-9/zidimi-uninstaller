@@ -23,6 +23,7 @@ public class LeftoversViewModel : ObservableObject
             if (SetProperty(ref _isScanning, value))
             {
                 OnPropertyChanged(nameof(CanOperate));
+                OnPropertyChanged(nameof(IsBusy));
                 OnPropertyChanged(nameof(ShowEmptyState));
                 OnPropertyChanged(nameof(ShowNoResults));
             }
@@ -38,6 +39,7 @@ public class LeftoversViewModel : ObservableObject
             if (SetProperty(ref _isCleaning, value))
             {
                 OnPropertyChanged(nameof(CanOperate));
+                OnPropertyChanged(nameof(IsBusy));
                 OnPropertyChanged(nameof(ShowEmptyState));
                 OnPropertyChanged(nameof(ShowNoResults));
             }
@@ -45,6 +47,7 @@ public class LeftoversViewModel : ObservableObject
     }
 
     public bool CanOperate => !IsScanning && !IsCleaning;
+    public bool IsBusy => IsScanning || IsCleaning;
 
     private string _statusText = string.Empty;
     public string StatusText
@@ -60,7 +63,10 @@ public class LeftoversViewModel : ObservableObject
         set
         {
             if (SetProperty(ref _searchText, value))
+            {
                 _itemsView.Refresh();
+                UpdateStats();
+            }
         }
     }
 
@@ -77,6 +83,7 @@ public class LeftoversViewModel : ObservableObject
                 OnPropertyChanged(nameof(IsFilterRegistry));
                 OnPropertyChanged(nameof(IsFilterShortcuts));
                 _itemsView.Refresh();
+                UpdateStats();
             }
         }
     }
@@ -174,10 +181,10 @@ public class LeftoversViewModel : ObservableObject
 
         try
         {
-            var (deleted, freed) = await Task.Run(() =>
+            var (deleted, freed, deletedItems) = await Task.Run(() =>
                 DeepCleanService.CleanLeftovers(selected, AppSettings.Instance.SendToRecycleBin));
 
-            foreach (var item in selected)
+            foreach (var item in deletedItems)
                 Items.Remove(item);
 
             AppServices.Toast.Show(

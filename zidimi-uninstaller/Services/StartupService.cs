@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using Microsoft.Win32;
 using zidimi_uninstaller.Models;
 
@@ -7,21 +8,39 @@ namespace zidimi_uninstaller.Services;
 
 public static class StartupService
 {
+    private sealed class DisabledRegistryStartup
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Command { get; set; } = string.Empty;
+        public string Location { get; set; } = string.Empty;
+        public bool IsMachine { get; set; }
+        public RegistryView RegistryView { get; set; } = RegistryView.Default;
+        public RegistryValueKind RegistryValueKind { get; set; } = RegistryValueKind.String;
+    }
+
+    private static readonly object DisabledStoreLock = new();
+    private static readonly string DisabledStorePath = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        "ZidimiUninstaller",
+        "disabled-startup.json");
     public static List<StartupEntry> GetEntries()
     {
         var list = new List<StartupEntry>();
 
-        // Registry Startup locations
-        AddRunKey(list, Registry.CurrentUser, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", false);
-        AddRunKey(list, Registry.CurrentUser, @"SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce", false);
-        AddRunKey(list, Registry.LocalMachine, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-        AddRunKey(list, Registry.LocalMachine, @"SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce", true);
+        // Registry startup locations. Read each view explicitly so writes target the same view later.
+        var nativeView = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32;
+        AddRunKey(list, RegistryHive.CurrentUser, nativeView, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", false);
+        AddRunKey(list, RegistryHive.CurrentUser, nativeView, @"SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce", false);
+        AddRunKey(list, RegistryHive.LocalMachine, nativeView, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+        AddRunKey(list, RegistryHive.LocalMachine, nativeView, @"SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce", true);
 
         if (Environment.Is64BitOperatingSystem)
         {
-            AddRunKey(list, Registry.LocalMachine, @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run", true);
-            AddRunKey(list, Registry.LocalMachine, @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\RunOnce", true);
+            AddRunKey(list, RegistryHive.LocalMachine, RegistryView.Registry32, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            AddRunKey(list, RegistryHive.LocalMachine, RegistryView.Registry32, @"SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce", true);
         }
+
+        AddManagedDisabledRegistryEntries(list);
 
         // Folder Startup locations
         AddFolderEntries(list, Environment.GetFolderPath(Environment.SpecialFolder.Startup), false);
@@ -30,11 +49,17 @@ public static class StartupService
         return list;
     }
 
-    private static void AddRunKey(List<StartupEntry> list, RegistryKey root, string path, bool isMachine)
+    private static void AddRunKey(
+        List<StartupEntry> list,
+        RegistryHive hive,
+        RegistryView view,
+        string path,
+        bool isMachine)
     {
         try
         {
-            using var key = root.OpenSubKey(path);
+            using var baseKey = RegistryKey.OpenBaseKey(hive, view);
+            using var key = baseKey.OpenSubKey(path);
             if (key == null) return;
 
             foreach (var valueName in key.GetValueNames())
@@ -42,16 +67,16 @@ public static class StartupService
                 var value = key.GetValue(valueName)?.ToString() ?? string.Empty;
                 if (string.IsNullOrWhiteSpace(value)) continue;
 
-                var exePath = ExtractExecutablePath(value);
-
                 var entry = new StartupEntry
                 {
                     Name = valueName,
                     Command = value,
-                    ExecutablePath = exePath,
+                    ExecutablePath = ExtractExecutablePath(value),
                     Location = key.Name,
                     IsMachine = isMachine,
-                    IsFolderEntry = false
+                    IsFolderEntry = false,
+                    RegistryView = view,
+                    RegistryValueKind = key.GetValueKind(valueName)
                 };
                 PopulateMetadata(entry);
                 list.Add(entry);
@@ -59,7 +84,7 @@ public static class StartupService
         }
         catch
         {
-            // Skip unreadable keys
+            // Skip unreadable keys.
         }
     }
 
@@ -209,17 +234,32 @@ public static class StartupService
             }
             else
             {
-                var (hive, subPath, regView) = ParseFullPath(entry.Location);
-                using var baseKey = RegistryKey.OpenBaseKey(hive, regView);
+                var (hive, subPath) = ParseFullPath(entry.Location);
+                using var baseKey = RegistryKey.OpenBaseKey(hive, entry.RegistryView);
                 if (baseKey == null) return false;
 
                 using var key = baseKey.OpenSubKey(subPath, writable: true);
                 if (key == null) return false;
 
                 if (enabled)
-                    key.SetValue(entry.Name, entry.Command, RegistryValueKind.String);
+                {
+                    key.SetValue(entry.Name, entry.Command, entry.RegistryValueKind);
+                    RemoveDisabledRegistryEntry(entry);
+                }
                 else
-                    key.DeleteValue(entry.Name, throwOnMissingValue: false);
+                {
+                    // Save first so a successful disable is always reversible after a rescan or restart.
+                    SaveDisabledRegistryEntry(entry);
+                    try
+                    {
+                        key.DeleteValue(entry.Name, throwOnMissingValue: false);
+                    }
+                    catch
+                    {
+                        RemoveDisabledRegistryEntry(entry);
+                        throw;
+                    }
+                }
 
                 entry.IsEnabled = enabled;
                 return true;
@@ -229,6 +269,106 @@ public static class StartupService
         {
             return false;
         }
+    }
+
+    private static void AddManagedDisabledRegistryEntries(List<StartupEntry> list)
+    {
+        foreach (var saved in LoadDisabledRegistryEntries())
+        {
+            if (list.Any(e => !e.IsFolderEntry
+                           && e.Name.Equals(saved.Name, StringComparison.OrdinalIgnoreCase)
+                           && e.Location.Equals(saved.Location, StringComparison.OrdinalIgnoreCase)
+                           && e.RegistryView == saved.RegistryView))
+                continue;
+
+            var entry = new StartupEntry
+            {
+                Name = saved.Name,
+                Command = saved.Command,
+                ExecutablePath = ExtractExecutablePath(saved.Command),
+                Location = saved.Location,
+                IsMachine = saved.IsMachine,
+                IsFolderEntry = false,
+                RegistryView = saved.RegistryView,
+                RegistryValueKind = saved.RegistryValueKind,
+                IsEnabled = false
+            };
+            PopulateMetadata(entry);
+            list.Add(entry);
+        }
+    }
+
+    private static List<DisabledRegistryStartup> LoadDisabledRegistryEntries()
+    {
+        lock (DisabledStoreLock)
+        {
+            try
+            {
+                if (!File.Exists(DisabledStorePath))
+                    return new List<DisabledRegistryStartup>();
+
+                return JsonSerializer.Deserialize<List<DisabledRegistryStartup>>(File.ReadAllText(DisabledStorePath))
+                       ?? new List<DisabledRegistryStartup>();
+            }
+            catch
+            {
+                return new List<DisabledRegistryStartup>();
+            }
+        }
+    }
+
+    private static void SaveDisabledRegistryEntry(StartupEntry entry)
+    {
+        lock (DisabledStoreLock)
+        {
+            var entries = LoadDisabledRegistryEntriesUnsafe();
+            entries.RemoveAll(x => x.Name.Equals(entry.Name, StringComparison.OrdinalIgnoreCase)
+                                && x.Location.Equals(entry.Location, StringComparison.OrdinalIgnoreCase)
+                                && x.RegistryView == entry.RegistryView);
+            entries.Add(new DisabledRegistryStartup
+            {
+                Name = entry.Name,
+                Command = entry.Command,
+                Location = entry.Location,
+                IsMachine = entry.IsMachine,
+                RegistryView = entry.RegistryView,
+                RegistryValueKind = entry.RegistryValueKind
+            });
+            SaveDisabledRegistryEntriesUnsafe(entries);
+        }
+    }
+
+    private static void RemoveDisabledRegistryEntry(StartupEntry entry)
+    {
+        lock (DisabledStoreLock)
+        {
+            var entries = LoadDisabledRegistryEntriesUnsafe();
+            if (entries.RemoveAll(x => x.Name.Equals(entry.Name, StringComparison.OrdinalIgnoreCase)
+                                    && x.Location.Equals(entry.Location, StringComparison.OrdinalIgnoreCase)
+                                    && x.RegistryView == entry.RegistryView) > 0)
+                SaveDisabledRegistryEntriesUnsafe(entries);
+        }
+    }
+
+    private static List<DisabledRegistryStartup> LoadDisabledRegistryEntriesUnsafe()
+    {
+        try
+        {
+            if (!File.Exists(DisabledStorePath))
+                return new List<DisabledRegistryStartup>();
+            return JsonSerializer.Deserialize<List<DisabledRegistryStartup>>(File.ReadAllText(DisabledStorePath))
+                   ?? new List<DisabledRegistryStartup>();
+        }
+        catch
+        {
+            return new List<DisabledRegistryStartup>();
+        }
+    }
+
+    private static void SaveDisabledRegistryEntriesUnsafe(List<DisabledRegistryStartup> entries)
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(DisabledStorePath)!);
+        File.WriteAllText(DisabledStorePath, JsonSerializer.Serialize(entries, new JsonSerializerOptions { WriteIndented = true }));
     }
 
     public static bool OpenCommandLocation(StartupEntry entry)
@@ -252,7 +392,7 @@ public static class StartupService
         return false;
     }
 
-    private static (RegistryHive Hive, string SubPath, RegistryView View) ParseFullPath(string fullPath)
+    private static (RegistryHive Hive, string SubPath) ParseFullPath(string fullPath)
     {
         var hive = fullPath.StartsWith("HKEY_LOCAL_MACHINE", StringComparison.OrdinalIgnoreCase)
             ? RegistryHive.LocalMachine
@@ -260,11 +400,7 @@ public static class StartupService
 
         var idx = fullPath.IndexOf('\\');
         var sub = idx >= 0 ? fullPath[(idx + 1)..] : fullPath;
-
-        var view = sub.Contains(@"Wow6432Node", StringComparison.OrdinalIgnoreCase)
-            ? RegistryView.Registry32
-            : RegistryView.Registry64;
-
-        return (hive, sub, view);
+        return (hive, sub);
     }
+
 }

@@ -11,7 +11,7 @@
         <StackPanel MaxWidth="640" HorizontalAlignment="Left">
             <controls:ZSectionHeader Title="{Binding [Settings_SectionTitle], Source={x:Static services:LanguageManager.Instance}}"
                                      Subtitle="{Binding [Settings_SectionSubtitle], Source={x:Static services:LanguageManager.Instance}}"
-                                     Icon="{StaticResource IconSettings}"/>
+                                     Icon="{StaticResource StrokeIconSettings}"/>
 
             <!-- Display Language -->
             <controls:ZCard Margin="0,18,0,0" Padding="20,14">
@@ -40,7 +40,7 @@
                 <StackPanel>
                     <controls:ZSectionHeader Title="{Binding [Settings_ProtectionHeader], Source={x:Static services:LanguageManager.Instance}}"
                                              Subtitle="{Binding [Settings_ProtectionSubtitle], Source={x:Static services:LanguageManager.Instance}}"
-                                             Icon="{StaticResource IconShield}"/>
+                                             Icon="{StaticResource StrokeIconShield}"/>
                     <controls:ZToggleRow Title="{Binding [Settings_HideSystem], Source={x:Static services:LanguageManager.Instance}}"
                                          Subtitle="{Binding [Settings_HideSystemDesc], Source={x:Static services:LanguageManager.Instance}}"
                                          IsOn="{Binding HideSystemComponents, Mode=TwoWay}"
@@ -69,7 +69,7 @@
                 <StackPanel>
                     <controls:ZSectionHeader Title="{Binding [Settings_DeepCleanHeader], Source={x:Static services:LanguageManager.Instance}}"
                                              Subtitle="{Binding [Settings_DeepCleanSubtitle], Source={x:Static services:LanguageManager.Instance}}"
-                                             Icon="{StaticResource IconTrash}"/>
+                                             Icon="{StaticResource StrokeIconTrash}"/>
                     <controls:ZToggleRow Title="{Binding [Settings_AutoDeepClean], Source={x:Static services:LanguageManager.Instance}}"
                                          Subtitle="{Binding [Settings_AutoDeepCleanDesc], Source={x:Static services:LanguageManager.Instance}}"
                                          IsOn="{Binding EnableDeepClean, Mode=TwoWay}"
@@ -86,7 +86,7 @@
                 <StackPanel>
                     <controls:ZSectionHeader Title="{Binding [Settings_ElevationHeader], Source={x:Static services:LanguageManager.Instance}}"
                                              Subtitle="{Binding [Settings_ElevationSubtitle], Source={x:Static services:LanguageManager.Instance}}"
-                                             Icon="{StaticResource IconShield}"/>
+                                             Icon="{StaticResource StrokeIconShield}"/>
                     <controls:ZToggleRow Title="{Binding [Settings_BypassUac], Source={x:Static services:LanguageManager.Instance}}"
                                          Subtitle="{Binding [Settings_BypassUacDesc], Source={x:Static services:LanguageManager.Instance}}"
                                          IsOn="{Binding BypassUacViaTaskScheduler, Mode=TwoWay}"
@@ -117,18 +117,18 @@
                 <StackPanel>
                     <controls:ZSectionHeader Title="{Binding [Settings_DataHeader], Source={x:Static services:LanguageManager.Instance}}"
                                              Subtitle="{Binding [Settings_DataSubtitle], Source={x:Static services:LanguageManager.Instance}}"
-                                             Icon="{StaticResource IconRefresh}"/>
+                                             Icon="{StaticResource StrokeIconRefresh}"/>
                     <Grid Margin="0,14,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <controls:ZButton Content="{Binding [Settings_ReloadAllBtn], Source={x:Static services:LanguageManager.Instance}}"
-                                          Variant="Secondary" Icon="{StaticResource IconRefresh}"
+                                          Variant="Secondary" Icon="{StaticResource StrokeIconReloadAll}"
                                           Command="{Binding ReloadDataCommand}"/>
                         <controls:ZButton Grid.Column="1"
                                           Content="{Binding [Settings_ClearCacheBtn], Source={x:Static services:LanguageManager.Instance}}"
-                                          Variant="Secondary" Icon="{StaticResource IconTrash}"
+                                          Variant="Secondary" Icon="{StaticResource StrokeIconTrash}"
                                           Command="{Binding ClearIconCacheCommand}"
                                           Margin="12,0,0,0"/>
                     </Grid>

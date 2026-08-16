@@ -12,8 +12,27 @@ public class PackageEntry : ObservableObject
 {
     public string Id { get; init; } = string.Empty;
     public string Name { get; init; } = string.Empty;
-    public string Version { get; set; } = string.Empty;
-    public string AvailableVersion { get; set; } = string.Empty;
+    private string _version = string.Empty;
+    public string Version
+    {
+        get => _version;
+        set
+        {
+            if (SetProperty(ref _version, value))
+                OnPropertyChanged(nameof(HasUpdate));
+        }
+    }
+
+    private string _availableVersion = string.Empty;
+    public string AvailableVersion
+    {
+        get => _availableVersion;
+        set
+        {
+            if (SetProperty(ref _availableVersion, value))
+                OnPropertyChanged(nameof(HasUpdate));
+        }
+    }
     public string Source { get; init; } = string.Empty;
     public PackageManagerKind Manager { get; init; } = PackageManagerKind.WinGet;
 

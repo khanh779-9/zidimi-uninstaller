@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Reflection;
 using zidimi_uninstaller.Models;
-using zidimi_uninstaller.Services;
 
 namespace zidimi_uninstaller.ViewModels;
 
@@ -23,61 +22,49 @@ public class DashboardViewModel : ObservableObject
 
     public string TotalSizeText => TotalSizeKb <= 0 ? "—" : ApplicationEntry.FormatSize(TotalSizeKb * 1024L);
 
-    private bool _isLoading;
+    // Start in the loading state so the first rendered Dashboard never flashes empty counters.
+    private bool _isLoading = true;
     public bool IsLoading { get => _isLoading; set => SetProperty(ref _isLoading, value); }
 
     public string Version { get; }
 
-    public AsyncRelayCommand RefreshCommand { get; }
-    public RelayCommand ReloadAllCommand { get; }
-    public event Action? ReloadAllRequested;
+    public AsyncRelayCommand RescanCommand { get; }
+    public AsyncRelayCommand ReloadAllCommand { get; }
+
+    public event Func<Task>? RescanRequested;
+    public event Func<Task>? ReloadAllRequested;
 
     public DashboardViewModel()
     {
-        Version = (Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3)) ?? "1.0.0";
-        RefreshCommand = new AsyncRelayCommand(async _ => await LoadAsync());
-        ReloadAllCommand = new RelayCommand(_ => ReloadAllRequested?.Invoke());
+        Version = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.0.0";
+        RescanCommand = new AsyncRelayCommand(_ => InvokeAsync(RescanRequested));
+        ReloadAllCommand = new AsyncRelayCommand(_ => InvokeAsync(ReloadAllRequested));
     }
 
-    public async Task LoadAsync()
+    public void UpdateFromLoadedData(IEnumerable<ApplicationEntry> apps, int storeAppCount, int startupCount)
     {
-        IsLoading = true;
-        try
-        {
-            var apps = await Task.Run(() => RegistryService.GetInstalledApplications());
-            AppCount = apps.Count;
-            TotalSizeKb = apps.Sum(a => Math.Max(0, a.EstimatedSizeKb));
+        var appList = apps.ToList();
+        AppCount = appList.Count;
+        StoreAppCount = storeAppCount;
+        StartupCount = startupCount;
+        TotalSizeKb = appList.Sum(a => Math.Max(0, a.EstimatedSizeKb));
 
-            RecentlyInstalled.Clear();
-            var recentList = apps
-                .Where(a => a.InstallDate > DateTime.MinValue)
-                .OrderByDescending(a => a.InstallDate)
-                .Take(8)
-                .ToList();
+        RecentlyInstalled.Clear();
+        var recentList = appList
+            .Where(a => a.InstallDate > DateTime.MinValue)
+            .OrderByDescending(a => a.InstallDate)
+            .Take(8)
+            .ToList();
 
-            if (recentList.Count < 6)
-            {
-                var remaining = apps.Except(recentList).Take(8 - recentList.Count);
-                recentList.AddRange(remaining);
-            }
+        if (recentList.Count < 6)
+            recentList.AddRange(appList.Except(recentList).Take(8 - recentList.Count));
 
-            foreach (var app in recentList)
-            {
-                app.Icon = IconService.GetIcon(app.DisplayIconPath);
-                RecentlyInstalled.Add(app);
-            }
+        foreach (var app in recentList)
+            RecentlyInstalled.Add(app);
 
-            var storeApps = await Task.Run(() => StoreAppService.GetStoreApps());
-            StoreAppCount = storeApps.Count;
-
-            var startup = await Task.Run(() => StartupService.GetEntries());
-            StartupCount = startup.Count;
-
-            OnPropertyChanged(nameof(TotalSizeText));
-        }
-        finally
-        {
-            IsLoading = false;
-        }
+        OnPropertyChanged(nameof(TotalSizeText));
     }
+
+    private static Task InvokeAsync(Func<Task>? handler)
+        => handler?.Invoke() ?? Task.CompletedTask;
 }

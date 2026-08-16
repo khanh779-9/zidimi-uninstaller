@@ -70,7 +70,7 @@ public class StartupViewModel : ObservableObject
         set => SetProperty(ref _isDetailsModalOpen, value);
     }
 
-    public AsyncRelayCommand RefreshCommand { get; }
+    public AsyncRelayCommand RescanCommand { get; }
     public RelayCommand OpenLocationCommand { get; }
     public RelayCommand OpenDetailsCommand { get; }
     public RelayCommand CloseDetailsCommand { get; }
@@ -81,7 +81,7 @@ public class StartupViewModel : ObservableObject
     {
         _itemsView = new ListCollectionView(Entries) { Filter = Filter };
 
-        RefreshCommand = new AsyncRelayCommand(async _ => await LoadAsync());
+        RescanCommand = new AsyncRelayCommand(async _ => await LoadAsync());
         OpenLocationCommand = new RelayCommand(p => OpenLocationSelected(p as StartupEntry ?? SelectedEntry));
         OpenDetailsCommand = new RelayCommand(p =>
         {
@@ -172,6 +172,8 @@ public class StartupViewModel : ObservableObject
             _reverting = false;
             AppServices.Toast.Show(string.Format(LanguageManager.T("Toasts_StartupToggleFailed", "Cannot update \"{0}\". Administrator privileges required."), entry.Name), ZToastType.Error);
         }
+
+        UpdateCounts();
     }
 
     private void OpenLocationSelected(StartupEntry? entry)

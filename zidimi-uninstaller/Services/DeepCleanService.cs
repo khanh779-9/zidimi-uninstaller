@@ -347,56 +347,64 @@ public static class DeepCleanService
             return 0;
         }
     }
-    public static (int DeletedCount, long FreedBytes) CleanLeftovers(IEnumerable<LeftoverItem> items, bool recycleBin = true)
+    public static (int DeletedCount, long FreedBytes, List<LeftoverItem> DeletedItems) CleanLeftovers(
+        IEnumerable<LeftoverItem> items,
+        bool recycleBin = true)
     {
         int deleted = 0;
         long freed = 0;
+        var deletedItems = new List<LeftoverItem>();
 
-        foreach (var item in items.Where(i => i.IsSelected))
+        foreach (var item in items.Where(i => i.IsSelected).ToList())
         {
             try
             {
-                if (item.Type == LeftoverType.Directory || item.Type == LeftoverType.File || item.Type == LeftoverType.Shortcut)
+                bool success = false;
+
+                if (item.Type is LeftoverType.Directory or LeftoverType.File or LeftoverType.Shortcut)
                 {
-                    if (IsProtectedFolder(item.Path)) continue;
+                    if (IsProtectedFolder(item.Path))
+                        continue;
 
                     if (recycleBin)
                     {
-                        if (SendToRecycleBin(item.Path))
-                        {
-                            deleted++;
-                            freed += item.SizeInBytes;
-                        }
+                        success = SendToRecycleBin(item.Path);
+                    }
+                    else if (Directory.Exists(item.Path))
+                    {
+                        Directory.Delete(item.Path, recursive: true);
+                        success = true;
+                    }
+                    else if (File.Exists(item.Path))
+                    {
+                        File.Delete(item.Path);
+                        success = true;
                     }
                     else
                     {
-                        if (Directory.Exists(item.Path))
-                        {
-                            Directory.Delete(item.Path, recursive: true);
-                            deleted++;
-                            freed += item.SizeInBytes;
-                        }
-                        else if (File.Exists(item.Path))
-                        {
-                            File.Delete(item.Path);
-                            deleted++;
-                            freed += item.SizeInBytes;
-                        }
+                        // Already gone is equivalent to cleaned for a stale scan result.
+                        success = true;
                     }
                 }
                 else if (item.Type == LeftoverType.RegistryKey)
                 {
-                    DeleteRegistryKey(item.Path);
-                    deleted++;
+                    success = DeleteRegistryKey(item.Path);
                 }
+
+                if (!success)
+                    continue;
+
+                deleted++;
+                freed += item.SizeInBytes;
+                deletedItems.Add(item);
             }
             catch
             {
-                // Continue cleaning other items if one fails
+                // Keep failed items visible so the user can retry or inspect them.
             }
         }
 
-        return (deleted, freed);
+        return (deleted, freed, deletedItems);
     }
 
     public static List<LeftoverItem> ScanSystemOrphanedLeftovers(IProgress<string>? progress = null)
@@ -409,8 +417,6 @@ public static class DeepCleanService
         var installedApps = RegistryService.GetInstalledApplications();
 
         var activeKeywords = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        var activeFolders = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-
         var systemVendors = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "Microsoft", "Windows", "Windows NT", "Windows Defender", "Windows Mail",
@@ -440,10 +446,6 @@ public static class DeepCleanService
                 var cleanPub = CleanName(app.Publisher);
                 if (cleanPub.Length >= 4)
                     activeKeywords.Add(cleanPub);
-            }
-            if (!string.IsNullOrWhiteSpace(app.InstallLocation) && Directory.Exists(app.InstallLocation))
-            {
-                activeFolders.Add(Path.GetFullPath(app.InstallLocation).TrimEnd('\\', '/'));
             }
         }
 
@@ -479,12 +481,12 @@ public static class DeepCleanService
                         items.Add(new LeftoverItem
                         {
                             Type = LeftoverType.Directory,
-                            SafetyLevel = LeftoverSafetyLevel.Safe,
+                            SafetyLevel = LeftoverSafetyLevel.Review,
                             Path = dir,
                             Name = dirName,
-                            Description = $"Orphaned folder in {label}",
+                            Description = $"Potential orphan folder in {label}",
                             SizeInBytes = size,
-                            IsSelected = true
+                            IsSelected = false
                         });
                         seenPaths.Add(dir);
                     }
@@ -523,9 +525,9 @@ public static class DeepCleanService
                             SafetyLevel = LeftoverSafetyLevel.Review,
                             Path = fullRegPath,
                             Name = name,
-                            Description = $"Orphaned configuration key ({root.Name})",
+                            Description = $"Potential orphan configuration key ({root.Name})",
                             SizeInBytes = 0,
-                            IsSelected = true
+                            IsSelected = false
                         });
                     }
                 }
@@ -533,8 +535,8 @@ public static class DeepCleanService
             catch { }
         }
 
-        // 4. Scan broken shortcuts
-        progress?.Report("Scanning broken shortcuts on Desktop & Start Menu…");
+        // 4. Surface potentially orphaned shortcuts for manual review
+        progress?.Report("Scanning shortcuts on Desktop & Start Menu…");
         var shortcutRoots = new[]
         {
             Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
@@ -561,12 +563,12 @@ public static class DeepCleanService
                         items.Add(new LeftoverItem
                         {
                             Type = LeftoverType.Shortcut,
-                            SafetyLevel = LeftoverSafetyLevel.Safe,
+                            SafetyLevel = LeftoverSafetyLevel.Review,
                             Path = file,
                             Name = Path.GetFileName(file),
-                            Description = "Orphaned application shortcut",
+                            Description = "Potential orphan application shortcut",
                             SizeInBytes = fi.Length,
-                            IsSelected = true
+                            IsSelected = false
                         });
                         seenPaths.Add(file);
                     }
@@ -578,14 +580,13 @@ public static class DeepCleanService
         return items;
     }
 
-    private static void DeleteRegistryKey(string fullPath)
+    private static bool DeleteRegistryKey(string fullPath)
     {
-        // e.g. HKEY_CURRENT_USER\Software\AppName
         var slashIdx = fullPath.IndexOf('\\');
-        if (slashIdx <= 0) return;
+        if (slashIdx <= 0) return false;
 
-        var rootName = fullPath.Substring(0, slashIdx);
-        var subPath = fullPath.Substring(slashIdx + 1);
+        var rootName = fullPath[..slashIdx];
+        var subPath = fullPath[(slashIdx + 1)..];
 
         RegistryKey? root = rootName switch
         {
@@ -595,12 +596,16 @@ public static class DeepCleanService
             _ => null
         };
 
-        if (root == null) return;
+        if (root == null) return false;
 
         try
         {
             root.DeleteSubKeyTree(subPath, throwOnMissingSubKey: false);
+            return true;
         }
-        catch { }
+        catch
+        {
+            return false;
+        }
     }
 }

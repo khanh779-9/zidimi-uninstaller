@@ -10,13 +10,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ZDialog}">
                     <Border x:Name="PART_Overlay" Background="#66121012" Visibility="Collapsed">
-                        <Border x:Name="PART_Card" Width="480" MaxHeight="540" Background="{StaticResource ZBrushWhite}"
-                                BorderBrush="{StaticResource ZBrushLightGray}" BorderThickness="1" CornerRadius="16"
+                        <Border x:Name="PART_Card" Width="480" MaxHeight="540" Background="{StaticResource ZBrushSurface}"
+                                BorderBrush="{StaticResource ZBrushBorderStrong}" BorderThickness="1" CornerRadius="16"
                                 Padding="26" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Border x:Name="IconWrap" Width="40" Height="40" CornerRadius="11" Background="{StaticResource ZBrushAccentTint}">
-                                        <Path Data="{TemplateBinding Icon}" Fill="{StaticResource ZBrushAccent}" Width="20" Height="20"
+                                        <Path Data="{TemplateBinding Icon}" Fill="Transparent" Stroke="{StaticResource ZBrushAccent}" StrokeThickness="1.8" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Width="20" Height="20"
                                               Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                     <TextBlock Text="{TemplateBinding Title}" FontSize="16" FontWeight="SemiBold"

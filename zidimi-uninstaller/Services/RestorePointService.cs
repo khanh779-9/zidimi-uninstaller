@@ -47,28 +47,12 @@ public static class RestorePointService
             // P/Invoke may fail if srclient is unavailable or restricted
         }
 
-        // Fallback to PowerShell / WMI checkpoint
-        try
-        {
-            var psi = new System.Diagnostics.ProcessStartInfo
-            {
-                FileName = "powershell.exe",
-                Arguments = $"-NoProfile -NonInteractive -ExecutionPolicy Bypass -Command \"Checkpoint-Computer -Description 'Zidimi: {description}' -RestorePointType APPLICATION_UNINSTALL\"",
-                CreateNoWindow = true,
-                UseShellExecute = false
-            };
-            using var proc = System.Diagnostics.Process.Start(psi);
-            if (proc != null)
-            {
-                proc.WaitForExit(15000);
-                return proc.ExitCode == 0;
-            }
-        }
-        catch
-        {
-            // Ignore failure
-        }
-
-        return false;
+        // Fallback to PowerShell / WMI checkpoint.
+        var safeDescription = description.Replace("'", "''", StringComparison.Ordinal);
+        var exitCode = ProcessTools.RunAndWait(
+            "powershell.exe",
+            $"-NoProfile -NonInteractive -ExecutionPolicy Bypass -Command \"Checkpoint-Computer -Description 'Zidimi: {safeDescription}' -RestorePointType APPLICATION_UNINSTALL\"",
+            15_000);
+        return exitCode == 0;
     }
 }

@@ -25,7 +25,7 @@ public class SortOption : ObservableObject
     }
 }
 
-public class ApplicationsViewModel : ObservableObject
+public class ApplicationsViewModel : ObservableObject, IDisposable
 {
     public ObservableCollection<ApplicationEntry> Apps { get; } = new();
 
@@ -148,7 +148,7 @@ public class ApplicationsViewModel : ObservableObject
         set => SetProperty(ref _isDetailsModalOpen, value);
     }
 
-    public AsyncRelayCommand RefreshCommand { get; }
+    public AsyncRelayCommand RescanCommand { get; }
     public AsyncRelayCommand UninstallCommand { get; }
     public AsyncRelayCommand QuietUninstallCommand { get; }
     public AsyncRelayCommand ForceRemoveCommand { get; }
@@ -183,10 +183,10 @@ public class ApplicationsViewModel : ObservableObject
         });
         CloseDetailsCommand = new RelayCommand(_ => IsDetailsModalOpen = false);
 
-        RefreshCommand = new AsyncRelayCommand(async _ => await LoadAsync());
-        UninstallCommand = new AsyncRelayCommand(async p => await UninstallAsync(quiet: false, param: p));
+        RescanCommand = new AsyncRelayCommand(async _ => await LoadAsync());
+        UninstallCommand = new AsyncRelayCommand(async p => await UninstallAsync(quiet: AppSettings.Instance.PreferQuietUninstall, param: p));
         QuietUninstallCommand = new AsyncRelayCommand(async p => await UninstallAsync(quiet: true, param: p));
-        ForceRemoveCommand = new AsyncRelayCommand(async _ => await ForceRemoveAsync());
+        ForceRemoveCommand = new AsyncRelayCommand(async p => await ForceRemoveAsync(p));
         DeepCleanSelectedCommand = new RelayCommand(_ =>
         {
             if (SelectedApp != null)
@@ -197,7 +197,7 @@ public class ApplicationsViewModel : ObservableObject
         OpenUrlCommand = new RelayCommand(_ => OpenUrlSelected());
         SetFilterCategoryCommand = new RelayCommand(p => FilterCategory = p as string ?? "All");
         SelectAllCommand = new RelayCommand(_ => ToggleSelectAll(true));
-        ClearSelectionCommand = new RelayCommand(_ => ToggleSelectAll(false));
+        ClearSelectionCommand = new RelayCommand(_ => ClearSelection());
 
         LanguageManager.Instance.LanguageChanged += OnLanguageChanged;
     }
@@ -218,8 +218,14 @@ public class ApplicationsViewModel : ObservableObject
         try
         {
             var list = await Task.Run(() => RegistryService.GetInstalledApplications());
+            DetachEntries();
             Apps.Clear();
-            foreach (var entry in list) Apps.Add(entry);
+            foreach (var entry in list)
+            {
+                entry.PropertyChanged += OnEntryPropertyChanged;
+                Apps.Add(entry);
+            }
+            SelectedApp = null;
             StatusText = string.Format(LanguageManager.T("Status_AppsCount", "{0} applications"), Apps.Count);
         }
         catch
@@ -297,6 +303,25 @@ public class ApplicationsViewModel : ObservableObject
         UpdateCounts();
     }
 
+    private void ClearSelection()
+    {
+        ToggleSelectAll(false);
+        SelectedApp = null;
+        IsDetailsModalOpen = false;
+    }
+
+    private void OnEntryPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(ApplicationEntry.IsSelected))
+            UpdateCounts();
+    }
+
+    private void DetachEntries()
+    {
+        foreach (var entry in Apps)
+            entry.PropertyChanged -= OnEntryPropertyChanged;
+    }
+
     private void UpdateCounts()
     {
         TotalCount = Apps.Count;
@@ -311,7 +336,7 @@ public class ApplicationsViewModel : ObservableObject
 
     private List<ApplicationEntry> GetTargets(object? param = null)
     {
-        if (param is ApplicationEntry single && single != SelectedApp)
+        if (param is ApplicationEntry single)
             return new List<ApplicationEntry> { single };
 
         var selected = Apps.Where(a => a.IsSelected).ToList();
@@ -325,19 +350,21 @@ public class ApplicationsViewModel : ObservableObject
         var targets = GetTargets(param);
         if (targets.Count == 0) return;
 
-        // 1. Mandatory confirmation step before any uninstallation
-        var title = targets.Count == 1
-            ? LanguageManager.T("Dialogs_ConfirmUninstallSingleTitle", "Uninstall Application")
-            : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiTitle", "Uninstall {0} Applications"), targets.Count);
-        var msg = targets.Count == 1
-            ? string.Format(LanguageManager.T("Dialogs_ConfirmUninstallSingleMsg", "Are you sure you want to uninstall \"{0}\"?"), targets[0].DisplayName)
-            : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiMsg", "Are you sure you want to uninstall {0} selected applications?"), targets.Count);
-        var btn = LanguageManager.T("Dialogs_ConfirmBtn", "Uninstall");
+        if (AppSettings.Instance.ConfirmBeforeUninstall)
+        {
+            var title = targets.Count == 1
+                ? LanguageManager.T("Dialogs_ConfirmUninstallSingleTitle", "Uninstall Application")
+                : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiTitle", "Uninstall {0} Applications"), targets.Count);
+            var msg = targets.Count == 1
+                ? string.Format(LanguageManager.T("Dialogs_ConfirmUninstallSingleMsg", "Are you sure you want to uninstall \"{0}\"?"), targets[0].DisplayName)
+                : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiMsg", "Are you sure you want to uninstall {0} selected applications?"), targets.Count);
+            var btn = LanguageManager.T("Dialogs_ConfirmBtn", "Uninstall");
 
-        var ok = await AppServices.Dialog.ConfirmAsync(title, msg, btn);
-        if (!ok) return;
+            if (!await AppServices.Dialog.ConfirmAsync(title, msg, btn))
+                return;
+        }
 
-        // 2. Create Restore Point if enabled
+        // Create Restore Point if enabled
         if (AppSettings.Instance.CreateRestorePoint)
         {
             var appDesc = targets.Count == 1 ? targets[0].DisplayName : $"{targets.Count} applications";
@@ -382,22 +409,36 @@ public class ApplicationsViewModel : ObservableObject
                     }
                     catch { }
 
-                    await Task.Delay(1500);
+                    var uninstallConfirmed = await WaitForUninstallRegistrationRemovalAsync(entry);
 
-                    // Remove entry on UI thread
                     System.Windows.Application.Current?.Dispatcher.Invoke(() =>
                     {
                         entry.IsUninstalling = false;
+
+                        if (!uninstallConfirmed)
+                        {
+                            AppServices.Toast.Show(
+                                string.Format(LanguageManager.T("Toasts_UninstallNotConfirmed", "Uninstallation of \"{0}\" was not confirmed. The application is still registered."), entry.DisplayName),
+                                ZToastType.Warning);
+                            return;
+                        }
+
+                        entry.PropertyChanged -= OnEntryPropertyChanged;
                         Apps.Remove(entry);
+                        if (ReferenceEquals(SelectedApp, entry))
+                            SelectedApp = null;
                         UpdateCounts();
                         ReloadRequested?.Invoke();
                     });
 
-                    // 5. Open Deep Clean Modal to show all leftover files, folders & registry entries for user review
-                    System.Windows.Application.Current?.Dispatcher.Invoke(() =>
+                    if (uninstallConfirmed && AppSettings.Instance.EnableDeepClean)
                     {
-                        DeepCleanRequested?.Invoke(entry);
-                    });
+                        await Task.Delay(1000);
+                        System.Windows.Application.Current?.Dispatcher.Invoke(() =>
+                        {
+                            DeepCleanRequested?.Invoke(entry);
+                        });
+                    }
                 });
             }
             catch (NoWayToUninstallException)
@@ -412,16 +453,23 @@ public class ApplicationsViewModel : ObservableObject
         }
     }
 
-    private async Task AutoRefreshAfterUninstallAsync()
+    private static async Task<bool> WaitForUninstallRegistrationRemovalAsync(ApplicationEntry entry)
     {
-        await Task.Delay(TimeSpan.FromSeconds(15));
-        await LoadAsync();
-        ReloadRequested?.Invoke();
+        var deadline = DateTime.UtcNow.AddSeconds(15);
+        while (DateTime.UtcNow < deadline)
+        {
+            if (!RegistryService.IsApplicationRegistered(entry))
+                return true;
+
+            await Task.Delay(1000);
+        }
+
+        return !RegistryService.IsApplicationRegistered(entry);
     }
 
-    private async Task ForceRemoveAsync()
+    private async Task ForceRemoveAsync(object? param = null)
     {
-        var targets = GetTargets();
+        var targets = GetTargets(param);
         if (targets.Count == 0) return;
 
         var title = LanguageManager.T("Dialogs_ForceRemoveTitle", "Delete Uninstall Registration");
@@ -436,7 +484,10 @@ public class ApplicationsViewModel : ObservableObject
         {
             if (RegistryService.RemoveEntry(entry))
             {
+                entry.PropertyChanged -= OnEntryPropertyChanged;
                 Apps.Remove(entry);
+                if (ReferenceEquals(SelectedApp, entry))
+                    SelectedApp = null;
                 removed++;
             }
         }
@@ -483,6 +534,13 @@ public class ApplicationsViewModel : ObservableObject
             return;
         }
         UninstallService.OpenUrl(entry.AboutUrl);
+    }
+
+    public void Dispose()
+    {
+        DetachEntries();
+        LanguageManager.Instance.LanguageChanged -= OnLanguageChanged;
+        GC.SuppressFinalize(this);
     }
 
     private sealed class ApplicationComparer : IComparer<ApplicationEntry>, System.Collections.IComparer

@@ -2,7 +2,7 @@
 LanguageName=Deutsch
 
 [Sidebar]
-Dashboard=Ãbersicht
+Dashboard=Übersicht
 Applications=Installierte Apps
 StoreApps=Store Apps
 Packages=WinGet Pakete
@@ -11,13 +11,14 @@ Startup=Autostart
 Settings=Einstellungen
 Version=Version {0}
 ReloadAll=Alle Daten neu laden
-About=Ãber die Anwendung
+About=Über die Anwendung
+Leftovers=Spurenbereinigung
 
 [Pages]
 LeftoversSubtitle=Verwaiste Dateien, Ordner, Daten und Registry-Schlüssel deinstallierter Software bereinigen
 LeftoversTitle=Reste- & Spurenbereinigung
-DashboardTitle=Ãbersicht
-DashboardSubtitle=SchnellÃ¼bersicht der installierten Anwendungen
+DashboardTitle=Übersicht
+DashboardSubtitle=Schnellübersicht der installierten Anwendungen
 AppsTitle=Installierte Anwendungen
 AppsSubtitle=Software verwalten und deinstallieren
 StoreTitle=Microsoft Store Apps
@@ -34,36 +35,36 @@ SettingsSubtitle=Zidimi Uninstaller Verhalten anpassen
 [Dashboard]
 AppCount=Installierte Apps
 StoreAppCount=Store Apps
-StartupCount=Autostart-EintrÃ¤ge
-TotalSize=GesamtgrÃ¶Ãe
+StartupCount=Autostart-Einträge
+TotalSize=Gesamtgröße
 Rescan=Neu scannen
 ReloadAll=Alles neu laden
-RecentInstalled=KÃ¼rzlich installiert
+RecentInstalled=Kürzlich installiert
 RecentSubtitle=Neueste Software-Installationen
-Scanning=System wird gescanntâ¦
+Scanning=System wird gescannt…
 
 [Apps]
 SelectedCountText={0} Apps ausgewählt
-SearchPlaceholder=Anwendungen suchenâ¦
+SearchPlaceholder=Anwendungen suchen…
 SortName=App-Name
 SortPublisher=Herausgeber
-SortSize=GrÃ¶Ãe
+SortSize=Größe
 SortDate=Installationsdatum
 FilterAll=Alle
 Filter64Bit=64-Bit
 Filter32Bit=32-Bit
-FilterLarge=GroÃe GrÃ¶Ãe (>500MB)
-FilterRecent=KÃ¼rzlich installiert (30 Tage)
-FilterBroken=BeschÃ¤digt / Kein Uninstaller
-SelectedCount={0} Anwendungen ausgewÃ¤hlt
+FilterLarge=Große Größe (>500MB)
+FilterRecent=Kürzlich installiert (30 Tage)
+FilterBroken=Beschädigt / Kein Uninstaller
+SelectedCount={0} Anwendungen ausgewählt
 Uninstall=Deinstallieren
 QuietUninstall=Stille Deinstallation
 DeepClean=Tiefenreinigung
-Modify=Ãndern
+Modify=Ändern
 OpenFolder=Ordner
 OpenWebsite=Webseite
-DeleteRegistry=Aus Registrierung lÃ¶schen
-BrokenBadge=BeschÃ¤digt
+DeleteRegistry=Aus Registrierung löschen
+BrokenBadge=Beschädigt
 SystemComponentBadge=Systemkomponente
 EmptyTitle=Keine Anwendungen gefunden
 EmptySubtitle=Klicken Sie oben rechts auf Aktualisieren.
@@ -72,39 +73,40 @@ ElevationSubtitle=DISM erfordert Administratorrechte, um optionale Windows-Funkt
 RestartAdminBtn=Als Administrator neu starten
 NoResultsTitle=Keine Ergebnisse
 NoResultsSubtitle=Versuchen Sie einen anderen Suchbegriff oder passen Sie die Filter an.
-Scanning=Registrierung wird gescanntâ¦
+Scanning=Registrierung wird gescannt…
 DisplayCount=Zeige {0} von {1}
 PublisherLabel=Herausgeber
 VersionLabel=Version
-SizeLabel=GrÃ¶Ãe
+SizeLabel=Größe
 InstallDateLabel=Installationsdatum
 ArchLabel=Architektur
 InstallLocationLabel=Installationspfad
 InstallSourceLabel=Installationsquelle
 WebsiteLabel=Webseite
-RegistryKeyLabel=RegistrierungsschlÃ¼ssel
+RegistryKeyLabel=Registrierungsschlüssel
 Details=Details
-Close=SchlieÃen
-CloseTooltip=SchlieÃen
-CloseActionBar=Aktionsleiste schlieÃen
+Close=Schließen
+CloseTooltip=Schließen
+CloseActionBar=Aktionsleiste schließen
 
 [Store]
-SearchPlaceholder=Store Apps suchenâ¦
+SearchPlaceholder=Store Apps suchen…
 RescanTooltip=Store Apps neu scannen
-SelectedCount={0} Apps ausgewÃ¤hlt
-UninstallSelected=AusgewÃ¤hlte deinstallieren
+SelectedCount={0} Apps ausgewählt
+UninstallSelected=Ausgewählte deinstallieren
 Uninstall=Deinstallieren
 EmptyTitle=Keine Store Apps
-EmptySubtitle=Alle Store Apps wurden entfernt oder sind fÃ¼r dieses Konto nicht installiert.
+EmptySubtitle=Alle Store Apps wurden entfernt oder sind für dieses Konto nicht installiert.
 ElevationTitle=Administratorrechte erforderlich
 ElevationSubtitle=DISM erfordert Administratorrechte, um optionale Windows-Funktionen abzufragen und zu verwalten.
 RestartAdminBtn=Als Administrator neu starten
 NoResultsTitle=Keine passenden Apps
 NoResultsSubtitle=Versuchen Sie die Suche mit einem anderen Begriff.
-Scanning=Microsoft Store Apps werden gescanntâ¦
+Scanning=Microsoft Store Apps werden gescannt…
+SelectedCountText={0} Store-Apps ausgewählt
 
 [Packages]
-SearchPlaceholder=WinGet / Scoop / Chocolatey Pakete suchenâ¦
+SearchPlaceholder=WinGet / Scoop / Chocolatey Pakete suchen…
 RescanTooltip=Paketliste neu scannen
 HasUpdate=Update v{0}
 Upgrade=Aktualisieren
@@ -116,23 +118,23 @@ ElevationSubtitle=DISM erfordert Administratorrechte, um optionale Windows-Funkt
 RestartAdminBtn=Als Administrator neu starten
 NoResultsTitle=Keine passenden Pakete
 NoResultsSubtitle=Versuchen Sie die Suche mit einem anderen Begriff.
-Scanning=Pakete Ã¼ber WinGet CLI werden gescanntâ¦
+Scanning=Pakete über WinGet CLI werden gescannt…
 
 [Features]
-SearchPlaceholder=Windows-Features suchen (Hyper-V, WSL, Sandbox, .NETâ¦)
+SearchPlaceholder=Windows-Features suchen (Hyper-V, WSL, Sandbox, .NET…)
 RescanTooltip=Windows-Features neu scannen
 TotalBadge={0} Funktionen
 EnabledBadge={0} aktiviert
 StatusEnabled=Aktiviert
 StatusDisabled=Deaktiviert
-EmptyTitle=Keine Features verfÃ¼gbar
+EmptyTitle=Keine Features verfügbar
 EmptySubtitle=DISM Feature-Status konnte auf diesem System nicht gelesen werden.
 ElevationTitle=Administratorrechte erforderlich
 ElevationSubtitle=DISM erfordert Administratorrechte, um optionale Windows-Funktionen abzufragen und zu verwalten.
 RestartAdminBtn=Als Administrator neu starten
 NoResultsTitle=Keine passenden Features
 NoResultsSubtitle=Versuchen Sie die Suche mit einem anderen Begriff.
-Scanning=Windows-Features werden Ã¼ber DISM abgefragtâ¦
+Scanning=Windows-Features werden über DISM abgefragt…
 
 [Startup]
 ItemName=Elementname
@@ -143,52 +145,54 @@ StatusLabel=Status
 ExecutableLabel=Ausführbare Datei
 LocationLabel=Registry- / Ordnerspeicherort
 OpenRegedit=In Regedit öffnen
-SearchPlaceholder=Autostart-EintrÃ¤ge suchenâ¦
-RescanTooltip=Autostart-EintrÃ¤ge neu scannen
-TotalBadge={0} EintrÃ¤ge
+SearchPlaceholder=Autostart-Einträge suchen…
+RescanTooltip=Autostart-Einträge neu scannen
+TotalBadge={0} Einträge
 EnabledBadge={0} aktiviert
 DisabledBadge={0} deaktiviert
-EmptyTitle=Keine Autostart-EintrÃ¤ge
-EmptySubtitle=Keine Autostart-EintrÃ¤ge in der Registrierung gefunden.
+EmptyTitle=Keine Autostart-Einträge
+EmptySubtitle=Keine Autostart-Einträge in der Registrierung gefunden.
 ElevationTitle=Administratorrechte erforderlich
 ElevationSubtitle=DISM erfordert Administratorrechte, um optionale Windows-Funktionen abzufragen und zu verwalten.
 RestartAdminBtn=Als Administrator neu starten
 NoResultsTitle=Keine Ergebnisse
 NoResultsSubtitle=Versuchen Sie einen anderen Suchbegriff.
-Scanning=Autostart-EintrÃ¤ge werden gescanntâ¦
+Scanning=Autostart-Einträge werden gescannt…
+PublisherLabel=Herausgeber
 
 [DeepClean]
 Title=Tiefenreinigung: {0}
-FoundStats={0} Restelemente gefunden  Â·  GrÃ¶Ãe: {1}
-SelectAll=Alle auswÃ¤hlen
-SelectSafeOnly=Nur sichere auswÃ¤hlen
-Skip=Ãberspringen
+FoundStats={0} Restelemente gefunden  ·  Größe: {1}
+SelectAll=Alle auswählen
+SelectSafeOnly=Nur sichere auswählen
+Skip=Überspringen
 CleanSelected={0} Elemente bereinigen
-CleaningProgress=Restelemente werden entferntâ¦
+CleaningProgress=Restelemente werden entfernt…
+ScanningProgress=Suche nach Restdateien und Registrierungsspuren…
 
 [Settings]
 SectionTitle=Einstellungen
 SectionSubtitle=Anwendungsverhalten und Konfiguration
 LanguageHeader=Anzeigesprache
-LanguageSubtitle=WÃ¤hlen Sie die Sprache fÃ¼r Zidimi Uninstaller
+LanguageSubtitle=Wählen Sie die Sprache für Zidimi Uninstaller
 ProtectionHeader=Verhalten & Schutz
-ProtectionSubtitle=Sicherheitsmechanismen wÃ¤hrend der Deinstallation
+ProtectionSubtitle=Sicherheitsmechanismen während der Deinstallation
 HideSystem=Systemkomponenten ausblenden
-HideSystemDesc=Vorinstallierte Windows-Systempakete ausschlieÃen.
+HideSystemDesc=Vorinstallierte Windows-Systempakete ausschließen.
 PreferQuiet=Stille Deinstallation bevorzugen
-PreferQuietDesc=Automatisch Parameter fÃ¼r stille Deinstallation Ã¼bergeben.
-ConfirmBefore=Vor Deinstallation bestÃ¤tigen
-ConfirmBeforeDesc=BestÃ¤tigungsdialog vor Deinstallationsaktionen anzeigen.
+PreferQuietDesc=Automatisch Parameter für stille Deinstallation übergeben.
+ConfirmBefore=Vor Deinstallation bestätigen
+ConfirmBeforeDesc=Bestätigungsdialog vor Deinstallationsaktionen anzeigen.
 AutoKill=Laufende Prozesse automatisch beenden
 AutoKillDesc=Aktive Prozesse scannen und beenden, die Dateien vor Deinstallation sperren.
 RestorePoint=Systemwiederherstellungspunkt erstellen
 RestorePointDesc=Vor Entfernungsoperationen automatisch einen Wiederherstellungspunkt erstellen.
 DeepCleanHeader=Reste-Bereinigung (Deep Clean)
-DeepCleanSubtitle=Automatisch verbleibende Dateien, Ordner und RegistrierungsschlÃ¼ssel bereinigen
+DeepCleanSubtitle=Automatisch verbleibende Dateien, Ordner und Registrierungsschlüssel bereinigen
 AutoDeepClean=Reste nach Deinstallation suchen
-AutoDeepCleanDesc=Deep Clean automatisch nach Abschluss des Uninstallers ausfÃ¼hren.
-RecycleBin=GelÃ¶schte Dateien in den Papierkorb verschieben
-RecycleBinDesc=Dateien sicher in den Papierkorb verschieben statt dauerhaft zu lÃ¶schen.
+AutoDeepCleanDesc=Deep Clean automatisch nach Abschluss des Uninstallers ausführen.
+RecycleBin=Gelöschte Dateien in den Papierkorb verschieben
+RecycleBinDesc=Dateien sicher in den Papierkorb verschieben statt dauerhaft zu löschen.
 ElevationHeader=UAC Bypass (Task Scheduler)
 ElevationSubtitle=Configure execution with highest privileges without UAC prompt
 BypassUac=Bypass UAC prompts via Task Scheduler
@@ -203,51 +207,51 @@ ClearCacheBtn=Icon-Cache leeren
 
 [Dialogs]
 ConfirmUninstallSingleTitle=Anwendung deinstallieren
-ConfirmUninstallSingleMsg=MÃ¶chten Sie "{0}" wirklich deinstallieren?
+ConfirmUninstallSingleMsg=Möchten Sie "{0}" wirklich deinstallieren?
 ConfirmUninstallMultiTitle={0} Anwendungen deinstallieren
-ConfirmUninstallMultiMsg=MÃ¶chten Sie die {0} ausgewÃ¤hlten Anwendungen wirklich deinstallieren?
+ConfirmUninstallMultiMsg=Möchten Sie die {0} ausgewählten Anwendungen wirklich deinstallieren?
 ConfirmBtn=Deinstallieren
 CancelBtn=Abbrechen
-CloseBtn=SchlieÃen
-ForceRemoveTitle=Registrierungseintrag lÃ¶schen
-ForceRemoveMsg=Dadurch wird der Deinstallations-Registrierungseintrag fÃ¼r "{0}" entfernt.\nNur verwenden, wenn die normale Deinstallation fehlschlÃ¤gt. Fortfahren?
-ForceRemoveBtn=LÃ¶schen
+CloseBtn=Schließen
+ForceRemoveTitle=Registrierungseintrag löschen
+ForceRemoveMsg=Dadurch wird der Deinstallations-Registrierungseintrag für "{0}" entfernt.\nNur verwenden, wenn die normale Deinstallation fehlschlägt. Fortfahren?
+ForceRemoveBtn=Löschen
 FeatureEnableTitle=Windows-Feature aktivieren
 FeatureDisableTitle=Windows-Feature deaktivieren
-FeatureToggleMsg=MÃ¶chten Sie das Feature "{1}" wirklich {0}?\nDieser Vorgang kann einige Minuten dauern.
+FeatureToggleMsg=Möchten Sie das Feature "{1}" wirklich {0}?\nDieser Vorgang kann einige Minuten dauern.
 ActionEnable=aktivieren
 ActionDisable=deaktivieren
 ActionEnableCapital=Aktivieren
 ActionDisableCapital=Deaktivieren
 PackageUninstallTitle=WinGet-Paket deinstallieren
-PackageUninstallMsg=MÃ¶chten Sie das Paket "{0}" (ID: {1}) wirklich entfernen?
-AboutTitle=Ãber Zidimi Uninstaller
+PackageUninstallMsg=Möchten Sie das Paket "{0}" (ID: {1}) wirklich entfernen?
+AboutTitle=Über Zidimi Uninstaller
 AboutDesc=Zidimi Uninstaller ist ein leistungsstarker Uninstaller.\n\nVersion: {0}
 
 [Toasts]
-CreatingRestorePoint=Systemwiederherstellungspunkt wird erstelltâ¦
-KilledProcesses={0} sperrende Prozesse fÃ¼r "{1}" beendet.
-UninstallerNotFound=Kein Deinstallationsprogramm fÃ¼r "{0}" gefunden.
+CreatingRestorePoint=Systemwiederherstellungspunkt wird erstellt…
+KilledProcesses={0} sperrende Prozesse für "{1}" beendet.
+UninstallerNotFound=Kein Deinstallationsprogramm für "{0}" gefunden.
 LaunchedUninstallers={0} Deinstallationsprogramm(e) gestartet.
-RemovedRegistryEntries={0} EintrÃ¤ge aus der Registrierung entfernt.
+RemovedRegistryEntries={0} Einträge aus der Registrierung entfernt.
 CannotRemoveRegistry=Registrierungseintrag konnte nicht entfernt werden.
-ModifyNotSupported=Diese Anwendung unterstÃ¼tzt keine Ãnderung (Modify).
-NoInstallLocation=Keine Installationspfad-Informationen verfÃ¼gbar.
-NoWebsiteUrl=Keine Webseiten-URL verfÃ¼gbar.
-NoExecutable=AusfÃ¼hrbare Datei nicht gefunden.
-StoreUninstallFailed=Deinstallation von "{0}" fehlgeschlagen. Administratorrechte prÃ¼fen.
+ModifyNotSupported=Diese Anwendung unterstützt keine Änderung (Modify).
+NoInstallLocation=Keine Installationspfad-Informationen verfügbar.
+NoWebsiteUrl=Keine Webseiten-URL verfügbar.
+NoExecutable=Ausführbare Datei nicht gefunden.
+StoreUninstallFailed=Deinstallation von "{0}" fehlgeschlagen. Administratorrechte prüfen.
 StoreUninstallSuccess={0} Store-App(s) erfolgreich deinstalliert.
 PackageUninstallSuccess="{0}" erfolgreich deinstalliert.
 PackageUninstallFailed=Deinstallation von "{0}" fehlgeschlagen.
-PackageUpgrading="{0}" wird auf die neueste Version aktualisiertâ¦
+PackageUpgrading="{0}" wird auf die neueste Version aktualisiert…
 PackageUpgradeSuccess="{0}" erfolgreich aktualisiert!
 PackageUpgradeFailed=Aktualisierung von "{0}" fehlgeschlagen.
-FeatureToggling=Feature-Status fÃ¼r "{0}" wird Ã¼ber DISM angewendetâ¦
+FeatureToggling=Feature-Status für "{0}" wird über DISM angewendet…
 FeatureToggleSuccess="{1}" erfolgreich {0}!
-FeatureToggleFailed=Status fÃ¼r "{0}" konnte nicht geÃ¤ndert werden. Administratorrechte erforderlich.
+FeatureToggleFailed=Status für "{0}" konnte nicht geändert werden. Administratorrechte erforderlich.
 StartupToggleSuccess="{1}" erfolgreich {0}.
 StartupToggleFailed="{0}" konnte nicht aktualisiert werden. Administratorrechte erforderlich.
-DeepCleanNoLeftovers=Keine Reste fÃ¼r "{0}" gefunden. Saubere Deinstallation!
+DeepCleanNoLeftovers=Keine Reste für "{0}" gefunden. Saubere Deinstallation!
 DeepCleanSuccess=Tiefenreinigung abgeschlossen: {0} Elemente entfernt, {1} freigegeben.
 DeepCleanFailed=Fehler bei der Tiefenreinigung: {0}
 CacheCleared=Icon-Cache geleert.
@@ -256,23 +260,24 @@ TaskSchedulerRemoved=Task Scheduler configuration removed.
 TaskSchedulerFailed=Failed to register Task Scheduler. Ensure you have administrator rights.
 ShortcutCreated=No-UAC Desktop shortcut created successfully!
 ShortcutFailed=Failed to create desktop shortcut. Please try again.
+UninstallNotConfirmed=Die Deinstallation von „{0}“ wurde nicht bestätigt. Die Anwendung ist weiterhin registriert.
 
 [Status]
-ScanningRegistry=Registrierung wird gescanntâ¦
-ScanningStore=Microsoft Store Apps werden gescanntâ¦
-ScanningPackages=Pakete Ã¼ber WinGet werden gescanntâ¦
-ScanningFeatures=Windows-Features (DISM) werden gelesenâ¦
-ScanningStartup=Autostart-EintrÃ¤ge werden gelesenâ¦
+ScanningRegistry=Registrierung wird gescannt…
+ScanningStore=Microsoft Store Apps werden gescannt…
+ScanningPackages=Pakete über WinGet werden gescannt…
+ScanningFeatures=Windows-Features (DISM) werden gelesen…
+ScanningStartup=Autostart-Einträge werden gelesen…
 AppsCount={0} Anwendungen
 StoreAppsCount={0} Store Apps
 PackagesCount={0} Pakete
 FeaturesCount={0} Windows-Features
-StartupCount={0} Autostart-EintrÃ¤ge
+StartupCount={0} Autostart-Einträge
 CannotReadApps=Installierte Anwendungen konnten nicht gelesen werden
 CannotReadStore=Store Apps konnten nicht gelesen werden
 CannotReadPackages=WinGet Pakete konnten nicht gelesen werden
 CannotReadFeatures=Windows-Features konnten nicht gelesen werden
-CannotReadStartup=Autostart-EintrÃ¤ge konnten nicht gelesen werden
+CannotReadStartup=Autostart-Einträge konnten nicht gelesen werden
 
 
 [Scope]
@@ -361,15 +366,27 @@ SafetyReview=Überprüfung empfohlen
 
 SafetyWarning=Vorsicht geboten
 
-SafetyUnknown=Unbekannt
-
-[About]
-Tagline=Ein modernes, schnelles und gründliches Softwareverwaltungs- und Deinstallationsprogramm für Windows mit Tiefenreinigung von Rückständen.
-AuthorLabel=Autor / Entwickler
-LicenseLabel=Softwarelizenz
-PlatformLabel=Betriebssystem
-FrameworkLabel=Framework-Laufzeit
-ArchitectureLabel=Architektur
-StatusLabel=Release-Status
-ReleasesBtn=Releases
+SafetyUnknown=Unbekannt
+
+
+
+[About]
+
+Tagline=Ein modernes, schnelles und gründliches Softwareverwaltungs- und Deinstallationsprogramm für Windows mit Tiefenreinigung von Rückständen.
+
+AuthorLabel=Autor / Entwickler
+
+LicenseLabel=Softwarelizenz
+
+PlatformLabel=Betriebssystem
+
+FrameworkLabel=Framework-Laufzeit
+
+ArchitectureLabel=Architektur
+
+StatusLabel=Release-Status
+
+ReleasesBtn=Releases
+
 IssuesBtn=Problem melden
+

@@ -8,7 +8,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ZProgressBar}">
-                    <Border x:Name="PART_Track" Background="{StaticResource ZBrushLightGray}" CornerRadius="3">
+                    <Border x:Name="PART_Track" Background="{StaticResource ZBrushBorder}" CornerRadius="3">
                         <Border x:Name="PART_Fill" Background="{StaticResource ZBrushAccent}" CornerRadius="3" HorizontalAlignment="Left"/>
                     </Border>
                 </ControlTemplate>

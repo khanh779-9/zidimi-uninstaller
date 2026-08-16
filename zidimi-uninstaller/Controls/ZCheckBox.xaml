@@ -17,9 +17,9 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Border x:Name="Box" Width="18" Height="18" CornerRadius="5" Background="{StaticResource ZBrushWhite}"
-                                BorderBrush="{StaticResource ZBrushLighterGray}" BorderThickness="1.5" VerticalAlignment="Center">
-                            <Path x:Name="CheckMark" Data="{StaticResource IconCheck}" Stretch="Uniform" Width="11" Height="11"
-                                  Fill="White" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                BorderBrush="{StaticResource ZBrushBorderStrong}" BorderThickness="1" VerticalAlignment="Center">
+                            <Path x:Name="CheckMark" Data="{StaticResource StrokeIconCheck}" Stretch="Uniform" Width="11" Height="11"
+                                  Fill="Transparent" Stroke="White" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ContentPresenter Grid.Column="1" Margin="8,0,0,0" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                     </Grid>
@@ -31,6 +31,10 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Box" Property="BorderBrush" Value="{StaticResource ZBrushAccent}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Box" Property="BorderBrush" Value="{StaticResource ZBrushAccent}"/>
+                            <Setter TargetName="Box" Property="BorderThickness" Value="2"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5"/>

@@ -7,7 +7,6 @@ namespace zidimi_uninstaller.Services;
 public static class RegistryService
 {
     private const string UninstallPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
-    private const string UninstallPathWow = @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall";
 
     public static List<ApplicationEntry> GetInstalledApplications()
     {
@@ -15,17 +14,23 @@ public static class RegistryService
 
         // Use RegistryView to distinguish 64-bit and 32-bit.
         // Registry32 view automatically redirects to Wow6432Node, so always open UninstallPath.
-        var views = new[]
-        {
-            (RegistryHive.LocalMachine, RegistryView.Registry64, true),
-            (RegistryHive.LocalMachine, RegistryView.Registry32, false),
-            (RegistryHive.CurrentUser, RegistryView.Registry64, true),
-            (RegistryHive.CurrentUser, RegistryView.Registry32, false)
-        };
+        var views = Environment.Is64BitOperatingSystem
+            ? new[]
+            {
+                (RegistryHive.LocalMachine, RegistryView.Registry64),
+                (RegistryHive.LocalMachine, RegistryView.Registry32),
+                (RegistryHive.CurrentUser, RegistryView.Registry64),
+                (RegistryHive.CurrentUser, RegistryView.Registry32)
+            }
+            : new[]
+            {
+                (RegistryHive.LocalMachine, RegistryView.Registry32),
+                (RegistryHive.CurrentUser, RegistryView.Registry32)
+            };
 
         var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-        foreach (var (hive, view, is64) in views)
+        foreach (var (hive, view) in views)
         {
             var path = UninstallPath;
             try
@@ -42,10 +47,10 @@ public static class RegistryService
                         if (sub == null) continue;
 
                         // Avoid duplicates between views (64-bit and 32-bit may point to the same key)
-                        var fullKeyName = sub.Name;
-                        if (!seen.Add(fullKeyName)) continue;
+                        var identity = $"{hive}|{view}|{sub.Name}";
+                        if (!seen.Add(identity)) continue;
 
-                        var entry = CreateEntry(sub, subName, is64);
+                        var entry = CreateEntry(sub, subName, view);
                         if (entry != null) results.Add(entry);
                     }
                     catch
@@ -63,7 +68,7 @@ public static class RegistryService
         return results;
     }
 
-    private static ApplicationEntry? CreateEntry(RegistryKey key, string keyName, bool is64)
+    private static ApplicationEntry? CreateEntry(RegistryKey key, string keyName, RegistryView view)
     {
         var displayName = GetString(key, "DisplayName");
         var publisher = GetString(key, "Publisher");
@@ -89,7 +94,8 @@ public static class RegistryService
             DisplayIconPath = GetString(key, "DisplayIcon") ?? string.Empty,
             RegistryPath = key.Name,
             RegistryKeyName = keyName,
-            Is64Bit = is64,
+            Is64Bit = view == RegistryView.Registry64,
+            RegistryView = view,
             IsSystemComponent = GetInt(key, "SystemComponent") != 0,
             IsProtected = GetInt(key, "NoRemove") != 0,
             IsUpdate = GetIsUpdate(key, keyName),
@@ -117,6 +123,7 @@ public static class RegistryService
         }
 
         var (fileName, _) = ProcessTools.SeparateArgsFromCommand(entry.UninstallString);
+        fileName = Environment.ExpandEnvironmentVariables(fileName);
         if (!string.IsNullOrWhiteSpace(fileName) && Path.IsPathRooted(fileName))
         {
             if (!File.Exists(fileName) && !Directory.Exists(fileName))
@@ -241,9 +248,27 @@ public static class RegistryService
         var match = System.Text.RegularExpressions.Regex.Match(text, @"\{?[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\}?");
         return match.Success && Guid.TryParse(match.Value, out guid);
     }
+    public static bool IsApplicationRegistered(ApplicationEntry target)
+    {
+        try
+        {
+            return GetInstalledApplications().Any(entry =>
+                entry.RegistryView == target.RegistryView
+                && ((!string.IsNullOrWhiteSpace(target.RegistryPath)
+                     && entry.RegistryPath.Equals(target.RegistryPath, StringComparison.OrdinalIgnoreCase))
+                    || (entry.RegistryKeyName.Equals(target.RegistryKeyName, StringComparison.OrdinalIgnoreCase)
+                        && entry.DisplayName.Equals(target.DisplayName, StringComparison.OrdinalIgnoreCase))));
+        }
+        catch
+        {
+            // Verification must fail closed: never deep-clean if registration state is unknown.
+            return true;
+        }
+    }
+
     public static bool RemoveEntry(ApplicationEntry entry)
     {
-        if (string.IsNullOrEmpty(entry.RegistryPath))
+        if (string.IsNullOrWhiteSpace(entry.RegistryPath))
             return false;
 
         try
@@ -256,33 +281,29 @@ public static class RegistryService
                 : RegistryHive.CurrentUser;
 
             var subPath = entry.RegistryPath[(idx + 1)..];
-            subPath = subPath.Replace(@"SOFTWARE\Wow6432Node\", @"SOFTWARE\", StringComparison.OrdinalIgnoreCase);
-
             var lastSlash = subPath.LastIndexOf('\\');
             if (lastSlash < 0) return false;
-            var parent = subPath[..lastSlash];
-            var name = subPath[(lastSlash + 1)..];
 
-            foreach (var view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
+            var parentPath = subPath[..lastSlash];
+            var keyName = subPath[(lastSlash + 1)..];
+
+            using var baseKey = RegistryKey.OpenBaseKey(hive, entry.RegistryView);
+            using var parentKey = baseKey.OpenSubKey(parentPath, writable: true);
+            if (parentKey == null) return false;
+
+            using (var existing = parentKey.OpenSubKey(keyName))
             {
-                try
-                {
-                    using var baseKey = RegistryKey.OpenBaseKey(hive, view);
-                    using var parentKey = baseKey.OpenSubKey(parent, writable: true);
-                    if (parentKey == null) continue;
-                    parentKey.DeleteSubKeyTree(name, throwOnMissingSubKey: false);
-                    return true;
-                }
-                catch
-                {
-                    // Try other view
-                }
+                if (existing == null) return false;
             }
+
+            parentKey.DeleteSubKeyTree(keyName, throwOnMissingSubKey: true);
+            using var verify = parentKey.OpenSubKey(keyName);
+            return verify == null;
         }
         catch
         {
-            // ignore
+            return false;
         }
-        return false;
     }
+
 }

@@ -67,8 +67,8 @@ public static class StoreAppService
         if (string.IsNullOrEmpty(entry.PackageFullName)) return false;
         var safeName = entry.PackageFullName.Replace("'", "''");
         var script = $"Remove-AppxPackage -Package '{safeName}' -Confirm:$false";
-        var output = ProcessTools.RunAndReadOutput("powershell.exe", $"-NoProfile -NonInteractive -Command \"{script}\"", 180_000);
-        return string.IsNullOrWhiteSpace(output);
+        var exitCode = ProcessTools.RunAndWait("powershell.exe", $"-NoProfile -NonInteractive -Command \"{script}\"", 180_000);
+        return exitCode == 0;
     }
 
     private static string ParseArchitecture(JsonElement item)

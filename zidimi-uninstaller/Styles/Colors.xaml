@@ -11,10 +11,19 @@
     <Color x:Key="ZColorAccent">#EA0232</Color>
     <Color x:Key="ZColorAccentLight">#CE5564</Color>
     <Color x:Key="ZColorLightGray">#E3DFDF</Color>
+    <Color x:Key="ZColorSurface">#FFFFFF</Color>
+    <Color x:Key="ZColorSurfaceMuted">#F7F5F6</Color>
+    <Color x:Key="ZColorBorder">#DDD8DA</Color>
+    <Color x:Key="ZColorBorderStrong">#C9C2C5</Color>
     <Color x:Key="ZColorLighterGray">#BEB7B7</Color>
     <Color x:Key="ZColorMidGray">#959495</Color>
     <Color x:Key="ZColorDarkGray">#525153</Color>
     <Color x:Key="ZColorBrown">#803C38</Color>
+
+    <Color x:Key="ZColorSidebarHover">#3A383A</Color>
+    <Color x:Key="ZColorSidebarActive">#47272D</Color>
+    <Color x:Key="ZColorSidebarBorder">#403E40</Color>
+    <Color x:Key="ZColorSidebarText">#CEC9CB</Color>
 
     <!-- Derived color variants -->
     <Color x:Key="ZColorAccentHover">#D0022D</Color>
@@ -33,10 +42,18 @@
     <SolidColorBrush x:Key="ZBrushAccent" Color="{StaticResource ZColorAccent}"/>
     <SolidColorBrush x:Key="ZBrushAccentLight" Color="{StaticResource ZColorAccentLight}"/>
     <SolidColorBrush x:Key="ZBrushLightGray" Color="{StaticResource ZColorLightGray}"/>
+    <SolidColorBrush x:Key="ZBrushSurface" Color="{StaticResource ZColorSurface}"/>
+    <SolidColorBrush x:Key="ZBrushSurfaceMuted" Color="{StaticResource ZColorSurfaceMuted}"/>
+    <SolidColorBrush x:Key="ZBrushBorder" Color="{StaticResource ZColorBorder}"/>
+    <SolidColorBrush x:Key="ZBrushBorderStrong" Color="{StaticResource ZColorBorderStrong}"/>
     <SolidColorBrush x:Key="ZBrushLighterGray" Color="{StaticResource ZColorLighterGray}"/>
     <SolidColorBrush x:Key="ZBrushMidGray" Color="{StaticResource ZColorMidGray}"/>
     <SolidColorBrush x:Key="ZBrushDarkGray" Color="{StaticResource ZColorDarkGray}"/>
     <SolidColorBrush x:Key="ZBrushBrown" Color="{StaticResource ZColorBrown}"/>
+    <SolidColorBrush x:Key="ZBrushSidebarHover" Color="{StaticResource ZColorSidebarHover}"/>
+    <SolidColorBrush x:Key="ZBrushSidebarActive" Color="{StaticResource ZColorSidebarActive}"/>
+    <SolidColorBrush x:Key="ZBrushSidebarBorder" Color="{StaticResource ZColorSidebarBorder}"/>
+    <SolidColorBrush x:Key="ZBrushSidebarText" Color="{StaticResource ZColorSidebarText}"/>
 
     <SolidColorBrush x:Key="ZBrushAccentHover" Color="{StaticResource ZColorAccentHover}"/>
     <SolidColorBrush x:Key="ZBrushAccentPressed" Color="{StaticResource ZColorAccentPressed}"/>

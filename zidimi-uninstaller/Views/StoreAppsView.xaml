@@ -7,7 +7,7 @@
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="900">
-    <Grid Margin="28">
+    <Grid Margin="24,20,24,18">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -23,10 +23,10 @@
             </Grid.ColumnDefinitions>
             <controls:ZSearchBox Placeholder="{Binding [Store_SearchPlaceholder], Source={x:Static services:LanguageManager.Instance}}"
                                  Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                                 MaxWidth="460" HorizontalAlignment="Left"/>
+                                 MaxWidth="460" HorizontalAlignment="Stretch" Margin="0,0,12,0"/>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <controls:ZIconButton Icon="{StaticResource IconRefresh}"
-                                      Command="{Binding RefreshCommand}"
+                <controls:ZIconButton Icon="{StaticResource StrokeIconRescan}"
+                                      Command="{Binding RescanCommand}"
                                       ToolTip="{Binding [Store_RescanTooltip], Source={x:Static services:LanguageManager.Instance}}"/>
             </StackPanel>
         </Grid>
@@ -36,13 +36,18 @@
                 Margin="0,0,0,12"
                 Visibility="{Binding HasSelection, Converter={StaticResource BoolToVis}}">
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
                 <TextBlock Text="{Binding SelectedCountText}"
                            FontWeight="SemiBold" VerticalAlignment="Center"
-                           Foreground="{StaticResource ZBrushAccent}"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <controls:ZButton Content="{Binding [Store_UninstallSelected], Source={x:Static services:LanguageManager.Instance}}" Icon="{StaticResource IconTrash}"
-                                      Command="{Binding UninstallCommand}"/>
-                </StackPanel>
+                           Foreground="{StaticResource ZBrushAccent}"
+                           TextTrimming="CharacterEllipsis" Margin="0,0,12,0"/>
+                <controls:ZButton Grid.Column="1"
+                                  Content="{Binding [Store_UninstallSelected], Source={x:Static services:LanguageManager.Instance}}"
+                                  Icon="{StaticResource StrokeIconTrash}"
+                                  Command="{Binding UninstallCommand}"/>
             </Grid>
         </Border>
 
@@ -69,12 +74,12 @@
             </ListBox>
 
             <!-- Empty state -->
-            <controls:ZEmptyState Icon="{StaticResource IconStore}"
+            <controls:ZEmptyState Icon="{StaticResource StrokeIconStore}"
                                   Title="{Binding [Store_EmptyTitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Subtitle="{Binding [Store_EmptySubtitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Visibility="{Binding ShowEmptyState, Converter={StaticResource BoolToVis}}"/>
 
-            <controls:ZEmptyState Icon="{StaticResource IconSearch}"
+            <controls:ZEmptyState Icon="{StaticResource StrokeIconSearch}"
                                   Title="{Binding [Store_NoResultsTitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Subtitle="{Binding [Store_NoResultsSubtitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Visibility="{Binding ShowNoResults, Converter={StaticResource BoolToVis}}"/>
@@ -83,7 +88,7 @@
             <Border Background="{StaticResource ZBrushBackground}"
                     Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}" Panel.ZIndex="10">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <controls:ZProgressRing RingSize="40"/>
+                    <controls:ZProgressRing RingSize="40" IsActive="{Binding IsLoading}"/>
                     <TextBlock Text="{Binding [Store_Scanning], Source={x:Static services:LanguageManager.Instance}}" Margin="0,14,0,0" HorizontalAlignment="Center"
                                Foreground="{StaticResource ZBrushGray}"/>
                 </StackPanel>

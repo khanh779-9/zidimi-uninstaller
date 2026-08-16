@@ -12,7 +12,14 @@ public class WindowsFeatureEntry : ObservableObject
     public bool IsEnabled
     {
         get => _isEnabled;
-        set => SetProperty(ref _isEnabled, value);
+        set
+        {
+            if (SetProperty(ref _isEnabled, value))
+            {
+                OnPropertyChanged(nameof(StatusText));
+                OnPropertyChanged(nameof(StatusBadgeVariant));
+            }
+        }
     }
 
     private bool _isOperating;

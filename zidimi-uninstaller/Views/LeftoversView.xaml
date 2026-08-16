@@ -7,7 +7,7 @@
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="950">
-    <Grid Margin="24,18,24,18">
+    <Grid Margin="24,20,24,18">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -15,65 +15,85 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Top Bar: Search, Stats Badges, Actions -->
-        <Grid Grid.Row="0" Margin="0,0,0,14">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+        <!-- Responsive toolbar: stats and actions no longer compete for one horizontal row. -->
+        <Border Grid.Row="0"
+                Background="{StaticResource ZBrushSurfaceMuted}"
+                BorderBrush="{StaticResource ZBrushBorder}"
+                BorderThickness="1"
+                CornerRadius="10"
+                Padding="12"
+                Margin="0,0,0,12">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <!-- Search box -->
-            <controls:ZSearchBox Grid.Column="0" Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Placeholder="{Binding [Leftovers_SearchPlaceholder], Source={x:Static services:LanguageManager.Instance}}"
-                                 Width="280"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-            <!-- Badges -->
-            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0,0,0">
-                <controls:ZBadge Content="{Binding TotalBadgeText}" Variant="Neutral" Margin="0,0,8,0"/>
-                <controls:ZBadge Content="{Binding SelectedBadgeText}" Variant="Accent"/>
-            </StackPanel>
+                    <controls:ZSearchBox Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Placeholder="{Binding [Leftovers_SearchPlaceholder], Source={x:Static services:LanguageManager.Instance}}"
+                                         MaxWidth="420"
+                                         HorizontalAlignment="Stretch"
+                                         Margin="0,0,12,0"/>
 
-            <!-- Action buttons -->
-            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                <controls:ZButton Content="{Binding [Leftovers_SelectAll], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Secondary" Command="{Binding SelectAllCommand}"
-                                  Margin="0,0,8,0" IsEnabled="{Binding CanOperate}"/>
-                <controls:ZButton Content="{Binding [Leftovers_SelectSafeOnly], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Secondary" Command="{Binding SelectSafeOnlyCommand}"
-                                  Margin="0,0,8,0" IsEnabled="{Binding CanOperate}"/>
-                <controls:ZButton Content="{Binding [Leftovers_ScanBtn], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Primary" Icon="{StaticResource IconSearch}"
-                                  Command="{Binding ScanCommand}"
-                                  Margin="0,0,8,0" IsEnabled="{Binding CanOperate}"/>
-                <controls:ZButton Content="{Binding [Leftovers_CleanBtn], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Danger" Icon="{StaticResource IconTrash}"
-                                  Command="{Binding CleanCommand}"
-                                  IsEnabled="{Binding CanOperate}"/>
-            </StackPanel>
-        </Grid>
+                    <WrapPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <controls:ZBadge Content="{Binding TotalBadgeText}" Variant="Neutral" Margin="0,0,8,0"/>
+                        <controls:ZBadge Content="{Binding SelectedBadgeText}" Variant="Accent"/>
+                    </WrapPanel>
+                </Grid>
 
-        <!-- Filter Pills Bar -->
-        <Border Grid.Row="1" Background="{StaticResource ZBrushWhite}" CornerRadius="10"
-                BorderBrush="{StaticResource ZBrushLightGray}" BorderThickness="1"
-                Padding="8,6" Margin="0,0,0,14">
+                <WrapPanel Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Left">
+                    <controls:ZButton Content="{Binding [Leftovers_SelectAll], Source={x:Static services:LanguageManager.Instance}}"
+                                      Variant="Secondary"
+                                      Icon="{StaticResource StrokeIconSelectAll}"
+                                      Command="{Binding SelectAllCommand}"
+                                      Margin="0,0,8,0"
+                                      IsEnabled="{Binding CanOperate}"/>
+                    <controls:ZButton Content="{Binding [Leftovers_SelectSafeOnly], Source={x:Static services:LanguageManager.Instance}}"
+                                      Variant="Secondary"
+                                      Icon="{StaticResource StrokeIconShield}"
+                                      Command="{Binding SelectSafeOnlyCommand}"
+                                      Margin="0,0,8,0"
+                                      IsEnabled="{Binding CanOperate}"/>
+                    <controls:ZButton Content="{Binding [Leftovers_ScanBtn], Source={x:Static services:LanguageManager.Instance}}"
+                                      Variant="Primary"
+                                      Icon="{StaticResource StrokeIconRescan}"
+                                      Command="{Binding ScanCommand}"
+                                      Margin="0,0,8,0"
+                                      IsEnabled="{Binding CanOperate}"/>
+                    <controls:ZButton Content="{Binding [Leftovers_CleanBtn], Source={x:Static services:LanguageManager.Instance}}"
+                                      Variant="Danger"
+                                      Icon="{StaticResource StrokeIconTrash}"
+                                      Command="{Binding CleanCommand}"
+                                      IsEnabled="{Binding CanOperate}"/>
+                </WrapPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1"
+                Background="{StaticResource ZBrushSurface}"
+                BorderBrush="{StaticResource ZBrushBorder}"
+                BorderThickness="1"
+                CornerRadius="10"
+                Padding="8,6"
+                Margin="0,0,0,12">
             <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <controls:ZButton Content="{Binding [Leftovers_FilterAll], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Secondary" Command="{Binding FilterCommand}" CommandParameter="All"
-                                  Margin="0,0,8,0"/>
+                                  Variant="Secondary" Command="{Binding FilterCommand}" CommandParameter="All" Margin="0,0,6,0"/>
                 <controls:ZButton Content="{Binding [Leftovers_FilterFolders], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Ghost" Command="{Binding FilterCommand}" CommandParameter="Folders"
-                                  Margin="0,0,8,0"/>
+                                  Variant="Ghost" Command="{Binding FilterCommand}" CommandParameter="Folders" Margin="0,0,6,0"/>
                 <controls:ZButton Content="{Binding [Leftovers_FilterRegistry], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Ghost" Command="{Binding FilterCommand}" CommandParameter="Registry"
-                                  Margin="0,0,8,0"/>
+                                  Variant="Ghost" Command="{Binding FilterCommand}" CommandParameter="Registry" Margin="0,0,6,0"/>
                 <controls:ZButton Content="{Binding [Leftovers_FilterShortcuts], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Ghost" Command="{Binding FilterCommand}" CommandParameter="Shortcuts"
-                                  Margin="0,0,8,0"/>
+                                  Variant="Ghost" Command="{Binding FilterCommand}" CommandParameter="Shortcuts"/>
             </WrapPanel>
         </Border>
 
-        <!-- Traces List -->
         <Grid Grid.Row="2">
             <ListBox ItemsSource="{Binding ItemsView}"
                      ItemContainerStyle="{StaticResource ZStartupListItemStyle}"
@@ -81,9 +101,12 @@
                      Background="Transparent">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border Background="{StaticResource ZBrushWhite}" CornerRadius="12"
-                                BorderBrush="{StaticResource ZBrushLightGray}" BorderThickness="1"
-                                Padding="14,10" Margin="0,3">
+                        <Border Background="{StaticResource ZBrushSurface}"
+                                CornerRadius="10"
+                                BorderBrush="{StaticResource ZBrushBorder}"
+                                BorderThickness="1"
+                                Padding="12,10"
+                                Margin="0,3">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -92,79 +115,90 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <!-- Selection Checkbox -->
                                 <controls:ZCheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                                    VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                                    VerticalAlignment="Center" Margin="0,0,10,0"/>
 
-                                <!-- Type Badge -->
-                                <controls:ZBadge Grid.Column="1" Content="{Binding TypeText}"
-                                                 Variant="Neutral" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                                <controls:ZBadge Grid.Column="1"
+                                                 Content="{Binding TypeText}"
+                                                 Variant="Neutral"
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,0,12,0"/>
 
-                                <!-- Name, Description & Path -->
-                                <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,0,16,0">
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="13.5"
-                                                   Foreground="{StaticResource ZBrushBlack}" TextTrimming="CharacterEllipsis"
-                                                   MaxWidth="360"/>
-                                        <TextBlock Text="{Binding Description}" FontSize="11.5" Foreground="{StaticResource ZBrushGray}"
-                                                   Margin="8,0,0,0" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <TextBlock Text="{Binding Path}" FontSize="11.5" Foreground="{StaticResource ZBrushGray}"
-                                               TextTrimming="CharacterEllipsis" Margin="0,3,0,0" ToolTip="{Binding Path}"/>
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,0,14,0">
+                                    <TextBlock Text="{Binding Name}"
+                                               FontWeight="SemiBold"
+                                               FontSize="13.5"
+                                               Foreground="{StaticResource ZBrushBlack}"
+                                               TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="{Binding Description}"
+                                               FontSize="11.5"
+                                               Foreground="{StaticResource ZBrushGray}"
+                                               TextTrimming="CharacterEllipsis"
+                                               Margin="0,2,0,0"/>
+                                    <TextBlock Text="{Binding Path}"
+                                               FontSize="11.5"
+                                               Foreground="{StaticResource ZBrushMidGray}"
+                                               TextTrimming="CharacterEllipsis"
+                                               Margin="0,2,0,0"
+                                               ToolTip="{Binding Path}"/>
                                 </StackPanel>
 
-                                <!-- Safety Badge -->
-                                <controls:ZBadge Grid.Column="3" Content="{Binding SafetyText}"
+                                <controls:ZBadge Grid.Column="3"
+                                                 Content="{Binding SafetyText}"
                                                  Variant="{Binding SafetyBadgeVariant}"
-                                                 VerticalAlignment="Center" Margin="0,0,14,0"/>
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,0,12,0"/>
 
-                                <!-- Size -->
-                                <TextBlock Grid.Column="4" Text="{Binding FormattedSize}" FontSize="12.5"
-                                           FontWeight="SemiBold" Foreground="{StaticResource ZBrushGray}"
-                                           VerticalAlignment="Center" Width="75" TextAlignment="Right" Margin="0,0,14,0"/>
+                                <TextBlock Grid.Column="4"
+                                           Text="{Binding FormattedSize}"
+                                           FontSize="12"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource ZBrushGray}"
+                                           VerticalAlignment="Center"
+                                           MinWidth="64"
+                                           TextAlignment="Right"
+                                           Margin="0,0,10,0"/>
 
-                                <!-- Open Item Button -->
-                                <controls:ZIconButton Grid.Column="5" Icon="{StaticResource IconLaunch}"
+                                <controls:ZIconButton Grid.Column="5"
+                                                      Icon="{StaticResource StrokeIconLaunch}"
                                                       Command="{Binding DataContext.OpenItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                       CommandParameter="{Binding}"
-                                                      ToolTip="{Binding [Leftovers_OpenItemTooltip], Source={x:Static services:LanguageManager.Instance}}"
-                                                      Margin="0,0,4,0"/>
+                                                      ToolTip="{Binding [Leftovers_OpenItemTooltip], Source={x:Static services:LanguageManager.Instance}}"/>
                             </Grid>
                         </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <!-- Empty State (Before Scan) -->
-            <controls:ZEmptyState Icon="{StaticResource IconTrash}"
+            <controls:ZEmptyState Icon="{StaticResource StrokeIconTrash}"
                                   Title="{Binding [Leftovers_EmptyTitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Subtitle="{Binding [Leftovers_EmptySubtitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Visibility="{Binding ShowEmptyState, Converter={StaticResource BoolToVis}}"/>
 
-            <!-- No Results State -->
-            <controls:ZEmptyState Icon="{StaticResource IconSearch}"
+            <controls:ZEmptyState Icon="{StaticResource StrokeIconSearch}"
                                   Title="{Binding [Leftovers_NoResultsTitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Subtitle="{Binding [Leftovers_NoResultsSubtitle], Source={x:Static services:LanguageManager.Instance}}"
                                   Visibility="{Binding ShowNoResults, Converter={StaticResource BoolToVis}}"/>
 
-            <!-- Loading overlay -->
             <Border Background="{StaticResource ZBrushBackground}"
-                    Visibility="{Binding IsScanning, Converter={StaticResource BoolToVis}}" Panel.ZIndex="10">
+                    Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}"
+                    Panel.ZIndex="10">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <controls:ZProgressRing RingSize="44"/>
-                    <TextBlock Text="{Binding StatusText}" Margin="0,18,0,0" HorizontalAlignment="Center"
-                               FontWeight="SemiBold" Foreground="{StaticResource ZBrushGray}"
+                    <controls:ZProgressRing RingSize="44" IsActive="{Binding IsBusy}"/>
+                    <TextBlock Text="{Binding StatusText}"
+                               Margin="0,16,0,0"
+                               HorizontalAlignment="Center"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource ZBrushGray}"
                                FontSize="13"/>
                 </StackPanel>
             </Border>
         </Grid>
 
-        <!-- Status bar -->
-        <TextBlock Grid.Row="3" Margin="6,10,6,0" FontSize="12" Foreground="{StaticResource ZBrushGray}">
-            <Run Text="{Binding StatusText, Mode=OneWay}"/>
-        </TextBlock>
+        <Border Grid.Row="3" BorderBrush="{StaticResource ZBrushBorder}" BorderThickness="0,1,0,0" Margin="0,10,0,0" Padding="4,9,4,0">
+            <TextBlock FontSize="12" Foreground="{StaticResource ZBrushGray}" Text="{Binding StatusText}" TextTrimming="CharacterEllipsis"/>
+        </Border>
     </Grid>
 </UserControl>

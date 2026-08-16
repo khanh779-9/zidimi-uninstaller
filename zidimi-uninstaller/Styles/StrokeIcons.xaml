@@ -1,0 +1,39 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- 24x24 line icons. These stay vector-based and scale cleanly at any DPI. -->
+    <Geometry x:Key="StrokeIconDashboard">M4,4 H10 V10 H4 Z M14,4 H20 V8 H14 Z M14,12 H20 V20 H14 Z M4,14 H10 V20 H4 Z</Geometry>
+    <Geometry x:Key="StrokeIconApps">M4,4 H8 V8 H4 Z M10,4 H14 V8 H10 Z M16,4 H20 V8 H16 Z M4,10 H8 V14 H4 Z M10,10 H14 V14 H10 Z M16,10 H20 V14 H16 Z M4,16 H8 V20 H4 Z M10,16 H14 V20 H10 Z M16,16 H20 V20 H16 Z</Geometry>
+    <Geometry x:Key="StrokeIconStore">M3,10 H21 M5,10 V20 H19 V10 M4,10 L6,4 H18 L20,10 M9,20 V14 H15 V20</Geometry>
+    <Geometry x:Key="StrokeIconFolder">M3,7 V5 H9 L11,7 H21 V20 H3 Z</Geometry>
+    <Geometry x:Key="StrokeIconShield">M12,3 L20,6 V11 C20,16 16.6,20.3 12,22 C7.4,20.3 4,16 4,11 V6 Z M8.5,12 L11,14.5 L15.5,9.5</Geometry>
+    <Geometry x:Key="StrokeIconStartup">M13,2 L5,13 H11 L10,22 L19,10 H13 Z</Geometry>
+    <Geometry x:Key="StrokeIconTrash">M4,7 H20 M9,3 H15 L17,7 M7,7 L8,21 H16 L17,7 M10,11 V17 M14,11 V17</Geometry>
+    <Geometry x:Key="StrokeIconSettings">M12,8 A4,4 0 1 1 12,16 A4,4 0 1 1 12,8 M12,2 V5 M12,19 V22 M2,12 H5 M19,12 H22 M5,5 L7.2,7.2 M16.8,16.8 L19,19 M19,5 L16.8,7.2 M7.2,16.8 L5,19</Geometry>
+
+    <!-- Action semantics -->
+    <Geometry x:Key="StrokeIconRefresh">M20,7 V12 H15 M20,12 C19.2,7.8 15.7,4.5 11.5,4.5 C7,4.5 3.5,8 3.5,12.5 M4,17 V12 H9 M4,12 C4.8,16.2 8.3,19.5 12.5,19.5 C17,19.5 20.5,16 20.5,11.5</Geometry>
+    <Geometry x:Key="StrokeIconRescan">M10.5,4 A6.5,6.5 0 1 1 10.5,17 A6.5,6.5 0 1 1 10.5,4 M15.2,15.2 L20.5,20.5 M18,4 V8 M16,6 H20</Geometry>
+    <Geometry x:Key="StrokeIconReload">M19,8 V4 M19,4 H15 M19,4 C16.9,2.7 14.4,2.1 12,2.4 C6.7,3.1 3,7.8 3.5,13 C4,18.2 8.5,22 13.7,21.5 C17.3,21.1 20.3,18.7 21.5,15.5</Geometry>
+    <Geometry x:Key="StrokeIconReloadAll">M6,7 C7.7,4.7 10.3,3.5 13,3.5 C15.6,3.5 18,4.7 19.5,6.7 M19.5,6.7 V3.5 M19.5,6.7 H16.3 M18,17 C16.3,19.3 13.7,20.5 11,20.5 C8.4,20.5 6,19.3 4.5,17.3 M4.5,17.3 V20.5 M4.5,17.3 H7.7 M8,9 H16 M8,12 H16 M8,15 H16</Geometry>
+    <Geometry x:Key="StrokeIconUpdate">M12,3 V15 M7.5,10.5 L12,15 L16.5,10.5 M4,20 H20 M4,17 V20 M20,17 V20</Geometry>
+    <Geometry x:Key="StrokeIconSelectAll">M5,6 H17 V18 H5 Z M8,12 L10.5,14.5 L15,9.5 M8,3 H20 V15</Geometry>
+
+    <Geometry x:Key="StrokeIconInfo">M12,3 A9,9 0 1 1 12,21 A9,9 0 1 1 12,3 M12,8 V8.01 M12,11 V16</Geometry>
+    <Geometry x:Key="StrokeIconClose">M6,6 L18,18 M18,6 L6,18</Geometry>
+    <Geometry x:Key="StrokeIconCheck">M5,12 L10,17 L19,7</Geometry>
+    <Geometry x:Key="StrokeIconSearch">M11,4 A7,7 0 1 1 11,18 A7,7 0 1 1 11,4 M16,16 L21,21</Geometry>
+    <Geometry x:Key="StrokeIconLaunch">M14,5 H19 V10 M19,5 L10,14 M19,13 V19 H5 V5 H11</Geometry>
+    <Geometry x:Key="StrokeIconExternal">M14,5 H19 V10 M19,5 L10,14 M19,13 V19 H5 V5 H11</Geometry>
+    <Geometry x:Key="StrokeIconRestart">M18.5,7.5 A8,8 0 1 0 20,14 M18.5,7.5 V3.5 M18.5,7.5 H14.5</Geometry>
+    <Geometry x:Key="StrokeIconWarning">M12,3 L22,20 H2 Z M12,9 V14 M12,17 V17.01</Geometry>
+    <Geometry x:Key="StrokeIconError">M12,3 A9,9 0 1 1 12,21 A9,9 0 1 1 12,3 M8.5,8.5 L15.5,15.5 M15.5,8.5 L8.5,15.5</Geometry>
+    <Geometry x:Key="StrokeIconGlobe">M12,3 A9,9 0 1 1 12,21 A9,9 0 1 1 12,3 M3.5,12 H20.5 M12,3 C15,6 16,9 16,12 C16,15 15,18 12,21 M12,3 C9,6 8,9 8,12 C8,15 9,18 12,21</Geometry>
+    <Geometry x:Key="StrokeIconMemory">M4,6 C4,4.3 7.6,3 12,3 C16.4,3 20,4.3 20,6 C20,7.7 16.4,9 12,9 C7.6,9 4,7.7 4,6 M4,6 V12 C4,13.7 7.6,15 12,15 C16.4,15 20,13.7 20,12 V6 M4,12 V18 C4,19.7 7.6,21 12,21 C16.4,21 20,19.7 20,18 V12</Geometry>
+    <Geometry x:Key="StrokeIconClock">M12,3 A9,9 0 1 1 12,21 A9,9 0 1 1 12,3 M12,7 V12 L15.5,14</Geometry>
+
+    <!-- Window chrome -->
+    <Geometry x:Key="StrokeIconMinimize">M6,12 H18</Geometry>
+    <Geometry x:Key="StrokeIconMaximize">M6,6 H18 V18 H6 Z</Geometry>
+    <Geometry x:Key="StrokeIconRestore">M8,8 H18 V18 H8 Z M6,16 V6 H16</Geometry>
+</ResourceDictionary>

@@ -8,7 +8,7 @@ namespace zidimi_uninstaller
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            LanguageManager.Instance.Initialize();
+            _ = LanguageManager.Instance;
         }
     }
 }

@@ -6,10 +6,20 @@
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+        <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
 
     <Style TargetType="{x:Type Control}">
         <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+    </Style>
+
+    <Style TargetType="{x:Type Image}">
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
 
     <Style TargetType="{x:Type ToolTip}">
@@ -31,8 +41,8 @@
 
     <!-- ScrollBar -->
     <Style TargetType="{x:Type ScrollBar}">
-        <Setter Property="Width" Value="10"/>
-        <Setter Property="MinWidth" Value="10"/>
+        <Setter Property="Width" Value="9"/>
+        <Setter Property="MinWidth" Value="9"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
@@ -47,7 +57,7 @@
                                 <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Opacity="0" Focusable="False"/>
                             </Track.IncreaseRepeatButton>
                             <Track.Thumb>
-                                <Thumb>
+                                <Thumb MinHeight="32">
                                     <Thumb.Template>
                                         <ControlTemplate TargetType="{x:Type Thumb}">
                                             <Border x:Name="ThumbBorder" CornerRadius="5" Background="{StaticResource ZBrushLighterGray}" Margin="2"/>
@@ -69,8 +79,8 @@
                         <Trigger Property="Orientation" Value="Horizontal">
                             <Setter Property="Width" Value="Auto"/>
                             <Setter Property="MinWidth" Value="0"/>
-                            <Setter Property="Height" Value="10"/>
-                            <Setter Property="MinHeight" Value="10"/>
+                            <Setter Property="Height" Value="9"/>
+                            <Setter Property="MinHeight" Value="9"/>
                             <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="False"/>
                             <Setter TargetName="PART_Track" Property="Orientation" Value="Horizontal"/>
                         </Trigger>
@@ -83,7 +93,7 @@
     <!-- TextBox -->
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{StaticResource ZBrushWhite}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ZBrushLightGray}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ZBrushBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Foreground" Value="{StaticResource ZBrushBlack}"/>
         <Setter Property="CaretBrush" Value="{StaticResource ZBrushAccent}"/>
@@ -127,7 +137,7 @@
     <!-- ContextMenu / MenuItem -->
     <Style TargetType="{x:Type ContextMenu}">
         <Setter Property="Background" Value="{StaticResource ZBrushWhite}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ZBrushLightGray}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ZBrushBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="4"/>
         <Setter Property="Effect">
@@ -221,7 +231,7 @@
     <!-- ComboBox -->
     <Style TargetType="{x:Type ComboBox}">
         <Setter Property="Background" Value="{StaticResource ZBrushWhite}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ZBrushLightGray}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ZBrushBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Foreground" Value="{StaticResource ZBrushBlack}"/>
         <Setter Property="Padding" Value="12,7,28,7"/>
@@ -259,7 +269,7 @@
                                Focusable="False"
                                StaysOpen="False">
                             <Border Background="{StaticResource ZBrushWhite}"
-                                    BorderBrush="{StaticResource ZBrushLightGray}"
+                                    BorderBrush="{StaticResource ZBrushBorder}"
                                     BorderThickness="1"
                                     CornerRadius="10"
                                     Margin="0,4,0,0"

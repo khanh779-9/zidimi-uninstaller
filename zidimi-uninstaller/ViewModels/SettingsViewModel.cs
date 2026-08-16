@@ -94,7 +94,7 @@ public class SettingsViewModel : ObservableObject
 
     public bool BypassUacViaTaskScheduler
     {
-        get => AppSettings.Instance.BypassUacViaTaskScheduler || TaskSchedulerService.IsTaskRegistered();
+        get => TaskSchedulerService.IsTaskRegistered();
         set
         {
             if (value)
@@ -113,10 +113,17 @@ public class SettingsViewModel : ObservableObject
             }
             else
             {
-                TaskSchedulerService.UnregisterTask();
-                AppSettings.Instance.BypassUacViaTaskScheduler = false;
-                AppSettings.Instance.Save();
-                AppServices.Toast.Show(LanguageManager.Instance["Toasts_TaskSchedulerRemoved"], ZToastType.Info);
+                var ok = TaskSchedulerService.UnregisterTask();
+                if (ok || !TaskSchedulerService.IsTaskRegistered())
+                {
+                    AppSettings.Instance.BypassUacViaTaskScheduler = false;
+                    AppSettings.Instance.Save();
+                    AppServices.Toast.Show(LanguageManager.Instance["Toasts_TaskSchedulerRemoved"], ZToastType.Info);
+                }
+                else
+                {
+                    AppServices.Toast.Show(LanguageManager.Instance["Toasts_TaskSchedulerFailed"], ZToastType.Error);
+                }
             }
             OnPropertyChanged();
         }
@@ -163,10 +170,13 @@ public class SettingsViewModel : ObservableObject
 
         CreateNoUacShortcutCommand = new RelayCommand(_ =>
         {
-            TaskSchedulerService.RegisterTask();
-            var success = TaskSchedulerService.CreateDesktopShortcut();
+            var taskReady = TaskSchedulerService.IsTaskRegistered() || TaskSchedulerService.RegisterTask();
+            var success = taskReady && TaskSchedulerService.CreateDesktopShortcut();
             if (success)
             {
+                AppSettings.Instance.BypassUacViaTaskScheduler = true;
+                AppSettings.Instance.Save();
+                OnPropertyChanged(nameof(BypassUacViaTaskScheduler));
                 AppServices.Toast.Show(LanguageManager.Instance["Toasts_ShortcutCreated"], ZToastType.Success);
             }
             else

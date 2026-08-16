@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace zidimi_uninstaller.Controls;
+
 public class ZNavButton : Button
 {
     static ZNavButton()
@@ -17,15 +18,6 @@ public class ZNavButton : Button
     {
         get => (Geometry?)GetValue(IconProperty);
         set => SetValue(IconProperty, value);
-    }
-
-    public static readonly DependencyProperty TextProperty =
-        DependencyProperty.Register(nameof(Text), typeof(string), typeof(ZNavButton), new PropertyMetadata(string.Empty));
-
-    public string Text
-    {
-        get => (string)GetValue(TextProperty);
-        set => SetValue(TextProperty, value);
     }
 
     public static readonly DependencyProperty IsActiveProperty =

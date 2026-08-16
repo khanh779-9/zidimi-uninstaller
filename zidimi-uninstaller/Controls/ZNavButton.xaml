@@ -1,71 +1,84 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
->
+                    xmlns:controls="clr-namespace:zidimi_uninstaller.Controls">
     <Style TargetType="{x:Type controls:ZNavButton}">
-        <Setter Property="Height" Value="42"/>
-        <Setter Property="Margin" Value="10,2"/>
-        <Setter Property="Foreground" Value="{StaticResource ZBrushLighterGray}"/>
+        <Setter Property="Height" Value="44"/>
+        <Setter Property="Margin" Value="0,2"/>
+        <Setter Property="Foreground" Value="{StaticResource ZBrushSidebarText}"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ZNavButton}">
-                    <Border x:Name="Bd" Background="Transparent" CornerRadius="9" Padding="14,0">
+                    <Border x:Name="Root"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            BorderThickness="1"
+                            CornerRadius="10"
+                            Padding="12,0">
                         <Grid>
-                            <!-- Active indicator bar aligned to left edge -->
-                            <Border x:Name="Indicator" Width="3.5" Height="18" CornerRadius="1.75"
-                                    Background="{StaticResource ZBrushAccent}" Visibility="Collapsed"
-                                    HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-8,0,0,0"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3"/>
+                                <ColumnDefinition Width="34"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                            <!-- Icon and Text shifted right, clear of indicator -->
-                            <Grid Margin="6,0,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Path Grid.Column="0" Data="{TemplateBinding Icon}" Fill="{TemplateBinding Foreground}" Stretch="Uniform"
-                                      Width="17" Height="17" Margin="0,0,12,0" VerticalAlignment="Center"/>
-                                <ContentPresenter Grid.Column="1" Content="{TemplateBinding Content}"
-                                                  VerticalAlignment="Center" RecognizesAccessKey="True"
-                                                  TextElement.Foreground="{TemplateBinding Foreground}"
-                                                  TextElement.FontWeight="{TemplateBinding FontWeight}"
-                                                  TextElement.FontSize="{TemplateBinding FontSize}"/>
-                            </Grid>
+                            <Border x:Name="Indicator"
+                                    Width="3" Height="20"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="{StaticResource ZBrushAccent}"
+                                    CornerRadius="2"
+                                    Visibility="Collapsed"/>
+
+                            <Path Grid.Column="1"
+                                  Data="{TemplateBinding Icon}"
+                                  Width="18" Height="18"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Fill="Transparent"
+                                  Stroke="{TemplateBinding Foreground}"
+                                  StrokeThickness="1.75"
+                                  StrokeLineJoin="Round"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"
+                                  Stretch="Uniform"/>
+
+                            <ContentPresenter Grid.Column="2"
+                                              Content="{TemplateBinding Content}"
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"
+                                              TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                              TextElement.FontSize="{TemplateBinding FontSize}"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsActive" Value="True"/>
-                                <Condition Property="IsMouseOver" Value="True"/>
-                            </MultiTrigger.Conditions>
-                            <MultiTrigger.Setters>
-                                <Setter TargetName="Bd" Property="Background" Value="#33EA0232"/>
-                                <Setter Property="Foreground" Value="White"/>
-                            </MultiTrigger.Setters>
-                        </MultiTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bd" Property="Background" Value="#26FFFFFF"/>
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource ZBrushSidebarHover}"/>
                             <Setter Property="Foreground" Value="White"/>
                         </Trigger>
                         <Trigger Property="IsActive" Value="True">
-                            <Setter TargetName="Bd" Property="Background" Value="#1FEA0232"/>
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource ZBrushSidebarActive}"/>
                             <Setter TargetName="Indicator" Property="Visibility" Value="Visible"/>
                             <Setter Property="Foreground" Value="White"/>
                         </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource ZBrushAccent}"/>
+                        </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Bd" Property="Background" Value="#33FFFFFF"/>
-                            <Setter Property="Foreground" Value="White"/>
+                            <Setter TargetName="Root" Property="Opacity" Value="0.82"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.45"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>
-

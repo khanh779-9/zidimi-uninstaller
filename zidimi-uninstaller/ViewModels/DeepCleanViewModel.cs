@@ -33,7 +33,11 @@ public class DeepCleanViewModel : ObservableObject
     public bool IsCleaning
     {
         get => _isCleaning;
-        set => SetProperty(ref _isCleaning, value);
+        set
+        {
+            if (SetProperty(ref _isCleaning, value))
+                OnPropertyChanged(nameof(CanClean));
+        }
     }
 
     private int _totalFound;
@@ -61,6 +65,7 @@ public class DeepCleanViewModel : ObservableObject
     public string HeaderTitle => string.Format(LanguageManager.T("DeepClean_Title", "Deep Clean: {0}"), AppName);
     public string FoundSummaryText => string.Format(LanguageManager.T("DeepClean_FoundStats", "Found {0} leftover items  ·  Size: {1}"), TotalFound, TotalSizeText);
     public string CleanButtonText => string.Format(LanguageManager.T("DeepClean_CleanSelected", "Clean {0} items"), SelectedCount);
+    public bool CanClean => SelectedCount > 0 && !IsCleaning;
 
     public RelayCommand SelectAllCommand { get; }
     public RelayCommand SelectSafeOnlyCommand { get; }
@@ -133,6 +138,7 @@ public class DeepCleanViewModel : ObservableObject
         OnPropertyChanged(nameof(HeaderTitle));
         OnPropertyChanged(nameof(FoundSummaryText));
         OnPropertyChanged(nameof(CleanButtonText));
+        OnPropertyChanged(nameof(CanClean));
     }
 
     private async Task CleanSelectedAsync()
@@ -142,15 +148,23 @@ public class DeepCleanViewModel : ObservableObject
         IsCleaning = true;
         try
         {
-            var (deletedCount, freedBytes) = await Task.Run(() =>
+            var (deletedCount, freedBytes, deletedItems) = await Task.Run(() =>
                 DeepCleanService.CleanLeftovers(Items, AppSettings.Instance.SendToRecycleBin));
+
+            foreach (var item in deletedItems)
+                Items.Remove(item);
+
+            UpdateStats();
 
             AppServices.Toast.Show(
                 string.Format(LanguageManager.T("Toasts_DeepCleanSuccess", "Deep Clean complete: removed {0} items, freed {1}."), deletedCount, ProcessTools.FormatBytes(freedBytes)),
-                ZToastType.Success);
+                deletedCount > 0 ? ZToastType.Success : ZToastType.Warning);
 
-            IsOpen = false;
-            CleanCompleted?.Invoke();
+            if (Items.Count == 0)
+                IsOpen = false;
+
+            if (deletedCount > 0)
+                CleanCompleted?.Invoke();
         }
         catch (Exception ex)
         {

@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace zidimi_uninstaller.Services;
 public static class ProcessTools
@@ -10,11 +11,20 @@ public static class ProcessTools
         if (string.IsNullOrWhiteSpace(command)) return (string.Empty, string.Empty);
         command = command.Trim();
 
-        if (command.StartsWith("\""))
+        if (command.StartsWith("\"", StringComparison.Ordinal))
         {
             var end = command.IndexOf('"', 1);
             if (end > 0)
-                return (command.Substring(1, end - 1), command[(end + 1)..].Trim());
+                return (command[1..end], command[(end + 1)..].Trim());
+        }
+
+        // Uninstall registrations are not always quoted even when the executable path contains spaces.
+        // Prefer an executable/script extension boundary before falling back to the first whitespace.
+        var executable = Regex.Match(command, @"^(.+?\.(?:exe|com|bat|cmd|msi))(?=\s|$)", RegexOptions.IgnoreCase);
+        if (executable.Success)
+        {
+            var file = executable.Groups[1].Value.Trim();
+            return (file, command[executable.Length..].Trim());
         }
 
         var idx = command.IndexOf(' ');
@@ -24,29 +34,62 @@ public static class ProcessTools
     {
         if (string.IsNullOrWhiteSpace(command)) return null;
         var (file, args) = SeparateArgsFromCommand(command);
+        if (string.IsNullOrWhiteSpace(file)) return null;
 
+        file = Environment.ExpandEnvironmentVariables(file.Trim());
         try
         {
+            var resolvedWorkingDirectory = workingDir;
+            if (string.IsNullOrWhiteSpace(resolvedWorkingDirectory))
+            {
+                try { resolvedWorkingDirectory = Path.GetDirectoryName(file); } catch { }
+            }
+
             var psi = new ProcessStartInfo
             {
                 FileName = file,
                 Arguments = args,
                 UseShellExecute = true,
-                WorkingDirectory = workingDir ?? Path.GetDirectoryName(file) ?? string.Empty
+                WorkingDirectory = resolvedWorkingDirectory ?? string.Empty
             };
             return Process.Start(psi);
         }
         catch
         {
-            // If splitting failed, try executing the raw command string
-            try
+            return null;
+        }
+    }
+    public static int? RunAndWait(string fileName, string arguments, int timeoutMs = 60_000)
+    {
+        try
+        {
+            var psi = new ProcessStartInfo
             {
-                return Process.Start(new ProcessStartInfo(command) { UseShellExecute = true });
-            }
-            catch
+                FileName = fileName,
+                Arguments = arguments,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using var process = Process.Start(psi);
+            if (process == null) return null;
+
+            if (!process.WaitForExit(timeoutMs))
             {
+                try
+                {
+                    process.Kill(entireProcessTree: true);
+                    process.WaitForExit(2_000);
+                }
+                catch { }
                 return null;
             }
+
+            return process.ExitCode;
+        }
+        catch
+        {
+            return null;
         }
     }
     public static string? RunAndReadOutput(string fileName, string arguments, int timeoutMs = 60_000)
@@ -71,10 +114,17 @@ public static class ProcessTools
             var stderr = p.StandardError.ReadToEndAsync();
             if (!p.WaitForExit(timeoutMs))
             {
-                try { p.Kill(); } catch { /* ignore */ }
+                try
+                {
+                    p.Kill(entireProcessTree: true);
+                    p.WaitForExit(2_000);
+                }
+                catch { }
             }
 
-            var output = stdout.Result + stderr.Result;
+            Task.WaitAll(new Task[] { stdout, stderr }, 2_000);
+            var output = (stdout.IsCompletedSuccessfully ? stdout.Result : string.Empty)
+                       + (stderr.IsCompletedSuccessfully ? stderr.Result : string.Empty);
             return string.IsNullOrWhiteSpace(output) ? null : output;
         }
         catch

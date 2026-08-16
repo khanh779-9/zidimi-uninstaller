@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
+using Microsoft.Win32;
 using zidimi_uninstaller.Services;
 
 namespace zidimi_uninstaller.Models;
@@ -19,6 +20,8 @@ public class StartupEntry : INotifyPropertyChanged
     public string Version { get; set; } = string.Empty;
     public bool IsMachine { get; set; }
     public bool IsFolderEntry { get; set; }
+    public RegistryView RegistryView { get; set; } = RegistryView.Default;
+    public RegistryValueKind RegistryValueKind { get; set; } = RegistryValueKind.String;
 
     public string ScopeText => IsMachine ? LanguageManager.T("Scope_Machine", "Machine") : LanguageManager.T("Scope_User", "User");
     public string LocationShort => Location.StartsWith("HKEY_LOCAL_MACHINE", StringComparison.OrdinalIgnoreCase) || Location.Contains("Common", StringComparison.OrdinalIgnoreCase) ? "HKLM" : "HKCU";

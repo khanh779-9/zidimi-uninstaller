@@ -12,7 +12,7 @@ public static class WindowsFeatureService
 
         try
         {
-            var output = ProcessTools.RunAndReadOutput("dism.exe", "/Online /Get-Features /Format:Table", timeoutMs: 35_000);
+            var output = ProcessTools.RunAndReadOutput("dism.exe", "/Online /English /Get-Features /Format:Table", timeoutMs: 35_000);
             if (string.IsNullOrWhiteSpace(output)) return list;
 
             var lines = output.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
@@ -94,7 +94,11 @@ public static class WindowsFeatureService
             using var proc = Process.Start(psi);
             if (proc != null)
             {
-                proc.WaitForExit(60_000);
+                if (!proc.WaitForExit(60_000))
+                {
+                    try { proc.Kill(entireProcessTree: true); } catch { }
+                    return false;
+                }
                 return proc.ExitCode == 0 || proc.ExitCode == 3010;
             }
         }

@@ -7,67 +7,86 @@
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="900">
-    <Grid Margin="28">
+    <Grid Margin="24,20,24,20">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Statistics cards -->
-        <StackPanel Grid.Row="0">
-            <UniformGrid Columns="4">
-                <controls:ZStatCard Margin="0,0,12,0"
-                                    Icon="{StaticResource IconApps}"
-                                    IconBrush="{StaticResource ZBrushAccent}"
-                                    Value="{Binding AppCount}"
-                                    Label="{Binding [Dashboard_AppCount], Source={x:Static services:LanguageManager.Instance}}"/>
-                <controls:ZStatCard Margin="0,0,12,0"
-                                    Icon="{StaticResource IconStore}"
-                                    IconBrush="{StaticResource ZBrushBrown}"
-                                    Value="{Binding StoreAppCount}"
-                                    Label="{Binding [Dashboard_StoreAppCount], Source={x:Static services:LanguageManager.Instance}}"/>
-                <controls:ZStatCard Margin="0,0,12,0"
-                                    Icon="{StaticResource IconStartup}"
-                                    IconBrush="{StaticResource ZBrushAccentLight}"
-                                    Value="{Binding StartupCount}"
-                                    Label="{Binding [Dashboard_StartupCount], Source={x:Static services:LanguageManager.Instance}}"/>
-                <controls:ZStatCard Icon="{StaticResource IconMemory}"
-                                    IconBrush="{StaticResource ZBrushDarkGray}"
-                                    Value="{Binding TotalSizeText}"
-                                    Label="{Binding [Dashboard_TotalSize], Source={x:Static services:LanguageManager.Instance}}"/>
-            </UniformGrid>
+        <!-- 2x2 keeps the cards readable even at the minimum window width. -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+            <controls:ZStatCard Grid.Row="0" Grid.Column="0" Margin="4"
+                                Icon="{StaticResource StrokeIconApps}"
+                                IconBrush="{StaticResource ZBrushAccent}"
+                                Value="{Binding AppCount}"
+                                Label="{Binding [Dashboard_AppCount], Source={x:Static services:LanguageManager.Instance}}"/>
+            <controls:ZStatCard Grid.Row="0" Grid.Column="1" Margin="4"
+                                Icon="{StaticResource StrokeIconStore}"
+                                IconBrush="{StaticResource ZBrushBrown}"
+                                Value="{Binding StoreAppCount}"
+                                Label="{Binding [Dashboard_StoreAppCount], Source={x:Static services:LanguageManager.Instance}}"/>
+            <controls:ZStatCard Grid.Row="0" Grid.Column="2" Margin="4"
+                                Icon="{StaticResource StrokeIconStartup}"
+                                IconBrush="{StaticResource ZBrushAccentLight}"
+                                Value="{Binding StartupCount}"
+                                Label="{Binding [Dashboard_StartupCount], Source={x:Static services:LanguageManager.Instance}}"/>
+            <controls:ZStatCard Grid.Row="0" Grid.Column="3" Margin="4"
+                                Icon="{StaticResource StrokeIconMemory}"
+                                IconBrush="{StaticResource ZBrushDarkGray}"
+                                Value="{Binding TotalSizeText}"
+                                Label="{Binding [Dashboard_TotalSize], Source={x:Static services:LanguageManager.Instance}}"/>
+        </Grid>
+
+        <Border Grid.Row="1"
+                Margin="0,16,0,0"
+                Padding="12"
+                Background="{StaticResource ZBrushSurfaceMuted}"
+                BorderBrush="{StaticResource ZBrushBorder}"
+                BorderThickness="1"
+                CornerRadius="10">
+            <WrapPanel Orientation="Horizontal">
                 <controls:ZButton Content="{Binding [Dashboard_Rescan], Source={x:Static services:LanguageManager.Instance}}"
-                                  Icon="{StaticResource IconRefresh}"
-                                  Command="{Binding RefreshCommand}"/>
+                                  Icon="{StaticResource StrokeIconRescan}"
+                                  Command="{Binding RescanCommand}"
+                                  Margin="0,0,8,0"/>
                 <controls:ZButton Content="{Binding [Dashboard_ReloadAll], Source={x:Static services:LanguageManager.Instance}}"
                                   Variant="Secondary"
-                                  Icon="{StaticResource IconRestart}"
-                                  Margin="10,0,0,0"
+                                  Icon="{StaticResource StrokeIconReloadAll}"
                                   Command="{Binding ReloadAllCommand}"/>
-            </StackPanel>
-        </StackPanel>
+            </WrapPanel>
+        </Border>
 
-        <!-- Recently installed -->
-        <controls:ZCard Grid.Row="1" Margin="0,24,0,0" Padding="20,16">
+        <controls:ZCard Grid.Row="2" Margin="0,16,0,0" Padding="18,16">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+
                 <controls:ZSectionHeader Title="{Binding [Dashboard_RecentInstalled], Source={x:Static services:LanguageManager.Instance}}"
                                          Subtitle="{Binding [Dashboard_RecentSubtitle], Source={x:Static services:LanguageManager.Instance}}"
-                                         Icon="{StaticResource IconClock}">
-                    <controls:ZBadge Content="{Binding RecentlyInstalled.Count, StringFormat={}{0} apps}" Variant="Accent"
-                                     HorizontalAlignment="Right"/>
+                                         Icon="{StaticResource StrokeIconClock}">
+                    <controls:ZBadge Content="{Binding RecentlyInstalled.Count}"
+                                     Variant="Accent" HorizontalAlignment="Right"/>
                 </controls:ZSectionHeader>
 
-                <ListBox Grid.Row="1" ItemsSource="{Binding RecentlyInstalled}"
+                <ListBox Grid.Row="1"
+                         ItemsSource="{Binding RecentlyInstalled}"
                          ItemContainerStyle="{StaticResource ZAppsListItemStyle}"
                          ScrollViewer.VerticalScrollBarVisibility="Auto"
                          Background="Transparent"
-                         Margin="0,12,0,0">
+                         Margin="0,10,0,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <controls:ZAppCard Icon="{Binding Icon}"
@@ -81,11 +100,16 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <Border Grid.Row="1" Background="{StaticResource ZBrushWhite}" CornerRadius="10"
-                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}" Panel.ZIndex="10">
+                <Border Grid.Row="1"
+                        Background="{StaticResource ZBrushSurface}"
+                        CornerRadius="10"
+                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
+                        Panel.ZIndex="10">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <controls:ZProgressRing RingSize="40"/>
-                        <TextBlock Text="{Binding [Dashboard_Scanning], Source={x:Static services:LanguageManager.Instance}}" Margin="0,14,0,0" HorizontalAlignment="Center"
+                        <controls:ZProgressRing RingSize="40" IsActive="{Binding IsLoading}"/>
+                        <TextBlock Text="{Binding [Dashboard_Scanning], Source={x:Static services:LanguageManager.Instance}}"
+                                   Margin="0,14,0,0"
+                                   HorizontalAlignment="Center"
                                    Foreground="{StaticResource ZBrushGray}"/>
                     </StackPanel>
                 </Border>

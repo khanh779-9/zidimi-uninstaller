@@ -60,13 +60,13 @@ public class WindowsFeaturesViewModel : ObservableObject
     private bool _showNoResults;
     public bool ShowNoResults { get => _showNoResults; set => SetProperty(ref _showNoResults, value); }
 
-    public AsyncRelayCommand RefreshCommand { get; }
+    public AsyncRelayCommand RescanCommand { get; }
     public RelayCommand RestartAsAdminCommand { get; }
 
     public WindowsFeaturesViewModel()
     {
         _itemsView = new ListCollectionView(Features) { Filter = Filter };
-        RefreshCommand = new AsyncRelayCommand(async _ => await LoadAsync());
+        RescanCommand = new AsyncRelayCommand(async _ => await LoadAsync());
         RestartAsAdminCommand = new RelayCommand(_ =>
         {
             try

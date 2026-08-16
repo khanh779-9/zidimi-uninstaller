@@ -25,74 +25,29 @@ public static class TaskSchedulerService
 
     public static bool IsTaskRegistered()
     {
-        try
-        {
-            var psi = new ProcessStartInfo
-            {
-                FileName = "schtasks.exe",
-                Arguments = $"/query /tn \"{TaskName}\"",
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
-            using var proc = Process.Start(psi);
-            proc?.WaitForExit(3000);
-            return proc?.ExitCode == 0;
-        }
-        catch
-        {
-            return false;
-        }
+        return ProcessTools.RunAndWait(
+            "schtasks.exe",
+            $"/query /tn \"{TaskName}\"",
+            3_000) == 0;
     }
 
     public static bool RegisterTask(string? executablePath = null)
     {
-        try
-        {
-            var exe = executablePath ?? Environment.ProcessPath ?? Assembly.GetEntryAssembly()?.Location;
-            if (string.IsNullOrWhiteSpace(exe) || !File.Exists(exe)) return false;
+        var exe = executablePath ?? Environment.ProcessPath ?? Assembly.GetEntryAssembly()?.Location;
+        if (string.IsNullOrWhiteSpace(exe) || !File.Exists(exe)) return false;
 
-            var psi = new ProcessStartInfo
-            {
-                FileName = "schtasks.exe",
-                Arguments = $"/create /tn \"{TaskName}\" /tr \"\\\"{exe}\\\"\" /rl HIGHEST /f /sc ONCE /st 00:00",
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
-            using var proc = Process.Start(psi);
-            proc?.WaitForExit(5000);
-            return proc?.ExitCode == 0;
-        }
-        catch
-        {
-            return false;
-        }
+        return ProcessTools.RunAndWait(
+            "schtasks.exe",
+            $"/create /tn \"{TaskName}\" /tr \"\\\"{exe}\\\"\" /rl HIGHEST /f /sc ONCE /st 00:00",
+            5_000) == 0;
     }
 
     public static bool UnregisterTask()
     {
-        try
-        {
-            var psi = new ProcessStartInfo
-            {
-                FileName = "schtasks.exe",
-                Arguments = $"/delete /tn \"{TaskName}\" /f",
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
-            using var proc = Process.Start(psi);
-            proc?.WaitForExit(5000);
-            return proc?.ExitCode == 0;
-        }
-        catch
-        {
-            return false;
-        }
+        return ProcessTools.RunAndWait(
+            "schtasks.exe",
+            $"/delete /tn \"{TaskName}\" /f",
+            5_000) == 0;
     }
 
     public static bool CreateDesktopShortcut()
@@ -129,22 +84,9 @@ public static class TaskSchedulerService
 
     public static bool RunElevatedViaTask()
     {
-        try
-        {
-            var psi = new ProcessStartInfo
-            {
-                FileName = "schtasks.exe",
-                Arguments = $"/run /tn \"{TaskName}\"",
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-            using var proc = Process.Start(psi);
-            proc?.WaitForExit(3000);
-            return proc?.ExitCode == 0;
-        }
-        catch
-        {
-            return false;
-        }
+        return ProcessTools.RunAndWait(
+            "schtasks.exe",
+            $"/run /tn \"{TaskName}\"",
+            3_000) == 0;
     }
 }

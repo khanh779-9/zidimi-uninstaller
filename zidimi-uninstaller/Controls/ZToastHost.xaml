@@ -12,11 +12,11 @@
                                   HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,18,18">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border x:Name="ToastCard" Background="{StaticResource ZBrushWhite}" CornerRadius="12"
-                                        BorderBrush="{StaticResource ZBrushLightGray}" BorderThickness="1"
+                                <Border x:Name="ToastCard" Background="{StaticResource ZBrushSurface}" CornerRadius="12"
+                                        BorderBrush="{StaticResource ZBrushBorderStrong}" BorderThickness="1"
                                         Margin="0,6" Padding="14,12" MinWidth="300" MaxWidth="400" HorizontalAlignment="Right">
                                     <Border.Effect>
-                                        <DropShadowEffect BlurRadius="18" ShadowDepth="2" Opacity="0.14" Color="#121012"/>
+                                        <DropShadowEffect BlurRadius="12" ShadowDepth="2" Opacity="0.10" Color="#121012"/>
                                     </Border.Effect>
                                     <Grid>
                                         <Grid.ColumnDefinitions>

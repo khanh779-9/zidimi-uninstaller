@@ -4,15 +4,36 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace zidimi_uninstaller.Controls;
+
 public class ZProgressRing : Control
 {
     static ZProgressRing()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(ZProgressRing), new FrameworkPropertyMetadata(typeof(ZProgressRing)));
+        DefaultStyleKeyProperty.OverrideMetadata(
+            typeof(ZProgressRing),
+            new FrameworkPropertyMetadata(typeof(ZProgressRing)));
     }
 
     public static readonly DependencyProperty RingSizeProperty =
         DependencyProperty.Register(nameof(RingSize), typeof(double), typeof(ZProgressRing), new PropertyMetadata(40.0));
+
+    public static readonly DependencyProperty IsActiveProperty =
+        DependencyProperty.Register(
+            nameof(IsActive),
+            typeof(bool),
+            typeof(ZProgressRing),
+            new PropertyMetadata(true, OnIsActiveChanged));
+
+    private FrameworkElement? _root;
+    private FrameworkElement? _indicator;
+    private RotateTransform? _rotate;
+    private DoubleAnimation? _animation;
+
+    public ZProgressRing()
+    {
+        Loaded += (_, _) => UpdateState();
+        Unloaded += (_, _) => StopAnimation();
+    }
 
     public double RingSize
     {
@@ -20,55 +41,69 @@ public class ZProgressRing : Control
         set => SetValue(RingSizeProperty, value);
     }
 
-    public static readonly DependencyProperty IsActiveProperty =
-        DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(ZProgressRing),
-            new PropertyMetadata(true, OnIsActiveChanged));
-
     public bool IsActive
     {
         get => (bool)GetValue(IsActiveProperty);
         set => SetValue(IsActiveProperty, value);
     }
 
-    private static void OnIsActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        if (d is ZProgressRing ring) ring.UpdateState();
-    }
-
-    private FrameworkElement? _root;
-    private RotateTransform? _rotate;
-    private DoubleAnimation? _animation;
-
     public override void OnApplyTemplate()
     {
+        StopAnimation();
         base.OnApplyTemplate();
+
         _root = GetTemplateChild("RingRoot") as FrameworkElement;
-        if (_root != null)
+        _indicator = GetTemplateChild("PART_Indicator") as FrameworkElement;
+
+        if (_indicator is not null)
         {
             _rotate = new RotateTransform();
-            _root.RenderTransform = _rotate;
-            _root.RenderTransformOrigin = new Point(0.5, 0.5);
+            _indicator.RenderTransform = _rotate;
+            _indicator.RenderTransformOrigin = new Point(0.5, 0.5);
         }
+
         UpdateState();
+    }
+
+    private static void OnIsActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is ZProgressRing ring)
+            ring.UpdateState();
     }
 
     private void UpdateState()
     {
-        if (_root == null || _rotate == null) return;
+        if (_root is null || _rotate is null)
+            return;
 
-        if (IsActive)
+        if (!IsActive || !IsLoaded)
         {
-            _animation ??= new DoubleAnimation(0, 360, TimeSpan.FromSeconds(1.1))
-            {
-                RepeatBehavior = RepeatBehavior.Forever
-            };
-            _rotate.BeginAnimation(RotateTransform.AngleProperty, _animation);
-            _root.Visibility = Visibility.Visible;
-        }
-        else
-        {
-            _rotate.BeginAnimation(RotateTransform.AngleProperty, null);
+            StopAnimation();
             _root.Visibility = Visibility.Collapsed;
+            return;
         }
+
+        _root.Visibility = Visibility.Visible;
+        _animation ??= new DoubleAnimation
+        {
+            From = 0,
+            To = 360,
+            Duration = TimeSpan.FromMilliseconds(900),
+            RepeatBehavior = RepeatBehavior.Forever
+        };
+
+        _rotate.BeginAnimation(
+            RotateTransform.AngleProperty,
+            _animation,
+            HandoffBehavior.SnapshotAndReplace);
+    }
+
+    private void StopAnimation()
+    {
+        if (_rotate is null)
+            return;
+
+        _rotate.BeginAnimation(RotateTransform.AngleProperty, null);
+        _rotate.Angle = 0;
     }
 }

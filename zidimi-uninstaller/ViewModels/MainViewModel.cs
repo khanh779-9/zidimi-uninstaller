@@ -6,8 +6,29 @@ using zidimi_uninstaller.Services;
 
 namespace zidimi_uninstaller.ViewModels;
 
-public class MainViewModel : ObservableObject
+public class MainViewModel : ObservableObject, IDisposable
 {
+    private sealed record NavigationDefinition(
+        string Key,
+        string NavTextKey,
+        string NavFallback,
+        string TitleKey,
+        string TitleFallback,
+        string SubtitleKey,
+        string SubtitleFallback,
+        string IconResourceKey,
+        object ViewModel);
+
+    private readonly IReadOnlyList<NavigationDefinition> _navigation;
+    private readonly IReadOnlyDictionary<string, NavigationDefinition> _navigationByKey;
+    private string _currentKey = "dashboard";
+    private object? _currentView;
+    private string _pageTitle = string.Empty;
+    private string _pageSubtitle = string.Empty;
+    private bool _isAboutModalOpen;
+    private readonly SemaphoreSlim _reloadGate = new(1, 1);
+    private Task? _initializationTask;
+
     public ObservableCollection<NavItem> NavItems { get; } = new();
 
     public DashboardViewModel Dashboard { get; }
@@ -20,41 +41,43 @@ public class MainViewModel : ObservableObject
     public DeepCleanViewModel DeepClean { get; }
     public LeftoversViewModel Leftovers { get; }
 
-    private object? _currentView;
     public object? CurrentView
     {
         get => _currentView;
-        set => SetProperty(ref _currentView, value);
+        private set => SetProperty(ref _currentView, value);
     }
 
-    private string _pageTitle = string.Empty;
-    public string PageTitle { get => _pageTitle; set => SetProperty(ref _pageTitle, value); }
+    public string PageTitle
+    {
+        get => _pageTitle;
+        private set => SetProperty(ref _pageTitle, value);
+    }
 
-    private string _pageSubtitle = string.Empty;
-    public string PageSubtitle { get => _pageSubtitle; set => SetProperty(ref _pageSubtitle, value); }
+    public string PageSubtitle
+    {
+        get => _pageSubtitle;
+        private set => SetProperty(ref _pageSubtitle, value);
+    }
 
-    public string AppVersion { get; }
-
-    private bool _isAboutModalOpen;
     public bool IsAboutModalOpen
     {
         get => _isAboutModalOpen;
         set => SetProperty(ref _isAboutModalOpen, value);
     }
 
+    public string AppVersion { get; }
+
     public RelayCommand NavigateCommand { get; }
-    public RelayCommand ReloadAllCommand { get; }
+    public AsyncRelayCommand ReloadAllCommand { get; }
     public RelayCommand OpenAboutCommand { get; }
     public RelayCommand CloseAboutCommand { get; }
     public RelayCommand OpenGitHubCommand { get; }
     public RelayCommand OpenReleasesCommand { get; }
     public RelayCommand OpenIssuesCommand { get; }
 
-    private readonly Dictionary<string, (string Title, string Subtitle)> _pages = new();
-
     public MainViewModel()
     {
-        AppVersion = (Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3)) ?? "1.2.1";
+        AppVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.3.0";
 
         Dashboard = new DashboardViewModel();
         Applications = new ApplicationsViewModel();
@@ -66,126 +89,192 @@ public class MainViewModel : ObservableObject
         DeepClean = new DeepCleanViewModel();
         Leftovers = new LeftoversViewModel();
 
-        NavigateCommand = new RelayCommand(p => Navigate(p as string ?? "dashboard"));
-        ReloadAllCommand = new RelayCommand(async _ => await ReloadAllAsync());
+        _navigation = CreateNavigationDefinitions();
+        _navigationByKey = _navigation.ToDictionary(item => item.Key, StringComparer.OrdinalIgnoreCase);
 
+        NavigateCommand = new RelayCommand(parameter => Navigate(parameter as string ?? "dashboard"));
+        ReloadAllCommand = new AsyncRelayCommand(async _ => await ReloadAllAsync());
         OpenAboutCommand = new RelayCommand(_ => IsAboutModalOpen = true);
         CloseAboutCommand = new RelayCommand(_ => IsAboutModalOpen = false);
         OpenGitHubCommand = new RelayCommand(_ => UninstallService.OpenUrl("https://github.com/khanh779-9/zidimi-uninstaller"));
         OpenReleasesCommand = new RelayCommand(_ => UninstallService.OpenUrl("https://github.com/khanh779-9/zidimi-uninstaller/releases"));
         OpenIssuesCommand = new RelayCommand(_ => UninstallService.OpenUrl("https://github.com/khanh779-9/zidimi-uninstaller/issues"));
 
-        RefreshNavItems();
-
-        Applications.ReloadRequested += () => _ = Dashboard.LoadAsync();
-        StoreApps.ReloadRequested += () => _ = Dashboard.LoadAsync();
+        Applications.ReloadRequested += RefreshDashboardSnapshot;
+        StoreApps.ReloadRequested += RefreshDashboardSnapshot;
         Settings.ReloadDataRequested += () => _ = ReloadAllAsync();
-        Dashboard.ReloadAllRequested += () => _ = ReloadAllAsync();
-
+        Dashboard.RescanRequested += ReloadDashboardAsync;
+        Dashboard.ReloadAllRequested += ReloadAllAsync;
         Applications.DeepCleanRequested += async app => await DeepClean.StartScanAsync(app);
         DeepClean.CleanCompleted += () => _ = ReloadAllAsync();
-
         LanguageManager.Instance.LanguageChanged += OnLanguageChanged;
 
-        Navigate("dashboard");
-    }
-
-    private string _currentKey = "dashboard";
-
-    private void OnLanguageChanged()
-    {
-        RefreshNavItems();
+        RefreshNavigationLabels();
         Navigate(_currentKey);
-    }
-
-    private void RefreshNavItems()
-    {
-        _pages["dashboard"] = (LanguageManager.T("Pages_DashboardTitle", "Dashboard"), LanguageManager.T("Pages_DashboardSubtitle", "Quick overview of installed applications"));
-        _pages["apps"] = (LanguageManager.T("Pages_AppsTitle", "Installed Applications"), LanguageManager.T("Pages_AppsSubtitle", "Manage and uninstall software"));
-        _pages["store"] = (LanguageManager.T("Pages_StoreTitle", "Microsoft Store Apps"), LanguageManager.T("Pages_StoreSubtitle", "Manage UWP/MSIX packages"));
-        _pages["packages"] = (LanguageManager.T("Pages_PackagesTitle", "WinGet Packages"), LanguageManager.T("Pages_PackagesSubtitle", "Manage modern software packages"));
-        _pages["features"] = (LanguageManager.T("Pages_FeaturesTitle", "Windows Features"), LanguageManager.T("Pages_FeaturesSubtitle", "Enable or disable optional features (DISM)"));
-        _pages["startup"] = (LanguageManager.T("Pages_StartupTitle", "Windows Startup"), LanguageManager.T("Pages_StartupSubtitle", "Manage auto-start programs"));
-        _pages["leftovers"] = (LanguageManager.T("Pages_LeftoversTitle", "Leftovers Cleaner"), LanguageManager.T("Pages_LeftoversSubtitle", "Scan and clean orphaned files, folders, and registry keys"));
-        _pages["settings"] = (LanguageManager.T("Pages_SettingsTitle", "Preferences"), LanguageManager.T("Pages_SettingsSubtitle", "Application behavior and configuration"));
-
-        if (NavItems.Count == 0)
-        {
-            NavItems.Add(new NavItem { Key = "dashboard", Title = LanguageManager.T("Sidebar_Dashboard", "Dashboard"), Icon = Geom("IconDashboard") });
-            NavItems.Add(new NavItem { Key = "apps", Title = LanguageManager.T("Sidebar_Applications", "Applications"), Icon = Geom("IconApps") });
-            NavItems.Add(new NavItem { Key = "store", Title = LanguageManager.T("Sidebar_StoreApps", "Store Apps"), Icon = Geom("IconStore") });
-            NavItems.Add(new NavItem { Key = "packages", Title = LanguageManager.T("Sidebar_Packages", "WinGet"), Icon = Geom("IconFolder") });
-            NavItems.Add(new NavItem { Key = "features", Title = LanguageManager.T("Sidebar_Features", "Features"), Icon = Geom("IconShield") });
-            NavItems.Add(new NavItem { Key = "startup", Title = LanguageManager.T("Sidebar_Startup", "Startup"), Icon = Geom("IconStartup") });
-            NavItems.Add(new NavItem { Key = "leftovers", Title = LanguageManager.T("Sidebar_Leftovers", "Trace Cleaner"), Icon = Geom("IconTrash") });
-            NavItems.Add(new NavItem { Key = "settings", Title = LanguageManager.T("Sidebar_Settings", "Settings"), Icon = Geom("IconSettings") });
-        }
-        else
-        {
-            foreach (var item in NavItems)
-            {
-                item.Title = item.Key switch
-                {
-                    "dashboard" => LanguageManager.T("Sidebar_Dashboard", "Dashboard"),
-                    "apps" => LanguageManager.T("Sidebar_Applications", "Applications"),
-                    "store" => LanguageManager.T("Sidebar_StoreApps", "Store Apps"),
-                    "packages" => LanguageManager.T("Sidebar_Packages", "WinGet"),
-                    "features" => LanguageManager.T("Sidebar_Features", "Features"),
-                    "startup" => LanguageManager.T("Sidebar_Startup", "Startup"),
-                    "leftovers" => LanguageManager.T("Sidebar_Leftovers", "Trace Cleaner"),
-                    "settings" => LanguageManager.T("Sidebar_Settings", "Settings"),
-                    _ => item.Title
-                };
-            }
-        }
     }
 
     public void Navigate(string key)
     {
-        _currentKey = key;
-        if (!_pages.TryGetValue(key, out var page)) return;
-        PageTitle = page.Title;
-        PageSubtitle = page.Subtitle;
+        if (!_navigationByKey.TryGetValue(key, out var destination))
+            return;
 
-        CurrentView = key switch
-        {
-            "dashboard" => Dashboard,
-            "apps" => Applications,
-            "store" => StoreApps,
-            "packages" => Packages,
-            "features" => WindowsFeatures,
-            "startup" => Startup,
-            "leftovers" => Leftovers,
-            "settings" => Settings,
-            _ => Dashboard
-        };
+        if (string.Equals(destination.Key, "apps", StringComparison.OrdinalIgnoreCase))
+            Applications.HideSystemComponents = AppSettings.Instance.HideSystemComponents;
 
-        foreach (var nav in NavItems)
-            nav.IsActive = nav.Key == key;
+        _currentKey = destination.Key;
+        PageTitle = LanguageManager.T(destination.TitleKey, destination.TitleFallback);
+        PageSubtitle = LanguageManager.T(destination.SubtitleKey, destination.SubtitleFallback);
+        CurrentView = destination.ViewModel;
+
+        foreach (var navItem in NavItems)
+            navItem.IsActive = string.Equals(navItem.Key, destination.Key, StringComparison.OrdinalIgnoreCase);
     }
 
-    public async Task InitializeAsync()
-    {
-        await Task.WhenAll(
-            Dashboard.LoadAsync(),
-            Applications.LoadAsync(),
-            StoreApps.LoadAsync(),
-            Packages.LoadAsync(),
-            WindowsFeatures.LoadAsync(),
-            Startup.LoadAsync());
-    }
+    public Task InitializeAsync() => _initializationTask ??= ReloadAllAsync();
 
     public async Task ReloadAllAsync()
     {
-        await Task.WhenAll(
-            Dashboard.LoadAsync(),
-            Applications.LoadAsync(),
-            StoreApps.LoadAsync(),
-            Packages.LoadAsync(),
-            WindowsFeatures.LoadAsync(),
-            Startup.LoadAsync());
+        if (!await _reloadGate.WaitAsync(0))
+            return;
+
+        try
+        {
+            await ReloadCoreAsync(loadAllModules: true);
+        }
+        finally
+        {
+            _reloadGate.Release();
+        }
     }
 
-    private static Geometry? Geom(string key)
-        => Application.Current.TryFindResource(key) as Geometry;
+    private async Task ReloadDashboardAsync()
+    {
+        if (!await _reloadGate.WaitAsync(0))
+            return;
+
+        try
+        {
+            await ReloadCoreAsync(loadAllModules: false);
+        }
+        finally
+        {
+            _reloadGate.Release();
+        }
+    }
+
+    public void Dispose()
+    {
+        LanguageManager.Instance.LanguageChanged -= OnLanguageChanged;
+        Applications.Dispose();
+        StoreApps.Dispose();
+        GC.SuppressFinalize(this);
+    }
+
+    private void OnLanguageChanged()
+    {
+        RefreshNavigationLabels();
+        Navigate(_currentKey);
+    }
+
+    private void RefreshNavigationLabels()
+    {
+        foreach (var definition in _navigation)
+        {
+            var title = LanguageManager.T(definition.NavTextKey, definition.NavFallback);
+            var existing = NavItems.FirstOrDefault(item => item.Key == definition.Key);
+
+            if (existing is not null)
+            {
+                existing.Title = title;
+                continue;
+            }
+
+            NavItems.Add(new NavItem
+            {
+                Key = definition.Key,
+                Title = title,
+                Icon = FindGeometry(definition.IconResourceKey)
+            });
+        }
+    }
+
+    private async Task ReloadCoreAsync(bool loadAllModules)
+    {
+        Applications.HideSystemComponents = AppSettings.Instance.HideSystemComponents;
+        Dashboard.IsLoading = true;
+
+        var applicationsTask = Applications.LoadAsync();
+        var storeAppsTask = StoreApps.LoadAsync();
+        var startupTask = Startup.LoadAsync();
+
+        var packagesTask = loadAllModules ? Packages.LoadAsync() : Task.CompletedTask;
+        var featuresTask = loadAllModules ? WindowsFeatures.LoadAsync() : Task.CompletedTask;
+
+        try
+        {
+            // Dashboard only depends on these three data sources. Show it as soon as they are ready
+            // instead of waiting for WinGet and DISM scans to finish.
+            await Task.WhenAll(applicationsTask, storeAppsTask, startupTask);
+            RefreshDashboardSnapshot();
+            Dashboard.IsLoading = false;
+
+            await Task.WhenAll(packagesTask, featuresTask);
+        }
+        finally
+        {
+            // Keep a best-effort snapshot even when one source fails internally.
+            RefreshDashboardSnapshot();
+            Dashboard.IsLoading = false;
+        }
+    }
+
+    private void RefreshDashboardSnapshot()
+        => Dashboard.UpdateFromLoadedData(Applications.Apps, StoreApps.Apps.Count, Startup.Entries.Count);
+
+    private IReadOnlyList<NavigationDefinition> CreateNavigationDefinitions() =>
+    [
+        new(
+            "dashboard", "Sidebar_Dashboard", "Dashboard",
+            "Pages_DashboardTitle", "Dashboard",
+            "Pages_DashboardSubtitle", "Quick overview of installed applications",
+            "StrokeIconDashboard", Dashboard),
+        new(
+            "apps", "Sidebar_Applications", "Applications",
+            "Pages_AppsTitle", "Installed Applications",
+            "Pages_AppsSubtitle", "Manage and uninstall software",
+            "StrokeIconApps", Applications),
+        new(
+            "store", "Sidebar_StoreApps", "Store Apps",
+            "Pages_StoreTitle", "Microsoft Store Apps",
+            "Pages_StoreSubtitle", "Manage UWP/MSIX packages",
+            "StrokeIconStore", StoreApps),
+        new(
+            "packages", "Sidebar_Packages", "WinGet",
+            "Pages_PackagesTitle", "WinGet Packages",
+            "Pages_PackagesSubtitle", "Manage modern software packages",
+            "StrokeIconFolder", Packages),
+        new(
+            "features", "Sidebar_Features", "Features",
+            "Pages_FeaturesTitle", "Windows Features",
+            "Pages_FeaturesSubtitle", "Enable or disable optional features (DISM)",
+            "StrokeIconShield", WindowsFeatures),
+        new(
+            "startup", "Sidebar_Startup", "Startup",
+            "Pages_StartupTitle", "Windows Startup",
+            "Pages_StartupSubtitle", "Manage auto-start programs",
+            "StrokeIconStartup", Startup),
+        new(
+            "leftovers", "Sidebar_Leftovers", "Trace Cleaner",
+            "Pages_LeftoversTitle", "Leftovers Cleaner",
+            "Pages_LeftoversSubtitle", "Scan and clean orphaned files, folders, and registry keys",
+            "StrokeIconTrash", Leftovers),
+        new(
+            "settings", "Sidebar_Settings", "Settings",
+            "Pages_SettingsTitle", "Preferences",
+            "Pages_SettingsSubtitle", "Application behavior and configuration",
+            "StrokeIconSettings", Settings)
+    ];
+
+    private static Geometry? FindGeometry(string resourceKey)
+        => Application.Current.TryFindResource(resourceKey) as Geometry;
 }

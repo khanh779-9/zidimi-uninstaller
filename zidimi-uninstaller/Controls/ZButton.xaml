@@ -2,21 +2,23 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:zidimi_uninstaller.Controls">
     <Style TargetType="{x:Type controls:ZButton}">
+        <Setter Property="MinHeight" Value="36"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Padding" Value="16,8"/>
+        <Setter Property="Padding" Value="14,8"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="{StaticResource ZBrushAccent}"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ZBrushAccent}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="CornerRadius" Value="8"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ZButton}">
-                    <Border x:Name="Bd"
+                    <Border x:Name="Root"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
@@ -26,12 +28,16 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Path x:Name="IconPath"
                                   Data="{TemplateBinding Icon}"
-                                  Fill="{TemplateBinding Foreground}"
+                                  Fill="Transparent"
+                                  Stroke="{TemplateBinding Foreground}"
+                                  StrokeThickness="1.75"
+                                  StrokeLineJoin="Round"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"
                                   Stretch="Uniform"
-                                  Width="14" Height="14"
+                                  Width="16" Height="16"
                                   Margin="0,0,8,0"
-                                  VerticalAlignment="Center"
-                                  Visibility="Visible"/>
+                                  VerticalAlignment="Center"/>
                             <ContentPresenter Content="{TemplateBinding Content}"
                                               VerticalAlignment="Center"
                                               HorizontalAlignment="Center"
@@ -39,103 +45,51 @@
                         </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <!-- Hide icon if null -->
                         <Trigger Property="Icon" Value="{x:Null}">
                             <Setter TargetName="IconPath" Property="Visibility" Value="Collapsed"/>
                         </Trigger>
-
-                        <!-- Primary Hover & Pressed -->
                         <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Variant" Value="Primary"/>
-                                <Condition Property="IsMouseOver" Value="True"/>
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource ZBrushAccentHover}"/>
+                            <MultiTrigger.Conditions><Condition Property="Variant" Value="Primary"/><Condition Property="IsMouseOver" Value="True"/></MultiTrigger.Conditions>
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource ZBrushAccentHover}"/>
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource ZBrushAccentHover}"/>
                         </MultiTrigger>
                         <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Variant" Value="Primary"/>
-                                <Condition Property="IsPressed" Value="True"/>
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource ZBrushAccentPressed}"/>
-                        </MultiTrigger>
-
-                        <!-- Secondary Hover & Pressed -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Variant" Value="Secondary"/>
-                                <Condition Property="IsMouseOver" Value="True"/>
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Bd" Property="Background" Value="#F2F2F2"/>
-                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ZBrushMidGray}"/>
+                            <MultiTrigger.Conditions><Condition Property="Variant" Value="Primary"/><Condition Property="IsPressed" Value="True"/></MultiTrigger.Conditions>
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource ZBrushAccentPressed}"/>
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource ZBrushAccentPressed}"/>
                         </MultiTrigger>
                         <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Variant" Value="Secondary"/>
-                                <Condition Property="IsPressed" Value="True"/>
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource ZBrushLightGray}"/>
+                            <MultiTrigger.Conditions><Condition Property="Variant" Value="Secondary"/><Condition Property="IsMouseOver" Value="True"/></MultiTrigger.Conditions>
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource ZBrushSurfaceMuted}"/>
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource ZBrushBorderStrong}"/>
                         </MultiTrigger>
-
-                        <!-- Ghost Hover & Pressed -->
                         <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Variant" Value="Ghost"/>
-                                <Condition Property="IsMouseOver" Value="True"/>
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource ZBrushAccentTint}"/>
+                            <MultiTrigger.Conditions><Condition Property="Variant" Value="Secondary"/><Condition Property="IsPressed" Value="True"/></MultiTrigger.Conditions>
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource ZBrushLightGray}"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions><Condition Property="Variant" Value="Ghost"/><Condition Property="IsMouseOver" Value="True"/></MultiTrigger.Conditions>
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource ZBrushAccentTint}"/>
                             <Setter Property="Foreground" Value="{StaticResource ZBrushAccent}"/>
                         </MultiTrigger>
                         <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Variant" Value="Ghost"/>
-                                <Condition Property="IsPressed" Value="True"/>
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource ZBrushAccentTintPressed}"/>
-                            <Setter Property="Foreground" Value="{StaticResource ZBrushAccent}"/>
+                            <MultiTrigger.Conditions><Condition Property="Variant" Value="Danger"/><Condition Property="IsMouseOver" Value="True"/></MultiTrigger.Conditions>
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource ZBrushBrownHover}"/>
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource ZBrushBrownHover}"/>
                         </MultiTrigger>
-
-                        <!-- Danger Hover & Pressed -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Variant" Value="Danger"/>
-                                <Condition Property="IsMouseOver" Value="True"/>
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource ZBrushBrownHover}"/>
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Variant" Value="Danger"/>
-                                <Condition Property="IsPressed" Value="True"/>
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource ZBrushAccentPressed}"/>
-                        </MultiTrigger>
-
-                        <!-- Disabled -->
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.45"/>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource ZBrushAccent}"/>
+                            <Setter TargetName="Root" Property="BorderThickness" Value="2"/>
                         </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.42"/></Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <Trigger Property="Variant" Value="Secondary">
-                <Setter Property="Background" Value="{StaticResource ZBrushWhite}"/>
-                <Setter Property="BorderBrush" Value="{StaticResource ZBrushLightGray}"/>
-                <Setter Property="Foreground" Value="{StaticResource ZBrushBlack}"/>
-            </Trigger>
-            <Trigger Property="Variant" Value="Ghost">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="Transparent"/>
-                <Setter Property="Foreground" Value="{StaticResource ZBrushBlack}"/>
-            </Trigger>
-            <Trigger Property="Variant" Value="Danger">
-                <Setter Property="Background" Value="{StaticResource ZBrushBrown}"/>
-                <Setter Property="BorderBrush" Value="Transparent"/>
-                <Setter Property="Foreground" Value="White"/>
-            </Trigger>
+            <Trigger Property="Variant" Value="Secondary"><Setter Property="Background" Value="{StaticResource ZBrushSurface}"/><Setter Property="BorderBrush" Value="{StaticResource ZBrushBorder}"/><Setter Property="Foreground" Value="{StaticResource ZBrushBlack}"/></Trigger>
+            <Trigger Property="Variant" Value="Ghost"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderBrush" Value="Transparent"/><Setter Property="Foreground" Value="{StaticResource ZBrushBlack}"/></Trigger>
+            <Trigger Property="Variant" Value="Danger"><Setter Property="Background" Value="{StaticResource ZBrushBrown}"/><Setter Property="BorderBrush" Value="{StaticResource ZBrushBrown}"/><Setter Property="Foreground" Value="White"/></Trigger>
         </Style.Triggers>
     </Style>
-
 </ResourceDictionary>

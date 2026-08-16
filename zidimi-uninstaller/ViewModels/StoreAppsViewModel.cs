@@ -7,7 +7,7 @@ using zidimi_uninstaller.Services;
 
 namespace zidimi_uninstaller.ViewModels;
 
-public class StoreAppsViewModel : ObservableObject
+public class StoreAppsViewModel : ObservableObject, IDisposable
 {
     public ObservableCollection<StoreAppEntry> Apps { get; } = new();
 
@@ -60,7 +60,7 @@ public class StoreAppsViewModel : ObservableObject
         set => SetProperty(ref _selectedApp, value);
     }
 
-    public AsyncRelayCommand RefreshCommand { get; }
+    public AsyncRelayCommand RescanCommand { get; }
     public AsyncRelayCommand UninstallCommand { get; }
 
     public event Action? ReloadRequested;
@@ -69,7 +69,7 @@ public class StoreAppsViewModel : ObservableObject
     {
         _itemsView = new ListCollectionView(Apps) { Filter = Filter };
 
-        RefreshCommand = new AsyncRelayCommand(async _ => await LoadAsync());
+        RescanCommand = new AsyncRelayCommand(async _ => await LoadAsync());
         UninstallCommand = new AsyncRelayCommand(async p => await UninstallAsync(p));
     }
 
@@ -80,8 +80,14 @@ public class StoreAppsViewModel : ObservableObject
         try
         {
             var list = await Task.Run(() => StoreAppService.GetStoreApps());
+            DetachEntries();
             Apps.Clear();
-            foreach (var entry in list) Apps.Add(entry);
+            foreach (var entry in list)
+            {
+                entry.PropertyChanged += OnEntryPropertyChanged;
+                Apps.Add(entry);
+            }
+            SelectedApp = null;
             StatusText = string.Format(LanguageManager.T("Status_StoreAppsCount", "{0} Store apps"), Apps.Count);
         }
         catch
@@ -102,6 +108,18 @@ public class StoreAppsViewModel : ObservableObject
         var q = SearchText.Trim();
         return entry.DisplayName.Contains(q, StringComparison.OrdinalIgnoreCase)
             || entry.Publisher.Contains(q, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private void OnEntryPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(StoreAppEntry.IsSelected))
+            UpdateCounts();
+    }
+
+    private void DetachEntries()
+    {
+        foreach (var entry in Apps)
+            entry.PropertyChanged -= OnEntryPropertyChanged;
     }
 
     private void UpdateCounts()
@@ -139,8 +157,11 @@ public class StoreAppsViewModel : ObservableObject
             : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiMsg", "Are you sure you want to uninstall {0} selected applications?"), targets.Count);
         var btn = LanguageManager.T("Dialogs_ConfirmBtn", "Uninstall");
 
-        var ok = await AppServices.Dialog.ConfirmAsync(title, msg, btn);
-        if (!ok) return;
+        if (AppSettings.Instance.ConfirmBeforeUninstall)
+        {
+            var ok = await AppServices.Dialog.ConfirmAsync(title, msg, btn);
+            if (!ok) return;
+        }
 
         int removed = 0;
         foreach (var entry in targets)
@@ -151,7 +172,10 @@ public class StoreAppsViewModel : ObservableObject
 
             if (success)
             {
+                entry.PropertyChanged -= OnEntryPropertyChanged;
                 Apps.Remove(entry);
+                if (ReferenceEquals(SelectedApp, entry))
+                    SelectedApp = null;
                 removed++;
             }
             else
@@ -166,5 +190,11 @@ public class StoreAppsViewModel : ObservableObject
             UpdateCounts();
             ReloadRequested?.Invoke();
         }
+    }
+
+    public void Dispose()
+    {
+        DetachEntries();
+        GC.SuppressFinalize(this);
     }
 }

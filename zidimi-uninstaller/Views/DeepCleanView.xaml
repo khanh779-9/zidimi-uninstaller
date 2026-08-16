@@ -8,10 +8,10 @@
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800">
-    <Border Background="{StaticResource ZBrushWhite}" CornerRadius="16" BorderBrush="{StaticResource ZBrushLightGray}"
+    <Border Background="{StaticResource ZBrushWhite}" CornerRadius="16" BorderBrush="{StaticResource ZBrushBorder}"
             BorderThickness="1" Padding="24" MaxWidth="760" MaxHeight="600">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="28" ShadowDepth="6" Opacity="0.2" Color="#000000"/>
+            <DropShadowEffect BlurRadius="16" ShadowDepth="3" Opacity="0.14" Color="#000000"/>
         </Border.Effect>
         <Grid>
             <Grid.RowDefinitions>
@@ -29,7 +29,9 @@
                 </Grid.ColumnDefinitions>
 
                 <Border Width="44" Height="44" CornerRadius="12" Background="{StaticResource ZBrushAccentTint}" VerticalAlignment="Center">
-                    <Path Data="{StaticResource IconTrash}" Fill="{StaticResource ZBrushAccent}" Stretch="Uniform" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Path Data="{StaticResource StrokeIconTrash}" Fill="Transparent" Stroke="{StaticResource ZBrushAccent}"
+                          StrokeThickness="1.8" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                          Stretch="Uniform" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
 
                 <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
@@ -37,7 +39,7 @@
                     <TextBlock Text="{Binding FoundSummaryText}" FontSize="13" Foreground="{StaticResource ZBrushGray}" Margin="0,3,0,0"/>
                 </StackPanel>
 
-                <controls:ZIconButton Grid.Column="2" Icon="{StaticResource IconClose}"
+                <controls:ZIconButton Grid.Column="2" Icon="{StaticResource StrokeIconClose}"
                                       Command="{Binding CloseCommand}"
                                       ToolTip="{Binding [DeepClean_Skip], Source={x:Static services:LanguageManager.Instance}}"/>
             </Grid>
@@ -67,7 +69,7 @@
                                                        Foreground="{StaticResource ZBrushBlack}"/>
                                             <TextBlock Text="{Binding FormattedSize, StringFormat=' ({0})'}"
                                                        FontSize="12" Foreground="{StaticResource ZBrushGray}"
-                                                       Visibility="{Binding FormattedSize, Converter={StaticResource NullEmptyToVis}, ConverterParameter=False}"/>
+                                                       Visibility="{Binding FormattedSize, Converter={StaticResource NotNullToVis}}"/>
                                         </StackPanel>
                                         <TextBlock Text="{Binding Path}" FontSize="11" Foreground="{StaticResource ZBrushMidGray}"
                                                    Margin="0,2,0,0" TextTrimming="CharacterEllipsis"
@@ -87,33 +89,58 @@
                 </ListBox>
             </Border>
 
-            <!-- Footer Toolbar -->
+            <!-- Footer actions wrap instead of competing for the same grid cell. -->
             <Grid Grid.Row="2">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <controls:ZButton Content="{Binding [DeepClean_SelectAll], Source={x:Static services:LanguageManager.Instance}}" Variant="Ghost"
-                                      Command="{Binding SelectAllCommand}"
-                                      Margin="0,0,8,0"/>
-                    <controls:ZButton Content="{Binding [DeepClean_SelectSafeOnly], Source={x:Static services:LanguageManager.Instance}}" Variant="Ghost"
-                                      Command="{Binding SelectSafeOnlyCommand}"/>
-                </StackPanel>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <controls:ZButton Content="{Binding [DeepClean_Skip], Source={x:Static services:LanguageManager.Instance}}" Variant="Secondary"
+                <WrapPanel>
+                    <controls:ZButton Content="{Binding [DeepClean_SelectAll], Source={x:Static services:LanguageManager.Instance}}"
+                                      Variant="Ghost"
+                                      Command="{Binding SelectAllCommand}"
+                                      Margin="0,0,8,6"/>
+                    <controls:ZButton Content="{Binding [DeepClean_SelectSafeOnly], Source={x:Static services:LanguageManager.Instance}}"
+                                      Variant="Ghost"
+                                      Command="{Binding SelectSafeOnlyCommand}"
+                                      Margin="0,0,0,6"/>
+                </WrapPanel>
+
+                <WrapPanel Grid.Row="1" Margin="0,6,0,0" HorizontalAlignment="Right">
+                    <controls:ZButton Content="{Binding [DeepClean_Skip], Source={x:Static services:LanguageManager.Instance}}"
+                                      Variant="Secondary"
                                       Command="{Binding CloseCommand}"
                                       Margin="0,0,10,0"/>
                     <controls:ZButton Content="{Binding CleanButtonText}"
                                       Variant="Danger"
-                                      Icon="{StaticResource IconTrash}"
+                                      Icon="{StaticResource StrokeIconTrash}"
                                       Command="{Binding CleanCommand}"
-                                      IsEnabled="{Binding SelectedCount, Converter={StaticResource IntToVis}}"/>
-                </StackPanel>
+                                      IsEnabled="{Binding CanClean}"/>
+                </WrapPanel>
             </Grid>
+
+            <!-- Scan overlay is shown immediately when Deep Clean opens. -->
+            <Border Grid.Row="0" Grid.RowSpan="3"
+                    Background="#F2FFFFFF"
+                    CornerRadius="16"
+                    Visibility="{Binding IsScanning, Converter={StaticResource BoolToVis}}"
+                    Panel.ZIndex="20">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <controls:ZProgressRing RingSize="44" IsActive="{Binding IsScanning}"/>
+                    <TextBlock Text="{Binding [DeepClean_ScanningProgress], Source={x:Static services:LanguageManager.Instance}}"
+                               Margin="0,16,0,0"
+                               Foreground="{StaticResource ZBrushGray}"
+                               FontWeight="SemiBold"/>
+                </StackPanel>
+            </Border>
 
             <!-- Cleaning Progress Overlay -->
             <Border Grid.Row="0" Grid.RowSpan="3" Background="#D9FFFFFF" CornerRadius="16"
-                    Visibility="{Binding IsCleaning, Converter={StaticResource BoolToVis}}">
+                    Visibility="{Binding IsCleaning, Converter={StaticResource BoolToVis}}"
+                    Panel.ZIndex="21">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <controls:ZProgressRing RingSize="44"/>
+                    <controls:ZProgressRing RingSize="44" IsActive="{Binding IsCleaning}"/>
                     <TextBlock Text="{Binding [DeepClean_CleaningProgress], Source={x:Static services:LanguageManager.Instance}}" Margin="0,16,0,0"
                                Foreground="{StaticResource ZBrushGray}" FontWeight="SemiBold"/>
                 </StackPanel>

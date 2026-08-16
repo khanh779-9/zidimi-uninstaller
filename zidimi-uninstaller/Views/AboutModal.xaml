@@ -7,12 +7,12 @@
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
              d:DesignHeight="520" d:DesignWidth="680">
-    <Border Background="{StaticResource ZBrushWhite}" CornerRadius="18"
-            BorderBrush="{StaticResource ZBrushLightGray}" BorderThickness="1"
+    <Border Background="{StaticResource ZBrushSurface}" CornerRadius="18"
+            BorderBrush="{StaticResource ZBrushBorderStrong}" BorderThickness="1"
             Padding="30" Width="640" MaxWidth="680"
             HorizontalAlignment="Center" VerticalAlignment="Center">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="40" ShadowDepth="12" Opacity="0.25" Color="#000000"/>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="4" Opacity="0.18" Color="#000000"/>
         </Border.Effect>
 
         <StackPanel>
@@ -25,8 +25,8 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- App Icon Container -->
-                <Border Width="64" Height="64" CornerRadius="16" Background="{StaticResource ZBrushCard}"
-                        BorderBrush="{StaticResource ZBrushLightGray}" BorderThickness="1"
+                <Border Width="64" Height="64" CornerRadius="16" Background="{StaticResource ZBrushSurfaceMuted}"
+                        BorderBrush="{StaticResource ZBrushBorder}" BorderThickness="1"
                         VerticalAlignment="Center">
                     <Image Source="pack://application:,,,/zidimi-icon.ico" Width="44" Height="44"
                            Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
@@ -44,7 +44,7 @@
                 </StackPanel>
 
                 <!-- Close Icon Button -->
-                <controls:ZIconButton Grid.Column="2" Icon="{StaticResource IconClose}"
+                <controls:ZIconButton Grid.Column="2" Icon="{StaticResource StrokeIconClose}"
                                       Command="{Binding CloseAboutCommand}"
                                       ToolTip="{Binding [Apps_CloseTooltip], Source={x:Static services:LanguageManager.Instance}}"/>
             </Grid>
@@ -54,7 +54,7 @@
                        FontSize="13.5" LineHeight="20" Foreground="{StaticResource ZBrushGray}"
                        TextWrapping="Wrap" Margin="2,0,2,18"/>
 
-            <Separator Height="1" Background="{StaticResource ZBrushLightGray}" Margin="0,0,0,18"/>
+            <Separator Height="1" Background="{StaticResource ZBrushBorder}" Margin="0,0,0,18"/>
 
             <!-- Information Matrix Cards -->
             <UniformGrid Columns="2" Margin="0,0,0,20">
@@ -70,21 +70,26 @@
                 </StackPanel>
             </UniformGrid>
 
-            <Separator Height="1" Background="{StaticResource ZBrushLightGray}" Margin="0,0,0,20"/>
+            <Separator Height="1" Background="{StaticResource ZBrushBorder}" Margin="0,0,0,20"/>
 
             <!-- Footer Action Links & Close Button -->
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
                 <!-- External Links -->
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <controls:ZButton Content="GitHub" Variant="Ghost" Icon="{StaticResource IconLaunch}"
+                <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,12,0">
+                    <controls:ZButton Content="GitHub" Variant="Ghost" Icon="{StaticResource StrokeIconLaunch}"
                                       Command="{Binding OpenGitHubCommand}" Margin="0,0,6,0"/>
                     <controls:ZButton Content="{Binding [About_ReleasesBtn], Source={x:Static services:LanguageManager.Instance}}"
-                                      Variant="Ghost" Icon="{StaticResource IconUpdate}"
+                                      Variant="Ghost" Icon="{StaticResource StrokeIconExternal}"
                                       Command="{Binding OpenReleasesCommand}" Margin="0,0,6,0"/>
                     <controls:ZButton Content="{Binding [About_IssuesBtn], Source={x:Static services:LanguageManager.Instance}}"
-                                      Variant="Ghost" Icon="{StaticResource IconWarning}"
+                                      Variant="Ghost" Icon="{StaticResource StrokeIconWarning}"
                                       Command="{Binding OpenIssuesCommand}"/>
-                </StackPanel>
+                </WrapPanel>
 
                 <!-- Close Button -->
                 <controls:ZButton Grid.Column="1" Content="{Binding [Apps_Close], Source={x:Static services:LanguageManager.Instance}}"
