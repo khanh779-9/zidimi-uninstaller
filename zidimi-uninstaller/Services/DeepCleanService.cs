@@ -166,7 +166,7 @@ public static class DeepCleanService
             {
                 foreach (var path in Directory.GetDirectories(root))
                 {
-                    if (IsProtectedFolder(path) || seenPaths.Contains(path)) continue;
+                    if (IsProtectedFolder(path) || IsZidimiOwnedDataPath(path) || seenPaths.Contains(path)) continue;
 
                     var dir = new DirectoryInfo(path);
                     var score = ScoreCandidateName(dir.Name, app, out var evidence);
@@ -237,7 +237,7 @@ public static class DeepCleanService
                 // Start Menu folders can contain multiple shortcuts. Only exact/high-confidence names are selected.
                 foreach (var path in Directory.GetDirectories(root))
                 {
-                    if (IsProtectedFolder(path) || seenPaths.Contains(path)) continue;
+                    if (IsProtectedFolder(path) || IsZidimiOwnedDataPath(path) || seenPaths.Contains(path)) continue;
                     var name = Path.GetFileName(path);
                     var score = ScoreCandidateName(name, app, out var evidence);
                     if (score < 82) continue;
@@ -324,17 +324,49 @@ public static class DeepCleanService
 
     public static (int DeletedCount, long FreedBytes, List<LeftoverItem> DeletedItems) CleanLeftovers(
         IEnumerable<LeftoverItem> items,
-        bool recycleBin = true)
+        bool recycleBin = true,
+        string? recoveryTitle = null,
+        string? applicationName = null,
+        bool createRecoveryPoint = true,
+        string operation = "Cleanup")
     {
+        var selectedItems = items
+            .Where(i => i.IsSelected)
+            .GroupBy(RecoveryVaultService.GetArtifactKey, StringComparer.OrdinalIgnoreCase)
+            .Select(group => group.OrderByDescending(item => item.ConfidenceScore).First())
+            .OrderBy(GetCleanupPriority)
+            .ThenByDescending(i => i.ConfidenceScore)
+            .ToList();
+
+        if (selectedItems.Count == 0)
+            return (0, 0, new List<LeftoverItem>());
+
+        RecoveryCaptureResult? recovery = null;
+        if (createRecoveryPoint && AppSettings.Instance.EnableRecoveryVault)
+        {
+            recovery = RecoveryVaultService.BeginRecoveryPoint(
+                selectedItems,
+                recoveryTitle ?? LanguageManager.T("RecoveryVault_DefaultTitle", "Protected cleanup"),
+                applicationName ?? string.Empty,
+                operation);
+
+            if (!recovery.IsComplete(selectedItems.Count))
+            {
+                var details = recovery.Errors.Count == 0
+                    ? LanguageManager.T("RecoveryVault_CaptureIncomplete", "Recovery Vault could not protect every selected item.")
+                    : string.Join("; ", recovery.Errors.Take(3));
+                RecoveryVaultService.AbandonRecoveryPoint(recovery.Entry.Id);
+                throw new InvalidOperationException(string.Format(
+                    LanguageManager.T("RecoveryVault_CleanupCancelled", "Cleanup was cancelled because Recovery Vault could not protect all selected items: {0}"),
+                    details));
+            }
+        }
+
         var deleted = 0;
         long freed = 0;
         var deletedItems = new List<LeftoverItem>();
 
-        foreach (var item in items
-                     .Where(i => i.IsSelected)
-                     .OrderBy(GetCleanupPriority)
-                     .ThenByDescending(i => i.ConfidenceScore)
-                     .ToList())
+        foreach (var item in selectedItems)
         {
             try
             {
@@ -365,6 +397,9 @@ public static class DeepCleanService
                 // Failed items remain visible so the user can retry or inspect them.
             }
         }
+
+        if (recovery != null)
+            RecoveryVaultService.FinalizeRecoveryPoint(recovery.Entry.Id, deletedItems);
 
         return (deleted, freed, deletedItems);
     }
@@ -398,7 +433,7 @@ public static class DeepCleanService
             {
                 foreach (var path in Directory.GetDirectories(root))
                 {
-                    if (IsProtectedFolder(path) || seenPaths.Contains(path)) continue;
+                    if (IsProtectedFolder(path) || IsZidimiOwnedDataPath(path) || seenPaths.Contains(path)) continue;
                     var dir = new DirectoryInfo(path);
                     if (IsKnownSystemOrVendorName(dir.Name)) continue;
                     if (MatchesAnyInstalledApp(dir.Name, activeNames)) continue;
@@ -598,6 +633,32 @@ public static class DeepCleanService
 
         evidence = "Weak textual similarity only";
         return 0;
+    }
+
+    private static bool IsZidimiOwnedDataPath(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path)) return false;
+        var candidates = new[]
+        {
+            InstallLogService.DataDirectory,
+            RecoveryVaultService.VaultDirectory
+        };
+
+        foreach (var candidate in candidates)
+        {
+            if (string.IsNullOrWhiteSpace(candidate)) continue;
+            try
+            {
+                var fullPath = Path.GetFullPath(path).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+                var fullCandidate = Path.GetFullPath(candidate).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+                if (fullPath.Equals(fullCandidate, StringComparison.OrdinalIgnoreCase)
+                    || fullCandidate.StartsWith(fullPath + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)
+                    || fullPath.StartsWith(fullCandidate + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            catch { }
+        }
+        return false;
     }
 
     private static HashSet<string> BuildActiveNames(IEnumerable<ApplicationEntry> apps)

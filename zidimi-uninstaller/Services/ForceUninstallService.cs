@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using zidimi_uninstaller.Models;
 
 namespace zidimi_uninstaller.Services;
@@ -17,23 +20,14 @@ public sealed class ForceUninstallResult
 }
 
 /// <summary>
-/// Force removal workflow for registered and direct-path targets.
-/// v1.5 owns process/file/folder/registry cleanup. Services, scheduled tasks,
-/// PATH and firewall artifacts are intentionally deferred to the v1.6 scanner.
+/// Transactional force-removal workflow for registered and direct-path targets.
+/// v2.0 protects every automatically removed artifact (including the ARP registration)
+/// with Recovery Vault before destructive cleanup begins.
 /// </summary>
 public static class ForceUninstallService
 {
     public static ForceUninstallResult Run(ApplicationEntry app, bool recycleBin, string? explicitTargetPath = null)
     {
-        var processesClosed = 0;
-        try
-        {
-            var processes = ProcessHunterService.FindRunningProcesses(app);
-            if (processes.Count > 0)
-                processesClosed = ProcessHunterService.TerminateProcesses(processes);
-        }
-        catch { }
-
         var candidates = DeepCleanService.ScanLeftovers(app);
         var installLocationShared = IsInstallLocationShared(app);
         AddExactInstallLocationCandidate(candidates, app.InstallLocation, installLocationShared);
@@ -50,9 +44,81 @@ public static class ForceUninstallService
         foreach (var item in candidates.Except(automatic))
             item.IsSelected = false;
 
-        var cleanup = DeepCleanService.CleanLeftovers(automatic, recycleBin);
-        var registrationRemoved = !RegistryService.IsApplicationRegistered(app) || RegistryService.RemoveEntry(app);
+        var wasRegistered = RegistryService.IsApplicationRegistered(app);
+        LeftoverItem? registrationBackupItem = null;
+        if (wasRegistered)
+        {
+            if (string.IsNullOrWhiteSpace(app.RegistryPath) && AppSettings.Instance.EnableRecoveryVault)
+                throw new InvalidOperationException(LanguageManager.T(
+                    "RecoveryVault_ForceRegistrationMissing",
+                    "Force Uninstall was cancelled because the application's uninstall registration cannot be backed up safely."));
+
+            if (!string.IsNullOrWhiteSpace(app.RegistryPath))
+            {
+                registrationBackupItem = new LeftoverItem
+                {
+                    Type = LeftoverType.RegistryKey,
+                    SafetyLevel = LeftoverSafetyLevel.Safe,
+                    Path = app.RegistryPath,
+                    Name = string.IsNullOrWhiteSpace(app.RegistryKeyName) ? app.DisplayName : app.RegistryKeyName,
+                    Description = "Add/Remove Programs registration",
+                    ConfidenceScore = 100,
+                    Evidence = "Exact uninstall registration for the force-uninstall target",
+                    IsSelected = true,
+                    Scope = app.RegistryPath.StartsWith("HKEY_LOCAL_MACHINE", StringComparison.OrdinalIgnoreCase) ? "Machine" : "User"
+                };
+            }
+        }
+
+        RecoveryCaptureResult? recovery = null;
+        var recoveryItems = automatic.ToList();
+        if (registrationBackupItem != null) recoveryItems.Add(registrationBackupItem);
+        recoveryItems = recoveryItems
+            .GroupBy(RecoveryVaultService.GetArtifactKey, StringComparer.OrdinalIgnoreCase)
+            .Select(group => group.First())
+            .ToList();
+        if (AppSettings.Instance.EnableRecoveryVault && recoveryItems.Count > 0)
+        {
+            recovery = RecoveryVaultService.BeginRecoveryPoint(
+                recoveryItems,
+                string.Format(LanguageManager.T("RecoveryVault_ForceTitle", "Force Uninstall · {0}"), app.DisplayName),
+                app.DisplayName,
+                "ForceUninstall");
+            if (!recovery.IsComplete(recoveryItems.Count))
+            {
+                var details = recovery.Errors.Count == 0
+                    ? LanguageManager.T("RecoveryVault_CaptureIncomplete", "Recovery Vault could not protect every selected item.")
+                    : string.Join("; ", recovery.Errors.Take(3));
+                RecoveryVaultService.AbandonRecoveryPoint(recovery.Entry.Id);
+                throw new InvalidOperationException(string.Format(
+                    LanguageManager.T("RecoveryVault_CleanupCancelled", "Cleanup was cancelled because Recovery Vault could not protect all selected items: {0}"),
+                    details));
+            }
+        }
+
+        var processesClosed = 0;
+        try
+        {
+            var processes = ProcessHunterService.FindRunningProcesses(app);
+            if (processes.Count > 0)
+                processesClosed = ProcessHunterService.TerminateProcesses(processes);
+        }
+        catch { }
+
+        var cleanup = DeepCleanService.CleanLeftovers(
+            automatic,
+            recycleBin,
+            createRecoveryPoint: false);
+        var registrationRemoved = !wasRegistered || RegistryService.RemoveEntry(app);
         var explicitTargetRemoved = IsPathGone(explicitTargetPath);
+
+        if (recovery != null)
+        {
+            var applied = cleanup.DeletedItems.ToList();
+            if (wasRegistered && registrationRemoved && registrationBackupItem != null)
+                applied.Add(registrationBackupItem);
+            RecoveryVaultService.FinalizeRecoveryPoint(recovery.Entry.Id, applied);
+        }
 
         return new ForceUninstallResult
         {
@@ -96,7 +162,13 @@ public static class ForceUninstallService
         }
 
         item.IsSelected = true;
-        var cleanup = DeepCleanService.CleanLeftovers(new[] { item }, recycleBin);
+        var cleanup = DeepCleanService.CleanLeftovers(
+            new[] { item },
+            recycleBin,
+            string.Format(LanguageManager.T("RecoveryVault_ForcePathTitle", "Force remove · {0}"), Path.GetFileName(targetPath.TrimEnd('\\', '/'))),
+            Path.GetFileName(targetPath.TrimEnd('\\', '/')),
+            createRecoveryPoint: true,
+            operation: "ForcePath");
 
         return new ForceUninstallResult
         {

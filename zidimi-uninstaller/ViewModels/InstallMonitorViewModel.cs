@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -24,6 +24,7 @@ public sealed class InstallMonitorViewModel : ObservableObject, IDisposable
     private InstallLogEntry? _selectedLog;
     private bool _isMonitoring;
     private bool _isPreparing;
+    private bool _isRollingBack;
     private string _statusText = string.Empty;
     private int _observedChangeCount;
     private string _installerPath = string.Empty;
@@ -54,6 +55,7 @@ public sealed class InstallMonitorViewModel : ObservableObject, IDisposable
             OnPropertyChanged(nameof(HasSelectedLog));
             OnPropertyChanged(nameof(SelectedArtifacts));
             OnPropertyChanged(nameof(CanScanSelectedLog));
+            OnPropertyChanged(nameof(CanRollbackSelectedLog));
             CommandManager.InvalidateRequerySuggested();
         }
     }
@@ -67,6 +69,7 @@ public sealed class InstallMonitorViewModel : ObservableObject, IDisposable
             OnPropertyChanged(nameof(IsIdle));
             OnPropertyChanged(nameof(CanFinishCapture));
             OnPropertyChanged(nameof(CanCancelCapture));
+            OnPropertyChanged(nameof(CanRollbackSelectedLog));
             OnPropertyChanged(nameof(CaptureStateText));
             CommandManager.InvalidateRequerySuggested();
         }
@@ -81,16 +84,32 @@ public sealed class InstallMonitorViewModel : ObservableObject, IDisposable
             OnPropertyChanged(nameof(IsIdle));
             OnPropertyChanged(nameof(CanFinishCapture));
             OnPropertyChanged(nameof(CanCancelCapture));
+            OnPropertyChanged(nameof(CanRollbackSelectedLog));
             CommandManager.InvalidateRequerySuggested();
         }
     }
 
-    public bool IsIdle => !IsMonitoring && !IsPreparing;
+    public bool IsRollingBack
+    {
+        get => _isRollingBack;
+        private set
+        {
+            if (!SetProperty(ref _isRollingBack, value)) return;
+            OnPropertyChanged(nameof(IsIdle));
+            OnPropertyChanged(nameof(CanRollbackSelectedLog));
+            CommandManager.InvalidateRequerySuggested();
+        }
+    }
+
+    public bool IsIdle => !IsMonitoring && !IsPreparing && !IsRollingBack;
     public bool CanFinishCapture => IsMonitoring && !IsPreparing;
     public bool CanCancelCapture => IsMonitoring && !IsPreparing;
     public bool HasSelectedLog => SelectedLog != null;
     public bool CanScanSelectedLog => SelectedLog?.ResolvedApplication == true
         && !SelectedLog.IsCurrentlyInstalled;
+    public bool CanRollbackSelectedLog => IsIdle
+        && SelectedLog?.ResolvedApplication == true
+        && (SelectedLog.CleanupEligibleCount > 0 || !string.IsNullOrWhiteSpace(SelectedLog.RegistryPath));
     public IReadOnlyList<InstallLogArtifact> SelectedArtifacts => SelectedLog == null
         ? Array.Empty<InstallLogArtifact>()
         : SelectedLog.Artifacts;
@@ -135,8 +154,10 @@ public sealed class InstallMonitorViewModel : ObservableObject, IDisposable
     public AsyncRelayCommand DeleteSelectedLogCommand { get; }
     public RelayCommand OpenLogFolderCommand { get; }
     public RelayCommand ScanSelectedLogCommand { get; }
+    public AsyncRelayCommand RollbackSelectedLogCommand { get; }
 
     public event Action<ApplicationEntry>? ScanLeftoversRequested;
+    public event Action? RollbackCompleted;
 
     public InstallMonitorViewModel()
     {
@@ -154,6 +175,7 @@ public sealed class InstallMonitorViewModel : ObservableObject, IDisposable
         DeleteSelectedLogCommand = new AsyncRelayCommand(async _ => await DeleteSelectedLogAsync(), _ => SelectedLog != null);
         OpenLogFolderCommand = new RelayCommand(_ => OpenLogFolder());
         ScanSelectedLogCommand = new RelayCommand(_ => ScanSelectedLog(), _ => CanScanSelectedLog);
+        RollbackSelectedLogCommand = new AsyncRelayCommand(async _ => await RollbackSelectedLogAsync(), _ => CanRollbackSelectedLog);
 
         LanguageManager.Instance.LanguageChanged += OnLanguageChanged;
         LoadLogs();
@@ -343,6 +365,85 @@ public sealed class InstallMonitorViewModel : ObservableObject, IDisposable
     {
         if (!CanScanSelectedLog || SelectedLog == null) return;
         ScanLeftoversRequested?.Invoke(SelectedLog.ToApplicationEntry());
+    }
+
+    private async Task RollbackSelectedLogAsync()
+    {
+        var selected = SelectedLog;
+        if (selected == null || !CanRollbackSelectedLog) return;
+        if (!AppSettings.Instance.EnableRecoveryVault)
+        {
+            AppServices.Toast.Show(
+                LanguageManager.T("InstallMonitor_RollbackNeedsVault", "Enable Recovery Vault in Settings before rolling back a logged installation."),
+                ZToastType.Warning);
+            return;
+        }
+
+        var ok = await AppServices.Dialog.ConfirmAsync(
+            LanguageManager.T("InstallMonitor_RollbackTitle", "Rollback logged installation"),
+            string.Format(
+                LanguageManager.T("InstallMonitor_RollbackMessage", "Rollback the high-confidence artifacts created by \"{0}\"? Recovery Vault will protect every item first. Artifacts recorded only as Modified are left untouched because older logs do not contain their complete before-image."),
+                selected.ApplicationName),
+            LanguageManager.T("InstallMonitor_Rollback", "Rollback"),
+            LanguageManager.T("Dialogs_CancelBtn", "Cancel"));
+        if (!ok) return;
+
+        IsRollingBack = true;
+        StatusText = LanguageManager.T("InstallMonitor_RollbackPreparing", "Preparing transactional installation rollback…");
+        try
+        {
+            var candidates = await Task.Run(() => InstallLogService.BuildRollbackCandidates(selected));
+            if (candidates.Count == 0)
+            {
+                AppServices.Toast.Show(
+                    LanguageManager.T("InstallMonitor_RollbackNothing", "No currently existing high-confidence created artifacts are available to roll back."),
+                    ZToastType.Warning);
+                return;
+            }
+
+            if (AppSettings.Instance.AutoKillProcesses)
+            {
+                try
+                {
+                    var processes = ProcessHunterService.FindRunningProcesses(selected.ToApplicationEntry());
+                    if (processes.Count > 0)
+                        ProcessHunterService.TerminateProcesses(processes);
+                }
+                catch { }
+            }
+
+            StatusText = string.Format(
+                LanguageManager.T("InstallMonitor_RollbackRunning", "Rolling back {0} protected artifact(s)…"),
+                candidates.Count);
+
+            var cleanup = await Task.Run(() => DeepCleanService.CleanLeftovers(
+                candidates,
+                AppSettings.Instance.SendToRecycleBin,
+                string.Format(LanguageManager.T("RecoveryVault_InstallRollbackTitle", "Installation rollback · {0}"), selected.ApplicationName),
+                selected.ApplicationName,
+                createRecoveryPoint: true,
+                operation: "InstallRollback"));
+
+            LoadLogs();
+            AppServices.Toast.Show(
+                string.Format(
+                    LanguageManager.T("InstallMonitor_RollbackSuccess", "Rollback removed {0} created artifact(s); {1} was protected in Recovery Vault."),
+                    cleanup.DeletedCount,
+                    ProcessTools.FormatBytes(cleanup.FreedBytes)),
+                cleanup.DeletedCount > 0 ? ZToastType.Success : ZToastType.Warning);
+            RollbackCompleted?.Invoke();
+        }
+        catch (Exception ex)
+        {
+            AppServices.Toast.Show(
+                string.Format(LanguageManager.T("InstallMonitor_RollbackFailed", "Installation rollback failed: {0}"), ex.Message),
+                ZToastType.Error);
+        }
+        finally
+        {
+            IsRollingBack = false;
+            SetIdleStatus();
+        }
     }
 
     private void ActivateMonitoringState(string installerPath)

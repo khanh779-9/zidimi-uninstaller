@@ -1187,6 +1187,8 @@ public static class WindowsArtifactService
         return first.Trim().Equals(second.Trim(), StringComparison.OrdinalIgnoreCase);
     }
 
+    public static void NotifyEnvironmentChanged() => BroadcastEnvironmentChanged();
+
     private static void BroadcastEnvironmentChanged()
     {
         try

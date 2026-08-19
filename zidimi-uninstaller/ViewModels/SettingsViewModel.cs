@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
@@ -87,6 +88,18 @@ public class SettingsViewModel : ObservableObject
         {
             if (AppSettings.Instance.SendToRecycleBin == value) return;
             AppSettings.Instance.SendToRecycleBin = value;
+            AppSettings.Instance.Save();
+            OnPropertyChanged();
+        }
+    }
+
+    public bool EnableRecoveryVault
+    {
+        get => AppSettings.Instance.EnableRecoveryVault;
+        set
+        {
+            if (AppSettings.Instance.EnableRecoveryVault == value) return;
+            AppSettings.Instance.EnableRecoveryVault = value;
             AppSettings.Instance.Save();
             OnPropertyChanged();
         }

@@ -49,6 +49,7 @@ public class MainViewModel : ObservableObject, IDisposable
     public InstallMonitorViewModel InstallMonitor { get; }
     public BrowserExtensionsViewModel BrowserExtensions { get; }
     public SoftwareHealthViewModel SoftwareHealth { get; }
+    public RecoveryVaultViewModel RecoveryVault { get; }
 
     public object? CurrentView
     {
@@ -86,7 +87,7 @@ public class MainViewModel : ObservableObject, IDisposable
 
     public MainViewModel()
     {
-        AppVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.8.0";
+        AppVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "2.0.0";
 
         Dashboard = new DashboardViewModel();
         Applications = new ApplicationsViewModel();
@@ -101,6 +102,7 @@ public class MainViewModel : ObservableObject, IDisposable
         InstallMonitor = new InstallMonitorViewModel();
         BrowserExtensions = new BrowserExtensionsViewModel();
         SoftwareHealth = new SoftwareHealthViewModel();
+        RecoveryVault = new RecoveryVaultViewModel();
 
         _navigation = CreateNavigationDefinitions();
         _navigationByKey = _navigation.ToDictionary(item => item.Key, StringComparer.OrdinalIgnoreCase);
@@ -114,7 +116,11 @@ public class MainViewModel : ObservableObject, IDisposable
         OpenIssuesCommand = new RelayCommand(_ => UninstallService.OpenUrl("https://github.com/khanh779-9/zidimi-uninstaller/issues"));
 
         Applications.ReloadRequested += RefreshDashboardSnapshot;
-        Applications.HistoryChanged += History.Load;
+        Applications.HistoryChanged += () =>
+        {
+            History.Load();
+            RecoveryVault.Load();
+        };
         StoreApps.ReloadRequested += RefreshDashboardSnapshot;
         Settings.ReloadDataRequested += () => _ = ReloadAllAsync();
         Dashboard.RescanRequested += ReloadDashboardAsync;
@@ -122,9 +128,19 @@ public class MainViewModel : ObservableObject, IDisposable
         Applications.DeepCleanRequested += async app => await DeepClean.StartScanAsync(app);
         History.ScanLeftoversRequested += async app => await DeepClean.StartScanAsync(app);
         InstallMonitor.ScanLeftoversRequested += async app => await DeepClean.StartScanAsync(app);
+        InstallMonitor.RollbackCompleted += () =>
+        {
+            RecoveryVault.Load();
+            _ = ReloadAllAsync();
+        };
         SoftwareHealth.RefreshRequested += ReloadAllAsync;
         SoftwareHealth.NavigateRequested += Navigate;
-        DeepClean.CleanCompleted += () => _ = ReloadAllAsync();
+        DeepClean.CleanCompleted += () =>
+        {
+            RecoveryVault.Load();
+            _ = ReloadAllAsync();
+        };
+        RecoveryVault.Restored += () => _ = ReloadAllAsync();
         LanguageManager.Instance.LanguageChanged += OnLanguageChanged;
 
         RefreshNavigationLabels();
@@ -140,6 +156,8 @@ public class MainViewModel : ObservableObject, IDisposable
             Applications.HideSystemComponents = AppSettings.Instance.HideSystemComponents;
         if (string.Equals(destination.Key, "health", StringComparison.OrdinalIgnoreCase))
             RefreshSoftwareHealthSnapshot();
+        if (string.Equals(destination.Key, "recovery", StringComparison.OrdinalIgnoreCase))
+            RecoveryVault.Load();
 
         _currentKey = destination.Key;
         PageTitle = LanguageManager.T(destination.TitleKey, destination.TitleFallback);
@@ -189,6 +207,7 @@ public class MainViewModel : ObservableObject, IDisposable
         StoreApps.Dispose();
         History.Dispose();
         InstallMonitor.Dispose();
+        RecoveryVault.Dispose();
         GC.SuppressFinalize(this);
     }
 
@@ -246,6 +265,7 @@ public class MainViewModel : ObservableObject, IDisposable
             if (loadAllModules)
             {
                 InstallMonitor.LoadLogs();
+                RecoveryVault.Load();
                 RefreshSoftwareHealthSnapshot();
             }
         }
@@ -321,6 +341,11 @@ public class MainViewModel : ObservableObject, IDisposable
             "Pages_LeftoversTitle", "Leftovers Cleaner",
             "Pages_LeftoversSubtitle", "Scan and clean orphaned files, folders, and registry keys",
             "StrokeIconTrash", Leftovers),
+        new(
+            "recovery", "Sidebar_RecoveryVault", "Recovery Vault",
+            "Pages_RecoveryVaultTitle", "Recovery Vault",
+            "Pages_RecoveryVaultSubtitle", "Restore protected cleanup transactions without overwriting newer data",
+            "StrokeIconRestore", RecoveryVault),
         new(
             "history", "Sidebar_History", "History",
             "Pages_HistoryTitle", "Uninstall History",

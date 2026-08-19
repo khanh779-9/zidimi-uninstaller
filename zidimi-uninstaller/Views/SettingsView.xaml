@@ -78,6 +78,10 @@
                     <controls:ZToggleRow Title="{Binding [Settings_RecycleBin], Source={x:Static services:LanguageManager.Instance}}"
                                          Subtitle="{Binding [Settings_RecycleBinDesc], Source={x:Static services:LanguageManager.Instance}}"
                                          IsOn="{Binding SendToRecycleBin, Mode=TwoWay}"/>
+                    <Separator Height="1" Background="{StaticResource ZBrushLightGray}" Margin="0,6"/>
+                    <controls:ZToggleRow Title="{Binding [Settings_RecoveryVault], Source={x:Static services:LanguageManager.Instance}}"
+                                         Subtitle="{Binding [Settings_RecoveryVaultDesc], Source={x:Static services:LanguageManager.Instance}}"
+                                         IsOn="{Binding EnableRecoveryVault, Mode=TwoWay}"/>
                 </StackPanel>
             </controls:ZCard>
 

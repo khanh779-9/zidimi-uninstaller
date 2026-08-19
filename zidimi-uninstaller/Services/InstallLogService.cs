@@ -128,6 +128,69 @@ public static class InstallLogService
         return result;
     }
 
+    public static List<LeftoverItem> BuildRollbackCandidates(InstallLogEntry log)
+    {
+        if (log == null || !log.ResolvedApplication) return new List<LeftoverItem>();
+
+        var result = new List<LeftoverItem>();
+        var currentWindows = WindowsArtifactService.CaptureInstallationSnapshot();
+        foreach (var artifact in log.Artifacts
+                     .Where(a => a.Change == InstallArtifactChange.Created)
+                     .Where(a => a.CleanupEligible && a.ConfidenceScore >= 95)
+                     .OrderByDescending(a => a.ConfidenceScore))
+        {
+            if (!StillExistsAndMatches(artifact, currentWindows)) continue;
+            var converted = ConvertToLeftover(artifact, log);
+            if (converted != null) result.Add(converted);
+        }
+
+        // The Add/Remove Programs registration is exact identity metadata. It is not a normal
+        // leftover while the app is installed, but an installation rollback must protect and
+        // remove it together with the created artifacts.
+        if (!string.IsNullOrWhiteSpace(log.RegistryPath)
+            && RegistryPathExists(log.RegistryPath)
+            && !result.Any(item => item.Type == LeftoverType.RegistryKey
+                && item.Path.Equals(log.RegistryPath, StringComparison.OrdinalIgnoreCase)))
+        {
+            result.Add(new LeftoverItem
+            {
+                Type = LeftoverType.RegistryKey,
+                SafetyLevel = LeftoverSafetyLevel.Safe,
+                Path = log.RegistryPath,
+                Name = string.IsNullOrWhiteSpace(log.RegistryKeyName) ? log.ApplicationName : log.RegistryKeyName,
+                Description = LanguageManager.T("InstallMonitor_RollbackRegistration", "Add/Remove Programs registration recorded by Install Monitor"),
+                ConfidenceScore = 100,
+                Evidence = LanguageManager.T("InstallMonitor_RollbackRegistrationEvidence", "Exact uninstall registration captured for this logged installation."),
+                IsSelected = true,
+                Scope = log.RegistryPath.StartsWith("HKEY_LOCAL_MACHINE", StringComparison.OrdinalIgnoreCase) ? "Machine" : "User"
+            });
+        }
+
+        // When a captured directory owns child paths in the same log, backing up/removing the
+        // directory is sufficient and avoids storing the same payload twice in Recovery Vault.
+        var directoryRoots = result
+            .Where(item => item.Type == LeftoverType.Directory)
+            .Select(item => NormalizePath(item.Path))
+            .Where(path => !string.IsNullOrWhiteSpace(path))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        result = result.Where(item =>
+        {
+            if (item.Type is not (LeftoverType.File or LeftoverType.Directory or LeftoverType.Shortcut)) return true;
+            var candidate = NormalizePath(item.Path);
+            if (string.IsNullOrWhiteSpace(candidate)) return true;
+            return !directoryRoots.Any(root =>
+                !root.Equals(candidate, StringComparison.OrdinalIgnoreCase)
+                && candidate.StartsWith(root + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase));
+        }).ToList();
+
+        return result
+            .GroupBy(item => $"{item.Type}|{item.Scope}|{item.NativeId}|{NormalizePath(item.Path)}", StringComparer.OrdinalIgnoreCase)
+            .Select(group => group.First())
+            .ToList();
+    }
+
     public static bool MatchesInstalledApplication(InstallLogEntry log, IEnumerable<ApplicationEntry> installedApps)
         => installedApps.Any(app => ScoreMatch(app, log) >= 80);
 
@@ -255,6 +318,13 @@ public static class InstallLogService
         var secondParts = second.Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         return firstParts.Length == secondParts.Length
             && firstParts.All(part => secondParts.Contains(part, StringComparer.OrdinalIgnoreCase));
+    }
+
+    private static string NormalizePath(string? path)
+    {
+        if (string.IsNullOrWhiteSpace(path)) return string.Empty;
+        try { return Path.GetFullPath(path).TrimEnd('\\', '/'); }
+        catch { return path.Trim().TrimEnd('\\', '/'); }
     }
 
     private static bool PathsEqual(string first, string second)

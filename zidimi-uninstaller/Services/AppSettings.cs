@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Text.Json;
 
@@ -11,6 +12,7 @@ public class AppSettings
     public bool CreateRestorePoint { get; set; } = false;
     public bool AutoKillProcesses { get; set; } = true;
     public bool SendToRecycleBin { get; set; } = true;
+    public bool EnableRecoveryVault { get; set; } = true;
     public bool BypassUacViaTaskScheduler { get; set; } = false;
     public string DisplayLanguage { get; set; } = "en-US";
 

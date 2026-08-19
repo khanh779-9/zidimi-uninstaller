@@ -198,7 +198,13 @@ public class LeftoversViewModel : ObservableObject
         try
         {
             var (deleted, freed, deletedItems) = await Task.Run(() =>
-                DeepCleanService.CleanLeftovers(selected, AppSettings.Instance.SendToRecycleBin));
+                DeepCleanService.CleanLeftovers(
+                    selected,
+                    AppSettings.Instance.SendToRecycleBin,
+                    LanguageManager.T("RecoveryVault_TraceCleanupTitle", "Trace Cleaner cleanup"),
+                    string.Empty,
+                    createRecoveryPoint: true,
+                    operation: "TraceCleaner"));
 
             foreach (var item in deletedItems)
                 Items.Remove(item);

@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using zidimi_uninstaller.Controls;
 using zidimi_uninstaller.Models;
@@ -149,7 +152,13 @@ public class DeepCleanViewModel : ObservableObject
         try
         {
             var (deletedCount, freedBytes, deletedItems) = await Task.Run(() =>
-                DeepCleanService.CleanLeftovers(Items, AppSettings.Instance.SendToRecycleBin));
+                DeepCleanService.CleanLeftovers(
+                    Items,
+                    AppSettings.Instance.SendToRecycleBin,
+                    string.Format(LanguageManager.T("RecoveryVault_AppCleanupTitle", "Deep Clean · {0}"), AppName),
+                    AppName,
+                    createRecoveryPoint: true,
+                    operation: "DeepClean"));
 
             foreach (var item in deletedItems)
                 Items.Remove(item);

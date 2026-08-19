@@ -282,6 +282,12 @@
                                        ToolTip="{Binding SelectedLog.InstallLocation}"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="12,0,0,0">
+                            <controls:ZButton Content="{Binding [InstallMonitor_Rollback], Source={x:Static services:LanguageManager.Instance}}"
+                                              Variant="Primary"
+                                              Icon="{StaticResource StrokeIconRestore}"
+                                              Command="{Binding RollbackSelectedLogCommand}"
+                                              IsEnabled="{Binding CanRollbackSelectedLog}"
+                                              Margin="0,0,7,0"/>
                             <controls:ZButton Content="{Binding [InstallMonitor_ScanLeftovers], Source={x:Static services:LanguageManager.Instance}}"
                                               Variant="Secondary"
                                               Icon="{StaticResource StrokeIconRescan}"

@@ -7,7 +7,7 @@ A modern, fast, and thorough software management and uninstallation utility for 
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D4?style=flat-square&logo=windows)](https://github.com/khanh779-9/zidimi-uninstaller)
 [![.NET](https://img.shields.io/badge/.NET-8.0--windows-512BD4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
 
-[Download Latest Release (v1.8.0)](https://github.com/khanh779-9/zidimi-uninstaller/releases/latest) | [View Releases](https://github.com/khanh779-9/zidimi-uninstaller/releases) | [Report an Issue](https://github.com/khanh779-9/zidimi-uninstaller/issues)
+[Download Latest Release (v2.0.0)](https://github.com/khanh779-9/zidimi-uninstaller/releases/latest) | [View Releases](https://github.com/khanh779-9/zidimi-uninstaller/releases) | [Report an Issue](https://github.com/khanh779-9/zidimi-uninstaller/issues)
 
 ---
 
@@ -35,12 +35,13 @@ A modern, fast, and thorough software management and uninstallation utility for 
   - [6. Deep Clean and Residue Removal](#6-deep-clean-and-residue-removal)
   - [7. Windows Artifacts & System Leftovers](#7-windows-artifacts--system-leftovers)
   - [8. Installation Monitor & Tracker](#8-installation-monitor--tracker)
-  - [9. Software Health & Optimization Doctor](#9-software-health--optimization-doctor)
-  - [10. Browser Extensions & Add-ons Manager](#10-browser-extensions--add-ons-manager)
-  - [11. Uninstall History & Audit Log](#11-uninstall-history--audit-log)
-  - [12. Hunter Mode & Target Resolver](#12-hunter-mode--target-resolver)
-  - [13. Safety and Process Hunter](#13-safety-and-process-hunter)
-  - [14. Task Scheduler UAC Bypass](#14-task-scheduler-uac-bypass)
+  - [9. Recovery Vault & Rollback Center](#9-recovery-vault--rollback-center)
+  - [10. Software Health & Optimization Doctor](#10-software-health--optimization-doctor)
+  - [11. Browser Extensions & Add-ons Manager](#11-browser-extensions--add-ons-manager)
+  - [12. Uninstall History & Audit Log](#12-uninstall-history--audit-log)
+  - [13. Hunter Mode & Target Resolver](#13-hunter-mode--target-resolver)
+  - [14. Safety and Process Hunter](#14-safety-and-process-hunter)
+  - [15. Task Scheduler UAC Bypass](#15-task-scheduler-uac-bypass)
 - [Supported Languages](#supported-languages)
 - [Configuration and Settings](#configuration-and-settings)
 - [System Requirements](#system-requirements)
@@ -61,6 +62,7 @@ A modern, fast, and thorough software management and uninstallation utility for 
 | Silent / Unattended Uninstallation Mode | Not Available | Supported |
 | Force Uninstall for Corrupt or Broken Uninstallers | Not Available | Supported |
 | Real-time Installation Monitor & Change Tracking | Not Available | Supported |
+| Integrated Recovery Vault & Differential Rollback | Not Available | Supported |
 | Software Health Doctor & Auto Configuration Repair | Not Available | Supported |
 | Browser Extension & Add-on Management (Chrome/Edge/Firefox) | Not Available | Supported |
 | Interactive Hunter Mode (Drag-and-Drop Crosshair Targeting) | Not Available | Supported |
@@ -89,6 +91,7 @@ A modern, fast, and thorough software management and uninstallation utility for 
 | **Deep Clean** | Post-uninstall residue detection and cleanup | Scan, Selective Clean, Send to Recycle Bin, Permanent Delete | File system (`AppData`, `ProgramData`, `Temp`), Registry keys |
 | **Windows Artifacts** | Clean broken system integrations and orphan traces | Remove Broken Services, Orphan Tasks, Stale PATH, Firewall Rules | Windows Service Control Manager, Task Scheduler, Environment, Firewall |
 | **Install Monitor** | Real-time installation tracking and snapshot differential | Launch Installer with Monitor, Diff Changes, 100% Reverse Rollback | File system changes, registry keys, services, shell extensions |
+| **Recovery Vault** | Universal backup snapshots and 1-click restore | Backup Before Removal, 1-Click Rollback, Verify Integrity, Prune | Deleted files, folders, registry subtrees, environment vars |
 | **Software Health** | Diagnostic scanner for broken software configurations | Bulk Repair, Sanitize Corrupt Registry Keys, Clear Orphan Shortcuts | Broken uninstaller keys, orphan shortcuts, leftover registry entries |
 | **Browser Extensions** | Multi-browser extension & add-on management | Inspect Permissions, Toggle, Remove Add-ons | Chrome, Edge, Brave, Vivaldi, Opera, Firefox |
 | **Uninstall History** | Audit log of all uninstall sessions and outcomes | Rescan Leftovers, Export Logs, Clear History, View Status | Historical uninstall events, sizes freed, timestamps |
@@ -119,7 +122,7 @@ A modern, fast, and thorough software management and uninstallation utility for 
 Zidimi Uninstaller is distributed as a standalone portable package that does not require prior installation.
 
 1. Navigate to the [Releases](https://github.com/khanh779-9/zidimi-uninstaller/releases) page.
-2. Download the latest release zip archive (`zidimi-uninstaller-v1.8.0.zip`).
+2. Download the latest release zip archive (`zidimi-uninstaller-v2.0.0.zip`).
 3. Extract the contents to any preferred folder.
 4. Launch `zidimi-uninstaller.exe` (Administrator privileges are recommended for complete system modifications).
 
@@ -178,29 +181,34 @@ Zidimi Uninstaller is distributed as a standalone portable package that does not
 - **Granular Change Diffing**: Records all newly created files, directories, registry keys, values, services, and startup shortcuts into dedicated `.zidimi-log` tracking profiles.
 - **100% Reversible Traced Uninstallation**: Completely undo installations by executing exact reverse deletions guided by recorded install logs without relying on corrupt default uninstallers.
 
-### 9. Software Health & Optimization Doctor
+### 9. Recovery Vault & Rollback Center
+- **Automatic Deletion Snapshots**: Captures secure differential backups of files, folders, and registry keys prior to executing any Deep Clean, Force Uninstall, or Traced Removal (`RecoveryVaultService`).
+- **1-Click Total Rollback**: Instantly restores previous states if an uninstallation inadvertently removes desired files or configuration keys.
+- **Vault Management**: View entry sizes, inspection items, backup export, and one-click vault pruning.
+
+### 10. Software Health & Optimization Doctor
 - **Comprehensive Health Scan**: Detects broken uninstaller registry keys, invalid start menu shortcuts, abandoned installation caches, and leftover uninstaller entries (`SoftwareHealthService`).
 - **One-Click Quick Fix**: Safely repairs and sanitizes system registration in bulk with automated rollback protection.
 
-### 10. Browser Extensions & Add-ons Manager
+### 11. Browser Extensions & Add-ons Manager
 - **Multi-Browser Support**: Scans extensions and plugins across Google Chrome, Microsoft Edge, Brave, Vivaldi, Opera, and Mozilla Firefox profiles (`BrowserExtensionService`).
 - **Security & Inspection**: View manifest metadata, version, requested permissions, ID, and safely remove stubborn or unwanted browser extensions.
 
-### 11. Uninstall History & Audit Log
+### 12. Uninstall History & Audit Log
 - **Activity Log**: Comprehensive record of every uninstallation event including application name, version, status (Success, Failed, Force Removed), timestamp, and freed disk space.
 - **Leftover Rescan**: Trigger targeted residue and leftover analysis on any previously uninstalled application directly from the history timeline.
 - **Log Management**: Export history log or clear records when desired.
 
-### 12. Hunter Mode & Target Resolver
+### 13. Hunter Mode & Target Resolver
 - **Visual Targeting Crosshair**: Drag and hover a floating crosshair overlay directly onto any visible window, taskbar item, or desktop shortcut.
 - **Instant Resolution**: Real-time identification of the underlying process name, PID, main window title, and installation directory via `TargetResolverService`.
 - **Target Actions**: Instantly choose to open folder in Explorer, kill running process tree, run standard uninstall, or trigger deep force removal.
 
-### 13. Safety and Process Hunter
+### 14. Safety and Process Hunter
 - **Process Hunter**: Queries running processes matching application executable names and file paths, offering automated process termination to prevent file lock errors during uninstallation.
 - **Restore Point Engine**: Calls Windows System Restore APIs to snapshot the system state prior to modifications.
 
-### 14. Task Scheduler UAC Bypass
+### 15. Task Scheduler UAC Bypass
 - **Highest Privileges Task**: Register a Windows Task Scheduler job running with `/rl HIGHEST` to launch Zidimi Uninstaller with full administrator privileges without triggering the Windows User Account Control (UAC) prompt.
 - **Desktop Shortcut Creator**: Generate a dedicated `Zidimi Uninstaller (No UAC).lnk` shortcut on your desktop with one click.
 
