@@ -1,4 +1,4 @@
-[Info]
+﻿[Info]
 LanguageName=Italiano
 
 [Sidebar]
@@ -14,6 +14,7 @@ ReloadAll=Ricarica tutti i dati
 About=Info sull'applicazione
 Leftovers=Pulizia tracce
 
+InstallMonitor=Monitor installazione
 [Pages]
 LeftoversSubtitle=Scan and clean orphaned files, registry data, services, scheduled tasks, PATH/environment entries, and firewall rules
 LeftoversTitle=Pulizia residui e tracce
@@ -32,6 +33,8 @@ StartupSubtitle=Gestisci i programmi eseguiti all'avvio
 SettingsTitle=Impostazioni
 SettingsSubtitle=Personalizza il comportamento di Zidimi Uninstaller
 
+InstallMonitorTitle=Monitor installazione
+InstallMonitorSubtitle=Registra le modifiche di installazione e consulta i programmi registrati
 [Dashboard]
 AppCount=App Installate
 StoreAppCount=App dello Store
@@ -568,3 +571,64 @@ ProtectedArtifactEvidence=the target is in a protected/shared Windows path, so a
 [Leftover]
 ServiceDllEvidencePrefix=ServiceDll ownership: 
 OrphanServiceDllEvidence=The Win32 service uses a ServiceDll module that no longer exists.
+
+[InstallMonitor]
+StillInstalled=Installato
+NotInstalled=Non installato
+CaptureTitle=Monitor installazione
+CaptureSubtitle=Registra le modifiche al file system e all’integrazione di Windows durante l’installazione. Termina la cattura solo dopo aver completato il setup.
+DropTitle=Trascina qui un installer
+DropSubtitle=Trascina un file .exe o .msi qui per registrarne l’installazione.
+ChooseInstaller=Scegli installer
+ManualCapture=Cattura manuale
+FinishCapture=Termina cattura
+CancelCapture=Annulla cattura
+Observed=Percorsi osservati
+Started=Avviato
+SearchPlaceholder=Cerca programmi registrati…
+Refresh=Aggiorna log
+OpenFolder=Apri cartella log
+ScanLeftovers=Scansiona residui
+Delete=Elimina log
+EmptyTitle=Nessun programma registrato
+EmptySubtitle=Avvia una cattura Install Monitor per creare un registro preciso dell’installazione.
+NoResultsTitle=Nessun log corrispondente
+NoResultsSubtitle=Prova un altro nome applicazione, editore, versione o installer.
+SelectLogTitle=Seleziona un programma registrato
+SelectLogSubtitle=Scegli una cattura a sinistra per esaminare file e artefatti Windows.
+StateRecording=Registrazione
+StateIdle=Inattivo
+PreparingSnapshot=Acquisizione dello snapshot pre-installazione…
+RunningInstaller=Installer avviato. Completa il setup, quindi fai clic su Termina cattura.
+ManualActive=La cattura manuale è attiva. Avvia l’installer, quindi fai clic su Termina cattura.
+StartFailed=Impossibile avviare Install Monitor: {0}
+Finalizing=Confronto degli snapshot prima/dopo e creazione del log di installazione…
+NoLog=Cattura terminata, ma non sono state identificate modifiche di installazione.
+CaptureSaved=Cattura salvata: {0} programma/i, {1} identificato/i.
+FinishFailed=Impossibile finalizzare la cattura: {0}
+Cancelled=Cattura installazione annullata. Nessun log salvato.
+DeleteTitle=Elimina log installazione
+DeleteMessage=Eliminare il log di installazione di "{0}"? Il programma non verrà disinstallato.
+DeleteFailed=Impossibile eliminare il log di installazione.
+InvalidInstaller=Il file installer selezionato non esiste.
+UnsupportedInstaller=Install Monitor supporta attualmente installer .exe e .msi.
+OverflowWarning=La registrazione è attiva, ma alcuni eventi del file system sono stati persi. Termina la cattura per i risultati basati sugli snapshot.
+IdleHint=Scegli un installer o avvia una cattura manuale. Zidimi registra solo durante una cattura attiva.
+Resolved=Applicazione identificata
+Unresolved=Cattura non identificata
+ArtifactCount={0} artefatto/i
+Confidence=Affidabilità {0}%
+ChangeCreated=Creato
+ChangeModified=Modificato
+ChangeObserved=Osservato
+TypeFile=File
+TypeFolder=Cartella
+TypeRegistry=Registro
+TypeService=Servizio
+TypeTask=Attività
+TypePath=PATH
+TypeEnvironment=Ambiente
+TypeFirewall=Firewall
+ManualCaptureName=Cattura installazione manuale
+LoggedTraceDescription=Registrato da Install Monitor
+LoggedTraceEvidence=Install Monitor ha osservato la creazione di questo artefatto per {0}. {1}

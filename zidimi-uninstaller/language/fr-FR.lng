@@ -1,4 +1,4 @@
-[Info]
+﻿[Info]
 LanguageName=Français
 
 [Sidebar]
@@ -14,6 +14,7 @@ ReloadAll=Recharger toutes les données
 About=À propos de l'application
 Leftovers=Nettoyeur de traces
 
+InstallMonitor=Moniteur d’installation
 [Pages]
 LeftoversSubtitle=Scan and clean orphaned files, registry data, services, scheduled tasks, PATH/environment entries, and firewall rules
 LeftoversTitle=Nettoyeur de résidus & traces
@@ -32,6 +33,8 @@ StartupSubtitle=Gérer les programmes lancés au démarrage
 SettingsTitle=Paramètres
 SettingsSubtitle=Personnaliser le comportement de Zidimi Uninstaller
 
+InstallMonitorTitle=Moniteur d’installation
+InstallMonitorSubtitle=Enregistrer les changements d’installation et consulter les programmes journalisés
 [Dashboard]
 AppCount=Applications installées
 StoreAppCount=Applications Store
@@ -568,3 +571,64 @@ ProtectedArtifactEvidence=the target is in a protected/shared Windows path, so a
 [Leftover]
 ServiceDllEvidencePrefix=ServiceDll ownership: 
 OrphanServiceDllEvidence=The Win32 service uses a ServiceDll module that no longer exists.
+
+[InstallMonitor]
+StillInstalled=Installé
+NotInstalled=Non installé
+CaptureTitle=Surveillance d’installation
+CaptureSubtitle=Enregistre les modifications du système de fichiers et de l’intégration Windows pendant l’installation. Terminez la capture seulement après la fin de l’installation.
+DropTitle=Déposez un installateur ici
+DropSubtitle=Glissez un fichier .exe ou .msi ici pour enregistrer son installation.
+ChooseInstaller=Choisir l’installateur
+ManualCapture=Capture manuelle
+FinishCapture=Terminer la capture
+CancelCapture=Annuler la capture
+Observed=Chemins observés
+Started=Démarré
+SearchPlaceholder=Rechercher dans les programmes journalisés…
+Refresh=Actualiser les journaux
+OpenFolder=Ouvrir le dossier des journaux
+ScanLeftovers=Analyser les résidus
+Delete=Supprimer le journal
+EmptyTitle=Aucun programme journalisé
+EmptySubtitle=Démarrez une capture Install Monitor pour créer un enregistrement précis de l’installation.
+NoResultsTitle=Aucun journal correspondant
+NoResultsSubtitle=Essayez un autre nom d’application, éditeur, version ou installateur.
+SelectLogTitle=Sélectionnez un programme journalisé
+SelectLogSubtitle=Choisissez une capture à gauche pour inspecter les fichiers et artefacts Windows.
+StateRecording=Enregistrement
+StateIdle=Inactif
+PreparingSnapshot=Création de l’instantané avant installation…
+RunningInstaller=Installateur lancé. Terminez l’installation puis cliquez sur Terminer la capture.
+ManualActive=La capture manuelle est active. Lancez l’installateur puis cliquez sur Terminer la capture.
+StartFailed=Impossible de démarrer Install Monitor : {0}
+Finalizing=Comparaison des instantanés avant/après et création du journal d’installation…
+NoLog=Capture terminée, mais aucune modification d’installation n’a pu être associée.
+CaptureSaved=Capture enregistrée : {0} programme(s), {1} identifié(s).
+FinishFailed=Impossible de finaliser la capture : {0}
+Cancelled=Capture d’installation annulée. Aucun journal n’a été enregistré.
+DeleteTitle=Supprimer le journal d’installation
+DeleteMessage=Supprimer le journal d’installation de "{0}" ? Cela ne désinstalle pas le programme.
+DeleteFailed=Impossible de supprimer le journal d’installation.
+InvalidInstaller=Le fichier d’installation sélectionné n’existe pas.
+UnsupportedInstaller=Install Monitor prend actuellement en charge les installateurs .exe et .msi.
+OverflowWarning=L’enregistrement est actif, mais certains événements du système de fichiers ont été perdus. Terminez la capture pour obtenir les résultats basés sur les instantanés.
+IdleHint=Choisissez un installateur ou démarrez une capture manuelle. Zidimi n’enregistre que pendant une capture active.
+Resolved=Application identifiée
+Unresolved=Capture non identifiée
+ArtifactCount={0} artefact(s)
+Confidence=Confiance {0}%
+ChangeCreated=Créé
+ChangeModified=Modifié
+ChangeObserved=Observé
+TypeFile=Fichier
+TypeFolder=Dossier
+TypeRegistry=Registre
+TypeService=Service
+TypeTask=Tâche
+TypePath=PATH
+TypeEnvironment=Environnement
+TypeFirewall=Pare-feu
+ManualCaptureName=Capture d’installation manuelle
+LoggedTraceDescription=Enregistré par Install Monitor
+LoggedTraceEvidence=Install Monitor a observé la création de cet artefact pour {0}. {1}

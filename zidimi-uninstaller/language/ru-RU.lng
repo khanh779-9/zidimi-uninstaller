@@ -1,4 +1,4 @@
-[Info]
+﻿[Info]
 LanguageName=Русский
 
 [Sidebar]
@@ -14,6 +14,7 @@ ReloadAll=Перезагрузить все данные
 About=О программе
 Leftovers=Очистка следов
 
+InstallMonitor=Монитор установки
 [Pages]
 LeftoversSubtitle=Scan and clean orphaned files, registry data, services, scheduled tasks, PATH/environment entries, and firewall rules
 LeftoversTitle=Очистка остатков и следов
@@ -32,6 +33,8 @@ StartupSubtitle=Управление программами при запуск�
 SettingsTitle=Настройки
 SettingsSubtitle=Настройка параметров Zidimi Uninstaller
 
+InstallMonitorTitle=Монитор установки
+InstallMonitorSubtitle=Запись изменений установки и просмотр журналированных программ
 [Dashboard]
 AppCount=Установлено программ
 StoreAppCount=Приложений Store
@@ -568,3 +571,64 @@ ProtectedArtifactEvidence=the target is in a protected/shared Windows path, so a
 [Leftover]
 ServiceDllEvidencePrefix=ServiceDll ownership: 
 OrphanServiceDllEvidence=The Win32 service uses a ServiceDll module that no longer exists.
+
+[InstallMonitor]
+StillInstalled=Установлено
+NotInstalled=Не установлено
+CaptureTitle=Монитор установки
+CaptureSubtitle=Записывает изменения файловой системы и интеграции Windows во время установки. Завершайте запись только после окончания установки.
+DropTitle=Перетащите установщик сюда
+DropSubtitle=Перетащите один файл .exe или .msi, чтобы записать установку.
+ChooseInstaller=Выбрать установщик
+ManualCapture=Ручная запись
+FinishCapture=Завершить запись
+CancelCapture=Отменить запись
+Observed=Наблюдаемые пути
+Started=Начато
+SearchPlaceholder=Поиск журналированных программ…
+Refresh=Обновить журналы
+OpenFolder=Открыть папку журналов
+ScanLeftovers=Сканировать остатки
+Delete=Удалить журнал
+EmptyTitle=Нет журналированных программ
+EmptySubtitle=Запустите Install Monitor, чтобы создать точную запись установки.
+NoResultsTitle=Подходящие журналы не найдены
+NoResultsSubtitle=Попробуйте другое имя приложения, издателя, версии или установщика.
+SelectLogTitle=Выберите программу
+SelectLogSubtitle=Выберите запись слева, чтобы просмотреть файлы и артефакты Windows.
+StateRecording=Запись
+StateIdle=Ожидание
+PreparingSnapshot=Создание снимка до установки…
+RunningInstaller=Установщик запущен. Завершите установку и нажмите «Завершить запись».
+ManualActive=Ручная запись активна. Запустите установщик и затем нажмите «Завершить запись».
+StartFailed=Не удалось запустить Install Monitor: {0}
+Finalizing=Сравнение снимков до/после и создание журнала установки…
+NoLog=Запись завершена, но изменения установки не удалось определить.
+CaptureSaved=Запись сохранена: программ — {0}, определено — {1}.
+FinishFailed=Не удалось завершить запись: {0}
+Cancelled=Запись установки отменена. Журнал не сохранён.
+DeleteTitle=Удалить журнал установки
+DeleteMessage=Удалить журнал установки для "{0}"? Программа не будет удалена.
+DeleteFailed=Не удалось удалить журнал установки.
+InvalidInstaller=Выбранный файл установщика не существует.
+UnsupportedInstaller=Install Monitor сейчас поддерживает установщики .exe и .msi.
+OverflowWarning=Запись активна, но часть событий файловой системы потеряна. Завершите запись для результатов на основе снимков.
+IdleHint=Выберите установщик или начните ручную запись. Zidimi записывает изменения только во время активной сессии.
+Resolved=Приложение определено
+Unresolved=Неопределённая запись
+ArtifactCount=Артефактов: {0}
+Confidence=Достоверность {0}%
+ChangeCreated=Создано
+ChangeModified=Изменено
+ChangeObserved=Наблюдалось
+TypeFile=Файл
+TypeFolder=Папка
+TypeRegistry=Реестр
+TypeService=Служба
+TypeTask=Задача
+TypePath=PATH
+TypeEnvironment=Переменная среды
+TypeFirewall=Брандмауэр
+ManualCaptureName=Ручная запись установки
+LoggedTraceDescription=Записано Install Monitor
+LoggedTraceEvidence=Install Monitor зафиксировал создание этого артефакта для {0}. {1}

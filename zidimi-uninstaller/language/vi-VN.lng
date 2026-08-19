@@ -1,4 +1,4 @@
-[Info]
+﻿[Info]
 LanguageName=Tiếng Việt
 
 [Sidebar]
@@ -14,6 +14,7 @@ ReloadAll=Nạp lại tất cả dữ liệu
 About=Thông tin phần mềm
 Leftovers=Dọn dấu vết
 
+InstallMonitor=Giám sát cài đặt
 [Pages]
 LeftoversSubtitle=Quét và dọn file, Registry, dịch vụ, tác vụ theo lịch, PATH/biến môi trường và quy tắc tường lửa còn sót lại
 LeftoversTitle=Quét dấu vết & Tàn dư
@@ -32,6 +33,8 @@ StartupSubtitle=Quản lý chương trình khởi động cùng hệ thống
 SettingsTitle=Cài đặt
 SettingsSubtitle=Tuỳ chỉnh cấu hình Zidimi Uninstaller
 
+InstallMonitorTitle=Giám sát cài đặt
+InstallMonitorSubtitle=Ghi nhận thay đổi khi cài phần mềm và xem lại các chương trình đã ghi log
 [Dashboard]
 AppCount=Ứng dụng đã cài
 StoreAppCount=Ứng dụng Store
@@ -583,3 +586,64 @@ ProtectedArtifactEvidence=đích nằm trong đường dẫn Windows được b�
 [Leftover]
 ServiceDllEvidencePrefix=Quyền sở hữu ServiceDll: 
 OrphanServiceDllEvidence=Dịch vụ Win32 sử dụng mô-đun ServiceDll không còn tồn tại.
+
+[InstallMonitor]
+StillInstalled=Đang cài đặt
+NotInstalled=Đã gỡ / không phát hiện
+CaptureTitle=Giám sát cài đặt
+CaptureSubtitle=Ghi nhận thay đổi hệ thống tệp và các thành phần tích hợp Windows trong lúc phần mềm được cài. Chỉ kết thúc phiên sau khi cài đặt hoàn tất.
+DropTitle=Thả bộ cài vào đây
+DropSubtitle=Kéo một file .exe hoặc .msi vào đây để ghi lại quá trình cài đặt.
+ChooseInstaller=Chọn bộ cài
+ManualCapture=Ghi thủ công
+FinishCapture=Kết thúc ghi
+CancelCapture=Hủy ghi
+Observed=Đường dẫn đã ghi nhận
+Started=Bắt đầu
+SearchPlaceholder=Tìm chương trình đã ghi log…
+Refresh=Làm mới log
+OpenFolder=Mở thư mục log
+ScanLeftovers=Quét phần còn sót
+Delete=Xóa log
+EmptyTitle=Chưa có chương trình được ghi log
+EmptySubtitle=Bắt đầu một phiên Install Monitor để tạo bản ghi cài đặt chính xác.
+NoResultsTitle=Không có log phù hợp
+NoResultsSubtitle=Thử từ khóa khác theo ứng dụng, nhà phát hành, phiên bản hoặc tên bộ cài.
+SelectLogTitle=Chọn chương trình đã ghi log
+SelectLogSubtitle=Chọn một phiên bên trái để xem file và các thành phần tích hợp Windows đã thay đổi.
+StateRecording=Đang ghi
+StateIdle=Sẵn sàng
+PreparingSnapshot=Đang chụp trạng thái trước khi cài…
+RunningInstaller=Đã chạy bộ cài. Hãy hoàn tất cài đặt rồi bấm Kết thúc ghi.
+ManualActive=Đang ghi thủ công. Hãy chạy bộ cài rồi bấm Kết thúc ghi.
+StartFailed=Không thể khởi động Install Monitor: {0}
+Finalizing=Đang so sánh trạng thái trước/sau và tạo installation log…
+NoLog=Đã kết thúc ghi nhưng không xác định được thay đổi cài đặt.
+CaptureSaved=Đã lưu phiên: {0} chương trình, xác định được {1}.
+FinishFailed=Không thể hoàn tất phiên ghi: {0}
+Cancelled=Đã hủy phiên ghi cài đặt. Không lưu log.
+DeleteTitle=Xóa Install Log
+DeleteMessage=Xóa log cài đặt của "{0}"? Thao tác này không gỡ ứng dụng.
+DeleteFailed=Không thể xóa installation log.
+InvalidInstaller=File bộ cài đã chọn không tồn tại.
+UnsupportedInstaller=Install Monitor hiện hỗ trợ bộ cài .exe và .msi.
+OverflowWarning=Đang ghi nhưng một số sự kiện hệ thống tệp đã bị bỏ lỡ. Hãy kết thúc phiên để Zidimi dùng kết quả snapshot trước/sau.
+IdleHint=Chọn bộ cài hoặc bắt đầu ghi thủ công. Zidimi chỉ ghi nhận thay đổi khi phiên monitor đang hoạt động.
+Resolved=Đã xác định ứng dụng
+Unresolved=Phiên chưa xác định
+ArtifactCount={0} thành phần
+Confidence=Độ tin cậy {0}%
+ChangeCreated=Được tạo
+ChangeModified=Được sửa
+ChangeObserved=Đã ghi nhận
+TypeFile=Tệp
+TypeFolder=Thư mục
+TypeRegistry=Registry
+TypeService=Dịch vụ
+TypeTask=Tác vụ
+TypePath=PATH
+TypeEnvironment=Biến môi trường
+TypeFirewall=Tường lửa
+ManualCaptureName=Phiên ghi cài đặt thủ công
+LoggedTraceDescription=Được Install Monitor ghi nhận
+LoggedTraceEvidence=Install Monitor đã ghi nhận thành phần này được tạo cho {0}. {1}

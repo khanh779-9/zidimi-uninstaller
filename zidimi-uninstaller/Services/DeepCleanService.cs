@@ -102,6 +102,9 @@ public static class DeepCleanService
         var items = new List<LeftoverItem>();
         var seenPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
+        // Install Monitor evidence is exact session data, so let it win identity de-duplication
+        // before heuristic scanners add lower-confidence candidates for the same artifact.
+        ScanLoggedInstallArtifacts(app, items, seenPaths);
         ScanInstallLocation(app, items, seenPaths);
         ScanApplicationData(app, items, seenPaths);
         ScanShortcuts(app, items, seenPaths);
@@ -310,6 +313,12 @@ public static class DeepCleanService
     private static void ScanWindowsArtifacts(ApplicationEntry app, List<LeftoverItem> items, HashSet<string> seenPaths)
     {
         foreach (var artifact in WindowsArtifactService.ScanApplicationArtifacts(app))
+            AddCandidate(items, seenPaths, artifact);
+    }
+
+    private static void ScanLoggedInstallArtifacts(ApplicationEntry app, List<LeftoverItem> items, HashSet<string> seenPaths)
+    {
+        foreach (var artifact in InstallLogService.GetLoggedLeftovers(app))
             AddCandidate(items, seenPaths, artifact);
     }
 

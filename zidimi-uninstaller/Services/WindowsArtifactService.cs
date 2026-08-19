@@ -82,6 +82,98 @@ public static class WindowsArtifactService
         };
     }
 
+    /// <summary>
+    /// Captures a compact snapshot of Windows integration artifacts for Install Monitor.
+    /// The snapshot is read-only metadata; no cleanup is performed here.
+    /// </summary>
+    public static List<InstallLogArtifact> CaptureInstallationSnapshot()
+    {
+        var items = new List<InstallLogArtifact>();
+
+        foreach (var service in EnumerateWin32Services())
+        {
+            var target = !string.IsNullOrWhiteSpace(service.ServiceDllPath)
+                ? service.ServiceDllPath
+                : service.ExecutablePath;
+            items.Add(new InstallLogArtifact
+            {
+                Kind = InstallArtifactKind.WindowsService,
+                Path = $@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\{service.Name}",
+                Name = string.IsNullOrWhiteSpace(service.DisplayName) ? service.Name : service.DisplayName,
+                NativeId = service.Name,
+                NativeData = target,
+                Scope = "Machine",
+                ConfidenceScore = 100
+            });
+        }
+
+        foreach (var task in EnumerateScheduledTasks())
+        {
+            items.Add(new InstallLogArtifact
+            {
+                Kind = InstallArtifactKind.ScheduledTask,
+                Path = task.Path,
+                Name = task.Name,
+                NativeId = task.Path,
+                NativeData = string.Join("|", task.Executables),
+                Scope = "Machine/User",
+                ConfidenceScore = 100
+            });
+        }
+
+        foreach (var scope in new[] { "User", "Machine" })
+        {
+            var variables = ReadEnvironmentVariables(scope);
+            foreach (var pair in variables)
+            {
+                if (pair.Key.Equals("Path", StringComparison.OrdinalIgnoreCase))
+                {
+                    foreach (var segment in SplitPath(pair.Value.Value))
+                    {
+                        items.Add(new InstallLogArtifact
+                        {
+                            Kind = InstallArtifactKind.EnvironmentPath,
+                            Path = segment,
+                            Name = "Path",
+                            NativeId = "Path",
+                            NativeData = segment,
+                            Scope = scope,
+                            ConfidenceScore = 100
+                        });
+                    }
+                    continue;
+                }
+
+                items.Add(new InstallLogArtifact
+                {
+                    Kind = InstallArtifactKind.EnvironmentVariable,
+                    Path = $"{scope}: {pair.Key}={pair.Value.Value}",
+                    Name = pair.Key,
+                    NativeId = pair.Key,
+                    NativeData = pair.Value.Value,
+                    Scope = scope,
+                    ConfidenceScore = 100
+                });
+            }
+        }
+
+        foreach (var rule in EnumerateFirewallRules())
+        {
+            items.Add(new InstallLogArtifact
+            {
+                Kind = InstallArtifactKind.FirewallRule,
+                Path = rule.ApplicationPath,
+                Name = rule.Name,
+                NativeId = rule.Name,
+                NativeData = rule.ApplicationPath,
+                Scope = rule.DirectionText,
+                ConfidenceScore = 100
+            });
+        }
+
+        return items;
+    }
+
     private static IEnumerable<LeftoverItem> ScanApplicationServices(ApplicationEntry app)
     {
         var items = new List<LeftoverItem>();

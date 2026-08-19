@@ -1,4 +1,4 @@
-[Info]
+﻿[Info]
 LanguageName=English
 
 [Sidebar]
@@ -14,6 +14,7 @@ ReloadAll=Reload all data
 About=About Application
 Leftovers=Trace Cleaner
 
+InstallMonitor=Install Monitor
 [Pages]
 LeftoversSubtitle=Scan and clean orphaned files, registry data, services, scheduled tasks, PATH/environment entries, and firewall rules
 LeftoversTitle=Leftovers & Trace Cleaner
@@ -32,6 +33,8 @@ StartupSubtitle=Manage startup programs
 SettingsTitle=Settings
 SettingsSubtitle=Customize Zidimi Uninstaller behavior
 
+InstallMonitorTitle=Install Monitor
+InstallMonitorSubtitle=Record installation changes and review logged programs
 [Dashboard]
 AppCount=Installed Apps
 StoreAppCount=Store Apps
@@ -582,3 +585,64 @@ ProtectedArtifactEvidence=the target is in a protected/shared Windows path, so a
 [Leftover]
 ServiceDllEvidencePrefix=ServiceDll ownership: 
 OrphanServiceDllEvidence=The Win32 service uses a ServiceDll module that no longer exists.
+
+[InstallMonitor]
+StillInstalled=Installed
+NotInstalled=Not installed
+CaptureTitle=Install Monitor
+CaptureSubtitle=Record file-system and Windows integration changes while software is being installed. Finish the capture only after setup is complete.
+DropTitle=Drop an installer here
+DropSubtitle=Drag one .exe or .msi file here to capture its installation.
+ChooseInstaller=Choose Installer
+ManualCapture=Manual Capture
+FinishCapture=Finish Capture
+CancelCapture=Cancel Capture
+Observed=Observed paths
+Started=Started
+SearchPlaceholder=Search logged programs…
+Refresh=Refresh logs
+OpenFolder=Open log folder
+ScanLeftovers=Scan leftovers
+Delete=Delete log
+EmptyTitle=No logged programs
+EmptySubtitle=Start an Install Monitor capture to build a precise installation record.
+NoResultsTitle=No matching logs
+NoResultsSubtitle=Try a different application, publisher, version, or installer name.
+SelectLogTitle=Select a logged program
+SelectLogSubtitle=Choose a capture on the left to inspect files and Windows integration artifacts.
+StateRecording=Recording
+StateIdle=Idle
+PreparingSnapshot=Capturing the pre-install snapshot…
+RunningInstaller=Installer launched. Complete the setup, then click Finish Capture.
+ManualActive=Manual capture is active. Run the installer, then click Finish Capture.
+StartFailed=Could not start Install Monitor: {0}
+Finalizing=Comparing before/after snapshots and building the installation log…
+NoLog=Capture finished, but no installation changes were resolved.
+CaptureSaved=Capture saved: {0} logged program(s), {1} resolved.
+FinishFailed=Could not finalize the capture: {0}
+Cancelled=Installation capture cancelled. No log was saved.
+DeleteTitle=Delete Install Log
+DeleteMessage=Delete the installation log for "{0}"? This does not uninstall the program.
+DeleteFailed=The installation log could not be deleted.
+InvalidInstaller=The selected installer file does not exist.
+UnsupportedInstaller=Install Monitor currently supports .exe and .msi installers.
+OverflowWarning=Recording is active, but some file-system events were dropped. Finish the capture for snapshot-based results.
+IdleHint=Choose an installer or start a manual capture. Zidimi only records while a capture is active.
+Resolved=Resolved application
+Unresolved=Unresolved capture
+ArtifactCount={0} artifact(s)
+Confidence={0}% confidence
+ChangeCreated=Created
+ChangeModified=Modified
+ChangeObserved=Observed
+TypeFile=File
+TypeFolder=Folder
+TypeRegistry=Registry
+TypeService=Service
+TypeTask=Task
+TypePath=PATH
+TypeEnvironment=Environment
+TypeFirewall=Firewall
+ManualCaptureName=Manual installation capture
+LoggedTraceDescription=Recorded by Install Monitor
+LoggedTraceEvidence=Install Monitor observed this artifact being created for {0}. {1}

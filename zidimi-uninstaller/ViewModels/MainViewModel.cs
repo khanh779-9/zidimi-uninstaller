@@ -46,6 +46,7 @@ public class MainViewModel : ObservableObject, IDisposable
     public DeepCleanViewModel DeepClean { get; }
     public LeftoversViewModel Leftovers { get; }
     public HistoryViewModel History { get; }
+    public InstallMonitorViewModel InstallMonitor { get; }
 
     public object? CurrentView
     {
@@ -83,7 +84,7 @@ public class MainViewModel : ObservableObject, IDisposable
 
     public MainViewModel()
     {
-        AppVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.6.0";
+        AppVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.7.0";
 
         Dashboard = new DashboardViewModel();
         Applications = new ApplicationsViewModel();
@@ -95,6 +96,7 @@ public class MainViewModel : ObservableObject, IDisposable
         DeepClean = new DeepCleanViewModel();
         Leftovers = new LeftoversViewModel();
         History = new HistoryViewModel();
+        InstallMonitor = new InstallMonitorViewModel();
 
         _navigation = CreateNavigationDefinitions();
         _navigationByKey = _navigation.ToDictionary(item => item.Key, StringComparer.OrdinalIgnoreCase);
@@ -115,6 +117,7 @@ public class MainViewModel : ObservableObject, IDisposable
         Dashboard.ReloadAllRequested += ReloadAllAsync;
         Applications.DeepCleanRequested += async app => await DeepClean.StartScanAsync(app);
         History.ScanLeftoversRequested += async app => await DeepClean.StartScanAsync(app);
+        InstallMonitor.ScanLeftoversRequested += async app => await DeepClean.StartScanAsync(app);
         DeepClean.CleanCompleted += () => _ = ReloadAllAsync();
         LanguageManager.Instance.LanguageChanged += OnLanguageChanged;
 
@@ -177,6 +180,7 @@ public class MainViewModel : ObservableObject, IDisposable
         Applications.Dispose();
         StoreApps.Dispose();
         History.Dispose();
+        InstallMonitor.Dispose();
         GC.SuppressFinalize(this);
     }
 
@@ -229,6 +233,7 @@ public class MainViewModel : ObservableObject, IDisposable
             Dashboard.IsLoading = false;
 
             await Task.WhenAll(packagesTask, featuresTask);
+            if (loadAllModules) InstallMonitor.LoadLogs();
         }
         finally
         {
@@ -273,6 +278,11 @@ public class MainViewModel : ObservableObject, IDisposable
             "Pages_StartupTitle", "Windows Startup",
             "Pages_StartupSubtitle", "Manage auto-start programs",
             "StrokeIconStartup", Startup),
+        new(
+            "monitor", "Sidebar_InstallMonitor", "Install Monitor",
+            "Pages_InstallMonitorTitle", "Install Monitor",
+            "Pages_InstallMonitorSubtitle", "Record installation changes and review logged programs",
+            "StrokeIconMemory", InstallMonitor),
         new(
             "leftovers", "Sidebar_Leftovers", "Trace Cleaner",
             "Pages_LeftoversTitle", "Leftovers Cleaner",

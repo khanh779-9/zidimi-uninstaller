@@ -1,4 +1,4 @@
-[Info]
+﻿[Info]
 LanguageName=简体中文
 
 [Sidebar]
@@ -14,6 +14,7 @@ ReloadAll=重新加载所有数据
 About=关于软件
 Leftovers=痕迹清理
 
+InstallMonitor=安装监视器
 [Pages]
 LeftoversSubtitle=Scan and clean orphaned files, registry data, services, scheduled tasks, PATH/environment entries, and firewall rules
 LeftoversTitle=残留痕迹清理
@@ -32,6 +33,8 @@ StartupSubtitle=管理随系统开机自启的项目
 SettingsTitle=设置
 SettingsSubtitle=自定义 Zidimi Uninstaller 行为与偏好
 
+InstallMonitorTitle=安装监视器
+InstallMonitorSubtitle=记录安装变化并查看已记录程序
 [Dashboard]
 AppCount=已安装程序
 StoreAppCount=Store 应用
@@ -568,3 +571,64 @@ ProtectedArtifactEvidence=the target is in a protected/shared Windows path, so a
 [Leftover]
 ServiceDllEvidencePrefix=ServiceDll ownership: 
 OrphanServiceDllEvidence=The Win32 service uses a ServiceDll module that no longer exists.
+
+[InstallMonitor]
+StillInstalled=已安装
+NotInstalled=未安装
+CaptureTitle=安装监视器
+CaptureSubtitle=在软件安装期间记录文件系统和 Windows 集成项的变化。请在安装完成后再结束捕获。
+DropTitle=将安装程序拖到这里
+DropSubtitle=拖入一个 .exe 或 .msi 文件以记录其安装过程。
+ChooseInstaller=选择安装程序
+ManualCapture=手动捕获
+FinishCapture=结束捕获
+CancelCapture=取消捕获
+Observed=已观察路径
+Started=开始时间
+SearchPlaceholder=搜索已记录程序…
+Refresh=刷新日志
+OpenFolder=打开日志文件夹
+ScanLeftovers=扫描残留
+Delete=删除日志
+EmptyTitle=暂无已记录程序
+EmptySubtitle=启动 Install Monitor 捕获以创建精确的安装记录。
+NoResultsTitle=没有匹配的日志
+NoResultsSubtitle=尝试其他应用、发布者、版本或安装程序名称。
+SelectLogTitle=选择已记录程序
+SelectLogSubtitle=从左侧选择一次捕获以查看文件和 Windows 集成项。
+StateRecording=正在记录
+StateIdle=空闲
+PreparingSnapshot=正在创建安装前快照…
+RunningInstaller=安装程序已启动。完成安装后点击“结束捕获”。
+ManualActive=手动捕获已启用。请运行安装程序，然后点击“结束捕获”。
+StartFailed=无法启动 Install Monitor：{0}
+Finalizing=正在比较前后快照并生成安装日志…
+NoLog=捕获已完成，但未能识别安装变化。
+CaptureSaved=捕获已保存：{0} 个程序，其中 {1} 个已识别。
+FinishFailed=无法完成捕获：{0}
+Cancelled=安装捕获已取消，未保存日志。
+DeleteTitle=删除安装日志
+DeleteMessage=删除“{0}”的安装日志？这不会卸载该程序。
+DeleteFailed=无法删除安装日志。
+InvalidInstaller=所选安装程序文件不存在。
+UnsupportedInstaller=Install Monitor 当前支持 .exe 和 .msi 安装程序。
+OverflowWarning=正在记录，但部分文件系统事件已丢失。请结束捕获以使用基于快照的结果。
+IdleHint=选择安装程序或开始手动捕获。Zidimi 仅在捕获活动期间记录变化。
+Resolved=已识别应用
+Unresolved=未识别捕获
+ArtifactCount={0} 个项目
+Confidence=置信度 {0}%
+ChangeCreated=已创建
+ChangeModified=已修改
+ChangeObserved=已观察
+TypeFile=文件
+TypeFolder=文件夹
+TypeRegistry=注册表
+TypeService=服务
+TypeTask=计划任务
+TypePath=PATH
+TypeEnvironment=环境变量
+TypeFirewall=防火墙
+ManualCaptureName=手动安装捕获
+LoggedTraceDescription=由 Install Monitor 记录
+LoggedTraceEvidence=Install Monitor 记录到此项目为 {0} 创建。{1}

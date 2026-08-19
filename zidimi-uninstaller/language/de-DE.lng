@@ -1,4 +1,4 @@
-[Info]
+﻿[Info]
 LanguageName=Deutsch
 
 [Sidebar]
@@ -14,6 +14,7 @@ ReloadAll=Alle Daten neu laden
 About=Über die Anwendung
 Leftovers=Spurenbereinigung
 
+InstallMonitor=Installationsmonitor
 [Pages]
 LeftoversSubtitle=Scan and clean orphaned files, registry data, services, scheduled tasks, PATH/environment entries, and firewall rules
 LeftoversTitle=Reste- & Spurenbereinigung
@@ -32,6 +33,8 @@ StartupSubtitle=Autostart-Programme verwalten
 SettingsTitle=Einstellungen
 SettingsSubtitle=Zidimi Uninstaller Verhalten anpassen
 
+InstallMonitorTitle=Installationsmonitor
+InstallMonitorSubtitle=Installationsänderungen aufzeichnen und protokollierte Programme prüfen
 [Dashboard]
 AppCount=Installierte Apps
 StoreAppCount=Store Apps
@@ -568,3 +571,64 @@ ProtectedArtifactEvidence=the target is in a protected/shared Windows path, so a
 [Leftover]
 ServiceDllEvidencePrefix=ServiceDll ownership: 
 OrphanServiceDllEvidence=The Win32 service uses a ServiceDll module that no longer exists.
+
+[InstallMonitor]
+StillInstalled=Installiert
+NotInstalled=Nicht installiert
+CaptureTitle=Installationsüberwachung
+CaptureSubtitle=Zeichnet Datei- und Windows-Integrationsänderungen während der Softwareinstallation auf. Beenden Sie die Aufzeichnung erst nach Abschluss des Setups.
+DropTitle=Installer hier ablegen
+DropSubtitle=Ziehen Sie eine .exe- oder .msi-Datei hierher, um die Installation aufzuzeichnen.
+ChooseInstaller=Installer auswählen
+ManualCapture=Manuelle Aufzeichnung
+FinishCapture=Aufzeichnung beenden
+CancelCapture=Aufzeichnung abbrechen
+Observed=Beobachtete Pfade
+Started=Gestartet
+SearchPlaceholder=Protokollierte Programme suchen…
+Refresh=Protokolle aktualisieren
+OpenFolder=Protokollordner öffnen
+ScanLeftovers=Reste scannen
+Delete=Protokoll löschen
+EmptyTitle=Keine protokollierten Programme
+EmptySubtitle=Starten Sie eine Installationsüberwachung, um eine präzise Installationsaufzeichnung zu erstellen.
+NoResultsTitle=Keine passenden Protokolle
+NoResultsSubtitle=Versuchen Sie einen anderen App-, Hersteller-, Versions- oder Installernamen.
+SelectLogTitle=Protokolliertes Programm auswählen
+SelectLogSubtitle=Wählen Sie links eine Aufzeichnung aus, um Dateien und Windows-Artefakte zu prüfen.
+StateRecording=Aufzeichnung
+StateIdle=Bereit
+PreparingSnapshot=Vorinstallations-Snapshot wird erstellt…
+RunningInstaller=Installer wurde gestartet. Schließen Sie das Setup ab und klicken Sie dann auf Aufzeichnung beenden.
+ManualActive=Manuelle Aufzeichnung ist aktiv. Starten Sie den Installer und klicken Sie danach auf Aufzeichnung beenden.
+StartFailed=Installationsüberwachung konnte nicht gestartet werden: {0}
+Finalizing=Vorher-/Nachher-Snapshots werden verglichen und das Installationsprotokoll erstellt…
+NoLog=Aufzeichnung beendet, aber es konnten keine Installationsänderungen zugeordnet werden.
+CaptureSaved=Aufzeichnung gespeichert: {0} Programm(e), {1} zugeordnet.
+FinishFailed=Aufzeichnung konnte nicht abgeschlossen werden: {0}
+Cancelled=Installationsaufzeichnung abgebrochen. Es wurde kein Protokoll gespeichert.
+DeleteTitle=Installationsprotokoll löschen
+DeleteMessage=Installationsprotokoll für "{0}" löschen? Das Programm wird dadurch nicht deinstalliert.
+DeleteFailed=Das Installationsprotokoll konnte nicht gelöscht werden.
+InvalidInstaller=Die ausgewählte Installer-Datei ist nicht vorhanden.
+UnsupportedInstaller=Install Monitor unterstützt derzeit .exe- und .msi-Installer.
+OverflowWarning=Die Aufzeichnung läuft, aber einige Dateisystemereignisse gingen verloren. Beenden Sie die Aufzeichnung für snapshotbasierte Ergebnisse.
+IdleHint=Wählen Sie einen Installer oder starten Sie eine manuelle Aufzeichnung. Zidimi zeichnet nur während einer aktiven Sitzung auf.
+Resolved=Anwendung zugeordnet
+Unresolved=Nicht zugeordnete Aufzeichnung
+ArtifactCount={0} Artefakt(e)
+Confidence={0}% Sicherheit
+ChangeCreated=Erstellt
+ChangeModified=Geändert
+ChangeObserved=Beobachtet
+TypeFile=Datei
+TypeFolder=Ordner
+TypeRegistry=Registrierung
+TypeService=Dienst
+TypeTask=Aufgabe
+TypePath=PATH
+TypeEnvironment=Umgebung
+TypeFirewall=Firewall
+ManualCaptureName=Manuelle Installationsaufzeichnung
+LoggedTraceDescription=Von Install Monitor aufgezeichnet
+LoggedTraceEvidence=Install Monitor hat beobachtet, dass dieses Artefakt für {0} erstellt wurde. {1}
