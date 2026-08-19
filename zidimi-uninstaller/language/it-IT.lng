@@ -390,3 +390,56 @@ ReleasesBtn=Versioni
 
 IssuesBtn=Segnala un problema
 
+
+; ===== v1.4 additions =====
+[Sidebar]
+History=History
+[Pages]
+HistoryTitle=Uninstall History
+HistorySubtitle=Review completed, failed, and force-uninstall operations
+[Apps]
+DeleteRegistry=Force Uninstall
+[Dialogs]
+ForceRemoveTitle=Force Uninstall
+ForceRemoveMsg=Force Uninstall will close matching processes, remove only high-confidence app-owned leftovers, and delete the broken uninstall registration for "{0}". Ambiguous traces will be left for review. Continue?
+ForceRemoveMultiMsg=Force Uninstall will process {0} applications one at a time. Only high-confidence traces are removed automatically; ambiguous traces are left for review. Continue?
+ForceRemoveBtn=Force Uninstall
+[Status]
+UninstallQueue=Uninstall queue {0}/{1}: {2}
+UninstallQueueComplete=Queue complete: {0} succeeded, {1} failed/not confirmed.
+ForceQueue=Force uninstall {0}/{1}: {2}
+ForceQueueComplete=Force uninstall complete: {0} removed, {1} need attention.
+[Toasts]
+UninstallFailed=Failed to uninstall "{0}": {1}
+UninstallQueueComplete=Uninstall queue complete: {0} succeeded, {1} need attention.
+ForceQueueComplete=Force uninstall complete: {0} removed, {1} need attention.
+[History]
+SearchPlaceholder=Search uninstall history…
+Refresh=Refresh
+Clear=Clear History
+ClearTitle=Clear Uninstall History
+ClearMessage=Clear the uninstall history? This does not restore or remove any applications.
+ScanAgain=Scan leftovers
+EmptyTitle=No uninstall history yet
+EmptySubtitle=Uninstall and force-uninstall operations will appear here
+NoResultsTitle=No matching history
+NoResultsSubtitle=Try a different application, publisher, or action
+Status={0} uninstall event(s) recorded
+OutcomeSuccess=Completed
+OutcomeFailed=Failed
+OutcomeNotConfirmed=Not confirmed
+CleanupSummary={0} leftovers · {1} freed
+NoCleanup=No automatic cleanup
+ActionStandard=Uninstall
+ActionQuiet=Quiet uninstall
+ActionForce=Force uninstall
+DetailsStillRegistered=The uninstaller exited, but the application is still registered.
+DetailsNoUninstaller=No usable uninstaller was found.
+ForceDetails=Closed {0} process(es); removed {1}/{2} high-confidence traces; {3} trace(s) left for review.
+[Leftover]
+Confidence={0}% confidence
+
+[Apps]
+Processing=Processing…
+[Toasts]
+OperationAlreadyRunning=Another uninstall operation is already running.

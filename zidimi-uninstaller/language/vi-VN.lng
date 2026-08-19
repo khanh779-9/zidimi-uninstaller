@@ -379,3 +379,63 @@ ReleasesBtn=Bản phát hành
 
 IssuesBtn=Báo cáo lỗi
 
+
+; ===== Bổ sung v1.4: hàng đợi / lịch sử / độ tin cậy =====
+[Sidebar]
+History=Lịch sử
+
+[Pages]
+HistoryTitle=Lịch sử gỡ cài đặt
+HistorySubtitle=Xem các lần gỡ thành công, thất bại và Force Uninstall
+
+[Apps]
+DeleteRegistry=Force Uninstall
+
+[Dialogs]
+ForceRemoveTitle=Force Uninstall
+ForceRemoveMsg=Force Uninstall sẽ đóng tiến trình liên quan, chỉ tự xoá các dấu vết có độ tin cậy cao thuộc riêng về "{0}", rồi xoá đăng ký gỡ cài đặt bị hỏng. Dấu vết chưa chắc chắn sẽ được giữ lại để bạn xem xét. Tiếp tục?
+ForceRemoveMultiMsg=Force Uninstall sẽ xử lý tuần tự {0} ứng dụng. Chỉ dấu vết có độ tin cậy cao được tự động xoá; phần chưa chắc chắn sẽ giữ lại để xem xét. Tiếp tục?
+ForceRemoveBtn=Force Uninstall
+
+[Status]
+UninstallQueue=Hàng đợi gỡ cài đặt {0}/{1}: {2}
+UninstallQueueComplete=Hoàn tất hàng đợi: {0} thành công, {1} lỗi/chưa xác nhận.
+ForceQueue=Force Uninstall {0}/{1}: {2}
+ForceQueueComplete=Hoàn tất Force Uninstall: {0} đã xoá, {1} cần kiểm tra.
+
+[Toasts]
+UninstallFailed=Không thể gỡ "{0}": {1}
+UninstallQueueComplete=Hoàn tất hàng đợi: {0} thành công, {1} cần kiểm tra.
+ForceQueueComplete=Hoàn tất Force Uninstall: {0} đã xoá, {1} cần kiểm tra.
+
+[History]
+SearchPlaceholder=Tìm trong lịch sử gỡ cài đặt…
+Refresh=Làm mới
+Clear=Xoá lịch sử
+ClearTitle=Xoá lịch sử gỡ cài đặt
+ClearMessage=Xoá lịch sử gỡ cài đặt? Thao tác này không khôi phục hoặc xoá thêm ứng dụng nào.
+ScanAgain=Quét phần còn sót
+EmptyTitle=Chưa có lịch sử gỡ cài đặt
+EmptySubtitle=Các lần gỡ cài đặt và Force Uninstall sẽ xuất hiện tại đây
+NoResultsTitle=Không có lịch sử phù hợp
+NoResultsSubtitle=Thử tên ứng dụng, nhà phát hành hoặc thao tác khác
+Status=Đã ghi nhận {0} lần gỡ cài đặt
+OutcomeSuccess=Hoàn tất
+OutcomeFailed=Thất bại
+OutcomeNotConfirmed=Chưa xác nhận
+CleanupSummary={0} dấu vết · giải phóng {1}
+NoCleanup=Không tự động dọn phần còn sót
+ActionStandard=Gỡ cài đặt
+ActionQuiet=Gỡ cài đặt im lặng
+ActionForce=Force Uninstall
+DetailsStillRegistered=Trình gỡ đã thoát nhưng ứng dụng vẫn còn đăng ký trong hệ thống.
+DetailsNoUninstaller=Không tìm thấy trình gỡ cài đặt có thể sử dụng.
+ForceDetails=Đã đóng {0} tiến trình; xoá {1}/{2} dấu vết độ tin cậy cao; còn {3} dấu vết cần xem xét.
+
+[Leftover]
+Confidence=Tin cậy {0}%
+
+[Apps]
+Processing=Đang xử lý…
+[Toasts]
+OperationAlreadyRunning=Đang có một thao tác gỡ cài đặt khác chạy.

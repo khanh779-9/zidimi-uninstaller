@@ -76,6 +76,9 @@
                     <DataTemplate DataType="{x:Type vm:LeftoversViewModel}">
                         <views:LeftoversView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:HistoryViewModel}">
+                        <views:HistoryView/>
+                    </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
         </Grid>

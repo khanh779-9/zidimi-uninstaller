@@ -40,6 +40,7 @@ public class MainViewModel : ObservableObject, IDisposable
     public WindowsFeaturesViewModel WindowsFeatures { get; }
     public DeepCleanViewModel DeepClean { get; }
     public LeftoversViewModel Leftovers { get; }
+    public HistoryViewModel History { get; }
 
     public object? CurrentView
     {
@@ -77,7 +78,7 @@ public class MainViewModel : ObservableObject, IDisposable
 
     public MainViewModel()
     {
-        AppVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.3.0";
+        AppVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.4.1";
 
         Dashboard = new DashboardViewModel();
         Applications = new ApplicationsViewModel();
@@ -88,6 +89,7 @@ public class MainViewModel : ObservableObject, IDisposable
         Settings = new SettingsViewModel();
         DeepClean = new DeepCleanViewModel();
         Leftovers = new LeftoversViewModel();
+        History = new HistoryViewModel();
 
         _navigation = CreateNavigationDefinitions();
         _navigationByKey = _navigation.ToDictionary(item => item.Key, StringComparer.OrdinalIgnoreCase);
@@ -101,11 +103,13 @@ public class MainViewModel : ObservableObject, IDisposable
         OpenIssuesCommand = new RelayCommand(_ => UninstallService.OpenUrl("https://github.com/khanh779-9/zidimi-uninstaller/issues"));
 
         Applications.ReloadRequested += RefreshDashboardSnapshot;
+        Applications.HistoryChanged += History.Load;
         StoreApps.ReloadRequested += RefreshDashboardSnapshot;
         Settings.ReloadDataRequested += () => _ = ReloadAllAsync();
         Dashboard.RescanRequested += ReloadDashboardAsync;
         Dashboard.ReloadAllRequested += ReloadAllAsync;
         Applications.DeepCleanRequested += async app => await DeepClean.StartScanAsync(app);
+        History.ScanLeftoversRequested += async app => await DeepClean.StartScanAsync(app);
         DeepClean.CleanCompleted += () => _ = ReloadAllAsync();
         LanguageManager.Instance.LanguageChanged += OnLanguageChanged;
 
@@ -167,6 +171,7 @@ public class MainViewModel : ObservableObject, IDisposable
         LanguageManager.Instance.LanguageChanged -= OnLanguageChanged;
         Applications.Dispose();
         StoreApps.Dispose();
+        History.Dispose();
         GC.SuppressFinalize(this);
     }
 
@@ -268,6 +273,11 @@ public class MainViewModel : ObservableObject, IDisposable
             "Pages_LeftoversTitle", "Leftovers Cleaner",
             "Pages_LeftoversSubtitle", "Scan and clean orphaned files, folders, and registry keys",
             "StrokeIconTrash", Leftovers),
+        new(
+            "history", "Sidebar_History", "History",
+            "Pages_HistoryTitle", "Uninstall History",
+            "Pages_HistorySubtitle", "Review completed, failed, and force-uninstall operations",
+            "StrokeIconClock", History),
         new(
             "settings", "Sidebar_Settings", "Settings",
             "Pages_SettingsTitle", "Preferences",

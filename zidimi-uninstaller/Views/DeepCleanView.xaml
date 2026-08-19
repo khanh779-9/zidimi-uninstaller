@@ -71,7 +71,10 @@
                                                        FontSize="12" Foreground="{StaticResource ZBrushGray}"
                                                        Visibility="{Binding FormattedSize, Converter={StaticResource NotNullToVis}}"/>
                                         </StackPanel>
-                                        <TextBlock Text="{Binding Path}" FontSize="11" Foreground="{StaticResource ZBrushMidGray}"
+                                        <TextBlock Text="{Binding Evidence}" FontSize="11" Foreground="{StaticResource ZBrushGray}"
+                                                   Margin="0,2,0,0" TextTrimming="CharacterEllipsis"
+                                                   ToolTip="{Binding Evidence}"/>
+                                        <TextBlock Text="{Binding Path}" FontSize="10.8" Foreground="{StaticResource ZBrushMidGray}"
                                                    Margin="0,2,0,0" TextTrimming="CharacterEllipsis"
                                                    ToolTip="{Binding Path}"/>
                                     </StackPanel>
@@ -79,9 +82,15 @@
                                     <controls:ZBadge Grid.Column="2" Content="{Binding TypeText}" Variant="Neutral"
                                                      VerticalAlignment="Center" Margin="10,0"/>
 
-                                    <controls:ZBadge Grid.Column="3" Content="{Binding SafetyText}"
-                                                     Variant="{Binding SafetyBadgeVariant}"
-                                                     VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="3" VerticalAlignment="Center">
+                                        <controls:ZBadge Content="{Binding ConfidenceText}"
+                                                         Variant="{Binding ConfidenceBadgeVariant}"/>
+                                        <TextBlock Text="{Binding SafetyText}"
+                                                   FontSize="10.5"
+                                                   Foreground="{StaticResource ZBrushGray}"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0,3,0,0"/>
+                                    </StackPanel>
                                 </Grid>
                             </Border>
                         </DataTemplate>

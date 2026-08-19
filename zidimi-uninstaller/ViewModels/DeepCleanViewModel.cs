@@ -125,7 +125,7 @@ public class DeepCleanViewModel : ObservableObject
     private void SetSafeOnlySelection()
     {
         foreach (var item in Items)
-            item.IsSelected = item.SafetyLevel == LeftoverSafetyLevel.Safe;
+            item.IsSelected = item.SafetyLevel == LeftoverSafetyLevel.Safe && item.ConfidenceScore >= 90;
         UpdateStats();
     }
 

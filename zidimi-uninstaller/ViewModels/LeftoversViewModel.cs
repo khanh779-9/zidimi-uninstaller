@@ -214,7 +214,7 @@ public class LeftoversViewModel : ObservableObject
     private void SetSafeOnly()
     {
         foreach (var item in Items)
-            item.IsSelected = item.SafetyLevel == LeftoverSafetyLevel.Safe;
+            item.IsSelected = item.SafetyLevel == LeftoverSafetyLevel.Safe && item.ConfidenceScore >= 90;
         UpdateStats();
     }
 

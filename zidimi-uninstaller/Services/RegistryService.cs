@@ -252,16 +252,39 @@ public static class RegistryService
     {
         try
         {
+            // Prefer the exact ARP key captured during enumeration. This avoids rescanning all
+            // uninstall hives every second while a queued uninstaller is being verified.
+            if (!string.IsNullOrWhiteSpace(target.RegistryPath))
+            {
+                var slash = target.RegistryPath.IndexOf('\\');
+                if (slash > 0)
+                {
+                    var rootName = target.RegistryPath[..slash];
+                    var subPath = target.RegistryPath[(slash + 1)..];
+                    var hive = rootName.Equals("HKEY_LOCAL_MACHINE", StringComparison.OrdinalIgnoreCase)
+                        ? RegistryHive.LocalMachine
+                        : rootName.Equals("HKEY_CURRENT_USER", StringComparison.OrdinalIgnoreCase)
+                            ? RegistryHive.CurrentUser
+                            : (RegistryHive?)null;
+
+                    if (hive.HasValue)
+                    {
+                        using var baseKey = RegistryKey.OpenBaseKey(hive.Value, target.RegistryView);
+                        using var key = baseKey.OpenSubKey(subPath, writable: false);
+                        return key != null;
+                    }
+                }
+            }
+
+            // Fallback for incomplete application snapshots (for example imported/history entries).
             return GetInstalledApplications().Any(entry =>
                 entry.RegistryView == target.RegistryView
-                && ((!string.IsNullOrWhiteSpace(target.RegistryPath)
-                     && entry.RegistryPath.Equals(target.RegistryPath, StringComparison.OrdinalIgnoreCase))
-                    || (entry.RegistryKeyName.Equals(target.RegistryKeyName, StringComparison.OrdinalIgnoreCase)
-                        && entry.DisplayName.Equals(target.DisplayName, StringComparison.OrdinalIgnoreCase))));
+                && entry.RegistryKeyName.Equals(target.RegistryKeyName, StringComparison.OrdinalIgnoreCase)
+                && entry.DisplayName.Equals(target.DisplayName, StringComparison.OrdinalIgnoreCase));
         }
         catch
         {
-            // Verification must fail closed: never deep-clean if registration state is unknown.
+            // Verification fails closed: never claim success / deep-clean if registration state is unknown.
             return true;
         }
     }

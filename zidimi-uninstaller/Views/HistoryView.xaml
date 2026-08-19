@@ -1,0 +1,150 @@
+<UserControl x:Class="zidimi_uninstaller.Views.HistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
+             xmlns:services="clr-namespace:zidimi_uninstaller.Services"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="950">
+    <Grid Margin="24,20,24,18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                Background="{StaticResource ZBrushSurfaceMuted}"
+                BorderBrush="{StaticResource ZBrushBorder}"
+                BorderThickness="1"
+                CornerRadius="10"
+                Padding="12"
+                Margin="0,0,0,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <controls:ZSearchBox Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Placeholder="{Binding [History_SearchPlaceholder], Source={x:Static services:LanguageManager.Instance}}"
+                                     MaxWidth="440"
+                                     HorizontalAlignment="Stretch"
+                                     Margin="0,0,12,0"/>
+                <WrapPanel Grid.Column="1" VerticalAlignment="Center">
+                    <controls:ZButton Content="{Binding [History_Refresh], Source={x:Static services:LanguageManager.Instance}}"
+                                      Variant="Secondary"
+                                      Icon="{StaticResource StrokeIconRefresh}"
+                                      Command="{Binding RefreshCommand}"
+                                      Margin="0,0,8,0"/>
+                    <controls:ZButton Content="{Binding [History_Clear], Source={x:Static services:LanguageManager.Instance}}"
+                                      Variant="Danger"
+                                      Icon="{StaticResource StrokeIconTrash}"
+                                      Command="{Binding ClearCommand}"/>
+                </WrapPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <ListBox ItemsSource="{Binding ItemsView}"
+                     ItemContainerStyle="{StaticResource ZStartupListItemStyle}"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     Background="Transparent">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{StaticResource ZBrushSurface}"
+                                CornerRadius="10"
+                                BorderBrush="{StaticResource ZBrushBorder}"
+                                BorderThickness="1"
+                                Padding="14,11"
+                                Margin="0,3">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Margin="0,0,16,0">
+                                    <WrapPanel>
+                                        <TextBlock Text="{Binding ApplicationName}"
+                                                   FontSize="13.5"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{StaticResource ZBrushBlack}"
+                                                   VerticalAlignment="Center"/>
+                                        <controls:ZBadge Content="{Binding OutcomeText}"
+                                                         Variant="{Binding OutcomeVariant}"
+                                                         Margin="8,0,0,0"/>
+                                    </WrapPanel>
+                                    <TextBlock Margin="0,4,0,0"
+                                               FontSize="11.5"
+                                               Foreground="{StaticResource ZBrushGray}">
+                                        <Run Text="{Binding Publisher, Mode=OneWay}"/>
+                                        <Run Text=" · "/>
+                                        <Run Text="{Binding Action, Mode=OneWay}"/>
+                                        <Run Text=" · "/>
+                                        <Run Text="{Binding CompletedAtText, Mode=OneWay}"/>
+                                        <Run Text=" · "/>
+                                        <Run Text="{Binding DurationText, Mode=OneWay}"/>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding CleanupText}"
+                                               Margin="0,3,0,0"
+                                               FontSize="11.5"
+                                               Foreground="{StaticResource ZBrushMidGray}"/>
+                                    <TextBlock Text="{Binding Details}"
+                                               Margin="0,3,0,0"
+                                               FontSize="11.5"
+                                               Foreground="{StaticResource ZBrushMidGray}"
+                                               TextTrimming="CharacterEllipsis"
+                                               ToolTip="{Binding Details}"/>
+                                </StackPanel>
+
+                                <controls:ZBadge Grid.Column="1"
+                                                 Content="{Binding Version}"
+                                                 Variant="Neutral"
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,0,10,0"/>
+
+                                <controls:ZButton Grid.Column="2"
+                                                  Content="{Binding [History_ScanAgain], Source={x:Static services:LanguageManager.Instance}}"
+                                                  Variant="Secondary"
+                                                  Icon="{StaticResource StrokeIconRescan}"
+                                                  Command="{Binding DataContext.ScanAgainCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                  CommandParameter="{Binding}"
+                                                  VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <controls:ZEmptyState Icon="{StaticResource StrokeIconClock}"
+                                  Title="{Binding [History_EmptyTitle], Source={x:Static services:LanguageManager.Instance}}"
+                                  Subtitle="{Binding [History_EmptySubtitle], Source={x:Static services:LanguageManager.Instance}}"
+                                  Visibility="{Binding ShowEmptyState, Converter={StaticResource BoolToVis}}"/>
+            <controls:ZEmptyState Icon="{StaticResource StrokeIconSearch}"
+                                  Title="{Binding [History_NoResultsTitle], Source={x:Static services:LanguageManager.Instance}}"
+                                  Subtitle="{Binding [History_NoResultsSubtitle], Source={x:Static services:LanguageManager.Instance}}"
+                                  Visibility="{Binding ShowNoResults, Converter={StaticResource BoolToVis}}"/>
+        </Grid>
+
+        <Border Grid.Row="2"
+                BorderBrush="{StaticResource ZBrushBorder}"
+                BorderThickness="0,1,0,0"
+                Margin="0,10,0,0"
+                Padding="4,9,4,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding StatusText}"
+                           FontSize="12"
+                           Foreground="{StaticResource ZBrushGray}"/>
+                <TextBlock Grid.Column="1" FontSize="12" Foreground="{StaticResource ZBrushGray}">
+                    <Run Text="{Binding VisibleCount, Mode=OneWay}"/><Run Text="/"/><Run Text="{Binding TotalCount, Mode=OneWay}"/>
+                </TextBlock>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

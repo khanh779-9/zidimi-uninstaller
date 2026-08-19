@@ -28,6 +28,7 @@ public class SortOption : ObservableObject
 public class ApplicationsViewModel : ObservableObject, IDisposable
 {
     public ObservableCollection<ApplicationEntry> Apps { get; } = new();
+    private readonly SemaphoreSlim _operationGate = new(1, 1);
 
     private readonly ListCollectionView _itemsView;
     public ICollectionView ItemsView => _itemsView;
@@ -161,6 +162,7 @@ public class ApplicationsViewModel : ObservableObject, IDisposable
     public RelayCommand OpenDetailsCommand { get; }
     public RelayCommand CloseDetailsCommand { get; }
     public event Action? ReloadRequested;
+    public event Action? HistoryChanged;
     public event Action<ApplicationEntry>? DeepCleanRequested;
 
     public ApplicationsViewModel()
@@ -184,9 +186,12 @@ public class ApplicationsViewModel : ObservableObject, IDisposable
         CloseDetailsCommand = new RelayCommand(_ => IsDetailsModalOpen = false);
 
         RescanCommand = new AsyncRelayCommand(async _ => await LoadAsync());
-        UninstallCommand = new AsyncRelayCommand(async p => await UninstallAsync(quiet: AppSettings.Instance.PreferQuietUninstall, param: p));
-        QuietUninstallCommand = new AsyncRelayCommand(async p => await UninstallAsync(quiet: true, param: p));
-        ForceRemoveCommand = new AsyncRelayCommand(async p => await ForceRemoveAsync(p));
+        UninstallCommand = new AsyncRelayCommand(async p => await RunExclusiveOperationAsync(
+            () => UninstallAsync(quiet: AppSettings.Instance.PreferQuietUninstall, param: p)));
+        QuietUninstallCommand = new AsyncRelayCommand(async p => await RunExclusiveOperationAsync(
+            () => UninstallAsync(quiet: true, param: p)));
+        ForceRemoveCommand = new AsyncRelayCommand(async p => await RunExclusiveOperationAsync(
+            () => ForceRemoveAsync(p)));
         DeepCleanSelectedCommand = new RelayCommand(_ =>
         {
             if (SelectedApp != null)
@@ -345,6 +350,26 @@ public class ApplicationsViewModel : ObservableObject, IDisposable
         return new List<ApplicationEntry>();
     }
 
+    private async Task RunExclusiveOperationAsync(Func<Task> operation)
+    {
+        if (!await _operationGate.WaitAsync(0))
+        {
+            AppServices.Toast.Show(
+                LanguageManager.T("Toasts_OperationAlreadyRunning", "Another uninstall operation is already running."),
+                ZToastType.Warning);
+            return;
+        }
+
+        try
+        {
+            await operation();
+        }
+        finally
+        {
+            _operationGate.Release();
+        }
+    }
+
     private async Task UninstallAsync(bool quiet, object? param = null)
     {
         var targets = GetTargets(param);
@@ -357,14 +382,13 @@ public class ApplicationsViewModel : ObservableObject, IDisposable
                 : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiTitle", "Uninstall {0} Applications"), targets.Count);
             var msg = targets.Count == 1
                 ? string.Format(LanguageManager.T("Dialogs_ConfirmUninstallSingleMsg", "Are you sure you want to uninstall \"{0}\"?"), targets[0].DisplayName)
-                : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiMsg", "Are you sure you want to uninstall {0} selected applications?"), targets.Count);
+                : string.Format(LanguageManager.T("Dialogs_ConfirmUninstallMultiMsg", "Are you sure you want to uninstall {0} selected applications? They will be processed one at a time."), targets.Count);
             var btn = LanguageManager.T("Dialogs_ConfirmBtn", "Uninstall");
 
             if (!await AppServices.Dialog.ConfirmAsync(title, msg, btn))
                 return;
         }
 
-        // Create Restore Point if enabled
         if (AppSettings.Instance.CreateRestorePoint)
         {
             var appDesc = targets.Count == 1 ? targets[0].DisplayName : $"{targets.Count} applications";
@@ -372,90 +396,156 @@ public class ApplicationsViewModel : ObservableObject, IDisposable
             await Task.Run(() => RestorePointService.CreateRestorePoint(appDesc));
         }
 
-        int launched = 0;
-        foreach (var entry in targets)
+        var successful = new List<ApplicationEntry>();
+        var failed = 0;
+        var actionName = quiet
+            ? LanguageManager.T("History_ActionQuiet", "Quiet uninstall")
+            : LanguageManager.T("History_ActionStandard", "Uninstall");
+
+        for (var index = 0; index < targets.Count; index++)
         {
+            var entry = targets[index];
+            var startedAt = DateTime.Now;
+            entry.IsUninstalling = true;
+            StatusText = string.Format(
+                LanguageManager.T("Status_UninstallQueue", "Uninstall queue {0}/{1}: {2}"),
+                index + 1,
+                targets.Count,
+                entry.DisplayName);
+
             try
             {
-                // 3. Terminate running processes holding locks if enabled
                 if (AppSettings.Instance.AutoKillProcesses)
                 {
-                    var procs = await Task.Run(() => ProcessHunterService.FindRunningProcesses(entry));
-                    if (procs.Count > 0)
+                    var processes = await Task.Run(() => ProcessHunterService.FindRunningProcesses(entry));
+                    if (processes.Count > 0)
                     {
-                        var killed = await Task.Run(() => ProcessHunterService.TerminateProcesses(procs));
+                        var killed = await Task.Run(() => ProcessHunterService.TerminateProcesses(processes));
                         if (killed > 0)
-                            AppServices.Toast.Show(string.Format(LanguageManager.T("Toasts_KilledProcesses", "Closed {0} locking process(es) for \"{1}\"."), killed, entry.DisplayName), ZToastType.Info);
+                        {
+                            AppServices.Toast.Show(
+                                string.Format(LanguageManager.T("Toasts_KilledProcesses", "Closed {0} locking process(es) for \"{1}\"."), killed, entry.DisplayName),
+                                ZToastType.Info);
+                        }
                     }
                 }
 
-                // 4. Launch official uninstaller (standard GUI if not quiet)
                 var process = UninstallService.Run(entry, quiet);
                 if (process == null)
+                    throw new NoWayToUninstallException();
+
+                int? exitCode = null;
+                try
                 {
-                    AppServices.Toast.Show(string.Format(LanguageManager.T("Toasts_UninstallerNotFound", "Uninstaller not found for \"{0}\"."), entry.DisplayName), ZToastType.Error);
+                    await process.WaitForExitAsync();
+                    exitCode = process.ExitCode;
+                }
+                catch
+                {
+                    // Some shell-launched uninstallers do not expose a usable exit code.
+                }
+                finally
+                {
+                    process.Dispose();
+                }
+
+                var uninstallConfirmed = await WaitForUninstallRegistrationRemovalAsync(entry);
+                if (!uninstallConfirmed)
+                {
+                    failed++;
+                    UninstallHistoryService.Add(UninstallHistoryEntry.FromApplication(
+                        entry,
+                        actionName,
+                        UninstallOutcome.NotConfirmed,
+                        startedAt,
+                        exitCode,
+                        details: LanguageManager.T("History_DetailsStillRegistered", "The uninstaller exited, but the application is still registered.")));
+                    HistoryChanged?.Invoke();
+
+                    AppServices.Toast.Show(
+                        string.Format(LanguageManager.T("Toasts_UninstallNotConfirmed", "Uninstallation of \"{0}\" was not confirmed. The application is still registered."), entry.DisplayName),
+                        ZToastType.Warning);
                     continue;
                 }
 
-                entry.IsUninstalling = true;
-                launched++;
+                successful.Add(entry);
+                UninstallHistoryService.Add(UninstallHistoryEntry.FromApplication(
+                    entry,
+                    actionName,
+                    UninstallOutcome.Success,
+                    startedAt,
+                    exitCode,
+                    details: exitCode.HasValue ? $"Exit code: {exitCode.Value}" : string.Empty));
+                HistoryChanged?.Invoke();
 
-                // Track process exit to trigger Deep Clean leftover review modal and list cleanup
-                _ = Task.Run(async () =>
-                {
-                    try
-                    {
-                        await process.WaitForExitAsync();
-                    }
-                    catch { }
-
-                    var uninstallConfirmed = await WaitForUninstallRegistrationRemovalAsync(entry);
-
-                    System.Windows.Application.Current?.Dispatcher.Invoke(() =>
-                    {
-                        entry.IsUninstalling = false;
-
-                        if (!uninstallConfirmed)
-                        {
-                            AppServices.Toast.Show(
-                                string.Format(LanguageManager.T("Toasts_UninstallNotConfirmed", "Uninstallation of \"{0}\" was not confirmed. The application is still registered."), entry.DisplayName),
-                                ZToastType.Warning);
-                            return;
-                        }
-
-                        entry.PropertyChanged -= OnEntryPropertyChanged;
-                        Apps.Remove(entry);
-                        if (ReferenceEquals(SelectedApp, entry))
-                            SelectedApp = null;
-                        UpdateCounts();
-                        ReloadRequested?.Invoke();
-                    });
-
-                    if (uninstallConfirmed && AppSettings.Instance.EnableDeepClean)
-                    {
-                        await Task.Delay(1000);
-                        System.Windows.Application.Current?.Dispatcher.Invoke(() =>
-                        {
-                            DeepCleanRequested?.Invoke(entry);
-                        });
-                    }
-                });
+                entry.PropertyChanged -= OnEntryPropertyChanged;
+                Apps.Remove(entry);
+                if (ReferenceEquals(SelectedApp, entry))
+                    SelectedApp = null;
+                UpdateCounts();
             }
             catch (NoWayToUninstallException)
             {
-                AppServices.Toast.Show(string.Format(LanguageManager.T("Toasts_UninstallerNotFound", "Uninstaller not found for \"{0}\"."), entry.DisplayName), ZToastType.Error);
+                failed++;
+                UninstallHistoryService.Add(UninstallHistoryEntry.FromApplication(
+                    entry,
+                    actionName,
+                    UninstallOutcome.Failed,
+                    startedAt,
+                    details: LanguageManager.T("History_DetailsNoUninstaller", "No usable uninstaller was found.")));
+                HistoryChanged?.Invoke();
+                AppServices.Toast.Show(
+                    string.Format(LanguageManager.T("Toasts_UninstallerNotFound", "Uninstaller not found for \"{0}\"."), entry.DisplayName),
+                    ZToastType.Error);
+            }
+            catch (Exception ex)
+            {
+                failed++;
+                UninstallHistoryService.Add(UninstallHistoryEntry.FromApplication(
+                    entry,
+                    actionName,
+                    UninstallOutcome.Failed,
+                    startedAt,
+                    details: ex.Message));
+                HistoryChanged?.Invoke();
+                AppServices.Toast.Show(
+                    string.Format(LanguageManager.T("Toasts_UninstallFailed", "Failed to uninstall \"{0}\": {1}"), entry.DisplayName, ex.Message),
+                    ZToastType.Error);
+            }
+            finally
+            {
+                entry.IsUninstalling = false;
             }
         }
 
-        if (launched > 0)
+        ReloadRequested?.Invoke();
+        UpdateCounts();
+
+        StatusText = string.Format(
+            LanguageManager.T("Status_UninstallQueueComplete", "Queue complete: {0} succeeded, {1} failed/not confirmed."),
+            successful.Count,
+            failed);
+
+        if (successful.Count > 0)
         {
-            AppServices.Toast.Show(string.Format(LanguageManager.T("Toasts_LaunchedUninstallers", "Launched {0} uninstaller(s)."), launched), ZToastType.Success);
+            AppServices.Toast.Show(
+                string.Format(LanguageManager.T("Toasts_UninstallQueueComplete", "Uninstall queue complete: {0} succeeded, {1} need attention."), successful.Count, failed),
+                failed == 0 ? ZToastType.Success : ZToastType.Warning);
+        }
+
+        // A modal review works naturally for a single uninstall. For batch operations, users can
+        // use History -> Scan leftovers so the queue is never blocked by a series of modals.
+        if (successful.Count == 1 && targets.Count == 1 && AppSettings.Instance.EnableDeepClean)
+        {
+            await Task.Delay(500);
+            DeepCleanRequested?.Invoke(successful[0]);
         }
     }
 
     private static async Task<bool> WaitForUninstallRegistrationRemovalAsync(ApplicationEntry entry)
     {
-        var deadline = DateTime.UtcNow.AddSeconds(15);
+        // Bootstrapper uninstallers sometimes exit before their child process removes the ARP entry.
+        var deadline = DateTime.UtcNow.AddSeconds(45);
         while (DateTime.UtcNow < deadline)
         {
             if (!RegistryService.IsApplicationRegistered(entry))
@@ -472,35 +562,108 @@ public class ApplicationsViewModel : ObservableObject, IDisposable
         var targets = GetTargets(param);
         if (targets.Count == 0) return;
 
-        var title = LanguageManager.T("Dialogs_ForceRemoveTitle", "Delete Uninstall Registration");
-        var msg = string.Format(LanguageManager.T("Dialogs_ForceRemoveMsg", "This will remove the uninstall registration entry for \"{0}\" from the registry.\nOnly use this if normal uninstallation fails. Continue?"), targets[0].DisplayName);
-        var btn = LanguageManager.T("Dialogs_ForceRemoveBtn", "Delete");
+        var title = LanguageManager.T("Dialogs_ForceRemoveTitle", "Force Uninstall");
+        var msg = targets.Count == 1
+            ? string.Format(
+                LanguageManager.T("Dialogs_ForceRemoveMsg", "Force Uninstall will close matching processes, remove only high-confidence app-owned leftovers, and delete the broken uninstall registration for \"{0}\". Ambiguous traces will be left for review. Continue?"),
+                targets[0].DisplayName)
+            : string.Format(
+                LanguageManager.T("Dialogs_ForceRemoveMultiMsg", "Force Uninstall will process {0} applications one at a time. Only high-confidence traces are removed automatically; ambiguous traces are left for review. Continue?"),
+                targets.Count);
+        var btn = LanguageManager.T("Dialogs_ForceRemoveBtn", "Force Uninstall");
 
-        var ok = await AppServices.Dialog.ConfirmAsync(title, msg, btn);
-        if (!ok) return;
+        if (!await AppServices.Dialog.ConfirmAsync(title, msg, btn)) return;
 
-        int removed = 0;
-        foreach (var entry in targets.ToList())
+        if (AppSettings.Instance.CreateRestorePoint)
         {
-            if (RegistryService.RemoveEntry(entry))
+            AppServices.Toast.Show(LanguageManager.T("Toasts_CreatingRestorePoint", "Creating System Restore Point…"), ZToastType.Info);
+            await Task.Run(() => RestorePointService.CreateRestorePoint(targets.Count == 1 ? targets[0].DisplayName : "Force uninstall batch"));
+        }
+
+        var succeeded = 0;
+        var needsAttention = 0;
+        ApplicationEntry? reviewTarget = null;
+
+        for (var index = 0; index < targets.Count; index++)
+        {
+            var entry = targets[index];
+            var startedAt = DateTime.Now;
+            entry.IsUninstalling = true;
+            StatusText = string.Format(
+                LanguageManager.T("Status_ForceQueue", "Force uninstall {0}/{1}: {2}"),
+                index + 1,
+                targets.Count,
+                entry.DisplayName);
+
+            try
             {
-                entry.PropertyChanged -= OnEntryPropertyChanged;
-                Apps.Remove(entry);
-                if (ReferenceEquals(SelectedApp, entry))
-                    SelectedApp = null;
-                removed++;
+                var result = await Task.Run(() => ForceUninstallService.Run(entry, AppSettings.Instance.SendToRecycleBin));
+                var outcome = result.RegistrationRemoved ? UninstallOutcome.Success : UninstallOutcome.NotConfirmed;
+                var details = string.Format(
+                    LanguageManager.T("History_ForceDetails", "Closed {0} process(es); removed {1}/{2} high-confidence traces; {3} trace(s) left for review."),
+                    result.ProcessesClosed,
+                    result.RemovedLeftovers,
+                    result.HighConfidenceCandidates,
+                    result.ReviewCandidates);
+
+                UninstallHistoryService.Add(UninstallHistoryEntry.FromApplication(
+                    entry,
+                    LanguageManager.T("History_ActionForce", "Force uninstall"),
+                    outcome,
+                    startedAt,
+                    removedLeftovers: result.RemovedLeftovers,
+                    freedBytes: result.FreedBytes,
+                    details: details));
+                HistoryChanged?.Invoke();
+
+                if (result.RegistrationRemoved)
+                {
+                    succeeded++;
+                    entry.PropertyChanged -= OnEntryPropertyChanged;
+                    Apps.Remove(entry);
+                    if (ReferenceEquals(SelectedApp, entry))
+                        SelectedApp = null;
+                }
+                else
+                {
+                    needsAttention++;
+                }
+
+                if (result.ReviewCandidates > 0 && targets.Count == 1)
+                    reviewTarget = entry;
+            }
+            catch (Exception ex)
+            {
+                needsAttention++;
+                UninstallHistoryService.Add(UninstallHistoryEntry.FromApplication(
+                    entry,
+                    LanguageManager.T("History_ActionForce", "Force uninstall"),
+                    UninstallOutcome.Failed,
+                    startedAt,
+                    details: ex.Message));
+                HistoryChanged?.Invoke();
+            }
+            finally
+            {
+                entry.IsUninstalling = false;
             }
         }
 
-        if (removed > 0)
+        UpdateCounts();
+        ReloadRequested?.Invoke();
+        StatusText = string.Format(
+            LanguageManager.T("Status_ForceQueueComplete", "Force uninstall complete: {0} removed, {1} need attention."),
+            succeeded,
+            needsAttention);
+
+        AppServices.Toast.Show(
+            string.Format(LanguageManager.T("Toasts_ForceQueueComplete", "Force uninstall complete: {0} removed, {1} need attention."), succeeded, needsAttention),
+            needsAttention == 0 ? ZToastType.Success : ZToastType.Warning);
+
+        if (reviewTarget != null && AppSettings.Instance.EnableDeepClean)
         {
-            AppServices.Toast.Show(string.Format(LanguageManager.T("Toasts_RemovedRegistryEntries", "Removed {0} entries from registry."), removed), ZToastType.Success);
-            UpdateCounts();
-            ReloadRequested?.Invoke();
-        }
-        else
-        {
-            AppServices.Toast.Show(LanguageManager.T("Toasts_CannotRemoveRegistry", "Unable to remove registry entry."), ZToastType.Error);
+            await Task.Delay(300);
+            DeepCleanRequested?.Invoke(reviewTarget);
         }
     }
 

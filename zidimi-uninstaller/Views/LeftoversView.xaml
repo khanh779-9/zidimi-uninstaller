@@ -137,6 +137,12 @@
                                                Foreground="{StaticResource ZBrushGray}"
                                                TextTrimming="CharacterEllipsis"
                                                Margin="0,2,0,0"/>
+                                    <TextBlock Text="{Binding Evidence}"
+                                               FontSize="11"
+                                               Foreground="{StaticResource ZBrushMidGray}"
+                                               TextTrimming="CharacterEllipsis"
+                                               Margin="0,2,0,0"
+                                               ToolTip="{Binding Evidence}"/>
                                     <TextBlock Text="{Binding Path}"
                                                FontSize="11.5"
                                                Foreground="{StaticResource ZBrushMidGray}"
@@ -145,11 +151,15 @@
                                                ToolTip="{Binding Path}"/>
                                 </StackPanel>
 
-                                <controls:ZBadge Grid.Column="3"
-                                                 Content="{Binding SafetyText}"
-                                                 Variant="{Binding SafetyBadgeVariant}"
-                                                 VerticalAlignment="Center"
-                                                 Margin="0,0,12,0"/>
+                                <StackPanel Grid.Column="3" VerticalAlignment="Center" Margin="0,0,12,0">
+                                    <controls:ZBadge Content="{Binding ConfidenceText}"
+                                                     Variant="{Binding ConfidenceBadgeVariant}"/>
+                                    <TextBlock Text="{Binding SafetyText}"
+                                               FontSize="10.5"
+                                               Foreground="{StaticResource ZBrushGray}"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,3,0,0"/>
+                                </StackPanel>
 
                                 <TextBlock Grid.Column="4"
                                            Text="{Binding FormattedSize}"
