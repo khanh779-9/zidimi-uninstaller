@@ -47,6 +47,8 @@ public class MainViewModel : ObservableObject, IDisposable
     public LeftoversViewModel Leftovers { get; }
     public HistoryViewModel History { get; }
     public InstallMonitorViewModel InstallMonitor { get; }
+    public BrowserExtensionsViewModel BrowserExtensions { get; }
+    public SoftwareHealthViewModel SoftwareHealth { get; }
 
     public object? CurrentView
     {
@@ -84,7 +86,7 @@ public class MainViewModel : ObservableObject, IDisposable
 
     public MainViewModel()
     {
-        AppVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.7.0";
+        AppVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.8.0";
 
         Dashboard = new DashboardViewModel();
         Applications = new ApplicationsViewModel();
@@ -97,6 +99,8 @@ public class MainViewModel : ObservableObject, IDisposable
         Leftovers = new LeftoversViewModel();
         History = new HistoryViewModel();
         InstallMonitor = new InstallMonitorViewModel();
+        BrowserExtensions = new BrowserExtensionsViewModel();
+        SoftwareHealth = new SoftwareHealthViewModel();
 
         _navigation = CreateNavigationDefinitions();
         _navigationByKey = _navigation.ToDictionary(item => item.Key, StringComparer.OrdinalIgnoreCase);
@@ -118,6 +122,8 @@ public class MainViewModel : ObservableObject, IDisposable
         Applications.DeepCleanRequested += async app => await DeepClean.StartScanAsync(app);
         History.ScanLeftoversRequested += async app => await DeepClean.StartScanAsync(app);
         InstallMonitor.ScanLeftoversRequested += async app => await DeepClean.StartScanAsync(app);
+        SoftwareHealth.RefreshRequested += ReloadAllAsync;
+        SoftwareHealth.NavigateRequested += Navigate;
         DeepClean.CleanCompleted += () => _ = ReloadAllAsync();
         LanguageManager.Instance.LanguageChanged += OnLanguageChanged;
 
@@ -132,6 +138,8 @@ public class MainViewModel : ObservableObject, IDisposable
 
         if (string.Equals(destination.Key, "apps", StringComparison.OrdinalIgnoreCase))
             Applications.HideSystemComponents = AppSettings.Instance.HideSystemComponents;
+        if (string.Equals(destination.Key, "health", StringComparison.OrdinalIgnoreCase))
+            RefreshSoftwareHealthSnapshot();
 
         _currentKey = destination.Key;
         PageTitle = LanguageManager.T(destination.TitleKey, destination.TitleFallback);
@@ -187,6 +195,7 @@ public class MainViewModel : ObservableObject, IDisposable
     private void OnLanguageChanged()
     {
         RefreshNavigationLabels();
+        RefreshSoftwareHealthSnapshot();
         Navigate(_currentKey);
     }
 
@@ -223,6 +232,7 @@ public class MainViewModel : ObservableObject, IDisposable
 
         var packagesTask = loadAllModules ? Packages.LoadAsync() : Task.CompletedTask;
         var featuresTask = loadAllModules ? WindowsFeatures.LoadAsync() : Task.CompletedTask;
+        var browserExtensionsTask = loadAllModules ? BrowserExtensions.LoadAsync() : Task.CompletedTask;
 
         try
         {
@@ -232,8 +242,12 @@ public class MainViewModel : ObservableObject, IDisposable
             RefreshDashboardSnapshot();
             Dashboard.IsLoading = false;
 
-            await Task.WhenAll(packagesTask, featuresTask);
-            if (loadAllModules) InstallMonitor.LoadLogs();
+            await Task.WhenAll(packagesTask, featuresTask, browserExtensionsTask);
+            if (loadAllModules)
+            {
+                InstallMonitor.LoadLogs();
+                RefreshSoftwareHealthSnapshot();
+            }
         }
         finally
         {
@@ -246,6 +260,15 @@ public class MainViewModel : ObservableObject, IDisposable
     private void RefreshDashboardSnapshot()
         => Dashboard.UpdateFromLoadedData(Applications.Apps, StoreApps.Apps.Count, Startup.Entries.Count);
 
+    private void RefreshSoftwareHealthSnapshot()
+        => SoftwareHealth.Update(
+            Applications.Apps,
+            Packages.Packages,
+            Startup.Entries,
+            BrowserExtensions.Extensions,
+            InstallMonitor.Logs,
+            Leftovers.Items);
+
     private IReadOnlyList<NavigationDefinition> CreateNavigationDefinitions() =>
     [
         new(
@@ -253,6 +276,11 @@ public class MainViewModel : ObservableObject, IDisposable
             "Pages_DashboardTitle", "Dashboard",
             "Pages_DashboardSubtitle", "Quick overview of installed applications",
             "StrokeIconDashboard", Dashboard),
+        new(
+            "health", "Sidebar_SoftwareHealth", "Software Health",
+            "Pages_SoftwareHealthTitle", "Software Health",
+            "Pages_SoftwareHealthSubtitle", "Review software maintenance signals from loaded system data",
+            "StrokeIconShield", SoftwareHealth),
         new(
             "apps", "Sidebar_Applications", "Applications",
             "Pages_AppsTitle", "Installed Applications",
@@ -278,6 +306,11 @@ public class MainViewModel : ObservableObject, IDisposable
             "Pages_StartupTitle", "Windows Startup",
             "Pages_StartupSubtitle", "Manage auto-start programs",
             "StrokeIconStartup", Startup),
+        new(
+            "extensions", "Sidebar_BrowserExtensions", "Browser Extensions",
+            "Pages_BrowserExtensionsTitle", "Browser Extensions",
+            "Pages_BrowserExtensionsSubtitle", "Review extensions, profiles, permissions, and capability signals",
+            "StrokeIconGlobe", BrowserExtensions),
         new(
             "monitor", "Sidebar_InstallMonitor", "Install Monitor",
             "Pages_InstallMonitorTitle", "Install Monitor",

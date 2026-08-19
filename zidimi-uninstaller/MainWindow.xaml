@@ -82,6 +82,12 @@
                     <DataTemplate DataType="{x:Type vm:InstallMonitorViewModel}">
                         <views:InstallMonitorView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:BrowserExtensionsViewModel}">
+                        <views:BrowserExtensionsView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:SoftwareHealthViewModel}">
+                        <views:SoftwareHealthView/>
+                    </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
         </Grid>
