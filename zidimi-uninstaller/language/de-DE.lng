@@ -15,7 +15,7 @@ About=Über die Anwendung
 Leftovers=Spurenbereinigung
 
 [Pages]
-LeftoversSubtitle=Verwaiste Dateien, Ordner, Daten und Registry-Schlüssel deinstallierter Software bereinigen
+LeftoversSubtitle=Scan and clean orphaned files, registry data, services, scheduled tasks, PATH/environment entries, and firewall rules
 LeftoversTitle=Reste- & Spurenbereinigung
 DashboardTitle=Übersicht
 DashboardSubtitle=Schnellübersicht der installierten Anwendungen
@@ -168,7 +168,7 @@ SelectSafeOnly=Nur sichere auswählen
 Skip=Überspringen
 CleanSelected={0} Elemente bereinigen
 CleaningProgress=Restelemente werden entfernt…
-ScanningProgress=Suche nach Restdateien und Registrierungsspuren…
+ScanningProgress=Scanning files, registry and Windows integration artifacts…
 
 [Settings]
 SectionTitle=Einstellungen
@@ -188,7 +188,7 @@ AutoKillDesc=Aktive Prozesse scannen und beenden, die Dateien vor Deinstallation
 RestorePoint=Systemwiederherstellungspunkt erstellen
 RestorePointDesc=Vor Entfernungsoperationen automatisch einen Wiederherstellungspunkt erstellen.
 DeepCleanHeader=Reste-Bereinigung (Deep Clean)
-DeepCleanSubtitle=Automatisch verbleibende Dateien, Ordner und Registrierungsschlüssel bereinigen
+DeepCleanSubtitle=Scan and purge leftover files, folders, registry keys and Windows integration artifacts
 AutoDeepClean=Reste nach Deinstallation suchen
 AutoDeepCleanDesc=Deep Clean automatisch nach Abschluss des Uninstallers ausführen.
 RecycleBin=Gelöschte Dateien in den Papierkorb verschieben
@@ -519,3 +519,52 @@ TargetUnsupported=Drag an EXE file or an application folder.
 
 [Apps]
 TargetUnsafeContainsRegistered=Direct-path removal is blocked because the folder contains a registered application's InstallLocation.
+
+; ===== v1.6 Windows artifact cleanup additions =====
+[Leftovers]
+FilterServices=Services
+FilterTasks=Tasks
+FilterEnvironment=Environment
+FilterFirewall=Firewall
+ScanningServices=Scanning orphaned Windows services…
+ScanningTasks=Scanning orphaned scheduled tasks…
+ScanningEnvironment=Scanning broken PATH entries…
+ScanningFirewall=Scanning orphaned firewall rules…
+
+[Leftover]
+TypeService=Service
+TypeScheduledTask=Scheduled Task
+TypePath=PATH Entry
+TypeEnvironment=Environment
+TypeFirewall=Firewall Rule
+ServiceDescription=Windows service · {0}
+OrphanServiceDescription=Service executable is missing · {0}
+OrphanServiceEvidence=The Win32 service points to a local executable that no longer exists.
+TaskNoExecutable=no executable action
+TaskDescription=Scheduled task · {0}
+OrphanTaskDescription=Scheduled task executable is missing · {0}
+OrphanTaskEvidence=A third-party scheduled task points to a local executable that no longer exists.
+PathName={0} PATH entry
+PathDescription={0} PATH segment · {1}
+EnvironmentDescription={0} environment variable
+BrokenPathDescription=Broken {0} PATH segment · {1}
+BrokenPathEvidence=The PATH segment resolves to a local path that no longer exists.
+FirewallDuplicateEvidence=multiple firewall rules share this name, so automatic removal is disabled
+FirewallDescription=Windows Firewall rule · {0}
+OrphanFirewallDescription=Firewall rule executable is missing · {0}
+OrphanFirewallEvidence=A unique third-party firewall rule points to an executable that no longer exists.
+OrphanFirewallDuplicateEvidence=The executable is missing, but multiple firewall rules share this rule name; review before removal.
+EvidenceInsideInstall=The artifact executable/path is inside the application's registered InstallLocation.
+EvidenceDisplayIcon=The artifact points to the executable registered as the application's DisplayIcon.
+EvidenceNamePublisher=Artifact name matches the application and the executable publisher matches the registered publisher.
+EvidencePublisher=Executable publisher matches the application's registered publisher; artifact name is only a partial match.
+EvidenceExactName=Artifact name strongly matches the full application name; no stronger path ownership proof was available.
+EvidencePartialName=Artifact name contains distinctive application-name tokens; review is recommended.
+EvidenceWeakName=Artifact name has a partial application-name match; this is weak ownership evidence.
+
+[Leftover]
+ProtectedArtifactEvidence=the target is in a protected/shared Windows path, so automatic removal is disabled
+
+[Leftover]
+ServiceDllEvidencePrefix=ServiceDll ownership: 
+OrphanServiceDllEvidence=The Win32 service uses a ServiceDll module that no longer exists.

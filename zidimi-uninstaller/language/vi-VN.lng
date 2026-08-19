@@ -15,7 +15,7 @@ About=Thông tin phần mềm
 Leftovers=Dọn dấu vết
 
 [Pages]
-LeftoversSubtitle=Quét và dọn dẹp các tệp, thư mục, dữ liệu và khóa registry còn sót lại của ứng dụng cũ
+LeftoversSubtitle=Quét và dọn file, Registry, dịch vụ, tác vụ theo lịch, PATH/biến môi trường và quy tắc tường lửa còn sót lại
 LeftoversTitle=Quét dấu vết & Tàn dư
 DashboardTitle=Tổng quan
 DashboardSubtitle=Thông tin nhanh về các ứng dụng đã cài
@@ -156,7 +156,7 @@ SelectSafeOnly=Chỉ chọn mục an toàn
 Skip=Bỏ qua
 CleanSelected=Dọn dẹp {0} mục
 CleaningProgress=Đang dọn dẹp các tệp và registry tàn dư…
-ScanningProgress=Đang quét tệp dư thừa và dấu vết Registry…
+ScanningProgress=Đang quét file, Registry và các thành phần tích hợp Windows…
 
 [Settings]
 SectionTitle=Tuỳ chọn
@@ -176,7 +176,7 @@ AutoKillDesc=Quét và buộc đóng các tiến trình đang chiếm giữ file
 RestorePoint=Tạo điểm khôi phục hệ thống (System Restore Point)
 RestorePointDesc=Tự động tạo Restore Point trước khi xoá để phòng ngừa rủi ro.
 DeepCleanHeader=Dọn dẹp tàn dư (Deep Clean)
-DeepCleanSubtitle=Tự động quét và xoá sạch file rác, thư mục thừa và khoá registry còn sót
+DeepCleanSubtitle=Quét và dọn file, thư mục, Registry cùng các thành phần tích hợp Windows còn sót lại
 AutoDeepClean=Quét tàn dư sau khi gỡ cài đặt
 AutoDeepCleanDesc=Tự động kích hoạt quét Deep Clean khi trình gỡ cài đặt hoàn tất.
 RecycleBin=Đưa file đã xoá vào Thùng rác (Recycle Bin)
@@ -534,3 +534,52 @@ TargetUnsupported=Hãy kéo file EXE hoặc thư mục ứng dụng.
 
 [Apps]
 TargetUnsafeContainsRegistered=Đã chặn xóa đường dẫn trực tiếp vì thư mục chứa InstallLocation của một ứng dụng đã đăng ký.
+
+; ===== v1.6 Windows artifact cleanup additions =====
+[Leftovers]
+FilterServices=Dịch vụ
+FilterTasks=Tác vụ
+FilterEnvironment=Môi trường
+FilterFirewall=Tường lửa
+ScanningServices=Đang quét các dịch vụ Windows mồ côi…
+ScanningTasks=Đang quét các tác vụ theo lịch mồ côi…
+ScanningEnvironment=Đang quét các mục PATH bị hỏng…
+ScanningFirewall=Đang quét các quy tắc tường lửa mồ côi…
+
+[Leftover]
+TypeService=Dịch vụ
+TypeScheduledTask=Tác vụ theo lịch
+TypePath=Mục PATH
+TypeEnvironment=Biến môi trường
+TypeFirewall=Quy tắc tường lửa
+ServiceDescription=Dịch vụ Windows · {0}
+OrphanServiceDescription=File thực thi của dịch vụ không còn tồn tại · {0}
+OrphanServiceEvidence=Dịch vụ Win32 đang trỏ đến một file thực thi cục bộ không còn tồn tại.
+TaskNoExecutable=không có hành động chạy file
+TaskDescription=Tác vụ theo lịch · {0}
+OrphanTaskDescription=File thực thi của tác vụ không còn tồn tại · {0}
+OrphanTaskEvidence=Một tác vụ theo lịch của bên thứ ba đang trỏ đến file thực thi cục bộ không còn tồn tại.
+PathName=Mục PATH {0}
+PathDescription=Đoạn PATH {0} · {1}
+EnvironmentDescription=Biến môi trường {0}
+BrokenPathDescription=Đoạn PATH {0} bị hỏng · {1}
+BrokenPathEvidence=Mục PATH được phân giải tới một đường dẫn cục bộ không còn tồn tại.
+FirewallDuplicateEvidence=có nhiều quy tắc tường lửa trùng tên nên Zidimi không tự động xóa
+FirewallDescription=Quy tắc Windows Firewall · {0}
+OrphanFirewallDescription=File thực thi của quy tắc tường lửa không còn tồn tại · {0}
+OrphanFirewallEvidence=Một quy tắc tường lửa bên thứ ba có tên duy nhất đang trỏ đến file thực thi không còn tồn tại.
+OrphanFirewallDuplicateEvidence=File thực thi không còn tồn tại nhưng có nhiều quy tắc trùng tên; hãy kiểm tra trước khi xóa.
+EvidenceInsideInstall=File/đường dẫn của thành phần nằm bên trong InstallLocation đã đăng ký của ứng dụng.
+EvidenceDisplayIcon=Thành phần trỏ đến đúng file thực thi được đăng ký làm DisplayIcon của ứng dụng.
+EvidenceNamePublisher=Tên thành phần khớp ứng dụng và nhà phát hành của file thực thi khớp nhà phát hành đã đăng ký.
+EvidencePublisher=Nhà phát hành file thực thi khớp ứng dụng; tên thành phần chỉ khớp một phần.
+EvidenceExactName=Tên thành phần khớp mạnh với tên đầy đủ của ứng dụng nhưng chưa có bằng chứng sở hữu đường dẫn mạnh hơn.
+EvidencePartialName=Tên thành phần chứa các từ khóa đặc trưng của ứng dụng; nên kiểm tra trước khi xóa.
+EvidenceWeakName=Tên thành phần chỉ khớp một phần với ứng dụng; đây là bằng chứng sở hữu yếu.
+
+[Leftover]
+ProtectedArtifactEvidence=đích nằm trong đường dẫn Windows được bảo vệ/dùng chung nên Zidimi không tự động xóa
+
+[Leftover]
+ServiceDllEvidencePrefix=Quyền sở hữu ServiceDll: 
+OrphanServiceDllEvidence=Dịch vụ Win32 sử dụng mô-đun ServiceDll không còn tồn tại.

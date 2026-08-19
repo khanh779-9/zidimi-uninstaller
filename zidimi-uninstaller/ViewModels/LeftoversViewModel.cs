@@ -1,6 +1,10 @@
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Data;
 using zidimi_uninstaller.Controls;
 using zidimi_uninstaller.Models;
@@ -82,6 +86,10 @@ public class LeftoversViewModel : ObservableObject
                 OnPropertyChanged(nameof(IsFilterFolders));
                 OnPropertyChanged(nameof(IsFilterRegistry));
                 OnPropertyChanged(nameof(IsFilterShortcuts));
+                OnPropertyChanged(nameof(IsFilterServices));
+                OnPropertyChanged(nameof(IsFilterTasks));
+                OnPropertyChanged(nameof(IsFilterEnvironment));
+                OnPropertyChanged(nameof(IsFilterFirewall));
                 _itemsView.Refresh();
                 UpdateStats();
             }
@@ -92,6 +100,10 @@ public class LeftoversViewModel : ObservableObject
     public bool IsFilterFolders => ActiveFilter == "Folders";
     public bool IsFilterRegistry => ActiveFilter == "Registry";
     public bool IsFilterShortcuts => ActiveFilter == "Shortcuts";
+    public bool IsFilterServices => ActiveFilter == "Services";
+    public bool IsFilterTasks => ActiveFilter == "Tasks";
+    public bool IsFilterEnvironment => ActiveFilter == "Environment";
+    public bool IsFilterFirewall => ActiveFilter == "Firewall";
 
     public int TotalCount => Items.Count;
     public int SelectedCount => Items.Count(i => i.IsSelected);
@@ -101,6 +113,10 @@ public class LeftoversViewModel : ObservableObject
     public int FolderCount => Items.Count(i => i.Type == LeftoverType.Directory || i.Type == LeftoverType.File);
     public int RegistryCount => Items.Count(i => i.Type == LeftoverType.RegistryKey || i.Type == LeftoverType.RegistryValue);
     public int ShortcutCount => Items.Count(i => i.Type == LeftoverType.Shortcut);
+    public int ServiceCount => Items.Count(i => i.Type == LeftoverType.WindowsService);
+    public int TaskCount => Items.Count(i => i.Type == LeftoverType.ScheduledTask);
+    public int EnvironmentCount => Items.Count(i => i.Type == LeftoverType.EnvironmentPath || i.Type == LeftoverType.EnvironmentVariable);
+    public int FirewallCount => Items.Count(i => i.Type == LeftoverType.FirewallRule);
 
     public bool ShowEmptyState => !IsScanning && Items.Count == 0;
     public bool ShowNoResults => !IsScanning && Items.Count > 0 && _itemsView.Cast<object>().Count() == 0;
@@ -222,13 +238,38 @@ public class LeftoversViewModel : ObservableObject
     {
         if (item == null) return;
 
-        if (item.Type == LeftoverType.RegistryKey || item.Type == LeftoverType.RegistryValue)
+        switch (item.Type)
         {
-            StartupService.OpenRegistryKey(item.Path);
+            case LeftoverType.RegistryKey:
+            case LeftoverType.RegistryValue:
+            case LeftoverType.WindowsService:
+                StartupService.OpenRegistryKey(item.Path);
+                break;
+            case LeftoverType.ScheduledTask:
+                OpenWindowsManagementConsole("taskschd.msc");
+                break;
+            case LeftoverType.EnvironmentPath:
+            case LeftoverType.EnvironmentVariable:
+                OpenWindowsManagementConsole("SystemPropertiesAdvanced.exe");
+                break;
+            case LeftoverType.FirewallRule:
+                OpenWindowsManagementConsole("wf.msc");
+                break;
+            default:
+                UninstallService.OpenInExplorer(item.Path);
+                break;
         }
-        else
+    }
+
+    private static void OpenWindowsManagementConsole(string fileName)
+    {
+        try
         {
-            UninstallService.OpenInExplorer(item.Path);
+            Process.Start(new ProcessStartInfo(fileName) { UseShellExecute = true });
+        }
+        catch
+        {
+            // Opening a management console is a convenience action only; scan/cleanup remains usable.
         }
     }
 
@@ -242,6 +283,14 @@ public class LeftoversViewModel : ObservableObject
         if (ActiveFilter == "Registry" && item.Type != LeftoverType.RegistryKey && item.Type != LeftoverType.RegistryValue)
             return false;
         if (ActiveFilter == "Shortcuts" && item.Type != LeftoverType.Shortcut)
+            return false;
+        if (ActiveFilter == "Services" && item.Type != LeftoverType.WindowsService)
+            return false;
+        if (ActiveFilter == "Tasks" && item.Type != LeftoverType.ScheduledTask)
+            return false;
+        if (ActiveFilter == "Environment" && item.Type != LeftoverType.EnvironmentPath && item.Type != LeftoverType.EnvironmentVariable)
+            return false;
+        if (ActiveFilter == "Firewall" && item.Type != LeftoverType.FirewallRule)
             return false;
 
         // Text search
@@ -261,6 +310,10 @@ public class LeftoversViewModel : ObservableObject
         OnPropertyChanged(nameof(FolderCount));
         OnPropertyChanged(nameof(RegistryCount));
         OnPropertyChanged(nameof(ShortcutCount));
+        OnPropertyChanged(nameof(ServiceCount));
+        OnPropertyChanged(nameof(TaskCount));
+        OnPropertyChanged(nameof(EnvironmentCount));
+        OnPropertyChanged(nameof(FirewallCount));
         OnPropertyChanged(nameof(ShowEmptyState));
         OnPropertyChanged(nameof(ShowNoResults));
         OnPropertyChanged(nameof(TotalBadgeText));

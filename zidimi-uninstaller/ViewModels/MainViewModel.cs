@@ -1,5 +1,10 @@
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using zidimi_uninstaller.Services;
@@ -78,7 +83,7 @@ public class MainViewModel : ObservableObject, IDisposable
 
     public MainViewModel()
     {
-        AppVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.5.0";
+        AppVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "1.6.0";
 
         Dashboard = new DashboardViewModel();
         Applications = new ApplicationsViewModel();

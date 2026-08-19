@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
@@ -103,6 +106,7 @@ public static class DeepCleanService
         ScanApplicationData(app, items, seenPaths);
         ScanShortcuts(app, items, seenPaths);
         ScanRegistryLeftovers(app, items, seenPaths);
+        ScanWindowsArtifacts(app, items, seenPaths);
 
         return items
             .OrderByDescending(item => item.ConfidenceScore)
@@ -303,6 +307,12 @@ public static class DeepCleanService
         }
     }
 
+    private static void ScanWindowsArtifacts(ApplicationEntry app, List<LeftoverItem> items, HashSet<string> seenPaths)
+    {
+        foreach (var artifact in WindowsArtifactService.ScanApplicationArtifacts(app))
+            AddCandidate(items, seenPaths, artifact);
+    }
+
     public static (int DeletedCount, long FreedBytes, List<LeftoverItem> DeletedItems) CleanLeftovers(
         IEnumerable<LeftoverItem> items,
         bool recycleBin = true)
@@ -311,7 +321,11 @@ public static class DeepCleanService
         long freed = 0;
         var deletedItems = new List<LeftoverItem>();
 
-        foreach (var item in items.Where(i => i.IsSelected).ToList())
+        foreach (var item in items
+                     .Where(i => i.IsSelected)
+                     .OrderBy(GetCleanupPriority)
+                     .ThenByDescending(i => i.ConfidenceScore)
+                     .ToList())
         {
             try
             {
@@ -319,6 +333,9 @@ public static class DeepCleanService
                 {
                     LeftoverType.RegistryKey => DeleteRegistryKey(item.Path),
                     LeftoverType.RegistryValue => false,
+                    LeftoverType.WindowsService or LeftoverType.ScheduledTask
+                        or LeftoverType.EnvironmentPath or LeftoverType.EnvironmentVariable
+                        or LeftoverType.FirewallRule => WindowsArtifactService.CleanArtifact(item),
                     LeftoverType.Directory when Directory.Exists(item.Path) => recycleBin
                         ? SendToRecycleBin(item.Path)
                         : DeleteDirectory(item.Path),
@@ -477,6 +494,9 @@ public static class DeepCleanService
             catch { }
         }
 
+        foreach (var artifact in WindowsArtifactService.ScanSystemOrphanedArtifacts(progress))
+            AddCandidate(items, seenPaths, artifact);
+
         return items
             .OrderByDescending(item => item.ConfidenceScore)
             .ThenByDescending(item => item.SizeInBytes)
@@ -484,9 +504,34 @@ public static class DeepCleanService
             .ToList();
     }
 
+    private static int GetCleanupPriority(LeftoverItem item)
+    {
+        // Remove active OS integration points before deleting files they may still reference.
+        return item.Type switch
+        {
+            LeftoverType.WindowsService => 0,
+            LeftoverType.ScheduledTask => 1,
+            LeftoverType.FirewallRule => 2,
+            LeftoverType.EnvironmentPath or LeftoverType.EnvironmentVariable => 3,
+            LeftoverType.RegistryKey or LeftoverType.RegistryValue => 4,
+            LeftoverType.Shortcut => 5,
+            LeftoverType.File => 6,
+            LeftoverType.Directory => 7,
+            _ => 10
+        };
+    }
+
     private static void AddCandidate(List<LeftoverItem> items, HashSet<string> seenPaths, LeftoverItem item)
     {
-        if (string.IsNullOrWhiteSpace(item.Path) || !seenPaths.Add(item.Path)) return;
+        if (string.IsNullOrWhiteSpace(item.Path)) return;
+        var identity = item.Type switch
+        {
+            LeftoverType.WindowsService or LeftoverType.ScheduledTask or LeftoverType.EnvironmentPath
+                or LeftoverType.EnvironmentVariable or LeftoverType.FirewallRule
+                => $"{item.Type}|{item.Scope}|{item.NativeId}|{item.NativeData}",
+            _ => item.Path
+        };
+        if (!seenPaths.Add(identity)) return;
         items.Add(item);
     }
 

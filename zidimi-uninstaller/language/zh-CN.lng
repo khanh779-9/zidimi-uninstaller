@@ -15,7 +15,7 @@ About=关于软件
 Leftovers=痕迹清理
 
 [Pages]
-LeftoversSubtitle=扫描并清理已卸载软件遗留的孤立文件、文件夹、应用数据和注册表项
+LeftoversSubtitle=Scan and clean orphaned files, registry data, services, scheduled tasks, PATH/environment entries, and firewall rules
 LeftoversTitle=残留痕迹清理
 DashboardTitle=概览
 DashboardSubtitle=已安装应用程序概况
@@ -168,7 +168,7 @@ SelectSafeOnly=仅选安全项
 Skip=跳过
 CleanSelected=清理 {0} 个项目
 CleaningProgress=正在清理残留文件与注册表项…
-ScanningProgress=正在扫描残留文件和注册表痕迹…
+ScanningProgress=Scanning files, registry and Windows integration artifacts…
 
 [Settings]
 SectionTitle=偏好设置
@@ -188,7 +188,7 @@ AutoKillDesc=在卸载前自动扫描并终止锁定相关文件的活动进程�
 RestorePoint=创建系统还原点
 RestorePointDesc=在执行移除操作前自动创建 Windows 系统还原点。
 DeepCleanHeader=残留深度清理 (Deep Clean)
-DeepCleanSubtitle=自动扫描并彻底清除残留文件、空文件夹及注册表冗余项
+DeepCleanSubtitle=Scan and purge leftover files, folders, registry keys and Windows integration artifacts
 AutoDeepClean=卸载后自动扫描残留
 AutoDeepCleanDesc=当卸载程序运行结束后自动唤起 Deep Clean 扫描。
 RecycleBin=将删除的文件移至回收站
@@ -519,3 +519,52 @@ TargetUnsupported=Drag an EXE file or an application folder.
 
 [Apps]
 TargetUnsafeContainsRegistered=Direct-path removal is blocked because the folder contains a registered application's InstallLocation.
+
+; ===== v1.6 Windows artifact cleanup additions =====
+[Leftovers]
+FilterServices=Services
+FilterTasks=Tasks
+FilterEnvironment=Environment
+FilterFirewall=Firewall
+ScanningServices=Scanning orphaned Windows services…
+ScanningTasks=Scanning orphaned scheduled tasks…
+ScanningEnvironment=Scanning broken PATH entries…
+ScanningFirewall=Scanning orphaned firewall rules…
+
+[Leftover]
+TypeService=Service
+TypeScheduledTask=Scheduled Task
+TypePath=PATH Entry
+TypeEnvironment=Environment
+TypeFirewall=Firewall Rule
+ServiceDescription=Windows service · {0}
+OrphanServiceDescription=Service executable is missing · {0}
+OrphanServiceEvidence=The Win32 service points to a local executable that no longer exists.
+TaskNoExecutable=no executable action
+TaskDescription=Scheduled task · {0}
+OrphanTaskDescription=Scheduled task executable is missing · {0}
+OrphanTaskEvidence=A third-party scheduled task points to a local executable that no longer exists.
+PathName={0} PATH entry
+PathDescription={0} PATH segment · {1}
+EnvironmentDescription={0} environment variable
+BrokenPathDescription=Broken {0} PATH segment · {1}
+BrokenPathEvidence=The PATH segment resolves to a local path that no longer exists.
+FirewallDuplicateEvidence=multiple firewall rules share this name, so automatic removal is disabled
+FirewallDescription=Windows Firewall rule · {0}
+OrphanFirewallDescription=Firewall rule executable is missing · {0}
+OrphanFirewallEvidence=A unique third-party firewall rule points to an executable that no longer exists.
+OrphanFirewallDuplicateEvidence=The executable is missing, but multiple firewall rules share this rule name; review before removal.
+EvidenceInsideInstall=The artifact executable/path is inside the application's registered InstallLocation.
+EvidenceDisplayIcon=The artifact points to the executable registered as the application's DisplayIcon.
+EvidenceNamePublisher=Artifact name matches the application and the executable publisher matches the registered publisher.
+EvidencePublisher=Executable publisher matches the application's registered publisher; artifact name is only a partial match.
+EvidenceExactName=Artifact name strongly matches the full application name; no stronger path ownership proof was available.
+EvidencePartialName=Artifact name contains distinctive application-name tokens; review is recommended.
+EvidenceWeakName=Artifact name has a partial application-name match; this is weak ownership evidence.
+
+[Leftover]
+ProtectedArtifactEvidence=the target is in a protected/shared Windows path, so automatic removal is disabled
+
+[Leftover]
+ServiceDllEvidencePrefix=ServiceDll ownership: 
+OrphanServiceDllEvidence=The Win32 service uses a ServiceDll module that no longer exists.

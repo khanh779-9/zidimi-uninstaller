@@ -1,3 +1,4 @@
+using System;
 using zidimi_uninstaller.Services;
 using zidimi_uninstaller.ViewModels;
 
@@ -9,7 +10,12 @@ public enum LeftoverType
     File,
     RegistryKey,
     RegistryValue,
-    Shortcut
+    Shortcut,
+    WindowsService,
+    ScheduledTask,
+    EnvironmentPath,
+    EnvironmentVariable,
+    FirewallRule
 }
 
 public enum LeftoverSafetyLevel
@@ -38,6 +44,15 @@ public class LeftoverItem : ObservableObject
     /// <summary>Short, user-readable evidence explaining why the trace was detected.</summary>
     public string Evidence { get; init; } = string.Empty;
 
+    /// <summary>Native identifier used to safely address non-file Windows artifacts (service name, task path, rule name, variable name).</summary>
+    public string NativeId { get; init; } = string.Empty;
+
+    /// <summary>Captured native value used for optimistic concurrency checks before cleanup.</summary>
+    public string NativeData { get; init; } = string.Empty;
+
+    /// <summary>Artifact scope such as User or Machine.</summary>
+    public string Scope { get; init; } = string.Empty;
+
     private bool _isSelected = true;
     public bool IsSelected
     {
@@ -54,6 +69,11 @@ public class LeftoverItem : ObservableObject
         LeftoverType.RegistryKey => LanguageManager.T("Leftover_TypeRegistry", "Registry Key"),
         LeftoverType.RegistryValue => LanguageManager.T("Leftover_TypeRegistryValue", "Registry Value"),
         LeftoverType.Shortcut => LanguageManager.T("Leftover_TypeShortcut", "Shortcut"),
+        LeftoverType.WindowsService => LanguageManager.T("Leftover_TypeService", "Service"),
+        LeftoverType.ScheduledTask => LanguageManager.T("Leftover_TypeScheduledTask", "Scheduled Task"),
+        LeftoverType.EnvironmentPath => LanguageManager.T("Leftover_TypePath", "PATH Entry"),
+        LeftoverType.EnvironmentVariable => LanguageManager.T("Leftover_TypeEnvironment", "Environment"),
+        LeftoverType.FirewallRule => LanguageManager.T("Leftover_TypeFirewall", "Firewall Rule"),
         _ => LanguageManager.T("Leftover_TypeUnknown", "Unknown")
     };
 

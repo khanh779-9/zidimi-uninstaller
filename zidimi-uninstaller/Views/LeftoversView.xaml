@@ -90,7 +90,15 @@
                 <controls:ZButton Content="{Binding [Leftovers_FilterRegistry], Source={x:Static services:LanguageManager.Instance}}"
                                   Variant="Ghost" Command="{Binding FilterCommand}" CommandParameter="Registry" Margin="0,0,6,0"/>
                 <controls:ZButton Content="{Binding [Leftovers_FilterShortcuts], Source={x:Static services:LanguageManager.Instance}}"
-                                  Variant="Ghost" Command="{Binding FilterCommand}" CommandParameter="Shortcuts"/>
+                                  Variant="Ghost" Command="{Binding FilterCommand}" CommandParameter="Shortcuts" Margin="0,0,6,0"/>
+                <controls:ZButton Content="{Binding [Leftovers_FilterServices], Source={x:Static services:LanguageManager.Instance}}"
+                                  Variant="Ghost" Command="{Binding FilterCommand}" CommandParameter="Services" Margin="0,0,6,0"/>
+                <controls:ZButton Content="{Binding [Leftovers_FilterTasks], Source={x:Static services:LanguageManager.Instance}}"
+                                  Variant="Ghost" Command="{Binding FilterCommand}" CommandParameter="Tasks" Margin="0,0,6,0"/>
+                <controls:ZButton Content="{Binding [Leftovers_FilterEnvironment], Source={x:Static services:LanguageManager.Instance}}"
+                                  Variant="Ghost" Command="{Binding FilterCommand}" CommandParameter="Environment" Margin="0,0,6,0"/>
+                <controls:ZButton Content="{Binding [Leftovers_FilterFirewall], Source={x:Static services:LanguageManager.Instance}}"
+                                  Variant="Ghost" Command="{Binding FilterCommand}" CommandParameter="Firewall"/>
             </WrapPanel>
         </Border>
 
