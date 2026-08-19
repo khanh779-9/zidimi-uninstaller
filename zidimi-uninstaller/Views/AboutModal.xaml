@@ -6,10 +6,10 @@
              xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
-             d:DesignHeight="520" d:DesignWidth="680">
+             d:DesignHeight="480" d:DesignWidth="620">
     <Border Background="{StaticResource ZBrushSurface}" CornerRadius="18"
             BorderBrush="{StaticResource ZBrushBorderStrong}" BorderThickness="1"
-            Padding="30" Width="640" MaxWidth="680"
+            Padding="24" Width="580" MaxWidth="620"
             HorizontalAlignment="Center" VerticalAlignment="Center">
         <Border.Effect>
             <DropShadowEffect BlurRadius="20" ShadowDepth="4" Opacity="0.18" Color="#000000"/>
@@ -25,16 +25,16 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- App Icon Container -->
-                <Border Width="64" Height="64" CornerRadius="16" Background="{StaticResource ZBrushSurfaceMuted}"
+                <Border Width="56" Height="56" CornerRadius="14" Background="{StaticResource ZBrushSurfaceMuted}"
                         BorderBrush="{StaticResource ZBrushBorder}" BorderThickness="1"
                         VerticalAlignment="Center">
-                    <Image Source="pack://application:,,,/zidimi-icon.ico" Width="44" Height="44"
+                    <Image Source="pack://application:,,,/zidimi-icon.ico" Width="38" Height="38"
                            Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Border>
 
                 <!-- Title & Version Badges -->
                 <StackPanel Grid.Column="1" Margin="18,0,0,0" VerticalAlignment="Center">
-                    <TextBlock Text="Zidimi Uninstaller" FontSize="22" FontWeight="Bold"
+                    <TextBlock Text="Zidimi Uninstaller" FontSize="20" FontWeight="Bold"
                                Foreground="{StaticResource ZBrushBlack}"/>
                     <WrapPanel Margin="0,6,0,0">
                         <controls:ZBadge Content="{Binding AppVersion, StringFormat=v{0}}" Variant="Accent"/>

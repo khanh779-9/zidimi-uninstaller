@@ -4,7 +4,7 @@
 >
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontSize" Value="12.5"/>
         <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
         <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
         <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
@@ -25,8 +25,8 @@
     <Style TargetType="{x:Type ToolTip}">
         <Setter Property="Background" Value="{StaticResource ZBrushDark}"/>
         <Setter Property="Foreground" Value="White"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Padding" Value="10,6"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Padding" Value="8,5"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -41,8 +41,8 @@
 
     <!-- ScrollBar -->
     <Style TargetType="{x:Type ScrollBar}">
-        <Setter Property="Width" Value="9"/>
-        <Setter Property="MinWidth" Value="9"/>
+        <Setter Property="Width" Value="8"/>
+        <Setter Property="MinWidth" Value="8"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
@@ -57,7 +57,7 @@
                                 <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Opacity="0" Focusable="False"/>
                             </Track.IncreaseRepeatButton>
                             <Track.Thumb>
-                                <Thumb MinHeight="32">
+                                <Thumb MinHeight="28">
                                     <Thumb.Template>
                                         <ControlTemplate TargetType="{x:Type Thumb}">
                                             <Border x:Name="ThumbBorder" CornerRadius="5" Background="{StaticResource ZBrushLighterGray}" Margin="2"/>
@@ -79,8 +79,8 @@
                         <Trigger Property="Orientation" Value="Horizontal">
                             <Setter Property="Width" Value="Auto"/>
                             <Setter Property="MinWidth" Value="0"/>
-                            <Setter Property="Height" Value="9"/>
-                            <Setter Property="MinHeight" Value="9"/>
+                            <Setter Property="Height" Value="8"/>
+                            <Setter Property="MinHeight" Value="8"/>
                             <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="False"/>
                             <Setter TargetName="PART_Track" Property="Orientation" Value="Horizontal"/>
                         </Trigger>
@@ -98,15 +98,15 @@
         <Setter Property="Foreground" Value="{StaticResource ZBrushBlack}"/>
         <Setter Property="CaretBrush" Value="{StaticResource ZBrushAccent}"/>
         <Setter Property="SelectionBrush" Value="{StaticResource ZBrushAccent}"/>
-        <Setter Property="FontSize" Value="13"/>
-        <Setter Property="Padding" Value="10,8"/>
+        <Setter Property="FontSize" Value="12.5"/>
+        <Setter Property="Padding" Value="9,6"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="8">
                         <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -139,7 +139,7 @@
         <Setter Property="Background" Value="{StaticResource ZBrushWhite}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ZBrushBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="4"/>
+        <Setter Property="Padding" Value="3"/>
         <Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect BlurRadius="16" ShadowDepth="2" Opacity="0.12" Color="#121012"/>
@@ -149,7 +149,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContextMenu}">
                     <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="1" CornerRadius="10" Padding="4">
+                            BorderThickness="1" CornerRadius="8" Padding="3">
                         <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
                     </Border>
                 </ControlTemplate>
@@ -159,21 +159,21 @@
 
     <Style TargetType="{x:Type MenuItem}">
         <Setter Property="Foreground" Value="{StaticResource ZBrushBlack}"/>
-        <Setter Property="FontSize" Value="13"/>
-        <Setter Property="Padding" Value="10,7"/>
+        <Setter Property="FontSize" Value="12.5"/>
+        <Setter Property="Padding" Value="8,5"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type MenuItem}">
-                    <Border x:Name="Bd" Background="Transparent" CornerRadius="7" Padding="{TemplateBinding Padding}" Margin="2,1">
+                    <Border x:Name="Bd" Background="Transparent" CornerRadius="6" Padding="{TemplateBinding Padding}" Margin="1,1">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="18"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <ContentPresenter Grid.Column="0" Content="{TemplateBinding Icon}" Width="16" Height="16"
+                            <ContentPresenter Grid.Column="0" Content="{TemplateBinding Icon}" Width="14" Height="14"
                                               HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
                             <ContentPresenter Grid.Column="1" ContentSource="Header" VerticalAlignment="Center" Margin="4,0,0,0"/>
                         </Grid>
@@ -197,7 +197,7 @@
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}"
-                CornerRadius="10"
+                CornerRadius="8"
                 SnapsToDevicePixels="True">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -211,7 +211,7 @@
                       Stretch="None"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
-                      Margin="10,0,12,0"/>
+                      Margin="8,0,10,0"/>
             </Grid>
         </Border>
         <ControlTemplate.Triggers>
@@ -234,8 +234,8 @@
         <Setter Property="BorderBrush" Value="{StaticResource ZBrushBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Foreground" Value="{StaticResource ZBrushBlack}"/>
-        <Setter Property="Padding" Value="12,7,28,7"/>
-        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Padding" Value="10,6,24,6"/>
+        <Setter Property="FontSize" Value="12.5"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -271,11 +271,11 @@
                             <Border Background="{StaticResource ZBrushWhite}"
                                     BorderBrush="{StaticResource ZBrushBorder}"
                                     BorderThickness="1"
-                                    CornerRadius="10"
-                                    Margin="0,4,0,0"
+                                    CornerRadius="8"
+                                    Margin="0,3,0,0"
                                     MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
                                     MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                                    Padding="4">
+                                    Padding="3">
                                 <Border.Effect>
                                     <DropShadowEffect BlurRadius="16" ShadowDepth="4" Opacity="0.16" Color="#000000"/>
                                 </Border.Effect>
@@ -300,14 +300,14 @@
 
     <Style TargetType="{x:Type ComboBoxItem}">
         <Setter Property="Foreground" Value="{StaticResource ZBrushBlack}"/>
-        <Setter Property="Padding" Value="10,7"/>
+        <Setter Property="Padding" Value="8,5"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
-                    <Border x:Name="Bd" Background="Transparent" CornerRadius="7" Padding="{TemplateBinding Padding}" Margin="0,1">
+                    <Border x:Name="Bd" Background="Transparent" CornerRadius="6" Padding="{TemplateBinding Padding}" Margin="0,1">
                         <ContentPresenter VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -328,7 +328,7 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0"/>
-        <Setter Property="Margin" Value="6,2"/>
+        <Setter Property="Margin" Value="4,1"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Cursor" Value="Hand"/>
@@ -336,7 +336,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="10">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="8">
                         <Grid>
                             <Border x:Name="Indicator" Width="3" Background="{StaticResource ZBrushAccent}" CornerRadius="1.5" HorizontalAlignment="Left" Visibility="Collapsed"/>
                             <ContentPresenter Margin="{TemplateBinding Padding}"/>
@@ -361,7 +361,7 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0"/>
-        <Setter Property="Margin" Value="6,2"/>
+        <Setter Property="Margin" Value="4,1"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Cursor" Value="Hand"/>
@@ -369,7 +369,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="10">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="8">
                         <ContentPresenter Margin="{TemplateBinding Padding}"/>
                     </Border>
                     <ControlTemplate.Triggers>

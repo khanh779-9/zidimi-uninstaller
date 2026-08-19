@@ -9,7 +9,7 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800">
     <Border Background="{StaticResource ZBrushWhite}" CornerRadius="16" BorderBrush="{StaticResource ZBrushBorder}"
-            BorderThickness="1" Padding="24" MaxWidth="760" MaxHeight="600">
+            BorderThickness="1" Padding="20" MaxWidth="700" MaxHeight="560">
         <Border.Effect>
             <DropShadowEffect BlurRadius="16" ShadowDepth="3" Opacity="0.14" Color="#000000"/>
         </Border.Effect>
@@ -51,7 +51,7 @@
                          ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type models:LeftoverItem}">
-                            <Border Background="{StaticResource ZBrushWhite}" CornerRadius="8" Padding="12,10" Margin="0,3">
+                            <Border Background="{StaticResource ZBrushWhite}" CornerRadius="8" Padding="10,8" Margin="0,3">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>

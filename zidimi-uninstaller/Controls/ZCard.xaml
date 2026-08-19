@@ -5,13 +5,13 @@
         <Setter Property="Background" Value="{StaticResource ZBrushSurface}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ZBrushBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="12"/>
-        <Setter Property="Padding" Value="20"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="Padding" Value="16"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Effect">
             <Setter.Value>
-                <DropShadowEffect BlurRadius="12" ShadowDepth="1" Direction="270" Opacity="0.035" Color="#121012"/>
+                <DropShadowEffect BlurRadius="10" ShadowDepth="1" Direction="270" Opacity="0.035" Color="#121012"/>
             </Setter.Value>
         </Setter>
     </Style>

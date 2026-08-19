@@ -10,7 +10,7 @@
              AllowDrop="True"
              DragOver="OnDragOver"
              Drop="OnDrop">
-    <Grid Margin="24,20,24,18">
+    <Grid Margin="18,14,18,14">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -47,7 +47,7 @@
                                TextWrapping="Wrap"/>
 
                     <Border Margin="0,12,0,0"
-                            Padding="12,10"
+                            Padding="10,8"
                             BorderBrush="{StaticResource ZBrushBorder}"
                             BorderThickness="1"
                             CornerRadius="9"

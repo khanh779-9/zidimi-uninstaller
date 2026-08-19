@@ -6,10 +6,10 @@
              xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="750">
+             d:DesignHeight="470" d:DesignWidth="700">
     <Border Background="{StaticResource ZBrushSurface}" CornerRadius="16"
             BorderBrush="{StaticResource ZBrushBorderStrong}" BorderThickness="1"
-            Padding="26" Width="720" MaxWidth="760"
+            Padding="22" Width="660" MaxWidth="700"
             HorizontalAlignment="Center" VerticalAlignment="Center">
         <Border.Effect>
             <DropShadowEffect BlurRadius="18" ShadowDepth="4" Opacity="0.18" Color="#000000"/>
@@ -24,13 +24,13 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Border Width="52" Height="52" CornerRadius="13" Background="{StaticResource ZBrushSurfaceMuted}" VerticalAlignment="Center">
-                    <Image Source="{Binding SelectedEntry.Icon}" Width="36" Height="36" Stretch="Uniform"
+                <Border Width="46" Height="46" CornerRadius="11" Background="{StaticResource ZBrushSurfaceMuted}" VerticalAlignment="Center">
+                    <Image Source="{Binding SelectedEntry.Icon}" Width="32" Height="32" Stretch="Uniform"
                            RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Border>
 
                 <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding SelectedEntry.Name}" FontSize="18" FontWeight="Bold"
+                    <TextBlock Text="{Binding SelectedEntry.Name}" FontSize="16.5" FontWeight="Bold"
                                Foreground="{StaticResource ZBrushBlack}" TextTrimming="CharacterEllipsis"/>
                     <WrapPanel Margin="0,6,0,0">
                         <controls:ZBadge Content="{Binding SelectedEntry.ScopeText}" Variant="Info"/>

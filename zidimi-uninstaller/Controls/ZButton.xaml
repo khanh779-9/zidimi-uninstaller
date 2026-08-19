@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:zidimi_uninstaller.Controls">
     <Style TargetType="{x:Type controls:ZButton}">
-        <Setter Property="MinHeight" Value="36"/>
-        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="FontSize" Value="12.5"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Padding" Value="14,8"/>
+        <Setter Property="Padding" Value="11,6"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
@@ -14,7 +14,7 @@
         <Setter Property="BorderBrush" Value="{StaticResource ZBrushAccent}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Foreground" Value="White"/>
-        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="CornerRadius" Value="7"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ZButton}">
@@ -35,8 +35,8 @@
                                   StrokeStartLineCap="Round"
                                   StrokeEndLineCap="Round"
                                   Stretch="Uniform"
-                                  Width="16" Height="16"
-                                  Margin="0,0,8,0"
+                                  Width="14" Height="14"
+                                  Margin="0,0,6,0"
                                   VerticalAlignment="Center"/>
                             <ContentPresenter Content="{TemplateBinding Content}"
                                               VerticalAlignment="Center"

@@ -6,10 +6,10 @@
         <Setter Property="Background" Value="{StaticResource ZBrushSurfaceMuted}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ZBrushBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontSize" Value="11.5"/>
+        <Setter Property="FontSize" Value="11"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Padding" Value="9,4"/>
-        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="7,3"/>
+        <Setter Property="MinHeight" Value="21"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Template">
@@ -18,7 +18,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="8"
+                            CornerRadius="7"
                             Padding="{TemplateBinding Padding}"
                             SnapsToDevicePixels="True">
                         <ContentPresenter ContentSource="Content"

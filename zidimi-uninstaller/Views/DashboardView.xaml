@@ -7,7 +7,7 @@
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="900">
-    <Grid Margin="24,20,24,20">
+    <Grid Margin="18,14,18,14">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -49,7 +49,7 @@
         </Grid>
 
         <Border Grid.Row="1"
-                Margin="0,16,0,0"
+                Margin="0,12,0,0"
                 Padding="12"
                 Background="{StaticResource ZBrushSurfaceMuted}"
                 BorderBrush="{StaticResource ZBrushBorder}"
@@ -67,7 +67,7 @@
             </WrapPanel>
         </Border>
 
-        <controls:ZCard Grid.Row="2" Margin="0,16,0,0" Padding="18,16">
+        <controls:ZCard Grid.Row="2" Margin="0,12,0,0" Padding="15,13">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -86,7 +86,7 @@
                          ItemContainerStyle="{StaticResource ZAppsListItemStyle}"
                          ScrollViewer.VerticalScrollBarVisibility="Auto"
                          Background="Transparent"
-                         Margin="0,10,0,0">
+                         Margin="0,8,0,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <controls:ZAppCard Icon="{Binding Icon}"
@@ -106,9 +106,9 @@
                         Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
                         Panel.ZIndex="10">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <controls:ZProgressRing RingSize="40" IsActive="{Binding IsLoading}"/>
+                        <controls:ZProgressRing RingSize="34" IsActive="{Binding IsLoading}"/>
                         <TextBlock Text="{Binding [Dashboard_Scanning], Source={x:Static services:LanguageManager.Instance}}"
-                                   Margin="0,14,0,0"
+                                   Margin="0,10,0,0"
                                    HorizontalAlignment="Center"
                                    Foreground="{StaticResource ZBrushGray}"/>
                     </StackPanel>

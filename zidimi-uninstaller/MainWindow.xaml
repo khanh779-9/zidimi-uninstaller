@@ -8,8 +8,8 @@
                xmlns:vm="clr-namespace:zidimi_uninstaller.ViewModels"
                mc:Ignorable="d"
                WindowStyle="SingleBorderWindow"
-               Title="Zidimi Uninstaller" Height="760" Width="1180"
-               MinHeight="600" MinWidth="920"
+               Title="Zidimi Uninstaller" Height="680" Width="1040"
+               MinHeight="540" MinWidth="820"
                Background="{StaticResource ZBrushWhite}"
                WindowStartupLocation="CenterScreen"
                Icon="pack://application:,,,/zidimi-icon.ico"
@@ -35,17 +35,17 @@
             </Grid.RowDefinitions>
 
             <Border Grid.Row="0"
-                    Padding="24,18,24,16"
+                    Padding="18,13,18,11"
                     BorderBrush="{StaticResource ZBrushLightGray}"
                     BorderThickness="0,0,0,1">
                 <StackPanel>
                     <TextBlock Text="{Binding PageTitle}"
-                               FontSize="25"
+                               FontSize="22"
                                FontWeight="SemiBold"
                                Foreground="{StaticResource ZBrushBlack}"/>
                     <TextBlock Text="{Binding PageSubtitle}"
-                               Margin="0,4,0,0"
-                               FontSize="13"
+                               Margin="0,3,0,0"
+                               FontSize="12"
                                Foreground="{StaticResource ZBrushGray}"/>
                 </StackPanel>
             </Border>
@@ -106,7 +106,7 @@
               Panel.ZIndex="110">
             <views:AboutModal DataContext="{Binding}"
                               HorizontalAlignment="Center" VerticalAlignment="Center"
-                              Margin="24"/>
+                              Margin="18"/>
         </Grid>
 
         <!-- Application Details Modal Overlay -->
@@ -116,7 +116,7 @@
               Panel.ZIndex="105">
             <views:AppDetailsModal DataContext="{Binding Applications}"
                                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Margin="24"/>
+                                   Margin="18"/>
         </Grid>
 
         <!-- Startup Details Modal Overlay -->
@@ -126,7 +126,7 @@
               Panel.ZIndex="106">
             <views:StartupDetailsModal DataContext="{Binding Startup}"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="24"/>
+                                       Margin="18"/>
         </Grid>
 
         <!-- Deep Clean Modal Overlay -->
@@ -136,12 +136,12 @@
               Panel.ZIndex="95">
             <views:DeepCleanView DataContext="{Binding DeepClean}"
                                  HorizontalAlignment="Center" VerticalAlignment="Center"
-                                 Margin="24"/>
+                                 Margin="18"/>
         </Grid>
 
         <!-- Toast notifications -->
         <controls:ZToastHost Grid.Column="1" x:Name="ToastHost"
                              HorizontalAlignment="Right" VerticalAlignment="Top"
-                             Margin="0,78,18,0" Panel.ZIndex="90"/>
+                             Margin="0,64,14,0" Panel.ZIndex="90"/>
     </Grid>
 </controls:ZWindow>

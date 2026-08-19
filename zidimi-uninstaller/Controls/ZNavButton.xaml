@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:zidimi_uninstaller.Controls">
     <Style TargetType="{x:Type controls:ZNavButton}">
-        <Setter Property="Height" Value="44"/>
-        <Setter Property="Margin" Value="0,2"/>
+        <Setter Property="Height" Value="38"/>
+        <Setter Property="Margin" Value="0,1"/>
         <Setter Property="Foreground" Value="{StaticResource ZBrushSidebarText}"/>
-        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontSize" Value="12.5"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -18,17 +18,17 @@
                             Background="Transparent"
                             BorderBrush="Transparent"
                             BorderThickness="1"
-                            CornerRadius="10"
-                            Padding="12,0">
+                            CornerRadius="8"
+                            Padding="9,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3"/>
-                                <ColumnDefinition Width="34"/>
+                                <ColumnDefinition Width="30"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
                             <Border x:Name="Indicator"
-                                    Width="3" Height="20"
+                                    Width="3" Height="18"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Background="{StaticResource ZBrushAccent}"
@@ -37,7 +37,7 @@
 
                             <Path Grid.Column="1"
                                   Data="{TemplateBinding Icon}"
-                                  Width="18" Height="18"
+                                  Width="16" Height="16"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   Fill="Transparent"

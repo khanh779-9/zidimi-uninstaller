@@ -20,7 +20,7 @@ public class ZSearchBox : TextBox
 
     public static readonly DependencyProperty CornerRadiusProperty =
         DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(ZSearchBox),
-            new PropertyMetadata(new CornerRadius(10)));
+            new PropertyMetadata(new CornerRadius(8)));
 
     public CornerRadius CornerRadius
     {

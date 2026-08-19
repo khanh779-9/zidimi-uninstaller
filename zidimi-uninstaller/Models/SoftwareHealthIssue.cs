@@ -22,7 +22,7 @@ public sealed class SoftwareHealthIssue : ObservableObject
     public string SeverityText => Severity switch
     {
         SoftwareHealthSeverity.Critical => LanguageManager.T("SoftwareHealth_SeverityCritical", "Needs attention"),
-        SoftwareHealthSeverity.Warning => LanguageManager.T("SoftwareHealth_SeverityWarning", "Review"),
+        SoftwareHealthSeverity.Warning => LanguageManager.T("SoftwareHealth_SeverityWarning", "Warning"),
         _ => LanguageManager.T("SoftwareHealth_SeverityInfo", "Info")
     };
 

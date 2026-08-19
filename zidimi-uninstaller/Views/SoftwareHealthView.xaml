@@ -7,110 +7,185 @@
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="900">
-    <Grid Margin="24,20,24,20">
+    <Grid Margin="18,14,18,14">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <!-- Hero health summary: full-width so status text never competes with stat cards. -->
+        <controls:ZCard Grid.Row="0" Margin="0,0,0,5" Padding="15,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Width="58" Height="58" CornerRadius="29"
+                        Background="{StaticResource ZBrushAccentTint}"
+                        BorderBrush="#40EA0232" BorderThickness="1"
+                        VerticalAlignment="Center">
+                    <TextBlock Text="{Binding ScoreText}" FontSize="20" FontWeight="SemiBold"
+                               Foreground="{StaticResource ZBrushAccent}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+
+                <StackPanel Grid.Column="1" Margin="13,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding [SoftwareHealth_Overall], Source={x:Static services:LanguageManager.Instance}}"
+                               FontSize="11.5" Foreground="{StaticResource ZBrushGray}"/>
+                    <WrapPanel Margin="0,3,0,0">
+                        <TextBlock Text="{Binding HealthStateText}" FontSize="15.5" FontWeight="SemiBold"
+                                   Foreground="{StaticResource ZBrushBlack}" VerticalAlignment="Center"/>
+                        <controls:ZBadge Content="{Binding HealthStateText}" Variant="{Binding HealthBadgeVariant}"
+                                         Margin="9,1,0,0" VerticalAlignment="Center"/>
+                    </WrapPanel>
+                    <TextBlock Text="{Binding [SoftwareHealth_ScoreDisclaimer], Source={x:Static services:LanguageManager.Instance}}"
+                               Margin="0,5,0,0" FontSize="10.4"
+                               Foreground="{StaticResource ZBrushMidGray}"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
+        </controls:ZCard>
+
+        <!-- Compact stats get their own row, removing pressure from the overall-health card. -->
+        <Grid Grid.Row="1" Margin="-4,0,-4,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.4*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <controls:ZCard Grid.Column="0" Margin="4" Padding="18,14">
-                <Grid>
-                    <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                    <Border Width="64" Height="64" CornerRadius="32" Background="{StaticResource ZBrushAccentTint}"
-                            BorderBrush="#40EA0232" BorderThickness="1">
-                        <TextBlock Text="{Binding ScoreText}" FontSize="23" FontWeight="SemiBold"
-                                   Foreground="{StaticResource ZBrushAccent}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding [SoftwareHealth_Overall], Source={x:Static services:LanguageManager.Instance}}"
-                                   FontSize="11.5" Foreground="{StaticResource ZBrushGray}"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-                            <TextBlock Text="{Binding HealthStateText}" FontSize="17" FontWeight="SemiBold" Foreground="{StaticResource ZBrushBlack}"/>
-                            <controls:ZBadge Content="{Binding HealthStateText}" Variant="{Binding HealthBadgeVariant}" Margin="9,0,0,0"/>
-                        </StackPanel>
-                        <TextBlock Text="{Binding [SoftwareHealth_ScoreDisclaimer], Source={x:Static services:LanguageManager.Instance}}"
-                                   Margin="0,5,0,0" FontSize="10.4" Foreground="{StaticResource ZBrushMidGray}" TextWrapping="Wrap"/>
-                    </StackPanel>
-                </Grid>
-            </controls:ZCard>
-            <controls:ZStatCard Grid.Column="1" Margin="4" Icon="{StaticResource StrokeIconError}"
+            <controls:ZStatCard Grid.Column="0" Margin="4" Icon="{StaticResource StrokeIconError}"
                                 IconBrush="{StaticResource ZBrushBrown}" Value="{Binding CriticalCount}"
                                 Label="{Binding [SoftwareHealth_Critical], Source={x:Static services:LanguageManager.Instance}}"/>
-            <controls:ZStatCard Grid.Column="2" Margin="4" Icon="{StaticResource StrokeIconWarning}"
+            <controls:ZStatCard Grid.Column="1" Margin="4" Icon="{StaticResource StrokeIconWarning}"
                                 IconBrush="{StaticResource ZBrushBrown}" Value="{Binding WarningCount}"
                                 Label="{Binding [SoftwareHealth_Warnings], Source={x:Static services:LanguageManager.Instance}}"/>
-            <controls:ZStatCard Grid.Column="3" Margin="4" Icon="{StaticResource StrokeIconInfo}"
+            <controls:ZStatCard Grid.Column="2" Margin="4" Icon="{StaticResource StrokeIconInfo}"
                                 IconBrush="{StaticResource ZBrushDarkGray}" Value="{Binding InfoCount}"
                                 Label="{Binding [SoftwareHealth_Info], Source={x:Static services:LanguageManager.Instance}}"/>
         </Grid>
 
-        <Border Grid.Row="1" Margin="0,14,0,0" Padding="12"
-                Background="{StaticResource ZBrushSurfaceMuted}" BorderBrush="{StaticResource ZBrushBorder}"
-                BorderThickness="1" CornerRadius="10">
+        <!-- Lightweight information banner. -->
+        <Border Grid.Row="2" Margin="0,5,0,0" Padding="12,9"
+                Background="{StaticResource ZBrushSurfaceMuted}"
+                BorderBrush="{StaticResource ZBrushBorder}"
+                BorderThickness="1" CornerRadius="9">
             <Grid>
-                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-                <StackPanel VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center" Margin="0,0,12,0">
                     <TextBlock Text="{Binding [SoftwareHealth_Description], Source={x:Static services:LanguageManager.Instance}}"
-                               FontSize="12" Foreground="{StaticResource ZBrushDarkGray}" TextWrapping="Wrap"/>
-                    <TextBlock Text="{Binding StatusText}" Margin="0,3,0,0" FontSize="10.8" Foreground="{StaticResource ZBrushGray}"/>
+                               FontSize="11.6" Foreground="{StaticResource ZBrushDarkGray}"
+                               TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding StatusText}" Margin="0,3,0,0" FontSize="10.5"
+                               Foreground="{StaticResource ZBrushGray}"
+                               TextWrapping="Wrap"/>
                 </StackPanel>
-                <controls:ZButton Grid.Column="1" Content="{Binding [SoftwareHealth_Refresh], Source={x:Static services:LanguageManager.Instance}}"
-                                  Icon="{StaticResource StrokeIconReloadAll}" Command="{Binding RefreshCommand}"/>
+                <controls:ZButton Grid.Column="1"
+                                  Content="{Binding [SoftwareHealth_Refresh], Source={x:Static services:LanguageManager.Instance}}"
+                                  Icon="{StaticResource StrokeIconReloadAll}"
+                                  Command="{Binding RefreshCommand}"
+                                  IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBool}}"
+                                  VerticalAlignment="Center"/>
             </Grid>
         </Border>
 
-        <controls:ZCard Grid.Row="2" Margin="0,14,0,0" Padding="14">
+        <controls:ZCard Grid.Row="3" Margin="0,5,0,0" Padding="14">
             <Grid>
-                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
                 <controls:ZSectionHeader Grid.Row="0"
                                          Title="{Binding [SoftwareHealth_Findings], Source={x:Static services:LanguageManager.Instance}}"
                                          Subtitle="{Binding [SoftwareHealth_FindingsSubtitle], Source={x:Static services:LanguageManager.Instance}}"
                                          Icon="{StaticResource StrokeIconShield}"/>
+
                 <ListBox Grid.Row="1" ItemsSource="{Binding Issues}" Margin="0,10,0,0"
-                         Background="Transparent" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                         Background="Transparent" BorderThickness="0"
+                         HorizontalContentAlignment="Stretch"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                         Visibility="{Binding IsLoading, Converter={StaticResource InverseBoolToVis}}">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Margin" Value="0"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border Margin="0,3" Padding="12,10" Background="{StaticResource ZBrushSurfaceMuted}" CornerRadius="8">
+                            <Border Margin="0,3" Padding="12,10" MinHeight="82"
+                                    HorizontalAlignment="Stretch"
+                                    Background="{StaticResource ZBrushSurfaceMuted}"
+                                    CornerRadius="8">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Title}" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource ZBrushBlack}"/>
-                                            <controls:ZBadge Content="{Binding Count}" Variant="Neutral" Margin="8,0,0,0"/>
-                                        </StackPanel>
-                                        <TextBlock Text="{Binding Description}" Margin="0,4,0,0" FontSize="11"
-                                                   Foreground="{StaticResource ZBrushGray}" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding Category}" Margin="0,3,0,0" FontSize="10.5" Foreground="{StaticResource ZBrushMidGray}"/>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="1" Margin="12,0,0,0" HorizontalAlignment="Right">
-                                        <controls:ZBadge Content="{Binding SeverityText}" Variant="{Binding SeverityBadgeVariant}"/>
-                                        <controls:ZButton Content="{Binding [SoftwareHealth_Review], Source={x:Static services:LanguageManager.Instance}}"
-                                                          Variant="Ghost" Icon="{StaticResource StrokeIconLaunch}"
-                                                          Command="{Binding DataContext.OpenIssueCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                                          CommandParameter="{Binding}" Margin="0,6,0,0"/>
-                                    </StackPanel>
+
+                                    <Grid Grid.Column="0" Margin="0,0,14,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Title}"
+                                                       FontSize="12.8" FontWeight="SemiBold"
+                                                       Foreground="{StaticResource ZBrushBlack}"
+                                                       TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                            <controls:ZBadge Grid.Column="1" Content="{Binding Count}" Variant="Neutral"
+                                                             Margin="8,0,0,0" VerticalAlignment="Center"/>
+                                            <controls:ZBadge Grid.Column="2" Content="{Binding SeverityText}"
+                                                             Variant="{Binding SeverityBadgeVariant}"
+                                                             Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                        </Grid>
+
+                                        <TextBlock Grid.Row="1" Text="{Binding Description}"
+                                                   Margin="0,5,0,0" FontSize="10.9"
+                                                   Foreground="{StaticResource ZBrushGray}"
+                                                   TextWrapping="Wrap"/>
+                                        <TextBlock Grid.Row="2" Text="{Binding Category}"
+                                                   Margin="0,4,0,0" FontSize="10.3"
+                                                   Foreground="{StaticResource ZBrushMidGray}"
+                                                   TextWrapping="Wrap"/>
+                                    </Grid>
+
+                                    <controls:ZButton Grid.Column="1"
+                                                      Content="{Binding [SoftwareHealth_Review], Source={x:Static services:LanguageManager.Instance}}"
+                                                      Variant="Ghost"
+                                                      Icon="{StaticResource StrokeIconLaunch}"
+                                                      Command="{Binding DataContext.OpenIssueCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                      CommandParameter="{Binding}"
+                                                      VerticalAlignment="Center"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <Border Grid.Row="1" Background="#AAFFFFFF" CornerRadius="10"
-                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}">
+
+                <Border Grid.Row="1" Background="{StaticResource ZBrushSurface}" CornerRadius="8"
+                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
+                        Panel.ZIndex="10">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <controls:ZProgressRing RingSize="38" IsActive="{Binding IsLoading}"/>
+                        <controls:ZProgressRing RingSize="34" IsActive="{Binding IsLoading}"/>
                         <TextBlock Text="{Binding [SoftwareHealth_Loading], Source={x:Static services:LanguageManager.Instance}}"
-                                   Margin="0,12,0,0" Foreground="{StaticResource ZBrushGray}"/>
+                                   Margin="0,10,0,0" HorizontalAlignment="Center"
+                                   Foreground="{StaticResource ZBrushGray}"/>
                     </StackPanel>
                 </Border>
             </Grid>

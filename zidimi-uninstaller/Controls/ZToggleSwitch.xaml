@@ -12,10 +12,10 @@
                 <ControlTemplate TargetType="{x:Type controls:ZToggleSwitch}">
                     <StackPanel Orientation="Horizontal" Background="Transparent">
                         <TextBlock x:Name="StateText" Text="{TemplateBinding OffText}" Foreground="{StaticResource ZBrushGray}"
-                                   FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,9,0"/>
-                        <Grid Width="44" Height="24">
-                            <Border x:Name="Track" CornerRadius="12" Background="{StaticResource ZBrushLighterGray}" BorderBrush="{StaticResource ZBrushBorderStrong}" BorderThickness="1">
-                                <Border x:Name="Thumb" Width="18" Height="18" CornerRadius="9" Background="White" HorizontalAlignment="Left" Margin="3,0">
+                                   FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <Grid Width="40" Height="22">
+                            <Border x:Name="Track" CornerRadius="11" Background="{StaticResource ZBrushLighterGray}" BorderBrush="{StaticResource ZBrushBorderStrong}" BorderThickness="1">
+                                <Border x:Name="Thumb" Width="16" Height="16" CornerRadius="8" Background="White" HorizontalAlignment="Left" Margin="3,0">
                                     <Border.RenderTransform>
                                         <TranslateTransform/>
                                     </Border.RenderTransform>
@@ -42,7 +42,7 @@
                         <EventTrigger RoutedEvent="ToggleButton.Checked">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="Thumb" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="20" Duration="0:0:0.15"/>
+                                    <DoubleAnimation Storyboard.TargetName="Thumb" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="18" Duration="0:0:0.15"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>

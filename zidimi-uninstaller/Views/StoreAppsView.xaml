@@ -7,7 +7,7 @@
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="900">
-    <Grid Margin="24,20,24,18">
+    <Grid Margin="18,14,18,14">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -32,7 +32,7 @@
         </Grid>
 
         <!-- Action bar on selection -->
-        <Border Grid.Row="1" Background="{StaticResource ZBrushAccentTint}" CornerRadius="10" Padding="16,10"
+        <Border Grid.Row="1" Background="{StaticResource ZBrushAccentTint}" CornerRadius="10" Padding="13,8"
                 Margin="0,0,0,12"
                 Visibility="{Binding HasSelection, Converter={StaticResource BoolToVis}}">
             <Grid>

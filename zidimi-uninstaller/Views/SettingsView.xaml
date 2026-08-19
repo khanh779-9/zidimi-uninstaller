@@ -8,13 +8,13 @@
              mc:Ignorable="d"
              d:DesignHeight="750" d:DesignWidth="900">
     <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="28">
-        <StackPanel MaxWidth="640" HorizontalAlignment="Left">
+        <StackPanel MaxWidth="590" HorizontalAlignment="Left">
             <controls:ZSectionHeader Title="{Binding [Settings_SectionTitle], Source={x:Static services:LanguageManager.Instance}}"
                                      Subtitle="{Binding [Settings_SectionSubtitle], Source={x:Static services:LanguageManager.Instance}}"
                                      Icon="{StaticResource StrokeIconSettings}"/>
 
             <!-- Display Language -->
-            <controls:ZCard Margin="0,18,0,0" Padding="20,14">
+            <controls:ZCard Margin="0,18,0,0" Padding="16,11">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -36,7 +36,7 @@
             </controls:ZCard>
 
             <!-- Uninstall & Protection -->
-            <controls:ZCard Margin="0,14,0,0" Padding="20,14">
+            <controls:ZCard Margin="0,14,0,0" Padding="16,11">
                 <StackPanel>
                     <controls:ZSectionHeader Title="{Binding [Settings_ProtectionHeader], Source={x:Static services:LanguageManager.Instance}}"
                                              Subtitle="{Binding [Settings_ProtectionSubtitle], Source={x:Static services:LanguageManager.Instance}}"
@@ -65,7 +65,7 @@
             </controls:ZCard>
 
             <!-- Deep Clean -->
-            <controls:ZCard Margin="0,14,0,0" Padding="20,14">
+            <controls:ZCard Margin="0,14,0,0" Padding="16,11">
                 <StackPanel>
                     <controls:ZSectionHeader Title="{Binding [Settings_DeepCleanHeader], Source={x:Static services:LanguageManager.Instance}}"
                                              Subtitle="{Binding [Settings_DeepCleanSubtitle], Source={x:Static services:LanguageManager.Instance}}"
@@ -86,7 +86,7 @@
             </controls:ZCard>
 
             <!-- UAC & Elevation (Task Scheduler) -->
-            <controls:ZCard Margin="0,14,0,0" Padding="20,14">
+            <controls:ZCard Margin="0,14,0,0" Padding="16,11">
                 <StackPanel>
                     <controls:ZSectionHeader Title="{Binding [Settings_ElevationHeader], Source={x:Static services:LanguageManager.Instance}}"
                                              Subtitle="{Binding [Settings_ElevationSubtitle], Source={x:Static services:LanguageManager.Instance}}"
@@ -117,7 +117,7 @@
             </controls:ZCard>
 
             <!-- Data & Cache -->
-            <controls:ZCard Margin="0,14,0,0" Padding="20,14">
+            <controls:ZCard Margin="0,14,0,0" Padding="16,11">
                 <StackPanel>
                     <controls:ZSectionHeader Title="{Binding [Settings_DataHeader], Source={x:Static services:LanguageManager.Instance}}"
                                              Subtitle="{Binding [Settings_DataSubtitle], Source={x:Static services:LanguageManager.Instance}}"

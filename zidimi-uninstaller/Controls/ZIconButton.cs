@@ -22,7 +22,7 @@ public class ZIconButton : Button
     }
 
     public static readonly DependencyProperty GlyphSizeProperty =
-        DependencyProperty.Register(nameof(GlyphSize), typeof(double), typeof(ZIconButton), new PropertyMetadata(14.0));
+        DependencyProperty.Register(nameof(GlyphSize), typeof(double), typeof(ZIconButton), new PropertyMetadata(13.0));
 
     public double GlyphSize
     {

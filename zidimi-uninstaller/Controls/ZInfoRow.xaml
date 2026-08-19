@@ -6,15 +6,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ZInfoRow}">
-                    <Grid Margin="0,5">
+                    <Grid Margin="0,4">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="115"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{TemplateBinding Label}" Foreground="{StaticResource ZBrushGray}" FontSize="12.5" VerticalAlignment="Top"/>
+                        <TextBlock Text="{TemplateBinding Label}" Foreground="{StaticResource ZBrushGray}" FontSize="11.8" VerticalAlignment="Top"/>
                         <TextBlock x:Name="ValueText" Grid.Column="1" Text="{TemplateBinding Value}"
-                                   Foreground="{StaticResource ZBrushBlack}" FontSize="12.5" VerticalAlignment="Top"
-                                   TextWrapping="Wrap" Margin="12,0,0,0"/>
+                                   Foreground="{StaticResource ZBrushBlack}" FontSize="11.8" VerticalAlignment="Top"
+                                   TextWrapping="Wrap" Margin="10,0,0,0"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsAccent" Value="True">

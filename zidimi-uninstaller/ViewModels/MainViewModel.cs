@@ -87,7 +87,7 @@ public class MainViewModel : ObservableObject, IDisposable
 
     public MainViewModel()
     {
-        AppVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "2.0.0";
+        AppVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "2.0.4";
 
         Dashboard = new DashboardViewModel();
         Applications = new ApplicationsViewModel();

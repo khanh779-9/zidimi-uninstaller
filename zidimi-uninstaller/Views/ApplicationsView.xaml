@@ -10,7 +10,7 @@
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
              d:DesignHeight="750" d:DesignWidth="950">
-    <Grid Margin="24,20,24,18">
+    <Grid Margin="18,14,18,14">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -160,7 +160,7 @@
                 BorderBrush="#36EA0232"
                 BorderThickness="1"
                 CornerRadius="10"
-                Padding="12,10"
+                Padding="10,8"
                 Margin="0,0,0,12"
                 Visibility="{Binding HasSelection, Converter={StaticResource BoolToVis}}">
             <Grid>

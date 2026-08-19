@@ -6,10 +6,10 @@
              xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="560" d:DesignWidth="720">
     <Border Background="{StaticResource ZBrushSurface}" CornerRadius="16"
             BorderBrush="{StaticResource ZBrushBorderStrong}" BorderThickness="1"
-            Padding="26" Width="720" MaxWidth="760"
+            Padding="22" Width="660" MaxWidth="700"
             HorizontalAlignment="Center" VerticalAlignment="Center">
         <Border.Effect>
             <DropShadowEffect BlurRadius="18" ShadowDepth="4" Opacity="0.18" Color="#000000"/>

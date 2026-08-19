@@ -7,7 +7,7 @@ A modern, fast, and thorough software management and uninstallation utility for 
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D4?style=flat-square&logo=windows)](https://github.com/khanh779-9/zidimi-uninstaller)
 [![.NET](https://img.shields.io/badge/.NET-8.0--windows-512BD4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
 
-[Download Latest Release (v2.0.0)](https://github.com/khanh779-9/zidimi-uninstaller/releases/latest) | [View Releases](https://github.com/khanh779-9/zidimi-uninstaller/releases) | [Report an Issue](https://github.com/khanh779-9/zidimi-uninstaller/issues)
+[Download Latest Release (v2.0.4)](https://github.com/khanh779-9/zidimi-uninstaller/releases/latest) | [View Releases](https://github.com/khanh779-9/zidimi-uninstaller/releases) | [Report an Issue](https://github.com/khanh779-9/zidimi-uninstaller/issues)
 
 ---
 
@@ -122,7 +122,7 @@ A modern, fast, and thorough software management and uninstallation utility for 
 Zidimi Uninstaller is distributed as a standalone portable package that does not require prior installation.
 
 1. Navigate to the [Releases](https://github.com/khanh779-9/zidimi-uninstaller/releases) page.
-2. Download the latest release zip archive (`zidimi-uninstaller-v2.0.0.zip`).
+2. Download the latest release zip archive (`zidimi-uninstaller-v2.0.4.zip`).
 3. Extract the contents to any preferred folder.
 4. Launch `zidimi-uninstaller.exe` (Administrator privileges are recommended for complete system modifications).
 

@@ -10,12 +10,12 @@
                     <Border Background="{StaticResource ZBrushSurface}"
                             BorderBrush="{StaticResource ZBrushBorder}"
                             BorderThickness="1"
-                            CornerRadius="12"
-                            Padding="18">
+                            CornerRadius="10"
+                            Padding="15">
                         <Border.Effect><DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.03" Color="#121012"/></Border.Effect>
                         <Grid>
                             <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                            <Border x:Name="IconWrap" Width="44" Height="44" CornerRadius="11"
+                            <Border x:Name="IconWrap" Width="38" Height="38" CornerRadius="9"
                                     Background="{StaticResource ZBrushSurfaceMuted}"
                                     BorderBrush="{StaticResource ZBrushBorder}" BorderThickness="1">
                                 <Path Data="{TemplateBinding Icon}"
@@ -25,12 +25,12 @@
                                       StrokeLineJoin="Round"
                                       StrokeStartLineCap="Round"
                                       StrokeEndLineCap="Round"
-                                      Stretch="Uniform" Width="21" Height="21"
+                                      Stretch="Uniform" Width="18" Height="18"
                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
-                            <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
-                                <TextBlock Text="{TemplateBinding Value}" FontSize="24" FontWeight="SemiBold" Foreground="{StaticResource ZBrushBlack}"/>
-                                <TextBlock Text="{TemplateBinding Label}" FontSize="12.5" Foreground="{StaticResource ZBrushGray}" Margin="0,3,0,0" TextTrimming="CharacterEllipsis"/>
+                            <StackPanel Grid.Column="1" Margin="11,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Text="{TemplateBinding Value}" FontSize="21" FontWeight="SemiBold" Foreground="{StaticResource ZBrushBlack}"/>
+                                <TextBlock Text="{TemplateBinding Label}" FontSize="11.8" Foreground="{StaticResource ZBrushGray}" Margin="0,2,0,0" TextTrimming="CharacterEllipsis"/>
                             </StackPanel>
                         </Grid>
                     </Border>

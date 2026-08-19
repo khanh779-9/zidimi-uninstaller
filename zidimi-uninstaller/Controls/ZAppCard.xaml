@@ -7,22 +7,22 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ZAppCard}">
-                    <Border Background="Transparent" CornerRadius="10" Padding="10,8">
+                    <Border Background="Transparent" CornerRadius="8" Padding="8,6">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Border x:Name="IconWrap" Width="44" Height="44" CornerRadius="10" Background="{StaticResource ZBrushSurfaceMuted}" BorderBrush="{StaticResource ZBrushBorder}" BorderThickness="1">
-                                <Image x:Name="IconImage" Source="{TemplateBinding Icon}" Width="28" Height="28" Stretch="Uniform"
+                            <Border x:Name="IconWrap" Width="38" Height="38" CornerRadius="8" Background="{StaticResource ZBrushSurfaceMuted}" BorderBrush="{StaticResource ZBrushBorder}" BorderThickness="1">
+                                <Image x:Name="IconImage" Source="{TemplateBinding Icon}" Width="24" Height="24" Stretch="Uniform"
                                        RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True"/>
                             </Border>
-                            <StackPanel Grid.Column="1" Margin="12,0,12,0" VerticalAlignment="Center">
-                                <TextBlock Text="{TemplateBinding Title}" FontSize="13.5" FontWeight="SemiBold"
+                            <StackPanel Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center">
+                                <TextBlock Text="{TemplateBinding Title}" FontSize="12.8" FontWeight="SemiBold"
                                            Foreground="{StaticResource ZBrushBlack}" TextTrimming="CharacterEllipsis"/>
-                                <TextBlock Text="{TemplateBinding Subtitle}" FontSize="12" Foreground="{StaticResource ZBrushGray}"
-                                           TextTrimming="CharacterEllipsis" Margin="0,3,0,0"/>
+                                <TextBlock Text="{TemplateBinding Subtitle}" FontSize="11.5" Foreground="{StaticResource ZBrushGray}"
+                                           TextTrimming="CharacterEllipsis" Margin="0,2,0,0"/>
                             </StackPanel>
                             <ContentPresenter Grid.Column="2" Content="{TemplateBinding Content}" VerticalAlignment="Center"/>
                         </Grid>

@@ -3,13 +3,13 @@
                     xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
 >
     <Style TargetType="{x:Type controls:ZSearchBox}">
-        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontSize" Value="12.5"/>
         <Setter Property="Foreground" Value="{StaticResource ZBrushBlack}"/>
         <Setter Property="CaretBrush" Value="{StaticResource ZBrushAccent}"/>
         <Setter Property="SelectionBrush" Value="{StaticResource ZBrushAccent}"/>
         <Setter Property="Background" Value="{StaticResource ZBrushWhite}"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="MinWidth" Value="220"/>
+        <Setter Property="Height" Value="36"/>
+        <Setter Property="MinWidth" Value="200"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -28,8 +28,8 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Path Data="{StaticResource StrokeIconSearch}"
-                                  Width="17" Height="17"
-                                  Margin="10,0,2,0"
+                                  Width="15" Height="15"
+                                  Margin="8,0,2,0"
                                   VerticalAlignment="Center"
                                   Fill="Transparent"
                                   Stroke="{StaticResource ZBrushGray}"
@@ -38,13 +38,13 @@
                                   StrokeEndLineCap="Round"
                                   Stretch="Uniform"/>
                             <TextBlock x:Name="PART_Placeholder" Grid.Column="1" Text="{TemplateBinding Placeholder}"
-                                       Foreground="{StaticResource ZBrushGray}" FontSize="13" Margin="4,0,4,0"
+                                       Foreground="{StaticResource ZBrushGray}" FontSize="12.5" Margin="3,0,3,0"
                                        VerticalAlignment="Center" IsHitTestVisible="False"/>
                             <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1" Margin="2" VerticalAlignment="Center"/>
-                            <Button x:Name="PART_Clear" Grid.Column="2" Width="24" Height="24" Margin="3,0,4,0" Cursor="Hand"
+                            <Button x:Name="PART_Clear" Grid.Column="2" Width="22" Height="22" Margin="2,0,3,0" Cursor="Hand"
                                     Background="Transparent" BorderThickness="0" Focusable="False" Visibility="Collapsed">
                                 <Path Data="{StaticResource StrokeIconClose}"
-                                      Width="12" Height="12"
+                                      Width="11" Height="11"
                                       Fill="Transparent"
                                       Stroke="{StaticResource ZBrushGray}"
                                       StrokeThickness="1.75"

@@ -10,27 +10,27 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ZDialog}">
                     <Border x:Name="PART_Overlay" Background="#66121012" Visibility="Collapsed">
-                        <Border x:Name="PART_Card" Width="480" MaxHeight="540" Background="{StaticResource ZBrushSurface}"
-                                BorderBrush="{StaticResource ZBrushBorderStrong}" BorderThickness="1" CornerRadius="16"
-                                Padding="26" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Border x:Name="PART_Card" Width="430" MaxHeight="500" Background="{StaticResource ZBrushSurface}"
+                                BorderBrush="{StaticResource ZBrushBorderStrong}" BorderThickness="1" CornerRadius="13"
+                                Padding="22" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <Border x:Name="IconWrap" Width="40" Height="40" CornerRadius="11" Background="{StaticResource ZBrushAccentTint}">
-                                        <Path Data="{TemplateBinding Icon}" Fill="Transparent" Stroke="{StaticResource ZBrushAccent}" StrokeThickness="1.8" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Width="20" Height="20"
+                                    <Border x:Name="IconWrap" Width="36" Height="36" CornerRadius="9" Background="{StaticResource ZBrushAccentTint}">
+                                        <Path Data="{TemplateBinding Icon}" Fill="Transparent" Stroke="{StaticResource ZBrushAccent}" StrokeThickness="1.8" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Width="18" Height="18"
                                               Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
-                                    <TextBlock Text="{TemplateBinding Title}" FontSize="16" FontWeight="SemiBold"
-                                               Foreground="{StaticResource ZBrushBlack}" Margin="12,0,0,0"
+                                    <TextBlock Text="{TemplateBinding Title}" FontSize="14.5" FontWeight="SemiBold"
+                                               Foreground="{StaticResource ZBrushBlack}" Margin="10,0,0,0"
                                                VerticalAlignment="Center" TextWrapping="Wrap"/>
                                 </StackPanel>
-                                <TextBlock Text="{TemplateBinding Message}" FontSize="13" Foreground="{StaticResource ZBrushDarkGray}"
-                                           TextWrapping="Wrap" Margin="0,16,0,0"/>
-                                <ContentPresenter Content="{TemplateBinding Content}" Margin="0,16,0,0"/>
-                                <Grid Margin="0,24,0,0">
+                                <TextBlock Text="{TemplateBinding Message}" FontSize="12" Foreground="{StaticResource ZBrushDarkGray}"
+                                           TextWrapping="Wrap" Margin="0,12,0,0"/>
+                                <ContentPresenter Content="{TemplateBinding Content}" Margin="0,12,0,0"/>
+                                <Grid Margin="0,18,0,0">
                                     <ContentPresenter Content="{TemplateBinding ButtonsContent}" HorizontalAlignment="Right"/>
                                     <StackPanel x:Name="DefaultButtons" Orientation="Horizontal" HorizontalAlignment="Right">
                                         <controls:ZButton x:Name="PART_CancelButton" Variant="Ghost"
-                                                          Content="{TemplateBinding CancelText}" Margin="0,0,10,0"
+                                                          Content="{TemplateBinding CancelText}" Margin="0,0,8,0"
                                                           Visibility="{Binding HideCancel, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InverseBoolToVis}}"/>
                                         <controls:ZButton x:Name="PART_ConfirmButton" Variant="Primary"
                                                           Content="{TemplateBinding ConfirmText}"/>

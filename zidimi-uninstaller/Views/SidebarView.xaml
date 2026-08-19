@@ -6,51 +6,19 @@
              xmlns:controls="clr-namespace:zidimi_uninstaller.Controls"
              xmlns:services="clr-namespace:zidimi_uninstaller.Services"
              mc:Ignorable="d"
-             d:DesignWidth="248" d:DesignHeight="720"
-             Width="248">
+             d:DesignWidth="216" d:DesignHeight="680"
+             Width="216">
     <Border Background="{StaticResource ZBrushDark}"
             BorderBrush="{StaticResource ZBrushSidebarBorder}"
             BorderThickness="0,0,1,0">
-        <Grid Margin="16,20,16,14">
+        <Grid Margin="8,10,8,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Grid Margin="8,0,8,22">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Border Width="38" Height="38"
-                        Background="#22EA0232"
-                        BorderBrush="#55EA0232"
-                        BorderThickness="1"
-                        CornerRadius="10">
-                    <Path Data="{StaticResource StrokeIconApps}"
-                          Width="18" Height="18"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center"
-                          Fill="Transparent"
-                          Stroke="{StaticResource ZBrushAccent}"
-                          StrokeThickness="1.7"
-                          StrokeLineJoin="Round"
-                          Stretch="Uniform"/>
-                </Border>
-
-                <StackPanel Grid.Column="1" Margin="11,0,0,0" VerticalAlignment="Center">
-                    <TextBlock Text="Zidimi"
-                               FontSize="16"
-                               FontWeight="SemiBold"
-                               Foreground="White"/>
-                    <TextBlock Text="Uninstaller"
-                               Margin="0,1,0,0"
-                               FontSize="11"
-                               Foreground="{StaticResource ZBrushSidebarText}"/>
-                </StackPanel>
-            </Grid>
+            
 
             <ScrollViewer Grid.Row="1"
                           VerticalScrollBarVisibility="Auto"
@@ -70,14 +38,14 @@
                 </ItemsControl>
             </ScrollViewer>
 
-            <Grid Grid.Row="2" Margin="8,14,8,0">
+            <Grid Grid.Row="2" Margin="6,10,6,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <Border Height="1"
-                        Margin="0,0,0,12"
+                        Margin="0,0,0,9"
                         Background="{StaticResource ZBrushSidebarBorder}"/>
 
                 <Grid Grid.Row="1">
@@ -86,29 +54,29 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <Border Padding="8,4"
+                    <Border Padding="6,3"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Background="#14FFFFFF"
                             CornerRadius="6">
                         <TextBlock Text="{Binding AppVersion, StringFormat=Version {0}}"
-                                   FontSize="11"
+                                   FontSize="10.5"
                                    Foreground="{StaticResource ZBrushSidebarText}"/>
                     </Border>
 
                     <StackPanel Grid.Column="1" Orientation="Horizontal">
                         <controls:ZIconButton Icon="{StaticResource StrokeIconReloadAll}"
                                               Variant="Sidebar"
-                                              GlyphSize="16"
+                                              GlyphSize="14"
                                               Foreground="{StaticResource ZBrushSidebarText}"
                                               Command="{Binding ReloadAllCommand}"
                                               ToolTip="{Binding [Sidebar_ReloadAll], Source={x:Static services:LanguageManager.Instance}}"
                                               AutomationProperties.Name="{Binding [Sidebar_ReloadAll], Source={x:Static services:LanguageManager.Instance}}"/>
                         <controls:ZIconButton Icon="{StaticResource StrokeIconInfo}"
                                               Variant="Sidebar"
-                                              GlyphSize="16"
+                                              GlyphSize="14"
                                               Foreground="{StaticResource ZBrushSidebarText}"
-                                              Margin="4,0,0,0"
+                                              Margin="3,0,0,0"
                                               Command="{Binding OpenAboutCommand}"
                                               ToolTip="{Binding [Sidebar_About], Source={x:Static services:LanguageManager.Instance}}"
                                               AutomationProperties.Name="{Binding [Sidebar_About], Source={x:Static services:LanguageManager.Instance}}"/>
