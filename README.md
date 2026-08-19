@@ -7,7 +7,7 @@ A modern, fast, and thorough software management and uninstallation utility for 
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D4?style=flat-square&logo=windows)](https://github.com/khanh779-9/zidimi-uninstaller)
 [![.NET](https://img.shields.io/badge/.NET-8.0--windows-512BD4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
 
-[Download Latest Release (v1.4.1)](https://github.com/khanh779-9/zidimi-uninstaller/releases/latest) | [View Releases](https://github.com/khanh779-9/zidimi-uninstaller/releases) | [Report an Issue](https://github.com/khanh779-9/zidimi-uninstaller/issues)
+[Download Latest Release (v1.5.0)](https://github.com/khanh779-9/zidimi-uninstaller/releases/latest) | [View Releases](https://github.com/khanh779-9/zidimi-uninstaller/releases) | [Report an Issue](https://github.com/khanh779-9/zidimi-uninstaller/issues)
 
 ---
 
@@ -34,8 +34,9 @@ A modern, fast, and thorough software management and uninstallation utility for 
   - [5. Startup Manager](#5-startup-manager)
   - [6. Deep Clean and Residue Removal](#6-deep-clean-and-residue-removal)
   - [7. Uninstall History & Audit Log](#7-uninstall-history--audit-log)
-  - [8. Safety and Process Hunter](#8-safety-and-process-hunter)
-  - [9. Task Scheduler UAC Bypass](#9-task-scheduler-uac-bypass)
+  - [8. Hunter Mode & Target Resolver](#8-hunter-mode--target-resolver)
+  - [9. Safety and Process Hunter](#9-safety-and-process-hunter)
+  - [10. Task Scheduler UAC Bypass](#10-task-scheduler-uac-bypass)
 - [Supported Languages](#supported-languages)
 - [Configuration and Settings](#configuration-and-settings)
 - [System Requirements](#system-requirements)
@@ -55,6 +56,7 @@ A modern, fast, and thorough software management and uninstallation utility for 
 | Microsoft Store (UWP / MSIX) App Management | Supported | Supported |
 | Silent / Unattended Uninstallation Mode | Not Available | Supported |
 | Force Uninstall for Corrupt or Broken Uninstallers | Not Available | Supported |
+| Interactive Hunter Mode (Drag-and-Drop Crosshair Targeting) | Not Available | Supported |
 | Post-Uninstall Leftover & Registry Scanning (Deep Clean) | Not Available | Supported |
 | Detailed Uninstall History & Log Audit | Not Available | Supported |
 | Windows Optional Features Management | Separate Control Panel | Integrated |
@@ -78,6 +80,7 @@ A modern, fast, and thorough software management and uninstallation utility for 
 | **Startup Manager** | Control applications launching at boot with icon inspection | Enable, Disable, Reveal Location, Registry Navigation | Registry Run/RunOnce keys and Startup folders |
 | **Deep Clean** | Post-uninstall residue detection and cleanup | Scan, Selective Clean, Send to Recycle Bin, Permanent Delete | File system (`AppData`, `ProgramData`, `Temp`), Registry keys |
 | **Uninstall History** | Audit log of all uninstall sessions and outcomes | Rescan Leftovers, Export Logs, Clear History, View Status | Historical uninstall events, sizes freed, timestamps |
+| **Hunter Mode** | Visual crosshair aiming & target resolution | Target Window/File/Shortcut, Inspect, Kill Process, Force Uninstall | Active desktop windows, running processes, desktop shortcuts, files |
 | **Process Hunter** | Active process monitoring for target software | Detection, Auto-Kill on demand, Process tree termination | Running executables and child processes |
 | **Restore Point Engine** | Automated safety checkpoints before system modifications | Create System Restore Point | Windows Volume Shadow Copy / System Restore API |
 
@@ -104,7 +107,7 @@ A modern, fast, and thorough software management and uninstallation utility for 
 Zidimi Uninstaller is distributed as a standalone portable package that does not require prior installation.
 
 1. Navigate to the [Releases](https://github.com/khanh779-9/zidimi-uninstaller/releases) page.
-2. Download the latest release zip archive (`zidimi-uninstaller-v1.4.1.zip`).
+2. Download the latest release zip archive (`zidimi-uninstaller-v1.5.0.zip`).
 3. Extract the contents to any preferred folder.
 4. Launch `zidimi-uninstaller.exe` (Administrator privileges are recommended for complete system modifications).
 
@@ -117,6 +120,7 @@ Zidimi Uninstaller is distributed as a standalone portable package that does not
 - **Smart Category Filters**: One-click filter pills for **All**, **64-Bit**, **32-Bit**, **Large Apps (>500 MB)**, **Recently Installed (<30 days)**, and **Broken/Orphaned** applications.
 - **Silent / Unattended Uninstall**: Automatically detects and applies silent parameters (`/quiet`, `/qn`, `/s`, `/silent`, `/VERYSILENT`) across installer architectures (MSI, Inno Setup, Nullsoft NSIS, InstallShield, WiX).
 - **Force Removal**: Dedicated `ForceUninstallService` terminates locked processes, force-unregisters Registry entries from all scopes (native & WOW6432Node), removes associated Windows services, and purges all program residues.
+- **Custom Target Force Uninstall**: Select any arbitrary executable or installation folder to resolve and purge unlisted/portable applications.
 - **Application Details Modal**: Inspect full publisher metadata, installation directories, installer source, official website URL, and exact Registry keys.
 - **Batch Processing**: Filter, sort, and select multiple applications for sequential queue processing.
 - **Contextual Actions**: Modify installations, reveal installation folders in Windows File Explorer, or navigate to official support websites.
@@ -156,11 +160,16 @@ Zidimi Uninstaller is distributed as a standalone portable package that does not
 - **Leftover Rescan**: Trigger targeted residue and leftover analysis on any previously uninstalled application directly from the history timeline.
 - **Log Management**: Export history log or clear records when desired.
 
-### 8. Safety and Process Hunter
+### 8. Hunter Mode & Target Resolver
+- **Visual Targeting Crosshair**: Drag and hover a floating crosshair overlay directly onto any visible window, taskbar item, or desktop shortcut.
+- **Instant Resolution**: Real-time identification of the underlying process name, PID, main window title, and installation directory via `TargetResolverService`.
+- **Target Actions**: Instantly choose to open folder in Explorer, kill running process tree, run standard uninstall, or trigger deep force removal.
+
+### 9. Safety and Process Hunter
 - **Process Hunter**: Queries running processes matching application executable names and file paths, offering automated process termination to prevent file lock errors during uninstallation.
 - **Restore Point Engine**: Calls Windows System Restore APIs to snapshot the system state prior to modifications.
 
-### 9. Task Scheduler UAC Bypass
+### 10. Task Scheduler UAC Bypass
 - **Highest Privileges Task**: Register a Windows Task Scheduler job running with `/rl HIGHEST` to launch Zidimi Uninstaller with full administrator privileges without triggering the Windows User Account Control (UAC) prompt.
 - **Desktop Shortcut Creator**: Generate a dedicated `Zidimi Uninstaller (No UAC).lnk` shortcut on your desktop with one click.
 

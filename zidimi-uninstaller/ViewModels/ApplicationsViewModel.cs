@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Windows.Data;
 using zidimi_uninstaller.Controls;
 using zidimi_uninstaller.Models;
@@ -149,6 +150,37 @@ public class ApplicationsViewModel : ObservableObject, IDisposable
         set => SetProperty(ref _isDetailsModalOpen, value);
     }
 
+    private ForceTargetResolution? _forceTarget;
+    public ForceTargetResolution? ForceTarget
+    {
+        get => _forceTarget;
+        private set => SetProperty(ref _forceTarget, value);
+    }
+
+    private bool _isResolvingTarget;
+    public bool IsResolvingTarget
+    {
+        get => _isResolvingTarget;
+        private set => SetProperty(ref _isResolvingTarget, value);
+    }
+
+    private bool _isHunterActive;
+    public bool IsHunterActive
+    {
+        get => _isHunterActive;
+        private set
+        {
+            if (SetProperty(ref _isHunterActive, value))
+                OnPropertyChanged(nameof(HunterButtonText));
+        }
+    }
+
+    private CancellationTokenSource? _hunterCancellation;
+
+    public string HunterButtonText => IsHunterActive
+        ? LanguageManager.T("Apps_HunterCancel", "Cancel Hunter")
+        : LanguageManager.T("Apps_HunterMode", "Hunter Mode");
+
     public AsyncRelayCommand RescanCommand { get; }
     public AsyncRelayCommand UninstallCommand { get; }
     public AsyncRelayCommand QuietUninstallCommand { get; }
@@ -161,6 +193,10 @@ public class ApplicationsViewModel : ObservableObject, IDisposable
     public RelayCommand ClearSelectionCommand { get; }
     public RelayCommand OpenDetailsCommand { get; }
     public RelayCommand CloseDetailsCommand { get; }
+    public RelayCommand HunterModeCommand { get; }
+    public RelayCommand ClearForceTargetCommand { get; }
+    public AsyncRelayCommand ForceResolvedTargetCommand { get; }
+    public RelayCommand OpenForceTargetLocationCommand { get; }
     public event Action? ReloadRequested;
     public event Action? HistoryChanged;
     public event Action<ApplicationEntry>? DeepCleanRequested;
@@ -184,6 +220,10 @@ public class ApplicationsViewModel : ObservableObject, IDisposable
                 IsDetailsModalOpen = true;
         });
         CloseDetailsCommand = new RelayCommand(_ => IsDetailsModalOpen = false);
+        HunterModeCommand = new RelayCommand(_ => ToggleHunterMode());
+        ClearForceTargetCommand = new RelayCommand(_ => ForceTarget = null);
+        ForceResolvedTargetCommand = new AsyncRelayCommand(async _ => await RunExclusiveOperationAsync(ForceResolvedTargetAsync));
+        OpenForceTargetLocationCommand = new RelayCommand(_ => OpenForceTargetLocation());
 
         RescanCommand = new AsyncRelayCommand(async _ => await LoadAsync());
         UninstallCommand = new AsyncRelayCommand(async p => await RunExclusiveOperationAsync(
@@ -213,6 +253,7 @@ public class ApplicationsViewModel : ObservableObject, IDisposable
         SortOptions[1].Label = LanguageManager.T("Apps_SortPublisher", "Publisher");
         SortOptions[2].Label = LanguageManager.T("Apps_SortSize", "Size");
         SortOptions[3].Label = LanguageManager.T("Apps_SortDate", "Installation Date");
+        OnPropertyChanged(nameof(HunterButtonText));
         UpdateCounts();
     }
 
@@ -231,6 +272,7 @@ public class ApplicationsViewModel : ObservableObject, IDisposable
                 Apps.Add(entry);
             }
             SelectedApp = null;
+            ForceTarget = null;
             StatusText = string.Format(LanguageManager.T("Status_AppsCount", "{0} applications"), Apps.Count);
         }
         catch
@@ -542,6 +584,265 @@ public class ApplicationsViewModel : ObservableObject, IDisposable
         }
     }
 
+    public async Task HandleDroppedTargetAsync(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path)) return;
+
+        if (File.Exists(path) && !Path.GetExtension(path).Equals(".exe", StringComparison.OrdinalIgnoreCase))
+        {
+            AppServices.Toast.Show(
+                LanguageManager.T("Toasts_TargetUnsupported", "Drag an EXE file or an application folder."),
+                ZToastType.Warning);
+            return;
+        }
+
+        IsResolvingTarget = true;
+        StatusText = LanguageManager.T("Status_ResolvingTarget", "Resolving force-uninstall target…");
+        try
+        {
+            var snapshot = Apps.ToList();
+            var resolved = await Task.Run(() => TargetResolverService.Resolve(
+                path,
+                snapshot,
+                ForceTargetSource.DragDrop));
+
+            ForceTarget = resolved;
+            StatusText = resolved.IsSafeTarget
+                ? string.Format(LanguageManager.T("Status_TargetResolved", "Target resolved: {0}"), resolved.DisplayName)
+                : LanguageManager.T("Status_TargetBlocked", "Target was resolved but blocked by protected-path safety checks.");
+
+            AppServices.Toast.Show(
+                resolved.IsSafeTarget
+                    ? string.Format(LanguageManager.T("Toasts_TargetResolved", "Resolved force-uninstall target: {0}"), resolved.DisplayName)
+                    : resolved.SafetyReason,
+                resolved.IsSafeTarget ? ZToastType.Success : ZToastType.Warning);
+        }
+        catch (Exception ex)
+        {
+            AppServices.Toast.Show(
+                string.Format(LanguageManager.T("Toasts_TargetResolveFailed", "Could not resolve target: {0}"), ex.Message),
+                ZToastType.Error);
+        }
+        finally
+        {
+            IsResolvingTarget = false;
+        }
+    }
+
+    private void ToggleHunterMode()
+    {
+        if (IsHunterActive)
+        {
+            _hunterCancellation?.Cancel();
+            return;
+        }
+
+        _ = StartHunterModeAsync();
+    }
+
+    private async Task StartHunterModeAsync()
+    {
+        _hunterCancellation?.Dispose();
+        _hunterCancellation = new CancellationTokenSource();
+        var token = _hunterCancellation.Token;
+        IsHunterActive = true;
+        StatusText = LanguageManager.T("Status_HunterWaiting", "Hunter Mode: click the window you want to inspect…");
+        AppServices.Toast.Show(
+            LanguageManager.T("Toasts_HunterStarted", "Hunter Mode is active. Click another application's window to resolve it."),
+            ZToastType.Info);
+
+        try
+        {
+            var captured = await HunterModeService.CaptureNextClickAsync(token);
+            if (captured == null || token.IsCancellationRequested)
+            {
+                StatusText = LanguageManager.T("Status_HunterCancelled", "Hunter Mode cancelled.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(captured.ExecutablePath))
+            {
+                StatusText = LanguageManager.T("Status_HunterAccessDenied", "Hunter Mode found the window but could not read its executable path.");
+                AppServices.Toast.Show(
+                    LanguageManager.T("Toasts_HunterAccessDenied", "The selected window belongs to a protected/elevated process; its executable path could not be read."),
+                    ZToastType.Warning);
+                return;
+            }
+
+            var snapshot = Apps.ToList();
+            var resolved = await Task.Run(() => TargetResolverService.Resolve(
+                captured.ExecutablePath,
+                snapshot,
+                ForceTargetSource.HunterMode,
+                captured.ProcessId,
+                captured.WindowTitle));
+
+            ForceTarget = resolved;
+            StatusText = string.Format(LanguageManager.T("Status_HunterResolved", "Hunter target: {0}"), resolved.DisplayName);
+            AppServices.Toast.Show(
+                string.Format(LanguageManager.T("Toasts_HunterResolved", "Hunter Mode resolved: {0}"), resolved.DisplayName),
+                resolved.IsSafeTarget ? ZToastType.Success : ZToastType.Warning);
+        }
+        catch (Exception ex)
+        {
+            if (!token.IsCancellationRequested)
+            {
+                StatusText = LanguageManager.T("Status_HunterFailed", "Hunter Mode could not start or inspect the selected window.");
+                AppServices.Toast.Show(
+                    string.Format(LanguageManager.T("Toasts_HunterFailed", "Hunter Mode failed: {0}"), ex.Message),
+                    ZToastType.Error);
+            }
+        }
+        finally
+        {
+            IsHunterActive = false;
+            _hunterCancellation?.Dispose();
+            _hunterCancellation = null;
+        }
+    }
+
+    private async Task ForceResolvedTargetAsync()
+    {
+        var target = ForceTarget;
+        if (target == null) return;
+
+        if (!target.CanForceRemove)
+        {
+            AppServices.Toast.Show(target.SafetyReason, ZToastType.Warning);
+            return;
+        }
+
+        var title = LanguageManager.T("Dialogs_ForceTargetTitle", "Force Uninstall Target");
+        var message = target.IsRegisteredApplication
+            ? string.Format(
+                LanguageManager.T("Dialogs_ForceTargetAppMsg", "\"{0}\" was matched to an installed application ({1}% confidence). Force Uninstall will close matching processes, remove the resolved target path and high-confidence traces, then remove its uninstall registration. Continue?"),
+                target.DisplayName,
+                target.ConfidenceScore)
+            : string.Format(
+                LanguageManager.T("Dialogs_ForceTargetPathMsg", "No installed application was matched strongly enough. Zidimi will close processes launched from this target and remove only the explicit path:\n{0}\n\nContinue?"),
+                target.RemovalPath);
+
+        if (!await AppServices.Dialog.ConfirmAsync(
+            title,
+            message,
+            LanguageManager.T("Dialogs_ForceRemoveBtn", "Force Uninstall")))
+            return;
+
+        if (AppSettings.Instance.CreateRestorePoint)
+        {
+            AppServices.Toast.Show(LanguageManager.T("Toasts_CreatingRestorePoint", "Creating System Restore Point…"), ZToastType.Info);
+            await Task.Run(() => RestorePointService.CreateRestorePoint(target.DisplayName));
+        }
+
+        var startedAt = DateTime.Now;
+        var historyApp = target.Application ?? new ApplicationEntry
+        {
+            DisplayName = target.DisplayName,
+            InstallLocation = Directory.Exists(target.RemovalPath)
+                ? target.RemovalPath
+                : string.Empty,
+            DisplayIconPath = File.Exists(target.InputPath) ? target.InputPath : string.Empty
+        };
+
+        try
+        {
+            if (target.Application != null)
+                target.Application.IsUninstalling = true;
+
+            StatusText = string.Format(LanguageManager.T("Status_ForceTarget", "Force uninstalling target: {0}"), target.DisplayName);
+
+            var result = target.Application != null
+                ? await Task.Run(() => ForceUninstallService.Run(
+                    target.Application,
+                    AppSettings.Instance.SendToRecycleBin,
+                    target.RemovalPath))
+                : await Task.Run(() => ForceUninstallService.RunPath(
+                    target.RemovalPath,
+                    AppSettings.Instance.SendToRecycleBin));
+
+            var registeredSuccess = target.Application == null || result.RegistrationRemoved;
+            var targetSuccess = result.ExplicitTargetRemoved;
+            var success = registeredSuccess && targetSuccess;
+            var outcome = success ? UninstallOutcome.Success : UninstallOutcome.NotConfirmed;
+            var details = string.Format(
+                LanguageManager.T("History_ForceTargetDetails", "Source: {0}; closed {1} process(es); removed {2} trace(s); target removed: {3}; registration removed: {4}."),
+                target.SourceText,
+                result.ProcessesClosed,
+                result.RemovedLeftovers,
+                targetSuccess ? "yes" : "no",
+                target.Application == null ? "n/a" : result.RegistrationRemoved ? "yes" : "no");
+
+            UninstallHistoryService.Add(UninstallHistoryEntry.FromApplication(
+                historyApp,
+                LanguageManager.T("History_ActionForceTarget", "Force target"),
+                outcome,
+                startedAt,
+                removedLeftovers: result.RemovedLeftovers,
+                freedBytes: result.FreedBytes,
+                details: details));
+            HistoryChanged?.Invoke();
+
+            if (target.Application != null && result.RegistrationRemoved)
+            {
+                target.Application.PropertyChanged -= OnEntryPropertyChanged;
+                Apps.Remove(target.Application);
+                if (ReferenceEquals(SelectedApp, target.Application))
+                    SelectedApp = null;
+            }
+
+            UpdateCounts();
+            ReloadRequested?.Invoke();
+
+            if (success)
+            {
+                StatusText = string.Format(LanguageManager.T("Status_ForceTargetComplete", "Force target removed: {0}"), target.DisplayName);
+                AppServices.Toast.Show(
+                    string.Format(LanguageManager.T("Toasts_ForceTargetComplete", "Force Uninstall completed for {0}."), target.DisplayName),
+                    ZToastType.Success);
+                ForceTarget = null;
+            }
+            else
+            {
+                StatusText = LanguageManager.T("Status_ForceTargetAttention", "Force Uninstall finished, but some target state remains and needs review.");
+                AppServices.Toast.Show(
+                    LanguageManager.T("Toasts_ForceTargetAttention", "Force Uninstall finished with remaining state. Review the target and History details."),
+                    ZToastType.Warning);
+            }
+        }
+        catch (Exception ex)
+        {
+            UninstallHistoryService.Add(UninstallHistoryEntry.FromApplication(
+                historyApp,
+                LanguageManager.T("History_ActionForceTarget", "Force target"),
+                UninstallOutcome.Failed,
+                startedAt,
+                details: ex.Message));
+            HistoryChanged?.Invoke();
+
+            AppServices.Toast.Show(
+                string.Format(LanguageManager.T("Toasts_ForceTargetFailed", "Force Uninstall failed: {0}"), ex.Message),
+                ZToastType.Error);
+        }
+        finally
+        {
+            if (target.Application != null)
+                target.Application.IsUninstalling = false;
+        }
+    }
+
+    private void OpenForceTargetLocation()
+    {
+        var target = ForceTarget;
+        if (target == null) return;
+
+        var path = target.RemovalPath;
+        if (File.Exists(path))
+            path = Path.GetDirectoryName(path) ?? path;
+
+        if (Directory.Exists(path))
+            UninstallService.OpenInExplorer(path);
+    }
+
     private static async Task<bool> WaitForUninstallRegistrationRemovalAsync(ApplicationEntry entry)
     {
         // Bootstrapper uninstallers sometimes exit before their child process removes the ARP entry.
@@ -701,6 +1002,9 @@ public class ApplicationsViewModel : ObservableObject, IDisposable
 
     public void Dispose()
     {
+        _hunterCancellation?.Cancel();
+        _hunterCancellation?.Dispose();
+        _hunterCancellation = null;
         DetachEntries();
         LanguageManager.Instance.LanguageChanged -= OnLanguageChanged;
         GC.SuppressFinalize(this);

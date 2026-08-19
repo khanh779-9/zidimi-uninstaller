@@ -439,3 +439,98 @@ Confidence=Tin cậy {0}%
 Processing=Đang xử lý…
 [Toasts]
 OperationAlreadyRunning=Đang có một thao tác gỡ cài đặt khác chạy.
+
+
+; ===== v1.5 Force Target / Hunter Mode additions =====
+[Apps]
+HunterMode=Chế độ Hunter
+HunterCancel=Hủy Hunter
+DropHint=Kéo thả file EXE hoặc thư mục ứng dụng vào trang này, hoặc dùng Hunter Mode rồi bấm vào cửa sổ ứng dụng đang chạy.
+ForceTarget=Force Target
+ClearTarget=Xóa mục tiêu đã nhận diện
+TargetConfidence=Khớp ứng dụng {0}%
+TargetDirect=Mục tiêu đường dẫn trực tiếp
+TargetSourceHunter=Hunter Mode
+TargetSourceDrop=Kéo & thả
+TargetFolder=Thư mục
+TargetFile=Tệp
+TargetUnknown=Mục tiêu
+TargetMissing=Mục tiêu đã chọn không tồn tại hoặc không thể truy cập.
+TargetNoAppMatch=Không có ứng dụng đã cài nào khớp đủ mạnh; Zidimi chỉ nhắm vào đúng đường dẫn đã chọn.
+TargetEvidenceExactInstall=Mục tiêu trùng chính xác InstallLocation của ứng dụng.
+TargetEvidenceInsideInstall=EXE/thư mục mục tiêu nằm bên trong InstallLocation của ứng dụng.
+TargetEvidenceExeInInstall=EXE mục tiêu nằm trực tiếp trong InstallLocation của ứng dụng.
+TargetEvidenceIcon=Mục tiêu trùng chính xác executable được tham chiếu bởi DisplayIcon.
+TargetEvidenceUninstaller=Mục tiêu khớp executable uninstaller đã đăng ký của ứng dụng.
+TargetEvidenceName=Tên executable khớp mạnh với tên hiển thị của ứng dụng.
+TargetEvidenceFolderName=Tên thư mục khớp mạnh với tên hiển thị của ứng dụng.
+TargetUnsafeEmpty=Không nhận diện được đường dẫn mục tiêu có thể xóa.
+TargetUnsafeInvalid=Đường dẫn mục tiêu không hợp lệ.
+TargetUnsafeDrive=Không cho phép force remove thư mục gốc của ổ đĩa.
+TargetUnsafeWindows=Chặn các mục tiêu nằm bên trong thư mục Windows.
+TargetUnsafeSharedRoot=Không cho phép force remove trực tiếp các thư mục gốc dùng chung của Windows/ứng dụng.
+TargetSafe=Mục tiêu đã vượt qua kiểm tra đường dẫn được bảo vệ.
+
+[Dialogs]
+ForceTargetTitle=Force Uninstall mục tiêu
+ForceTargetAppMsg="{0}" khớp với một ứng dụng đã cài ({1}% tin cậy). Zidimi sẽ đóng process liên quan, xóa đường dẫn mục tiêu và các trace có độ tin cậy cao, sau đó xóa đăng ký uninstall. Tiếp tục?
+ForceTargetPathMsg=Không có ứng dụng đã cài nào khớp đủ mạnh. Zidimi sẽ đóng process chạy từ mục tiêu này và chỉ xóa đúng đường dẫn: {0}. Tiếp tục?
+
+[Status]
+ResolvingTarget=Đang nhận diện mục tiêu force uninstall…
+TargetResolved=Đã nhận diện mục tiêu: {0}
+TargetBlocked=Đã nhận diện mục tiêu nhưng bị chặn bởi kiểm tra đường dẫn được bảo vệ.
+HunterWaiting=Hunter Mode: bấm vào cửa sổ bạn muốn nhận diện…
+HunterCancelled=Đã hủy Hunter Mode.
+HunterAccessDenied=Hunter Mode tìm thấy cửa sổ nhưng không đọc được đường dẫn executable.
+HunterResolved=Mục tiêu Hunter: {0}
+HunterFailed=Hunter Mode không thể khởi động hoặc đọc cửa sổ đã chọn.
+ForceTarget=Đang force uninstall mục tiêu: {0}
+ForceTargetComplete=Đã xóa mục tiêu: {0}
+ForceTargetAttention=Force Uninstall đã chạy xong nhưng vẫn còn trạng thái cần kiểm tra.
+
+[Toasts]
+TargetResolved=Đã nhận diện mục tiêu force uninstall: {0}
+TargetResolveFailed=Không thể nhận diện mục tiêu: {0}
+HunterStarted=Hunter Mode đang hoạt động. Hãy bấm vào cửa sổ của ứng dụng khác để nhận diện.
+HunterAccessDenied=Cửa sổ đã chọn thuộc process được bảo vệ/elevated nên không đọc được đường dẫn executable.
+HunterResolved=Hunter Mode đã nhận diện: {0}
+HunterFailed=Hunter Mode lỗi: {0}
+ForceTargetComplete=Force Uninstall hoàn tất cho {0}.
+ForceTargetAttention=Force Uninstall đã xong nhưng vẫn còn trạng thái. Hãy kiểm tra mục tiêu và History.
+ForceTargetFailed=Force Uninstall thất bại: {0}
+
+[History]
+ActionForceTarget=Force target
+ForceTargetDetails=Nguồn: {0}; đã đóng {1} process; đã xóa {2} trace; mục tiêu đã xóa: {3}; đăng ký uninstall đã xóa: {4}.
+
+
+; ===== localization parity cleanup =====
+[Apps]
+ElevationTitle=Cần quyền Quản trị viên
+ElevationSubtitle=Cần quyền Quản trị viên để quản lý ứng dụng đầy đủ.
+RestartAdminBtn=Khởi chạy lại với quyền Quản trị viên
+[Store]
+ElevationTitle=Cần quyền Quản trị viên
+ElevationSubtitle=Có thể cần quyền Quản trị viên để quản lý các Store app được bảo vệ.
+RestartAdminBtn=Khởi chạy lại với quyền Quản trị viên
+[Packages]
+ElevationTitle=Cần quyền Quản trị viên
+ElevationSubtitle=Có thể cần quyền Quản trị viên để quản lý các gói cài đặt toàn hệ thống.
+RestartAdminBtn=Khởi chạy lại với quyền Quản trị viên
+[Startup]
+ElevationTitle=Cần quyền Quản trị viên
+ElevationSubtitle=Có thể cần quyền Quản trị viên để quản lý các mục khởi động toàn máy.
+RestartAdminBtn=Khởi chạy lại với quyền Quản trị viên
+
+[Apps]
+TargetUnsafeSystemTree=Mục tiêu nằm trong cây thư mục ứng dụng Windows được bảo vệ/dùng chung.
+
+[Apps]
+TargetUnsafeContainsApps=Đã chặn vì thư mục này chứa InstallLocation của ứng dụng khác đã cài: {0}
+
+[Toasts]
+TargetUnsupported=Hãy kéo file EXE hoặc thư mục ứng dụng.
+
+[Apps]
+TargetUnsafeContainsRegistered=Đã chặn xóa đường dẫn trực tiếp vì thư mục chứa InstallLocation của một ứng dụng đã đăng ký.

@@ -438,3 +438,98 @@ Confidence={0}% confidence
 Processing=Processing…
 [Toasts]
 OperationAlreadyRunning=Another uninstall operation is already running.
+
+
+; ===== v1.5 Force Target / Hunter Mode additions =====
+[Apps]
+HunterMode=Hunter Mode
+HunterCancel=Cancel Hunter
+DropHint=Drag an EXE or application folder anywhere onto this page, or use Hunter Mode and click a running app window.
+ForceTarget=Force Target
+ClearTarget=Clear resolved target
+TargetConfidence={0}% app match
+TargetDirect=Direct path target
+TargetSourceHunter=Hunter Mode
+TargetSourceDrop=Drag & drop
+TargetFolder=Folder
+TargetFile=File
+TargetUnknown=Target
+TargetMissing=The selected target does not exist or cannot be accessed.
+TargetNoAppMatch=No installed application matched strongly enough; only the selected path will be targeted.
+TargetEvidenceExactInstall=Target exactly matches the application's InstallLocation.
+TargetEvidenceInsideInstall=Target executable/folder is inside the application's InstallLocation.
+TargetEvidenceExeInInstall=Target executable is directly inside the application's InstallLocation.
+TargetEvidenceIcon=Target exactly matches the executable referenced by DisplayIcon.
+TargetEvidenceUninstaller=Target matches the application's registered uninstaller executable.
+TargetEvidenceName=Executable name strongly matches the application display name.
+TargetEvidenceFolderName=Folder name strongly matches the application display name.
+TargetUnsafeEmpty=No removable target path was resolved.
+TargetUnsafeInvalid=The target path is invalid.
+TargetUnsafeDrive=Drive roots cannot be force removed.
+TargetUnsafeWindows=Targets inside the Windows directory are blocked.
+TargetUnsafeSharedRoot=Shared Windows/application roots cannot be force removed directly.
+TargetSafe=Target passed protected-path checks.
+
+[Dialogs]
+ForceTargetTitle=Force Uninstall Target
+ForceTargetAppMsg="{0}" matched an installed application ({1}% confidence). Zidimi will close matching processes, remove the resolved target path and high-confidence traces, then remove its uninstall registration. Continue?
+ForceTargetPathMsg=No installed application matched strongly enough. Zidimi will close processes launched from this target and remove only the explicit path: {0}. Continue?
+
+[Status]
+ResolvingTarget=Resolving force-uninstall target…
+TargetResolved=Target resolved: {0}
+TargetBlocked=Target was resolved but blocked by protected-path safety checks.
+HunterWaiting=Hunter Mode: click the window you want to inspect…
+HunterCancelled=Hunter Mode cancelled.
+HunterAccessDenied=Hunter Mode found the window but could not read its executable path.
+HunterResolved=Hunter target: {0}
+HunterFailed=Hunter Mode could not start or inspect the selected window.
+ForceTarget=Force uninstalling target: {0}
+ForceTargetComplete=Force target removed: {0}
+ForceTargetAttention=Force Uninstall finished, but some target state remains and needs review.
+
+[Toasts]
+TargetResolved=Resolved force-uninstall target: {0}
+TargetResolveFailed=Could not resolve target: {0}
+HunterStarted=Hunter Mode is active. Click another application's window to resolve it.
+HunterAccessDenied=The selected window belongs to a protected/elevated process; its executable path could not be read.
+HunterResolved=Hunter Mode resolved: {0}
+HunterFailed=Hunter Mode failed: {0}
+ForceTargetComplete=Force Uninstall completed for {0}.
+ForceTargetAttention=Force Uninstall finished with remaining state. Review the target and History details.
+ForceTargetFailed=Force Uninstall failed: {0}
+
+[History]
+ActionForceTarget=Force target
+ForceTargetDetails=Source: {0}; closed {1} process(es); removed {2} trace(s); target removed: {3}; registration removed: {4}.
+
+
+; ===== localization parity cleanup =====
+[Apps]
+ElevationTitle=Administrator Privileges Required
+ElevationSubtitle=Administrator privileges are required for complete application management.
+RestartAdminBtn=Restart as Administrator
+[Store]
+ElevationTitle=Administrator Privileges Required
+ElevationSubtitle=Administrator privileges may be required to manage protected Store apps.
+RestartAdminBtn=Restart as Administrator
+[Packages]
+ElevationTitle=Administrator Privileges Required
+ElevationSubtitle=Administrator privileges may be required to manage system-wide packages.
+RestartAdminBtn=Restart as Administrator
+[Startup]
+ElevationTitle=Administrator Privileges Required
+ElevationSubtitle=Administrator privileges may be required to manage machine-wide startup entries.
+RestartAdminBtn=Restart as Administrator
+
+[Apps]
+TargetUnsafeSystemTree=This target is inside a protected/shared Windows application tree.
+
+[Apps]
+TargetUnsafeContainsApps=Blocked because this folder contains another installed application's InstallLocation: {0}
+
+[Toasts]
+TargetUnsupported=Drag an EXE file or an application folder.
+
+[Apps]
+TargetUnsafeContainsRegistered=Direct-path removal is blocked because the folder contains a registered application's InstallLocation.

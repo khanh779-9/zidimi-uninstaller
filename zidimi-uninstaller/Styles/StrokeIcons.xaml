@@ -23,6 +23,7 @@
     <Geometry x:Key="StrokeIconClose">M6,6 L18,18 M18,6 L6,18</Geometry>
     <Geometry x:Key="StrokeIconCheck">M5,12 L10,17 L19,7</Geometry>
     <Geometry x:Key="StrokeIconSearch">M11,4 A7,7 0 1 1 11,18 A7,7 0 1 1 11,4 M16,16 L21,21</Geometry>
+    <Geometry x:Key="StrokeIconTarget">M12,3 A9,9 0 1 1 12,21 A9,9 0 1 1 12,3 M12,7 A5,5 0 1 1 12,17 A5,5 0 1 1 12,7 M12,1 V5 M12,19 V23 M1,12 H5 M19,12 H23</Geometry>
     <Geometry x:Key="StrokeIconLaunch">M14,5 H19 V10 M19,5 L10,14 M19,13 V19 H5 V5 H11</Geometry>
     <Geometry x:Key="StrokeIconExternal">M14,5 H19 V10 M19,5 L10,14 M19,13 V19 H5 V5 H11</Geometry>
     <Geometry x:Key="StrokeIconRestart">M18.5,7.5 A8,8 0 1 0 20,14 M18.5,7.5 V3.5 M18.5,7.5 H14.5</Geometry>

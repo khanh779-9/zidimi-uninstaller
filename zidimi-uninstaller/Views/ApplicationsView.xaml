@@ -1,4 +1,7 @@
 <UserControl x:Class="zidimi_uninstaller.Views.ApplicationsView"
+             AllowDrop="True"
+             PreviewDragOver="OnPreviewDragOver"
+             Drop="OnDrop"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -39,12 +42,95 @@
                                           Command="{Binding RescanCommand}"
                                           ToolTip="{Binding [Dashboard_Rescan], Source={x:Static services:LanguageManager.Instance}}"
                                           Margin="8,0,0,0"/>
+                    <controls:ZButton Content="{Binding HunterButtonText}"
+                                      Icon="{StaticResource StrokeIconTarget}"
+                                      Variant="Secondary"
+                                      Command="{Binding HunterModeCommand}"
+                                      Margin="8,0,0,0"/>
                     <controls:ZIconButton Icon="{StaticResource StrokeIconSelectAll}"
                                           Command="{Binding SelectAllCommand}"
                                           ToolTip="{Binding [DeepClean_SelectAll], Source={x:Static services:LanguageManager.Instance}}"
                                           Margin="4,0,0,0"/>
                 </StackPanel>
             </Grid>
+
+            <Border Margin="0,10,0,0"
+                    Padding="10,7"
+                    CornerRadius="8"
+                    Background="{StaticResource ZBrushSurfaceMuted}"
+                    BorderBrush="{StaticResource ZBrushBorder}"
+                    BorderThickness="1">
+                <StackPanel Orientation="Horizontal">
+                    <Path Data="{StaticResource StrokeIconTarget}"
+                          Stroke="{StaticResource ZBrushAccent}"
+                          StrokeThickness="1.6"
+                          Width="16" Height="16"
+                          Stretch="Uniform"
+                          Margin="0,0,8,0"/>
+                    <TextBlock Text="{Binding [Apps_DropHint], Source={x:Static services:LanguageManager.Instance}}"
+                               FontSize="11.5"
+                               Foreground="{StaticResource ZBrushGray}"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Border Margin="0,10,0,0"
+                    Padding="12"
+                    CornerRadius="10"
+                    Background="{StaticResource ZBrushAccentTint}"
+                    BorderBrush="#36EA0232"
+                    BorderThickness="1"
+                    Visibility="{Binding ForceTarget, Converter={StaticResource NotNullToVis}}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding ForceTarget.DisplayName}"
+                                       FontWeight="SemiBold" FontSize="13.5"
+                                       Foreground="{StaticResource ZBrushBlack}"
+                                       VerticalAlignment="Center"/>
+                            <controls:ZBadge Content="{Binding ForceTarget.SourceText}"
+                                             Variant="Accent" Margin="8,0,0,0"/>
+                            <controls:ZBadge Content="{Binding ForceTarget.ConfidenceText}"
+                                             Variant="Info" Margin="6,0,0,0"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding ForceTarget.RemovalPath}"
+                                   Margin="0,5,0,0" FontSize="11.5"
+                                   Foreground="{StaticResource ZBrushGray}"
+                                   TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Text="{Binding ForceTarget.Evidence}"
+                                   Margin="0,3,0,0" FontSize="11.5"
+                                   Foreground="{StaticResource ZBrushGray}"
+                                   TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding ForceTarget.SafetyReason}"
+                                   Margin="0,3,0,0" FontSize="11.5"
+                                   Foreground="{StaticResource ZBrushGray}"
+                                   TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding ForceTarget.WindowTitle}"
+                                   Margin="0,3,0,0" FontSize="11"
+                                   FontStyle="Italic"
+                                   Foreground="{StaticResource ZBrushGray}"
+                                   TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="12,0,0,0" VerticalAlignment="Center">
+                        <controls:ZButton Content="{Binding [Apps_OpenFolder], Source={x:Static services:LanguageManager.Instance}}"
+                                          Variant="Ghost"
+                                          Command="{Binding OpenForceTargetLocationCommand}"
+                                          Margin="0,0,6,0"/>
+                        <controls:ZButton Content="{Binding [Apps_ForceTarget], Source={x:Static services:LanguageManager.Instance}}"
+                                          Icon="{StaticResource StrokeIconTrash}"
+                                          Command="{Binding ForceResolvedTargetCommand}"
+                                          IsEnabled="{Binding ForceTarget.CanForceRemove}"
+                                          Margin="0,0,6,0"/>
+                        <controls:ZIconButton Icon="{StaticResource StrokeIconClose}"
+                                              Command="{Binding ClearForceTargetCommand}"
+                                              ToolTip="{Binding [Apps_ClearTarget], Source={x:Static services:LanguageManager.Instance}}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
 
             <WrapPanel Margin="0,10,0,0">
                 <controls:ZButton Content="{Binding [Apps_FilterAll], Source={x:Static services:LanguageManager.Instance}}"
@@ -204,6 +290,12 @@
                         <controls:ZButton Content="{Binding [Apps_QuietUninstall], Source={x:Static services:LanguageManager.Instance}}"
                                           Variant="Secondary"
                                           Command="{Binding QuietUninstallCommand}"
+                                          Margin="0,0,8,6"/>
+                        <controls:ZButton Content="{Binding [Apps_DeleteRegistry], Source={x:Static services:LanguageManager.Instance}}"
+                                          Variant="Secondary"
+                                          Icon="{StaticResource StrokeIconTarget}"
+                                          Command="{Binding ForceRemoveCommand}"
+                                          CommandParameter="{Binding SelectedApp}"
                                           Margin="0,0,8,6"/>
                         <controls:ZButton Content="{Binding [Apps_DeepClean], Source={x:Static services:LanguageManager.Instance}}"
                                           Variant="Secondary"
